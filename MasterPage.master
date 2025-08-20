@@ -1,0 +1,599 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="MasterPage" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+
+    <meta property="og:title" content="VET Orientation Form - Nortwest College" />
+    <meta property="og:description" content="Fill out the form in English. You can select the language to help you fill out the form." />
+    <meta property="og:url" content="https://website.nortwest.edu.au/" />
+
+    <title>
+        <asp:ContentPlaceHolder ID="title" runat="server">
+        </asp:ContentPlaceHolder>
+    </title>
+
+    <link rel="shortcut icon" href="assets/img/favicon_icon.png" type="image/x-icon" />
+
+    <!-- ========== Start Stylesheet ========== -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="assets/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="assets/css/flaticon-set.css" rel="stylesheet" />
+    <link href="assets/css/themify-icons.css" rel="stylesheet" />
+    <link href="assets/css/magnific-popup.css" rel="stylesheet" />
+    <link href="assets/css/owl.carousel.min.css" rel="stylesheet" />
+    <link href="assets/css/owl.theme.default.min.css" rel="stylesheet" />
+    <link href="assets/css/animate.css" rel="stylesheet" />
+    <link href="assets/css/bootsnav.css" rel="stylesheet" />
+    <link href="assets/css/style.css" rel="stylesheet" />
+    <link href="assets/css/responsive.css" rel="stylesheet" />
+
+    <!-- ========== Custom Stylesheet ========== -->
+    <link href="assets/css/My_Style.css" rel="stylesheet" />
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800" rel="stylesheet" />
+
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+
+        <!-- Preloader Start -->
+        <div class="se-pre-con"></div>
+        <!-- Preloader Ends -->
+
+        <!-- Start Header Top 
+    ============================================= -->
+        <div class="top-bar-area bg-dark text-light">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-md-8 address-info text-left">
+                        <div class="info">
+                            <ul>
+                                <li class="social">
+                                    <a href="https://www.facebook.com/nortwestedu/"><i class="fab fa-facebook-f"></i></a>
+                                    <a href="#"><i class="fab fa-twitter"></i></a>
+                                    <a href="https://www.linkedin.com/company/nortwesteducation/"><i class="fab fa-linkedin-in"></i></a>
+                                    <a href="#"><i class="fab fa-youtube"></i></a>
+                                </li>
+                                <%-- <li>
+                                    <i class="fas fa-user-shield"></i>Instructor: <strong>655</strong>
+                                </li>--%>
+                                <li>
+                                    <i class="fas fa-phone"></i>Contact: <strong>+61 426 254 486</strong>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 link text-right">
+                        <ul>
+
+                            <li>
+                                <a href="https://appform.nortwest.edu.au/">Apply Now</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Header Top -->
+
+        <!-- Header 
+    ============================================= -->
+        <header id="home">
+
+            <!-- Start Navigation -->
+            <nav class="navbar navbar-default brand-center navbar-sticky bootsnav">
+                <div class="container-fluid">
+
+                    <!-- Start Header Navigation -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <a class="navbar-brand" href="index.html">
+                            <img src="assets/img/logo_nwc_transp@1x.png" style="height: 50px" class="logo" alt="Logo">
+                        </a>
+                    </div>
+                    <!-- End Header Navigation -->
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="navbar-menu">
+                        <ul class="nav navbar-nav" data-in="#" data-out="#">
+                            <li>
+                                <a href="Default.aspx">Home</a>
+                            </li>
+                            <li>
+                                <a href="Courses.aspx">Courses</a>
+                            </li>
+
+                             
+                            <li>
+                                <a href="pre-enrolment.aspx">Pre-Enrolment</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">For Students</a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="Vet_Orientation.aspx">New Student Orientation</a></li>
+                                    <li><a href="#">Downloads</a></li>
+                                    <li><a href="assets/prefix_file/NW-Brochure-copy_compressed-3-1.pdf" download="NW-Brochure.pdf">Brochure</a></li>
+                                    <li><a href="https://accounts.google.com/v3/signin/identifier?continue=https%3A%2F%2Fmail.google.com%2Fmail%2F&ifkv=AXH0vVsC3NbLruWRPGrDMDXehhjhDfmqZAD10GenQPYkwt6jn3GdJFLpBNgSt8V3MhKBK_xq2bqkow&rip=1&sacu=1&service=mail&flowName=GlifWebSignIn&flowEntry=ServiceLogin&dsh=S-516335491%3A1744184120347082">Login Gmail</a></li>
+                                    <li><a href="http://appv2.nortwest.edu.au/web/">Login LMS</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="Campus.aspx">Campus</a>
+                            </li>
+                            <li>
+                                <a href="Student_Forms.aspx">Students Forms</a>
+                            </li>
+                             <%--<li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Login</a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="https://accounts.google.com/v3/signin/identifier?continue=https%3A%2F%2Fmail.google.com%2Fmail%2F&ifkv=AXH0vVsC3NbLruWRPGrDMDXehhjhDfmqZAD10GenQPYkwt6jn3GdJFLpBNgSt8V3MhKBK_xq2bqkow&rip=1&sacu=1&service=mail&flowName=GlifWebSignIn&flowEntry=ServiceLogin&dsh=S-516335491%3A1744184120347082">Login By Gmail</a></li>
+                                     <li><a href="http://appv2.nortwest.edu.au/web/" >Login LMS</a></li>
+                                </ul>
+                            </li>--%>
+                            <%--<li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Students Forms</a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Student Request Form</a></li>
+                                    <li><a href="#">Deferment or Suspension of Studies Form</a></li>
+                                    <li><a href="#">Change of a Course Form</a></li>
+                                    <li><a href="#">Cancelation Form</a></li>
+                                    <li><a href="#">Special Leave Request Form</a></li>
+                                    <li><a href="#">Credit Card Authorisation Form</a></li>
+                                    <li><a href="#">Student Details Form</a></li>
+                                    <li><a href="#">Credit Transfer Application</a></li>
+                                    <li><a href="#">Installment Payment Agreement</a></li>
+                                    <li><a href="#">Application for Reassessment</a></li>
+                                    <li><a href="#">Appeal Form</a></li>
+                                    <li><a href="#">Complaint and Feedback Form</a></li>
+                                    <li><a href="#">Change of Campus Form</a></li>
+                                    <li><a href="#">CRICOS Student Withdrawal Form</a></li>
+                                    <li><a href="#">Refund Form</a></li>
+                                    <li><a href="#">GTE Form</a></li>
+                                    <li><a href="#">English Test (EPT)</a></li>
+                                    <li><a href="#">LLN Test</a></li>
+                                    <li><a href="#">Student Orientation Form Elicos</a></li>
+                                    <li><a href="#">Student Orientation Form Vet</a></li>
+                                </ul>
+                            </li>--%>
+                             <li>
+                                <a href="Agent_List.aspx">Agents</a>
+                            </li>
+                            <li>
+                                <a href="Contact_Us.aspx">contact</a>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <!-- /.navbar-collapse -->
+                </div>
+            </nav>
+            <!-- End Navigation -->
+
+        </header>
+        <!-- End Header -->
+
+
+        <asp:ContentPlaceHolder ID="body" runat="server">
+        </asp:ContentPlaceHolder>
+
+
+        <footer class="bg-dark text-light">
+            <div class="container">
+
+                <div class="f-items campus_fotter" style="padding-top: 50px; padding-bottom: 50px; border-bottom: 1px solid #48b2a2;">
+                    <div class="row">
+                        <div class="site-heading text-center">
+                            <div class="col-md-8 col-md-offset-2">
+                                <h2>OUR LOCATIONS</h2>
+                            </div>
+                        </div>
+                        <!-- Single item -->
+                        <div class="col-md-3 col-sm-6 equal-height" style="border-right: 1px solid #6aa79d;">
+
+                            <div class="item">
+                                <div class="info campus_info">
+                                    <h4>
+                                        <a href="#">GEORGE STREET CAMPUS</a>
+                                    </h4>
+
+                                    <p style="font-size: 13px">
+                                        <a href="tel:+61 449 955 272">
+                                            <i class="fas fa-mobile">&nbsp&nbsp</i>+61 449 955 272
+                                        </a>
+                                    </p>
+                                    <p style="font-size: 13px">
+                                        <a href="#">
+                                            <i class="fas fa-envelope">&nbsp&nbsp</i>sso@nortwest.edu.au
+                                        </a>
+                                    </p>
+                                    <p style="font-size: 13px">
+
+                                        <a href="#">
+                                            <i class="fas fa-map">&nbsp&nbsp</i>LEVEL2, 531 GEORGE STREET SYDNEY NSW 2000 Australia
+                                        </a>
+                                    </p>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-3 col-sm-6 equal-height" style="border-right: 1px solid #6aa79d;">
+                            <div class="item">
+
+                                <div class="info campus_info">
+                                    <h4>
+                                        <a href="#">York Street Campus</a>
+                                    </h4>
+
+                                    <p style="font-size: 13px">
+                                        <a href="tel:+61 469 738 090">
+                                            <i class="fas fa-mobile">&nbsp&nbsp</i>+61 469 738 090
+                                        </a>
+                                    </p>
+
+                                    <p style="font-size: 13px">
+                                        <a href="mailto:englishsso@nortwest.edu.au">
+                                            <i class="fas fa-envelope">&nbsp&nbsp</i>englishsso@nortwest.edu.au
+                                        </a>
+                                    </p>
+                                    <p style="font-size: 13px">
+
+                                        <a href="#">
+                                            <i class="fas fa-map">&nbsp&nbsp</i>Level 2, The Grace Hotel Building 77 York Street Sydney NSW 2000 Australia
+                                        </a>
+                                    </p>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 equal-height" style="border-right: 1px solid #6aa79d;">
+                            <div class="item">
+
+                                <div class="info campus_info">
+                                    <h4>
+                                        <a href="#">Adelaide Campus</a>
+                                    </h4>
+
+                                    <p style="font-size: 13px">
+                                        <a href="tel:+61 492 938 782">
+                                            <i class="fas fa-mobile">&nbsp&nbsp</i>+61 492 938 782
+                                        </a>
+                                    </p>
+
+                                    <p style="font-size: 13px">
+                                        <a href="mailto:sso@nortwest.edu.au">
+                                            <i class="fas fa-envelope">&nbsp&nbsp</i>sso@nortwest.edu.au
+                                        </a>
+                                    </p>
+                                    <p style="font-size: 13px">
+                                        <a href="mailto:englishsso@nortwest.edu.au">
+                                            <i class="fas fa-envelope">&nbsp&nbsp</i>englishsso@nortwest.edu.au
+                                        </a>
+                                    </p>
+                                    <p style="font-size: 13px">
+
+                                        <a href="#">
+                                            <i class="fas fa-map">&nbsp&nbsp</i>Suite 1,Level 2 66-68 Grenfell Street Adelaide SA 5000 Australia
+                                        </a>
+                                    </p>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 equal-height">
+                            <div class="item">
+
+                                <div class="info campus_info">
+                                    <h4>
+                                        <a href="#">MELBOURNE CAMPUS</a>
+                                    </h4>
+
+                                    <p style="font-size: 13px">
+                                        <a href="tel:+61 426 254 486">
+                                            <i class="fas fa-mobile">&nbsp&nbsp</i>+61 426 254 486
+                                        </a>
+                                    </p>
+                                     <p style="font-size: 13px">
+                                        <a href="mailto:sso@nortwest.edu.au">
+                                            <i class="fas fa-envelope">&nbsp&nbsp</i>sso@nortwest.edu.au
+                                        </a>
+                                    </p>
+                                    <p style="font-size: 13px">
+                                        <a href="mailto:englishsso@nortwest.edu.au">
+                                            <i class="fas fa-envelope">&nbsp&nbsp</i>englishsso@nortwest.edu.au
+                                        </a>
+                                    </p>
+                                    <p style="font-size: 13px">
+
+                                        <a href="#">
+                                            <i class="fas fa-map">&nbsp&nbsp</i>Level 9, 108 Lonsdale st, Melbourne VIC
+                                        </a>
+                                    </p>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="f-items" style="padding-top: 60px; padding-bottom: 60px;">
+                    <div class="row">
+                        <!-- Single item -->
+                        <div class="col-md-4 col-sm-6 item equal-height">
+                            <div class="f-item about">
+                                <h4>About</h4>
+                                <p style="text-align: justify;">
+                                    Nortwest College has been Australia’s premier provider of education to overseas students since 2007. Nortwest College focuses on up-to-date, industry-endorsed courses in Business, Management, Project Management, IT, Trade, Commercial Cookery and Hospitality Management, and English. We have students from all over the world studying with us and experiencing life, study, and work in Australia with our support.
+                                </p>
+
+                            </div>
+                        </div>
+                        <!-- End Single item -->
+
+                        <!-- Single item -->
+                        <div class="col-md-2 col-sm-6 item equal-height">
+                            <div class="f-item link">
+                                <h4>Usefull Links</h4>
+                                <ul>
+                                    <li>
+                                        <a href="Courses.aspx"><i class="ti-angle-right"></i>All Courses</a>
+                                    </li>
+                                    <li>
+                                        <a href="#"><i class="ti-angle-right"></i>Downloads</a>
+                                    </li>
+                                    <li>
+                                        <a href="Student_Forms.aspx"><i class="ti-angle-right"></i>Student Forms</a>
+                                    </li>
+                                    <li>
+                                        <a href="academic_enrolment_calenda.aspx"><i class="ti-angle-right"></i>Calendar</a>
+                                    </li>
+                                    <li>
+                                        <a href="FAQ.aspx"><i class="ti-angle-right"></i>Faq</a>
+                                    </li>
+                                    <li>
+                                        <a href="Agent_List.aspx"><i class="ti-angle-right"></i>Agent Application</a>
+                                    </li>
+                                    <li>
+                                        <a href="Policy.aspx"><i class="ti-angle-right"></i>Policies & Procedures</a>
+                                    </li>
+                                    <li>
+                                        <a href="assets/img/NW-Brochure-copy_compressed-3-1.pdf"><i class="ti-angle-right"></i>Brochure</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- End Single item -->
+
+                        <!-- Single item -->
+                        <div class="col-md-2 col-sm-6 item equal-height">
+                            <div class="f-item link">
+                                <h4>Support</h4>
+                                <ul>
+                                    <li>
+                                        <a href="#"><i class="ti-angle-right"></i>Documentation</a>
+                                    </li>
+                                    <li>
+                                        <a href="#"><i class="ti-angle-right"></i>Forums</a>
+                                    </li>
+                                    <li>
+                                        <a href="#"><i class="ti-angle-right"></i>Language Packs</a>
+                                    </li>
+                                    <li>
+                                        <a href="#"><i class="ti-angle-right"></i>Release Status</a>
+                                    </li>
+                                    <li>
+                                        <a href="#"><i class="ti-angle-right"></i>LearnPress</a>
+                                    </li>
+                                    <li>
+                                        <a href="#"><i class="ti-angle-right"></i>Feedback</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- End Single item -->
+
+                        <!-- Single item -->
+                        <div class="col-md-4 col-sm-6 item equal-height">
+                            <div class="f-item popular-courses">
+                                <h4>Affiliation</h4>
+                                <div class="row fotter_affilition">
+                                    <div class="col-md-6">
+                                        <img src="assets/img/velg-logo.png" style="width: 100%" alt="Thumb">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <img src="assets/img/NRT_logo-1.jpg" style="width: 100%" alt="Thumb">
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <img src="assets/img/Australian_Qualifications_Framework_(logo).png" style="width: 100%" alt="Thumb">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- End Single item -->
+                    </div>
+                </div>
+            </div>
+            <!-- Start Footer Bottom -->
+            <div class="footer-bottom">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <p>&copy; Nortwest Pty Ltd, ABN 17 123 969 175, CRICOS 03256G, RTO ID 91781 trading as City Institute All rights reserved <a href="#">Powered by HL Group</a></p>
+                        </div>
+                        <div class="col-md-2 text-right">
+                            <ul>
+                                <li>
+                                    <a href="https://www.facebook.com/nortwestedu/">
+                                        <img style="width: 23px;" src="assets/img/facebook.png" /></a>
+                                </li>
+                                <li>
+                                    <a href="https://www.instagram.com/nortwesteducation/">
+                                        <img style="width: 23px;" src="assets/img/instagram.png" /></a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <img style="width: 23px;" src="assets/img/youtube.png" /></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Footer Bottom -->
+        </footer>
+
+        <img src="assets/img/whatsapp.png" alt="WhatsApp" data-toggle="modal" data-target="#myModal" class="whatsapp-icon_main fixed-bottom-left" />
+
+
+        <!-- The Modal -->
+        <div class="modal wtsp_modal" id="myModal">
+            <div class="modal-dialog modal-dialog-centered modal_fixed_left" style="width: 360px">
+                <div class="modal-content">
+
+                    <div class="modal-header" style="background: rgb(9, 94, 84); display: flex; align-items: center;">
+                        <a href="Default.aspx" class="modal-title" style="margin-right: 10px;">
+                            <img src="assets/img/whatsapp_white.png" style="width: 40px; object-fit: contain" alt="Alternate Text" />
+                        </a>
+                        <div>
+                            <p style="margin: 0; color: white; font-weight: 700; /* font-size: unset; */margin-left: 7px;">Nortwest Pty Ltd</p>
+                            <p style="margin: 0; color: white; margin-left: 7px; margin-left: 7px; font-size: 12px;">
+                                Online
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <div class="modal-body" style="background: url(https://i.pinimg.com/736x/8c/98/99/8c98994518b575bfd8c949e91d20548b.jpg); position: relative;">
+                        <div class="overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgb(230 221 212 / 75%)"></div>
+                        <%--<div class="msg" style="width: 230px; position: relative; border-radius: 8px; padding: 10px 5px 0px 11px; color: black; background: white">
+
+                            <p>Hii there 👋</p>
+                            <p style="padding-bottom: 10px;">
+                                How Can I Help You ?
+                            </p>
+                        </div>--%>
+                        <div class="profile-container">
+                            <a href="https://api.whatsapp.com/send?phone=61449955272">
+                                <div class="profile-content">
+
+                                    <div class="whatsapp-icon">
+                                        <img src="assets/img/whatsapp_msg.png" alt="WhatsApp" class="whatsapp-img">
+                                    </div>
+
+                                    <!-- Right side - Company name and contact number -->
+                                    <div class="company-details">
+                                        <h3 class="company-name">Nortwest - George Street, Sydney</h3>
+                                        <p class="contact-number">Need Help ?</p>
+                                    </div>
+
+                                </div>
+                            </a>
+                        </div>
+                        <div class="profile-container">
+                            <a href="https://api.whatsapp.com/send?phone=61449955272">
+                                <div class="profile-content">
+
+                                    <div class="whatsapp-icon">
+                                        <img src="assets/img/whatsapp_msg.png" alt="WhatsApp" class="whatsapp-img">
+                                    </div>
+
+                                    <!-- Right side - Company name and contact number -->
+                                    <div class="company-details">
+                                        <h3 class="company-name">Nortwest - York Street, Sydney</h3>
+                                        <p class="contact-number">Need Help ?</p>
+                                    </div>
+
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="profile-container">
+                            <a href="https://api.whatsapp.com/send?phone=61449955272">
+                                <div class="profile-content">
+
+                                    <div class="whatsapp-icon">
+                                        <img src="assets/img/whatsapp_msg.png" alt="WhatsApp" class="whatsapp-img">
+                                    </div>
+
+                                    <!-- Right side - Company name and contact number -->
+                                    <div class="company-details">
+                                        <h3 class="company-name">Nortwest - Melbourne</h3>
+                                        <p class="contact-number">Need Help ?</p>
+                                    </div>
+
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="profile-container">
+                            <a href="https://api.whatsapp.com/send?phone=61449955272">
+                                <div class="profile-content">
+
+                                    <div class="whatsapp-icon">
+                                        <img src="assets/img/whatsapp_msg.png" alt="WhatsApp" class="whatsapp-img">
+                                    </div>
+
+                                    <!-- Right side - Company name and contact number -->
+                                    <div class="company-details">
+                                        <h3 class="company-name">Nortwest - Adelaide</h3>
+                                        <p class="contact-number">Need Help ?</p>
+                                    </div>
+
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <%--<!-- Modal Footer -->
+                    <div class="modal-footer">
+                        <div class="col-md-12">
+                            <a class="text-center btn btn-success form-control" href="https://wa.me/+919913324044" target="_blank" style="border-radius: 20px; background-color: #095e54;">
+                                <i class="fa fa-message"></i>Start Chat</a>
+                        </div>
+                    </div>--%>
+                </div>
+            </div>
+        </div>
+
+        <!-- jQuery Frameworks
+    ============================================= -->
+        <script src="assets/js/jquery-1.12.4.min.js"></script>
+        <script src="assets/js/bootstrap.min.js"></script>
+        <script src="assets/js/equal-height.min.js"></script>
+        <script src="assets/js/jquery.appear.js"></script>
+        <script src="assets/js/jquery.easing.min.js"></script>
+        <script src="assets/js/jquery.magnific-popup.min.js"></script>
+        <script src="assets/js/modernizr.custom.13711.js"></script>
+        <script src="assets/js/owl.carousel.min.js"></script>
+        <script src="assets/js/wow.min.js"></script>
+        <script src="assets/js/progress-bar.min.js"></script>
+        <script src="assets/js/isotope.pkgd.min.js"></script>
+        <script src="assets/js/imagesloaded.pkgd.min.js"></script>
+        <script src="assets/js/count-to.js"></script>
+        <script src="assets/js/YTPlayer.min.js"></script>
+        <script src="assets/js/loopcounter.js"></script>
+        <script src="assets/js/jquery.nice-select.min.js"></script>
+        <script src="assets/js/bootsnav.js"></script>
+        <script src="assets/js/main.js"></script>
+
+        <asp:ContentPlaceHolder ID="jqury" runat="server">
+        </asp:ContentPlaceHolder>
+    </form>
+</body>
+</html>

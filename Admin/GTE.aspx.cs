@@ -1,0 +1,209 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Data;
+using CrystalDecisions.CrystalReports.Engine;
+using System.IO;
+using CrystalDecisions.Shared;
+using System.Net.Mail;
+using System.Configuration;
+
+public partial class GTE : System.Web.UI.Page
+{
+    public enum MessageType { Success, Error, Info, Warning };
+    protected void ShowMessage(string Message, MessageType type)
+    {
+        ScriptManager.RegisterStartupScript(this, this.GetType(), System.Guid.NewGuid().ToString(), "ShowMessage('" + Message + "','" + type + "');", true);
+    }
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        try
+        {
+            if (!IsPostBack)
+            {
+                txt_from_date.Text = DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd");
+                txt_to_date.Text = DateTime.Now.ToString("yyyy-MM-dd");
+                bind_data();
+
+
+            }
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+    }
+
+    public void bind_data()
+    {
+        try
+        {
+            DataSet ds = BAL_Forms.dis_gte_form(txt_from_date.Text, txt_to_date.Text);
+            if (ds.Tables.Count > 0)
+            {
+                grid_form.DataSource = ds.Tables[0];
+                grid_form.DataBind();
+            }
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+    }
+    protected void grid_sales_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        ReportDocument rpt = new ReportDocument();
+
+        try
+        {
+            string id = e.CommandArgument.ToString();
+
+            if (e.CommandName == "btn_pdf")
+            {
+                string server_url = ConfigurationManager.ConnectionStrings["server_url"].ToString();
+
+
+                DataSet ds = BAL_Forms.sel_gte_form(id);
+                if (ds.Tables.Count > 0)
+                {
+
+
+                    ds.Tables[0].Rows[0]["student_signature"] = Server.MapPath("~/assets/img/sign/") + ds.Tables[0].Rows[0]["student_signature"];
+                    ds.Tables[0].Rows[0]["doc_evidence_upd"] = server_url + "assets/img/document/" + ds.Tables[0].Rows[0]["doc_evidence_upd"];
+                    ds.Tables[0].Rows[0]["refused_visa_aus_upd"] = server_url + "assets/img/document/" + ds.Tables[0].Rows[0]["refused_visa_aus_upd"];
+                    ds.Tables[0].Rows[0]["undertaken_IELTS_upd"] = server_url + "assets/img/document/" + ds.Tables[0].Rows[0]["undertaken_IELTS_upd"];
+
+
+                    rpt.Load(Server.MapPath("~/RPT/RPT_GTE_Form.rpt"));
+
+                    rpt.Database.Tables["dt_gte_form"].SetDataSource(ds.Tables[0]);
+                    rpt.Database.Tables["dt_academic_history"].SetDataSource(ds.Tables[1]);
+                    rpt.Database.Tables["dt_job_description"].SetDataSource(ds.Tables[2]);
+
+                    string name = "New GTE Form";
+
+                    Stream ach_stream = rpt.ExportToStream(ExportFormatType.PortableDocFormat);
+                    Attachment ach_attachment = new Attachment(ach_stream, name + ".pdf", "application/pdf");
+
+                    string subject = "GTE Form (" + ds.Tables[0].Rows[0]["family_name"].ToString() + ")";
+                    using (Stream pdfStream = rpt.ExportToStream(ExportFormatType.PortableDocFormat))
+                    {
+                        // Set the response headers
+                        Response.Clear();
+                        Response.Buffer = true;
+                        Response.ContentType = "application/pdf";
+                        Response.AddHeader("Content-Disposition", "attachment; filename=" + subject + ".pdf");
+                        Response.AddHeader("Content-Length", pdfStream.Length.ToString());
+
+                        // Write the stream to the response
+                        pdfStream.CopyTo(Response.OutputStream);
+                        Response.Flush();
+                        Response.End();
+                    }
+
+                    // Dispose of the report
+                    rpt.Close();
+                    rpt.Dispose();
+
+                }
+            }
+
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+        finally
+        {
+            rpt.Close();
+            rpt.Dispose();
+        }     
+
+
+    }
+
+
+    public void view_sales_invoice(string invoice_id)
+    {
+        //DataSet ds = BAL_Sales.view_sales_bill(invoice_id);
+        //if (ds.Tables.Count > 0)
+        //{
+        //    list_invoice_detail.DataSource = ds.Tables[0];
+        //    list_invoice_detail.DataBind();
+
+        //    grid_item.DataSource = ds.Tables[1];
+        //    grid_item.DataBind();
+
+        //    list_total.DataSource = ds.Tables[0];
+        //    list_total.DataBind();
+
+        //    btn_edit_invoice.HRef = "new_Sales_Invoice.aspx?iid=" + invoice_id;
+        //    btn_gst_bill.HRef = "dwn/sales_invoice.aspx?id=" + invoice_id;
+        //    btn_non_gst_bill.HRef = "dwn/sales_invoice_non_gst.aspx?id=" + invoice_id;
+        //    btn_ins_cmp_bill.HRef = "dwn/sales_invoice.aspx?id=" + invoice_id + "&ins=true";
+
+        //    //btn_edit_invoice.HRef = "Mec_Jobcard_Close.aspx?id=" + invoice_id;
+        //    bind_thermal_print(invoice_id);
+
+        //}
+
+        //ScriptManager.RegisterStartupScript(this, GetType(), "modal_invoice", "modal_invoice();", true);
+    }
+
+    public void bind_thermal_print(string invoice_id)
+    {
+        try
+        {
+            //DataSet ds = BAL_Sales.view_sales_bill(invoice_id);
+            //if (ds.Tables.Count > 0)
+            //{
+            //    list_thermal_item.DataSource = ds.Tables[1];
+            //    list_thermal_item.DataBind();
+
+            //    list_thermal_total.DataSource = ds.Tables[0];
+            //    list_thermal_total.DataBind();
+
+            //    list_thermal_cust_detail.DataSource = ds.Tables[0];
+            //    list_thermal_cust_detail.DataBind();
+            //}
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+    }
+    protected void ddl_audit_type_filter_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        try
+        {
+            bind_data();
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+    }
+    protected void btn_search_Click(object sender, EventArgs e)
+    {
+        bind_data();
+    }
+
+    public static string set_audit_tag(string tag_name, string audit_status)
+    {
+        string css = "hide";
+        if (tag_name == audit_status)
+        {
+            css = "";
+        }
+
+        return css;
+    }
+}

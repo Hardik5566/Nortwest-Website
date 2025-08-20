@@ -1,0 +1,5 @@
+name,location,course,slots
+City Hospital,Melbourne Central,Nursing,"[{""start"":""2025-05-01"",""end"":""2025-05-15"",""capacity"":15},{""start"":""2025-06-01"",""end"":""2025-06-15"",""capacity"":5}]"
+Riverdale Clinic,River Town,Aged Care,"[{""start"":""2025-07-01"",""end"":""2025-07-15"",""capacity"":1},{""start"":""2025-08-01"",""end"":""2025-08-15"",""capacity"":4}]"
+Rural Health Hub,Outback Valley,Mental Health,"[{""start"":""2025-08-01"",""end"":""2025-08-10"",""capacity"":2}]"
+City Hospital,Adelaide Central,Nursing,"[{""start"":""2025-05-01"",""end"":""2025-05-15"",""capacity"":15},{""start"":""2025-06-01"",""end"":""2025-06-15"",""capacity"":5}]"
