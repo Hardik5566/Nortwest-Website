@@ -54,7 +54,7 @@
                         <h2>Courses</h2>
                         <p>
                             Explore Our Diverse Range of Courses Across Various Fields.
-Find the Perfect Program to Enhance Your Skills and Career Path.
+                            Find the Perfect Program to Enhance Your Skills and Career Path.
                        
                         </p>
                     </div>
@@ -64,7 +64,7 @@ Find the Perfect Program to Enhance Your Skills and Career Path.
                 <div class="features">
                     <div class="equal-height col-md-3 col-sm-6">
                         <div class="item mariner">
-                            <a href="Project_Management.aspx">
+                            <a href="Project_Management.aspx?page_name=Project Management">
                                 <div class="icon">
                                     <img src="assets/img/project-management.png" />
                                 </div>
@@ -77,7 +77,7 @@ Find the Perfect Program to Enhance Your Skills and Career Path.
 
                     <div class="equal-height col-md-3 col-sm-6">
                         <div class="item mariner">
-                            <a href="#">
+                            <a href="Project_Management.aspx?page_name=Business">
                                 <div class="icon">
                                     <img src="assets/img/business.png" />
                                 </div>
@@ -90,7 +90,7 @@ Find the Perfect Program to Enhance Your Skills and Career Path.
 
                     <div class="equal-height col-md-3 col-sm-6">
                         <div class="item mariner">
-                            <a href="#">
+                         <a href="Project_Management.aspx?page_name=Leadership %26 Management">
                                 <div class="icon">
                                     <img src="assets/img/team-leader.png" />
                                 </div>
@@ -103,7 +103,7 @@ Find the Perfect Program to Enhance Your Skills and Career Path.
 
                     <div class="equal-height col-md-3 col-sm-6">
                         <div class="item mariner">
-                            <a href="#">
+                            <a href="Project_Management.aspx?page_name=English">
                                 <div class="icon">
                                     <img src="assets/img/translation.png" />
                                 </div>
@@ -116,7 +116,7 @@ Find the Perfect Program to Enhance Your Skills and Career Path.
 
                     <div class="equal-height col-md-3 col-sm-6">
                         <div class="item mariner">
-                            <a href="#">
+                            <a href="Project_Management.aspx?page_name=Information Technology">
                                 <div class="icon">
                                     <img src="assets/img/technical-support.png" />
                                 </div>
@@ -130,7 +130,7 @@ Find the Perfect Program to Enhance Your Skills and Career Path.
 
                     <div class="equal-height col-md-3 col-sm-6">
                         <div class="item mariner">
-                            <a href="#">
+                            <a href="Project_Management.aspx?page_name=Graduate Diploma of Management">
                                 <div class="icon">
                                     <img src="assets/img/management.png" />
                                 </div>
@@ -143,7 +143,7 @@ Find the Perfect Program to Enhance Your Skills and Career Path.
 
                     <div class="equal-height col-md-3 col-sm-6">
                         <div class="item mariner">
-                            <a href="#">
+                            <a href="Project_Management.aspx?page_name=Cookery %26 Hospitality">
                                 <div class="icon">
                                     <img src="assets/img/chef.png" />
                                 </div>
@@ -156,7 +156,7 @@ Find the Perfect Program to Enhance Your Skills and Career Path.
 
                     <div class="equal-height col-md-3 col-sm-6">
                         <div class="item mariner">
-                            <a href="#">
+                            <a href="Project_Management.aspx?page_name=Building %26 Construction">
                                 <div class="icon">
                                     <img src="assets/img/construction.png" />
                                 </div>

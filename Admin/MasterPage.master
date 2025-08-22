@@ -127,9 +127,14 @@
                         </a>
                     </li>
                     <li class="menu-label">Forms</li>
-
-
-
+                    <li>
+                        <a href="Course_master.aspx">
+                            <div class="parent-icon">
+                                <i class="bi bi-journal-bookmark-fill"></i>
+                            </div>
+                            <div class="menu-title">Course Master</div>
+                        </a>
+                    </li>
                     <li>
                         <a href="javascript:;" class="has-arrow">
                             <div class="parent-icon">
@@ -190,15 +195,20 @@
                         </ul>
                     </li>
 
+
                 </ul>
                 <!--end navigation-->
             </aside>
-            <main class="page-content">
-            <asp:ContentPlaceHolder ID="body" runat="server">
-            </asp:ContentPlaceHolder>
-             </main>
-
-
+            <div class="page-content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="messagealert" id="alert_container">
+                        </div>
+                        <asp:ContentPlaceHolder ID="body" runat="server">
+                        </asp:ContentPlaceHolder>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Bootstrap bundle JS -->
