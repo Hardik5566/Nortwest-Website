@@ -135,6 +135,23 @@
                             <div class="menu-title">Course Master</div>
                         </a>
                     </li>
+                  <%--  <li>
+                        <a href="Intake_master.aspx">
+                            <div class="parent-icon">
+                                <i class="bi bi-calendar-range-fill"></i>
+                            </div>
+                            <div class="menu-title">Intake Master</div>
+                        </a>
+                    </li>--%>
+                   <%-- <li>
+                        <a href="Termbreak_master.aspx">
+                            <div class="parent-icon">
+                                <i class="bi bi-calendar-range"></i>
+                            </div>
+                            <div class="menu-title">TermBreak Master</div>
+                        </a>
+                    </li>--%>
+
                     <li>
                         <a href="javascript:;" class="has-arrow">
                             <div class="parent-icon">

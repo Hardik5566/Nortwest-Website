@@ -44,7 +44,7 @@
             <div class="row">
                 <div class="site-heading text-center">
                     <div class="col-md-8 col-md-offset-2">
-                        <h2><%--Project Management--%><asp:Label ID="lbl_programme" style="color:#002147" runat="server" Text=""></asp:Label></h2>
+                        <h2><%--Project Management--%><asp:Label ID="lbl_programme" Style="color: #002147" runat="server" Text=""></asp:Label></h2>
                     </div>
                 </div>
             </div>
@@ -63,7 +63,7 @@
                                                 </h4>
                                                 <ul>
                                                     <li><i class="fas fa-book"></i><%# Eval("course_code") %></li>
-                                                    <li><i class="fas fa-map-marked-alt"></i>CRICOS <%# Eval("cricos_code") %></li>
+                                                    <li><i class="fas fa-map-marked-alt"></i>CRICOS : <%# Eval("cricos_code") %></li>
                                                 </ul>
                                                 <ul>
                                                     <li><i class="fas fa-school"></i>Sydney CBD</li>
@@ -81,9 +81,12 @@
                                                     </tr>
                                                 </table>
                                                 <div class="bottom">
-                                                    <a href="#" class="btn circle btn-dark border btn-sm">
-                                                        <i class="fas fa-download">&nbsp</i>Download Flyer
+                                                    <a href='<%# string.IsNullOrEmpty(Eval("flyer").ToString()) ? "#" : ResolveUrl("~/Admin/assets/Flyer/" + Eval("flyer")) %>'
+                                                        <%# string.IsNullOrEmpty(Eval("flyer").ToString()) ? "onclick=\"return false;\"" : "download" %>>
+                                                        <i class="fas fa-download"></i>&nbsp;Download Flyer
                                                     </a>
+
+
                                                     <%-- <a href="#" class="btn circle btn-dark border btn-sm">
                                                 <i class="fas fa-eye">&nbsp</i>View Detail
                                             </a>

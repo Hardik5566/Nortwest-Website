@@ -126,7 +126,7 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">For Students</a>
                                 <ul class="dropdown-menu">
                                     <li><a href="Vet_Orientation.aspx">New Student Orientation</a></li>
-                                    <li><a href="#">Downloads</a></li>
+                                    <li><a href="downloads.aspx">Downloads</a></li>
                                     <li><a href="assets/prefix_file/NW-Brochure-copy_compressed-3-1.pdf" download="NW-Brochure.pdf">Brochure</a></li>
                                     <li><a href="https://accounts.google.com/v3/signin/identifier?continue=https%3A%2F%2Fmail.google.com%2Fmail%2F&ifkv=AXH0vVsC3NbLruWRPGrDMDXehhjhDfmqZAD10GenQPYkwt6jn3GdJFLpBNgSt8V3MhKBK_xq2bqkow&rip=1&sacu=1&service=mail&flowName=GlifWebSignIn&flowEntry=ServiceLogin&dsh=S-516335491%3A1744184120347082">Login Gmail</a></li>
                                     <li><a href="http://appv2.nortwest.edu.au/web/">Login LMS</a></li>
