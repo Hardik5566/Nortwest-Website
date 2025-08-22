@@ -311,7 +311,7 @@
             </div>
         </div>
     </div>
-    <div id="portfolio" class="portfolio-area default-padding" style="padding-top:30px">
+   <%-- <div id="portfolio" class="portfolio-area default-padding" style="padding-top:30px">
         <div class="container">
             <div class="portfolio-items-area text-center">
                 <div class="row">
@@ -410,13 +410,13 @@
                                         </div>
                                     </div>
                                 </div>--%>
-                            </div>
+                          <%--  </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </div>--%>
     <div class="features-area bg-gray default-padding bottom-less">
         <div class="container">
 

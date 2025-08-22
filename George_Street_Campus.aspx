@@ -311,7 +311,7 @@
             </div>
         </div>
     </div>
-    <div id="portfolio" class="portfolio-area default-padding" style="padding-top:30px">
+  <%--  <div id="portfolio" class="portfolio-area default-padding" style="padding-top:30px">
         <div class="container">
             <div class="portfolio-items-area text-center">
                 <div class="row">
@@ -341,7 +341,7 @@
                                     <div class="">
                                         <iframe id="vrIframe" src="https://nortwest.edu.au/wp-content/plugins/wp-vr-view/asset/index.html?image=https://nortwest.edu.au//assets/uploads/2017/11/SAM_100_0177-1.jpg&is_stereo=false" width="350px" height="300px"></iframe>
                                     </div>
-                                </div>
+                                </div>--%>
                                 <%-- <div class="pf-item campus education">
                                     <div class="item-effect">
                                         <img src="assets/img/Banner/ad_g_3.jpg" alt="thumb" />
@@ -410,13 +410,13 @@
                                         </div>
                                     </div>
                                 </div>--%>
-                            </div>
+                      <%--      </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </div>--%>
     <div class="features-area bg-gray default-padding bottom-less">
         <div class="container">
 

@@ -20,7 +20,6 @@
                 left: 0;
                 width: 100%;
                 height: 100%;
-
             }
 
         .h2, h2 {
@@ -39,8 +38,9 @@
             border-radius: 5px;
             background-color: white;
         }
-        .campus_info h4{
-            font-size:17px !important;
+
+        .campus_info h4 {
+            font-size: 17px !important;
         }
     </style>
 </asp:Content>
@@ -123,10 +123,12 @@
                                             <a href="#">Click Here to create Your USI</a>
                                         </h4>
                                         <div class="bottom">
-                                            <a href="#" class="btn circle btn-dark border btn-sm">
+                                            <a href="https://www.usi.gov.au/students/get-a-usi" target="_blank"
+                                                class="btn circle btn-dark border btn-sm">
                                                 <i class="fas fa-chart-bar"></i>Click Here
                                             </a>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -145,7 +147,7 @@
                                             <a href="#">Click Here for recovery of your USI</a>
                                         </h4>
                                         <div class="bottom">
-                                            <a href="#" class="btn circle btn-dark border btn-sm">
+                                            <a href="https://www.usi.gov.au/students/manage-your-usi-account/forgotten-password" target="_blank" class="btn circle btn-dark border btn-sm">
                                                 <i class="fas fa-chart-bar"></i>Click Here
                                             </a>
                                         </div>
@@ -279,7 +281,7 @@
                             </div>
                         </div>
                     </div>
-                      <div class="col-md-3 col-sm-6 equal-height">
+                    <div class="col-md-3 col-sm-6 equal-height">
                         <div class="item">
                             <div class="thumb">
                                 <img src="assets/img/Melbourn.jpeg" alt="Thumb">
@@ -304,7 +306,7 @@
                                         <i class="fas fa-envelope">&nbsp&nbsp</i>sso@nortwest.edu.au
                                     </a>
                                 </p>
-                                  <p style="font-size: 13px">
+                                <p style="font-size: 13px">
                                     <a href="#">
                                         <i class="fas fa-envelope">&nbsp&nbsp</i>englishsso@nortwest.edu.au
                                     </a>

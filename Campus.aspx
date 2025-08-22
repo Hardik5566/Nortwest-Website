@@ -45,14 +45,14 @@
                             <div class="thumb">
                                 <img src="assets/img/sydney.jpg" style="height: 210px; object-fit: cover; width: 100%;" alt="Thumb" />
                                 <div class="overlay">
-                                    <a href="#">
+                                    <a href="Melbourne_Campus.aspx">
                                         <img src="assets/img/Nortwest-Logo__NW-logo_sydney-campus.png" alt="Thumb" />
                                     </a>
                                 </div>
                             </div>
                             <div class="info">
                                 <h4 style="margin-bottom: 0" class="campus">
-                                    <a href="#">George Street Campus</a>
+                                    <a href="Melbourne_Campus.aspx">George Street Campus</a>
                                 </h4>
                                 <span style="font-size: 12px; font-weight: 500; color: #092247;"><i class="fas fa-map-marked-alt" style="color: #368b7d"></i>&nbsp;&nbsp;SYDNEY</span>
                             </div>
@@ -63,14 +63,14 @@
                             <div class="thumb">
                                 <img src="assets/img/sydney.jpg" style="height: 210px; object-fit: cover; width: 100%;" alt="Thumb" />
                                 <div class="overlay">
-                                    <a href="#">
+                                    <a href="York_Street_Campus.aspx">
                                         <img src="assets/img/Nortwest-Logo__NW-logo_sydney-campus.png" alt="Thumb" />
                                     </a>
                                 </div>
                             </div>
                             <div class="info">
                                 <h4 style="margin-bottom: 0" class="campus">
-                                    <a href="#">York Street Campus</a>
+                                    <a href="York_Street_Campus.aspx">York Street Campus</a>
                                 </h4>
                                 <span style="font-size: 12px; font-weight: 500; color: #092247;"><i class="fas fa-map-marked-alt" style="color: #368b7d"></i>&nbsp;&nbsp;SYDNEY</span>
 
@@ -103,14 +103,14 @@
                             <div class="thumb">
                                 <img src="assets/img/Melbourn.jpeg" style="height: 210px; object-fit: cover; width: 100%;" alt="Thumb" />
                                 <div class="overlay">
-                                    <a href="#">
+                                    <a href="Melbourne_Campus.aspx">
                                         <img src="assets/img/Nortwest-Logo__NW-logo_melbourne-campus.png" alt="Thumb" />
                                     </a>
                                 </div>
                             </div>
                             <div class="info">
                                 <h4 style="margin-bottom: 0" class="campus">
-                                    <a href="#">Melbourne Campus</a>
+                                    <a href="Melbourne_Campus.aspx">Melbourne Campus</a>
                                 </h4>
                                 <span style="font-size: 12px; font-weight: 500; color: #092247;"><i class="fas fa-map-marked-alt" style="color: #368b7d"></i>&nbsp;&nbsp;MELBOURNE</span>
                             </div>
