@@ -96,26 +96,22 @@ public class Bal_course
         cmd.Parameters.Add(param.intparam("@create_by", create_by));
         return command.ExtQueryDS(cmd);
     }
-    public static DataSet ins_course_intake(string course_code, string course_id, string intake_date, string create_by)
+    public static DataSet ins_course_intake(string intake_date, string create_by)
     {
         SqlCommand cmd = new SqlCommand();
         cmd.CommandText = "ins_course_intake_sp";
         parameter param = new parameter();
-        cmd.Parameters.Add(param.stringparam("@course_code", course_code));
-        cmd.Parameters.Add(param.intparam("@course_id", course_id));
         cmd.Parameters.Add(param.stringparam("@intake_date", intake_date));
         cmd.Parameters.Add(param.intparam("@create_by", create_by));
 
         return command.ExtQueryDS(cmd);
     }
-    public static DataSet upd_course_intake(string id, string course_code, string course_id, string intake_date, string modify_by)
+    public static DataSet upd_course_intake(string id, string intake_date, string modify_by)
     {
         SqlCommand cmd = new SqlCommand();
         cmd.CommandText = "upd_course_intake_sp";
         parameter param = new parameter();
         cmd.Parameters.Add(param.intparam("@intake_id", id));
-        cmd.Parameters.Add(param.stringparam("@course_code", course_code));
-        cmd.Parameters.Add(param.intparam("@course_id", course_id));
         cmd.Parameters.Add(param.stringparam("@intake_date", intake_date));
         cmd.Parameters.Add(param.intparam("@modify_by", modify_by));
 
@@ -185,6 +181,50 @@ public class Bal_course
         cmd.CommandText = "dis_intake_tearmbreak_sp";
         parameter param = new parameter();
         cmd.Parameters.Add(param.intparam("@intake_id", intake_id));
+        return command.ExtQueryDS(cmd);
+    }
+    public static DataSet ins_public_holiday(string holiday_name, string holiday_date, string create_by)
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.CommandText = "ins_public_holiday_sp";
+        parameter param = new parameter();
+        cmd.Parameters.Add(param.stringparam("@holiday_name", holiday_name));
+        cmd.Parameters.Add(param.datetimeparam("@holiday_date", holiday_date));
+        cmd.Parameters.Add(param.intparam("@create_by", create_by));
+        return command.ExtQueryDS(cmd);
+    }
+    public static DataSet dis_public_holidays()
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.CommandText = "dis_public_holidays_sp";
+        return command.ExtQueryDS(cmd);
+    }
+    public static DataSet upd_public_holiday(string id, string holiday_name, string holiday_date, string modify_by)
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.CommandText = "upd_public_holiday_sp";
+        parameter param = new parameter();
+        cmd.Parameters.Add(param.intparam("@holiday_id", id));
+        cmd.Parameters.Add(param.stringparam("@holiday_name", holiday_name));
+        cmd.Parameters.Add(param.datetimeparam("@holiday_date", holiday_date));
+        cmd.Parameters.Add(param.intparam("@modify_by", modify_by));
+        return command.ExtQueryDS(cmd);
+    }
+    public static DataSet sel_public_holidays(string holiday_id)
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.CommandText = "sel_public_holidays_sp";
+        parameter param = new parameter();
+        cmd.Parameters.Add(param.intparam("@holiday_id", holiday_id));
+        return command.ExtQueryDS(cmd);
+    }
+    public static DataSet del_public_holidays(string holiday_id, string delete_by)
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.CommandText = "del_public_holidays_sp";
+        parameter param = new parameter();
+        cmd.Parameters.Add(param.intparam("@holiday_id", holiday_id));
+        cmd.Parameters.Add(param.intparam("@delete_by", delete_by));
         return command.ExtQueryDS(cmd);
     }
 }

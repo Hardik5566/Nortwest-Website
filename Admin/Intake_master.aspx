@@ -21,7 +21,7 @@
                 <div class="col-md-3 mb-3">
                     <div class="card shadow-sm h-100">
                         <div class="card-header">
-                            <%# Eval("course_name") %>
+                            <%# Eval("year") %>
                         </div>
                         <div class="card-body">
                             <asp:GridView ID="grid_intake" CssClass="table" ShowHeader="false" OnRowCommand="grid_data_RowCommand" AutoGenerateColumns="false" runat="server">
@@ -31,13 +31,13 @@
                                             <label><%# Eval("intake_date") %></label>
                                         </ItemTemplate>
                                     </asp:TemplateField>
-                                    <asp:TemplateField>
+                                   <%-- <asp:TemplateField>
                                         <ItemTemplate>
                                             <a href='Termbreak_master.aspx?intake_id=<%# Eval("intake_id") %>'>
                                                 <%# Eval("termbreak_count") %> Break
                                             </a>
                                         </ItemTemplate>
-                                    </asp:TemplateField>
+                                    </asp:TemplateField>--%>
                                     <asp:TemplateField>
                                         <ItemTemplate>
                                             <asp:LinkButton ID="btnEdit" runat="server"
@@ -76,7 +76,7 @@
                 <div class="modal-body">
                     <div class="row">
 
-                        <div class="col-md-6 mb-3">
+                      <%--  <div class="col-md-6 mb-3">
                             <label for="ddl_programme" class="form-label">Course Name</label>
                             <asp:DropDownList ID="ddl_course"
                                 runat="server"
@@ -84,7 +84,7 @@
                             </asp:DropDownList>
 
                             <span id="ddlError" class="text-danger small"></span>
-                        </div>
+                        </div>--%>
 
                         <div class="col-md-6 mb-3">
                             <label for="txt_intake_date" class="form-label">Intake Date</label>
@@ -110,7 +110,6 @@
     <script>
         function clearCourseForm() {
             // reset dropdown
-            document.getElementById("<%= ddl_course.ClientID %>").selectedIndex = 0;
 
             // reset textboxes
             document.getElementById("<%= txt_intake_date.ClientID %>").value = "";
@@ -125,7 +124,6 @@
         function validateCourseModal() {
             var isValid = true;
             var fields = [
-                { id: "<%= ddl_course.ClientID %>", err: "ddlError", msg: "Please select a programme.", check: function (c) { return c.value !== "0"; } },
             { id: "<%= txt_intake_date.ClientID %>", err: "txt_1", msg: "Please enter Intake Date.", check: function (c) { return c.value.trim() !== ""; } },
             ];
             fields.forEach(function (f) {

@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="downloads.aspx.cs" Inherits="downloads" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="title" runat="Server">
+    Downloads
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="head" runat="Server">
     <style>
@@ -59,7 +60,7 @@
             </div>
 
             <div class="row" style="display: flex; flex-wrap: wrap; margin: 0 -10px;">
-                <div class="col-md-3 single-item" style="padding: 10px; display: flex; flex: 0 0 25%; max-width: 25%;">
+                <%--<div class="col-md-3 single-item" style="padding: 10px; display: flex; flex: 0 0 25%; max-width: 25%;">
                     <div class="item" style="border: 1px solid #ddd; padding: 15px; display: flex; flex-direction: column; justify-content: space-between; height: 100%; width: 100%; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
                         <div class="info" style="flex: 1;">
                             <div class="content" style="display: flex; flex-direction: column; height: 100%;">
@@ -96,25 +97,8 @@
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="col-md-3 single-item" style="padding: 10px; display: flex; flex: 0 0 25%; max-width: 25%;">
-                    <div class="item" style="border: 1px solid #ddd; padding: 15px; display: flex; flex-direction: column; justify-content: space-between; height: 100%; width: 100%; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
-                        <div class="info" style="flex: 1;">
-                            <div class="content" style="display: flex; flex-direction: column; height: 100%;">
-                                <h4 style="margin-bottom: auto;">
-                                    <a href="#">LIST OF EXTERNAL COUNSELLING AND ADVICE SERVICES</a>
-                                </h4>
-                                <a href="#">Download</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Second Row -->
-            <div class="row" style="display: flex; flex-wrap: wrap; margin: 0 -10px; margin-top: 20px;">
-                <div class="col-md-3 single-item" style="padding: 10px; display: flex; flex: 0 0 25%; max-width: 25%;">
+                </div>--%>
+                <div class="col-md-4 single-item" style="padding: 10px; display: flex; flex: 0 0 25%; max-width: 25%;">
                     <div class="item" style="border: 1px solid #ddd; padding: 15px; display: flex; flex-direction: column; justify-content: space-between; height: 100%; width: 100%; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
                         <div class="info" style="flex: 1;">
                             <div class="content" style="display: flex; flex-direction: column; height: 100%;">
@@ -126,8 +110,19 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="col-md-3 single-item" style="padding: 10px; display: flex; flex: 0 0 25%; max-width: 25%;">
+                <div class="col-md-4 single-item" style="padding: 10px; display: flex; flex: 0 0 25%; max-width: 25%;">
+                    <div class="item" style="border: 1px solid #ddd; padding: 15px; display: flex; flex-direction: column; justify-content: space-between; height: 100%; width: 100%; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+                        <div class="info" style="flex: 1;">
+                            <div class="content" style="display: flex; flex-direction: column; height: 100%;">
+                                <h4 style="margin-bottom: auto;">
+                                    <a href="#">LIST OF EXTERNAL COUNSELLING AND ADVICE SERVICES</a>
+                                </h4>
+                                <a href="#">Download</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 single-item" style="padding: 10px; display: flex; flex: 0 0 25%; max-width: 25%;">
                     <div class="item" style="border: 1px solid #ddd; padding: 15px; display: flex; flex-direction: column; justify-content: space-between; height: 100%; width: 100%; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
                         <div class="info" style="flex: 1;">
                             <div class="content" style="display: flex; flex-direction: column; height: 100%;">
@@ -139,8 +134,14 @@
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="col-md-3 single-item" style="padding: 10px; display: flex; flex: 0 0 25%; max-width: 25%;">
+            <!-- Second Row -->
+            <div class="row" style="display: flex; flex-wrap: wrap; margin: 0 -10px; margin-top: 20px;">
+
+
+
+                <div class="col-md-4 single-item" style="padding: 10px; display: flex; flex: 0 0 25%; max-width: 25%;">
                     <div class="item" style="border: 1px solid #ddd; padding: 15px; display: flex; flex-direction: column; justify-content: space-between; height: 100%; width: 100%; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
                         <div class="info" style="flex: 1;">
                             <div class="content" style="display: flex; flex-direction: column; height: 100%;">
@@ -153,7 +154,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-3 single-item" style="padding: 10px; display: flex; flex: 0 0 25%; max-width: 25%;">
+                <div class="col-md-4 single-item" style="padding: 10px; display: flex; flex: 0 0 25%; max-width: 25%;">
                     <div class="item" style="border: 1px solid #ddd; padding: 15px; display: flex; flex-direction: column; justify-content: space-between; height: 100%; width: 100%; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
                         <div class="info" style="flex: 1;">
                             <div class="content" style="display: flex; flex-direction: column; height: 100%;">

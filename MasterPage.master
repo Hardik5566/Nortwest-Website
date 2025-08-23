@@ -355,7 +355,7 @@
                                         <a href="Courses.aspx"><i class="ti-angle-right"></i>All Courses</a>
                                     </li>
                                     <li>
-                                        <a href="#"><i class="ti-angle-right"></i>Downloads</a>
+                                        <a href="downloads.aspx"><i class="ti-angle-right"></i>Downloads</a>
                                     </li>
                                     <li>
                                         <a href="Student_Forms.aspx"><i class="ti-angle-right"></i>Student Forms</a>

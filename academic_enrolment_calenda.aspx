@@ -25,10 +25,14 @@
             padding-right: 0;
         }
 
-       .holidays .info h5 {
+        .holidays .info h5 {
             list-style-type: disc;
             margin-left: 20px;
             display: list-item;
+        }
+
+        .blog-area .sidebar .sidebar-item:last-child {
+            margin-bottom: 20px !important;
         }
     </style>
 </asp:Content>
@@ -48,7 +52,7 @@
     </div>
 
     <div class="blog-area single full-blog left-sidebar full-blog default-padding" style="background-color: #eaf1f0">
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
             </div>
             <div class="row">
@@ -66,11 +70,11 @@
                             </div>
                             <asp:ListView ID="list_cal" runat="server" OnItemDataBound="list_cal_ItemDataBound">
                                 <ItemTemplate>
-                                    <div class="sidebar col-md-6" style="margin-bottom: 20px">
+                                    <div class="sidebar col-md-4 mb-3">
                                         <aside>
-                                            <div class="sidebar-item category" style="background-color: white">
+                                            <div class="sidebar-item category" style="background-color: white;">
                                                 <div class="title">
-                                                    <h4><%# Eval("year") %></h4>
+                                                    <h4><%# Eval("Year") %></h4>
                                                 </div>
                                                 <div class="sidebar-info">
                                                     <ul>
@@ -88,13 +92,14 @@
                                     </div>
                                 </ItemTemplate>
                             </asp:ListView>
+
                         </div>
                     </div>
 
                     <div class="blog-content col-md-4">
                         <div class="content-items">
 
-                            <div class="top-author" style="background-color: white; margin-bottom: 20px">
+                            <%-- <div class="top-author" style="background-color: white; margin-bottom: 20px">
                                 <h4>Holidays 2023</h4>
                                 <div class="author-items holidays">
                                     <!-- Single Item -->
@@ -150,7 +155,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div>--%>
 
                             <div class="top-author" style="background-color: white">
                                 <h4>Public Holidays (NSW)</h4>
