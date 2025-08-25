@@ -57,21 +57,21 @@
                                 </label>
                             </ItemTemplate>
                         </asp:TemplateField>
-                        
+
                         <asp:TemplateField HeaderText="Action" ItemStyle-Width="60px">
                             <ItemTemplate>
                                 <asp:LinkButton ID="btnEdit" runat="server"
-                                    CommandArgument='<%# Eval("course_id") %>'
+                                    CommandArgument='<%# Eval("holiday_id") %>'
                                     CommandName="btn_edit"
                                     CssClass="btn btn-link p-0">
-    <i class="bi bi-pencil-square text-primary" style="font-size: 18px;"></i>
+                                     <i class="bi bi-pencil-square text-primary" style="font-size: 18px;"></i>
                                 </asp:LinkButton>
 
                                 <asp:LinkButton ID="btnDelete" runat="server"
-                                    OnClientClick="return confirm('Are you sure delete this subject?');"
-                                    CommandArgument='<%# Eval("course_id") %>'
+                                    OnClientClick="return confirm('Are you sure delete this Holiday?');"
+                                    CommandArgument='<%# Eval("holiday_id") %>'
                                     CommandName="btn_delete" CssClass="btn btn-link p-0">
-    <i class="bi bi-trash text-danger" style="font-size: 18px;"></i>
+                                    <i class="bi bi-trash text-danger" style="font-size: 18px;"></i>
                                 </asp:LinkButton>
 
                             </ItemTemplate>

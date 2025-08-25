@@ -45,6 +45,12 @@ public partial class academic_enrolment_calenda : System.Web.UI.Page
                 list_cal.DataSource = groupedData;
                 list_cal.DataBind();
             }
+            DataSet ds2 = Bal_course.dis_public_holidays();
+            if (ds2.Tables[0].Rows.Count > 0)
+            {
+                list_holiday.DataSource = ds2.Tables[0];
+                list_holiday.DataBind();
+            }
         }
         catch (Exception ex)
         {

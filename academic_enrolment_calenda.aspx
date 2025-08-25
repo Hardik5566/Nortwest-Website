@@ -41,7 +41,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 col-md-12">
-                    <h1>Academic Calendar</h1>
+                    
+                        Academic Calendar</h1>
                     <ul class="breadcrumb">
                         <li><a href="Default.aspx"><i class="fas fa-home"></i>Home</a></li>
                         <li class="active">Academic Calendar</li>
@@ -163,18 +164,13 @@
                                     <!-- Single Item -->
                                     <div class="item">
                                         <div class="info">
-                                            <h5><a href="#">New Year’s Day: 1st of January</a></h5>
-                                            <h5><a href="#">Additional New Year’s Day: 2nd of January</a></h5>
-                                            <h5><a href="#">Australia Day: 26th of January</a></h5>
-                                            <h5><a href="#">Good Friday: 7th of April</a></h5>
-                                            <h5><a href="#">Holy Saturday: 8th of April</a></h5>
-                                            <h5><a href="#">Easter: 9th of April</a></h5>
-                                            <h5><a href="#">Easter Monday: 10th of April</a></h5>
-                                            <h5><a href="#">Anzac Day: 25th of April</a></h5>
-                                            <h5><a href="#">King’s Birthday: 12th of June</a></h5>
-                                            <h5><a href="#">Labour Day: 2nd of October</a></h5>
-                                            <h5><a href="#">Christmas Day: 25th of December</a></h5>
-                                            <h5><a href="#">Boxing Day: 26th of December</a></h5>
+                                            <asp:ListView ID="list_holiday" runat="server">
+                                                <ItemTemplate>
+                                                    <li>
+                                                        <a href="#"><i class="fas fa-circle fa-xs" style="color:black"></i>&nbsp <%#Eval("holiday_name") %> : <%#Eval("holiday_date") %></a>
+                                                    </li>
+                                                </ItemTemplate>
+                                            </asp:ListView>
                                         </div>
                                     </div>
                                 </div>

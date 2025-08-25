@@ -9,8 +9,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="" />
-
-    <meta property="og:title" content="VET Orientation Form - Nortwest College" />
+    <%--   <meta property="og:title" content="VET Orientation Form - Nortwest College" />--%>
+    <meta property="og:title" content="Nortwest College" />
     <meta property="og:description" content="Fill out the form in English. You can select the language to help you fill out the form." />
     <meta property="og:url" content="https://website.nortwest.edu.au/" />
 
