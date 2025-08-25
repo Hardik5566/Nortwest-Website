@@ -8,11 +8,24 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="" />
-    <%--   <meta property="og:title" content="VET Orientation Form - Nortwest College" />--%>
-    <meta property="og:title" content="Nortwest College" />
-    <meta property="og:description" content="Fill out the form in English. You can select the language to help you fill out the form." />
-    <meta property="og:url" content="https://website.nortwest.edu.au/" />
+    
+
+
+    <meta name="title" content="Nortwest Collegee" />
+    <meta name="description" content="Buy music albums and books online at the best prices." />
+
+
+     <!-- Open Graph / Facebook / LinkedIn -->
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="https://website.nortwest.edu.au/"/>
+    <meta property="og:title" content="Nortwest College"/>
+    <meta property="og:description" content="Nortwest College has been Australia’s premier provider of education to overseas students since 2010. Nortwest College focuses on up-to-date, industry-endorsed courses in Business, Management, Project Management, IT, Trade, Commercial Cookery and Hospitality Management, and English. We have students from all over the world studying with us and experiencing life, study, and work in Australia with our support."/>
+    <meta property="og:image" content="https://website.nortwest.edu.au/image/Website_banner.jpg"/>
+
+    <meta name="twitter:url" content="https://website.nortwest.edu.au/"/>
+    <meta name="twitter:title" content="Nortwest College"/>
+    <meta name="twitter:description" content="Nortwest College has been Australia’s premier provider of education to overseas students since 2010. Nortwest College focuses on up-to-date, industry-endorsed courses in Business, Management, Project Management, IT, Trade, Commercial Cookery and Hospitality Management, and English. We have students from all over the world studying with us and experiencing life, study, and work in Australia with our support."/>
+    <meta name="twitter:image" content="https://website.nortwest.edu.au/image/Website_banner.jpg"/>
 
     <title>
         <asp:ContentPlaceHolder ID="title" runat="server">
@@ -352,7 +365,7 @@
                                 <h4>Usefull Links</h4>
                                 <ul>
                                     <li>
-                                        <a href="Courses.aspx"><i class="ti-angle-right"></i>All Courses</a>
+                                        <a href="Courses.aspx"><i class="ti-angle-right"></i>Courses</a>
                                     </li>
                                     <li>
                                         <a href="downloads.aspx"><i class="ti-angle-right"></i>Downloads</a>
@@ -363,7 +376,19 @@
                                     <li>
                                         <a href="academic_enrolment_calenda.aspx"><i class="ti-angle-right"></i>Calendar</a>
                                     </li>
-                                    <li>
+                                   
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- End Single item -->
+
+                        <!-- Single item -->
+                        <div class="col-md-2 col-sm-6 item equal-height">
+                            <div class="f-item link">
+                                <h4><%--Support--%> &nbsp</h4>
+                                <ul>
+
+                                     <li>
                                         <a href="FAQ.aspx"><i class="ti-angle-right"></i>Faq</a>
                                     </li>
                                     <li>
@@ -375,17 +400,7 @@
                                     <li>
                                         <a href="assets/img/NW-Brochure-copy_compressed-3-1.pdf"><i class="ti-angle-right"></i>Brochure</a>
                                     </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- End Single item -->
-
-                        <!-- Single item -->
-                        <div class="col-md-2 col-sm-6 item equal-height">
-                            <div class="f-item link">
-                                <h4>Support</h4>
-                                <ul>
-                                    <li>
+                                  <%--  <li>
                                         <a href="#"><i class="ti-angle-right"></i>Documentation</a>
                                     </li>
                                     <li>
@@ -402,7 +417,7 @@
                                     </li>
                                     <li>
                                         <a href="#"><i class="ti-angle-right"></i>Feedback</a>
-                                    </li>
+                                    </li>--%>
                                 </ul>
                             </div>
                         </div>

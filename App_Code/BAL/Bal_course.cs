@@ -227,4 +227,13 @@ public class Bal_course
         cmd.Parameters.Add(param.intparam("@delete_by", delete_by));
         return command.ExtQueryDS(cmd);
     }
+    public static DataSet sel_admin(string emil, string pwd)
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.CommandText = "sel_admin_sp";
+        parameter param = new parameter();
+        cmd.Parameters.Add(param.stringparam("@emil", emil));
+        cmd.Parameters.Add(param.stringparam("@pwd", pwd));
+        return command.ExtQueryDS(cmd);
+    }
 }
