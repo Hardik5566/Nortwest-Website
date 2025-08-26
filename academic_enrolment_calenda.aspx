@@ -41,8 +41,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 col-md-12">
-                    
-                        Academic Calendar</h1>
+
+                    <h1>Academic Calendar</h1>
                     <ul class="breadcrumb">
                         <li><a href="Default.aspx"><i class="fas fa-home"></i>Home</a></li>
                         <li class="active">Academic Calendar</li>
@@ -167,7 +167,7 @@
                                             <asp:ListView ID="list_holiday" runat="server">
                                                 <ItemTemplate>
                                                     <li>
-                                                        <a href="#"><i class="fas fa-circle fa-xs" style="color:black"></i>&nbsp <%#Eval("holiday_name") %> : <%#Eval("holiday_date") %></a>
+                                                        <a href="#"><i class="fas fa-circle fa-xs" style="color: black"></i>&nbsp <%#Eval("holiday_name") %> : <%#Eval("holiday_date") %></a>
                                                     </li>
                                                 </ItemTemplate>
                                             </asp:ListView>

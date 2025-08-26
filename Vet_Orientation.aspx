@@ -179,14 +179,14 @@
                             <div class="thumb">
                                 <img src="assets/img/sydney.jpg" alt="Thumb">
                                 <div class="overlay">
-                                    <a href="#">
+                                    <a href="George_Street_Campus.aspx">
                                         <img src="assets/img/Nortwest-Logo__NW-logo_sydney-campus.png" alt="Thumb">
                                     </a>
                                 </div>
                             </div>
                             <div class="info campus_info">
                                 <h4>
-                                    <a href="#">George Street Campus</a>
+                                    <a href="George_Street_Campus.aspx">George Street Campus</a>
                                 </h4>
 
                                 <p style="font-size: 13px">
@@ -215,14 +215,14 @@
                             <div class="thumb">
                                 <img src="assets/img/sydney.jpg" alt="Thumb">
                                 <div class="overlay">
-                                    <a href="#">
+                                    <a href="York_Street_Campus.aspx">
                                         <img src="assets/img/Nortwest-Logo__NW-logo_sydney-campus.png" alt="Thumb">
                                     </a>
                                 </div>
                             </div>
                             <div class="info campus_info">
                                 <h4>
-                                    <a href="#">York Street Campus</a>
+                                    <a href="York_Street_Campus.aspx">York Street Campus</a>
                                 </h4>
 
                                 <p style="font-size: 13px">
@@ -251,7 +251,7 @@
                             <div class="thumb">
                                 <img src="assets/img/Adelaide_campus.jpg" alt="Thumb">
                                 <div class="overlay">
-                                    <a href="#">
+                                    <a href="adelaide_campus.aspx">
                                         <img src="assets/img/Nortwest-Logo__NW-logo_adelaide-campus.png" alt="Thumb">
                                     </a>
                                 </div>
@@ -286,14 +286,14 @@
                             <div class="thumb">
                                 <img src="assets/img/Melbourn.jpeg" alt="Thumb">
                                 <div class="overlay">
-                                    <a href="#">
+                                    <a href="Melbourne_Campus.aspx">
                                         <img src="assets/img/Nortwest-Logo__NW-logo_melbourne-campus.png" alt="Thumb">
                                     </a>
                                 </div>
                             </div>
                             <div class="info campus_info">
                                 <h4>
-                                    <a href="#">Melbourne Campus</a>
+                                    <a href="Melbourne_Campus.aspx">Melbourne Campus</a>
                                 </h4>
 
                                 <p style="font-size: 13px">
