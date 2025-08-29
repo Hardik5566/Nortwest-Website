@@ -303,6 +303,22 @@ create table tbl_admin
 	delete_by int,
 	delete_date datetime
 )
+----------------------------------------
+--------------Table Admin----------------
+----------------------------------------
+create table tbl_policies
+(
+	policies_id int identity(1,1),
+	policies_name varchar(650),
+	policies_file nvarchar(max),
+	status bit,
+	create_by int,
+	create_date datetime,
+	modify_by int,
+	modify_date datetime,
+	delete_by int,
+	delete_date datetime
+)
 
 
 

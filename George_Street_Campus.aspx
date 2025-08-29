@@ -63,7 +63,7 @@
                             Nortwest College offers a wide range of courses in Business, Management, Marketing, Project Management and Website Development from Certificates up to Diploma and Advanced Diploma level. We have carefully chosen the courses and use industry representatives to consult on our curriculum. Our training focuses on gaining real experience with industry benchmark.
                        
                         </p>
-                        <a class="btn circle btn-theme effect btn-md" href="#">Know More</a>
+                        <a class="btn circle btn-theme effect btn-md" href="#about">Know More</a>
                     </div>
                     <div class="col-md-6 thumb">
                         <div class="thumb">
@@ -71,13 +71,19 @@
                             <a href="https://www.youtube.com/watch?v=DKz_EEoJRs4" class="popup-youtube light video-play-button">
                                 <i class="fa fa-play"></i>
                             </a>
+                        <%--    <iframe width="100%" height="400"
+                                src="https://www.youtube.com/embed/DKz_EEoJRs4"
+                                title="YouTube video player"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen></iframe>--%>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="features-area bg-gray default-padding bottom-less">
+    <div id="about" class="features-area bg-gray default-padding bottom-less">
         <div class="container">
             <div class="row">
                 <div class="site-heading text-center">
@@ -90,7 +96,7 @@
                 <div class="features">
                     <div class="equal-height col-md-3 col-sm-6">
                         <div class="item mariner">
-                            <a href="#">
+                            <a href="javascript:void(0)">
                                 <div class="icon">
                                     <img src="assets/img/desktop.png" />
                                 </div>
@@ -102,7 +108,7 @@
                     </div>
                     <div class="equal-height col-md-3 col-sm-6">
                         <div class="item mariner">
-                            <a href="#">
+                            <a href="javascript:void(0)">
                                 <div class="icon">
                                     <img src="assets/img/teacher.png" />
                                 </div>
@@ -114,7 +120,7 @@
                     </div>
                     <div class="equal-height col-md-3 col-sm-6">
                         <div class="item mariner">
-                            <a href="#">
+                            <a href="javascript:void(0)">
                                 <div class="icon">
                                     <img src="assets/img/studyroom.png" />
                                 </div>
@@ -126,7 +132,7 @@
                     </div>
                     <div class="equal-height col-md-3 col-sm-6">
                         <div class="item mariner">
-                            <a href="#">
+                            <a href="javascript:void(0)">
                                 <div class="icon">
                                     <img src="assets/img/care.png" />
                                 </div>
@@ -138,7 +144,7 @@
                     </div>
                     <div class="equal-height col-md-3 col-sm-6">
                         <div class="item mariner">
-                            <a href="#">
+                            <a href="javascript:void(0)">
                                 <div class="icon">
                                     <img src="assets/img/system-update.png" />
                                 </div>
@@ -150,7 +156,7 @@
                     </div>
                     <div class="equal-height col-md-3 col-sm-6">
                         <div class="item mariner">
-                            <a href="#">
+                            <a href="javascript:void(0)">
                                 <div class="icon">
                                     <img src="assets/img/translate.png" />
                                 </div>
@@ -162,7 +168,7 @@
                     </div>
                     <div class="equal-height col-md-3 col-sm-6">
                         <div class="item mariner">
-                            <a href="#">
+                            <a href="javascript:void(0)">
                                 <div class="icon">
                                     <img src="assets/img/job-search.png" />
                                 </div>
@@ -186,7 +192,7 @@
                     </div>
                     <div class="equal-height col-md-3 col-sm-6">
                         <div class="item mariner">
-                            <a href="#">
+                            <a href="javascript:void(0)">
                                 <div class="icon">
                                     <img src="assets/img/relax.png" />
                                 </div>
@@ -198,7 +204,7 @@
                     </div>
                     <div class="equal-height col-md-3 col-sm-6">
                         <div class="item mariner">
-                            <a href="#">
+                            <a href="javascript:void(0)">
                                 <div class="icon">
                                     <img src="assets/img/dinner-table.png" />
                                 </div>
@@ -222,7 +228,7 @@
                     </div>
                     <div class="equal-height col-md-3 col-sm-6">
                         <div class="item mariner">
-                            <a href="#">
+                            <a href="javascript:void(0)">
                                 <div class="icon">
                                     <img src="assets/img/vending-machine.png" />
                                 </div>
@@ -232,7 +238,7 @@
                             </a>
                         </div>
                     </div>
-                   
+
                     <%-- <div class="col-md-12 new-sec" style="padding: 0;">
                         <div class="col-md-2"></div>
                         <div class="col-sm-12 col-md-4 col-lg-4 bg-color-border blue" style="padding: 0; border: solid 5px; margin-left: 0; flex-basis: 40%;">
@@ -258,7 +264,7 @@
             </div>
         </div>
     </div>
-   <div class="event-area flex-less" style="padding-top:30px">
+    <div class="event-area flex-less" style="padding-top: 30px">
         <div class="container">
             <div class="row">
                 <div class="event-items">
@@ -311,7 +317,7 @@
             </div>
         </div>
     </div>
-  <%--  <div id="portfolio" class="portfolio-area default-padding" style="padding-top:30px">
+    <%--  <div id="portfolio" class="portfolio-area default-padding" style="padding-top:30px">
         <div class="container">
             <div class="portfolio-items-area text-center">
                 <div class="row">
@@ -342,7 +348,7 @@
                                         <iframe id="vrIframe" src="https://nortwest.edu.au/wp-content/plugins/wp-vr-view/asset/index.html?image=https://nortwest.edu.au//assets/uploads/2017/11/SAM_100_0177-1.jpg&is_stereo=false" width="350px" height="300px"></iframe>
                                     </div>
                                 </div>--%>
-                                <%-- <div class="pf-item campus education">
+    <%-- <div class="pf-item campus education">
                                     <div class="item-effect">
                                         <img src="assets/img/Banner/ad_g_3.jpg" alt="thumb" />
                                         <div class="overlay">
@@ -410,7 +416,7 @@
                                         </div>
                                     </div>
                                 </div>--%>
-                      <%--      </div>
+    <%--      </div>
                         </div>
                     </div>
                 </div>
@@ -420,7 +426,7 @@
     <div class="features-area bg-gray default-padding bottom-less">
         <div class="container">
 
-          <%--  <div class="col-md-12 contact-details caps" style="margin-top: 10px !important; font-size: 20px; color: black; text-align: center;">
+            <%--  <div class="col-md-12 contact-details caps" style="margin-top: 10px !important; font-size: 20px; color: black; text-align: center;">
                 <strong>GEORGE STREET CAMPUS</strong><br />
                 <span style="font-size: 15px">LEVEL 2, 531 GEORGE STREET,<br />
                     SYDNEY NSW 2000 AUSTRALIA<br />

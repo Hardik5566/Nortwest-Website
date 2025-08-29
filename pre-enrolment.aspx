@@ -74,7 +74,7 @@
                     <!-- Single Item -->
                     <div class="col-md-6 col-sm-6 equal-height">
                         <div class="item mariner">
-                            <a href="#">
+                            <a href="javascript:void(0)">
                                 <div class="item-box">
                                     <div class="icon">
                                         <i class="ti-pulse"></i>
@@ -91,7 +91,7 @@
                     <!-- Single Item -->
                     <div class="col-md-6 col-sm-6 equal-height">
                         <div class="item java">
-                            <a href="#">
+                            <a href="javascript:void(0)">
                                 <div class="item-box">
                                     <div class="icon">
                                         <i class="ti-desktop"></i>
@@ -110,7 +110,7 @@
                     <!-- Single Item -->
                     <div class="col-md-6 col-sm-6 equal-height">
                         <div class="item malachite">
-                            <a href="#">
+                            <a href="javascript:void(0)">
                                 <div class="item-box">
                                     <div class="icon">
                                         <i class="ti-server"></i>
@@ -127,7 +127,7 @@
                     <!-- Single Item -->
                     <div class="col-md-6 col-sm-6 equal-height">
                         <div class="item brilliantrose">
-                            <a href="#">
+                            <a href="javascript:void(0)">
                                 <div class="item-box">
                                     <div class="icon">
                                         <i class="ti-panel"></i>
@@ -229,7 +229,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8 col-md-offset-2">
-                    <a href="https://appform.nortwest.edu.au/">
+                    <a href="App_form.aspx">
                         <img src="assets/img/click%20to%20enroll.png" style="width: 100%; border-radius: 10px" />
                     </a>
                 </div>

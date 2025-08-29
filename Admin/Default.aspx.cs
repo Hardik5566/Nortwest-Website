@@ -12,8 +12,6 @@ public partial class _Default : System.Web.UI.Page
     {
         try
         {
-
-
             if (!IsPostBack)
             {
                 HttpCookie ck_user_id = new HttpCookie("user_id");

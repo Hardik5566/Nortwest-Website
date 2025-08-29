@@ -545,3 +545,110 @@ BEGIN
         AND pwd = @pwd
         AND status = 1
 END
+----------------------------------------
+----------Insert Policies---------------
+----------------------------------------
+CREATE PROCEDURE ins_policies_sp
+(
+    @policies_name   VARCHAR(650),
+    @policies_file   NVARCHAR(MAX),
+    @create_by       INT
+)
+AS
+BEGIN
+   INSERT INTO tbl_policies
+    VALUES
+    (
+        @policies_name,
+        @policies_file,
+        1,
+        @create_by,
+        dbo.GetCurrentAUTTime(),  
+        NULL,        
+        NULL,        
+        NULL,        
+        NULL         
+    )
+
+	select 'ok'
+END
+----------------------------------------
+----------Display Policies---------------
+----------------------------------------
+create proc dis_policies_sp
+as
+begin
+	select 
+		policies_id,
+		policies_name,
+		policies_file,
+		status
+	from 
+		tbl_policies
+	where 
+		status = 1
+end
+----------------------------------------
+----------delete Policies---------------
+----------------------------------------
+alter proc del_policies_sp
+(
+	@id int,
+	@delete_by int
+)
+as
+begin
+	update 
+		tbl_policies
+	set 
+		status = 0,
+		delete_by = @delete_by,
+		delete_date = dbo.GetCurrentAUTTime()
+	where 
+		policies_id = @id
+	select 'ok'
+end
+----------------------------------------
+----------Display Policies---------------
+----------------------------------------
+create proc sel_policies_sp
+(
+	@id int
+)
+as
+begin
+	select 
+		policies_id,
+		policies_name,
+		policies_file,
+		status
+	from 
+		tbl_policies
+	where 
+		status = 1
+	and policies_id = @id
+end
+----------------------------------------
+----------Insert Policies---------------
+----------------------------------------
+CREATE PROCEDURE upd_policies_sp
+(
+	@id int,
+    @policies_name   VARCHAR(650),
+    @policies_file   NVARCHAR(MAX),
+    @modify_by       INT
+)
+AS
+BEGIN
+   update
+		tbl_policies 
+	set
+		policies_name = @policies_name,
+		policies_file = @policies_file,
+		modify_by = @modify_by,
+		modify_date = dbo.GetCurrentAUTTime()
+	where 
+		policies_id = @id
+
+	select 'ok'
+END

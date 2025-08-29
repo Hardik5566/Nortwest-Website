@@ -82,7 +82,7 @@
                                                         <asp:ListView ID="list_date" runat="server">
                                                             <ItemTemplate>
                                                                 <li>
-                                                                    <a href="#"><i class="fas fa-calendar-alt"></i>&nbsp <%# Container.DataItem %></a>
+                                                                    <a href="javascript:void(0)"><i class="fas fa-calendar-alt"></i>&nbsp <%# Container.DataItem %></a>
                                                                 </li>
                                                             </ItemTemplate>
                                                         </asp:ListView>
@@ -167,7 +167,7 @@
                                             <asp:ListView ID="list_holiday" runat="server">
                                                 <ItemTemplate>
                                                     <li>
-                                                        <a href="#"><i class="fas fa-circle fa-xs" style="color: black"></i>&nbsp <%#Eval("holiday_name") %> : <%#Eval("holiday_date") %></a>
+                                                        <a href="javascript:void(0)"><i class="fas fa-circle fa-xs" style="color: black"></i>&nbsp <%#Eval("holiday_name") %> : <%#Eval("holiday_date") %></a>
                                                     </li>
                                                 </ItemTemplate>
                                             </asp:ListView>

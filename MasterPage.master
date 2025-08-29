@@ -12,7 +12,7 @@
 
 
     <meta name="title" content="Nortwest Collegee" />
-    <meta name="description" content="Buy music albums and books online at the best prices." />
+    <meta name="description" content="Nortwest College has been Australia’s premier provider of education to overseas students since 2010. Nortwest College focuses on up-to-date, industry-endorsed courses in Business, Management, Project Management, IT, Trade, Commercial Cookery and Hospitality Management, and English. We have students from all over the world studying with us and experiencing life, study, and work in Australia with our support." />
 
 
      <!-- Open Graph / Facebook / LinkedIn -->
@@ -26,6 +26,14 @@
     <meta name="twitter:title" content="Nortwest College"/>
     <meta name="twitter:description" content="Nortwest College has been Australia’s premier provider of education to overseas students since 2010. Nortwest College focuses on up-to-date, industry-endorsed courses in Business, Management, Project Management, IT, Trade, Commercial Cookery and Hospitality Management, and English. We have students from all over the world studying with us and experiencing life, study, and work in Australia with our support."/>
     <meta name="twitter:image" content="https://website.nortwest.edu.au/image/Website_banner.jpg"/>
+
+    <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-WBD2B9DK');</script>
+<!-- End Google Tag Manager -->
 
     <title>
         <asp:ContentPlaceHolder ID="title" runat="server">
@@ -77,7 +85,7 @@
                                     <a href="https://www.facebook.com/nortwestedu/"><i class="fab fa-facebook-f"></i></a>
                                     <a href="#"><i class="fab fa-twitter"></i></a>
                                     <a href="https://www.linkedin.com/company/nortwesteducation/"><i class="fab fa-linkedin-in"></i></a>
-                                    <a href="#"><i class="fab fa-youtube"></i></a>
+                                    <a href="https://www.youtube.com/@NortwestCollege"><i class="fab fa-youtube"></i></a>
                                 </li>
                                 <%-- <li>
                                     <i class="fas fa-user-shield"></i>Instructor: <strong>655</strong>
@@ -93,7 +101,7 @@
                         <ul>
 
                             <li>
-                                <a href="https://appform.nortwest.edu.au/">Apply Now</a>
+                                <a href="App_form.aspx">Apply Now</a>
                             </li>
                         </ul>
                     </div>
@@ -464,7 +472,7 @@
                                         <img style="width: 23px;" src="assets/img/instagram.png" /></a>
                                 </li>
                                 <li>
-                                    <a href="#">
+                                    <a href="https://www.youtube.com/@NortwestCollege">
                                         <img style="width: 23px;" src="assets/img/youtube.png" /></a>
                                 </li>
                             </ul>
@@ -611,6 +619,11 @@
 
         <asp:ContentPlaceHolder ID="jqury" runat="server">
         </asp:ContentPlaceHolder>
+
+        <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WBD2B9DK"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
     </form>
 </body>
 </html>

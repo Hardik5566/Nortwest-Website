@@ -88,7 +88,9 @@
             <div class="row">
                 <div class="about-items">
                     <div class="col-md-6 about-info">
-                        <h2>Welcome ! <span style="font-size: 26px">We're International Education Academy</span></h2>
+                        <h2 style="margin-bottom:0px !important">Welcome ! </h2>
+                        <h1><span style="font-size: 26px;font-weight:200">We're International Education Academy</span></h1>
+
                         <blockquote>
                             Nortwest College has been Australia’s premier provider of education to overseas students since 2007. Nortwest College focuses on up-to-date, industry-endorsed courses in Business, Management, Project Management, IT, Trade, Commercial Cookery and Hospitality Management, and English. We have students from all over the world studying with us and experiencing life, study, and work in Australia with our support.
                        
@@ -99,7 +101,7 @@
                         <div class="row">
                             <div class="equal-height col-md-6 col-sm-6">
                                 <div class="item mariner">
-                                    <a href="#">
+                                    <a>
                                         <div class="icon">
                                             <i class="ti-panel"></i>
                                         </div>
@@ -112,7 +114,7 @@
                             </div>
                             <div class="equal-height col-md-6 col-sm-6">
                                 <div class="item brilliantrose">
-                                    <a href="#">
+                                    <a>
                                         <div class="icon">
                                             <i class="ti-ruler-pencil"></i>
                                         </div>
@@ -125,7 +127,7 @@
                             </div>
                             <div class="equal-height col-md-6 col-sm-6">
                                 <div class="item casablanca">
-                                    <a href="#">
+                                    <a>
                                         <div class="icon">
                                             <i class="ti-server"></i>
                                         </div>
@@ -138,7 +140,7 @@
                             </div>
                             <div class="equal-height col-md-6 col-sm-6">
                                 <div class="item malachite">
-                                    <a href="#">
+                                    <a>
                                         <div class="icon">
                                             <i class="ti-desktop"></i>
                                         </div>
@@ -323,7 +325,7 @@
                     <!-- Single Item -->
                     <div class="col-md-4 col-sm-6 equal-height">
                         <div class="item brilliantrose">
-                            <a href="https://appform.nortwest.edu.au/">
+                            <a href="App_form.aspx">
                                 <div class="item-box">
                                     <div class="icon">
                                         <i class="ti-panel"></i>
@@ -423,7 +425,7 @@
         </div>
     </div>
 
-    <div class="blog-area default-padding bottom-less">
+    <%--<div class="blog-area default-padding bottom-less">
         <div class="container">
             <div class="row">
                 <div class="site-heading text-center">
@@ -508,7 +510,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>--%>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="jqury" runat="Server">
 </asp:Content>

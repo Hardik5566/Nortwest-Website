@@ -143,6 +143,8 @@
                             </li>
                             <li><a href="public_holidays_master.aspx"><i class="bi bi-circle"></i>Holiday</a>
                             </li>
+                             <li><a href="Policies_master.aspx"><i class="bi bi-circle"></i>Policies</a>
+                            </li>
                         </ul>
 
                     </li>

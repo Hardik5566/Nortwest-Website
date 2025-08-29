@@ -236,4 +236,48 @@ public class Bal_course
         cmd.Parameters.Add(param.stringparam("@pwd", pwd));
         return command.ExtQueryDS(cmd);
     }
+    public static DataSet ins_policies(string policies_name, string policies_file, string create_by)
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.CommandText = "ins_policies_sp";
+        parameter param = new parameter();
+        cmd.Parameters.Add(param.stringparam("@policies_name", policies_name));
+        cmd.Parameters.Add(param.stringparam("@policies_file", policies_file));
+        cmd.Parameters.Add(param.intparam("@create_by", create_by));
+        return command.ExtQueryDS(cmd);
+    }
+    public static DataSet dis_policies()
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.CommandText = "dis_policies_sp";
+        return command.ExtQueryDS(cmd);
+    }
+    public static DataSet del_policies(string id, string delete_by)
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.CommandText = "del_policies_sp";
+        parameter param = new parameter();
+        cmd.Parameters.Add(param.intparam("@id", id));
+        cmd.Parameters.Add(param.intparam("@delete_by", delete_by));
+        return command.ExtQueryDS(cmd);
+    }
+    public static DataSet sel_policies(string id)
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.CommandText = "sel_policies_sp";
+        parameter param = new parameter();
+        cmd.Parameters.Add(param.intparam("@id", id));
+        return command.ExtQueryDS(cmd);
+    }
+    public static DataSet upd_policies(string id, string policies_name, string policies_file, string modify_by)
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.CommandText = "upd_policies_sp";
+        parameter param = new parameter();
+        cmd.Parameters.Add(param.intparam("@id", id));
+        cmd.Parameters.Add(param.stringparam("@policies_name", policies_name));
+        cmd.Parameters.Add(param.stringparam("@policies_file", policies_file));
+        cmd.Parameters.Add(param.intparam("@modify_by", modify_by));
+        return command.ExtQueryDS(cmd);
+    }
 }
