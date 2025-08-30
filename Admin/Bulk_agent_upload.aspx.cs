@@ -46,20 +46,19 @@ public partial class Admin_Bulk_agent_upload : System.Web.UI.Page
                 dtTVP.Columns.Add("agency_name", typeof(string));
                 dtTVP.Columns.Add("business_name", typeof(string));
                 dtTVP.Columns.Add("contact_number", typeof(string));
-                dtTVP.Columns.Add("email", typeof(string));
 
                 foreach (DataRow row in dtExcel.Rows)
                 {
                     dtTVP.Rows.Add(
-                        row["Agency"] != null ? row["Agency"].ToString().Trim() : "",
-                        row["Business Name"] != null ? row["Business Name"].ToString().Trim() : "",
-                        row["Contact number"] != null ? row["Contact number"].ToString().Trim() : "",
-                        row["Email"] != null ? row["Email"].ToString().Trim() : ""
+                        row[0] != null ? row[0].ToString().Trim() : "",   // First column → agency_name
+                        row[1] != null ? row[1].ToString().Trim() : "",   // Second column → business_name
+                        row[2] != null ? row[2].ToString().Trim() : ""    // Third column → contact_number
                     );
                 }
 
-               DataSet ds= Bal_agents.ins_tbl_agents(dtTVP, "1");
-                if(ds.Tables[0].Rows.Count>0)
+
+                DataSet ds = Bal_agents.ins_tbl_agents(dtTVP, "1");
+                if (ds.Tables[0].Rows.Count > 0)
                 {
                     ShowMessage("Agents added successfully", MessageType.Success);
                     bind_data();
@@ -70,7 +69,7 @@ public partial class Admin_Bulk_agent_upload : System.Web.UI.Page
                 }
             }
 
-           
+
         }
         catch (Exception ex)
         {
@@ -95,7 +94,7 @@ public partial class Admin_Bulk_agent_upload : System.Web.UI.Page
 
     private DataTable FilterSelectedColumns(DataTable dt)
     {
-        string[] selectedColumns = { "agency_name", "business_name", "contact_number", "email" };
+        string[] selectedColumns = { "agency_name", "business_name", "contact_number" };
         DataTable filteredTable = new DataTable();
 
         foreach (string col in selectedColumns)

@@ -112,7 +112,7 @@
         </div>
 
     </div>
-    <div class="row">
+   <%-- <div class="row">
         <div class="col-md-10">
             <div class="card overflow-hidden radius-0 form_list">
                 <div class="row">
@@ -156,7 +156,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>--%>
 
 </asp:Content>
 

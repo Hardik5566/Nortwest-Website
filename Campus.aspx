@@ -103,7 +103,7 @@
                                 </div>
                                 <div class="info">
                                     <h4 style="margin-bottom: 0" class="campus">
-                                        <a href="adelaide_campus.aspx">Adelaide Campus</a>
+                                        <span>Adelaide Campus</span>
 
                                     </h4>
 

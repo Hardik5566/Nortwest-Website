@@ -22,6 +22,16 @@
         .campus {
             font-size: 17px !important;
         }
+
+        .top-course-items .item .thumb::after {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            content: "";
+            height: 50%;
+            width: 100%;
+            background: rgba(0, 0, 0, 0) linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.18) 100%) repeat scroll 0 0;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="body" runat="Server">
@@ -88,8 +98,8 @@
             <div class="row">
                 <div class="about-items">
                     <div class="col-md-6 about-info">
-                        <h2 style="margin-bottom:0px !important">Welcome ! </h2>
-                        <h1><span style="font-size: 26px;font-weight:200">We're International Education Academy</span></h1>
+                        <h2 style="margin-bottom: 0px !important">Welcome ! </h2>
+                        <h1><span style="font-size: 26px; font-weight: 200">We're International Education Academy</span></h1>
 
                         <blockquote>
                             Nortwest College has been Australia’s premier provider of education to overseas students since 2007. Nortwest College focuses on up-to-date, industry-endorsed courses in Business, Management, Project Management, IT, Trade, Commercial Cookery and Hospitality Management, and English. We have students from all over the world studying with us and experiencing life, study, and work in Australia with our support.
@@ -174,83 +184,89 @@
             </div>
             <div class="row">
                 <div class="top-course-items">
-
-                    <div class="col-md-3 col-sm-6 equal-height">
-                        <div class="item">
-                            <div class="thumb">
-                                <img src="assets/img/sydney.jpg" style="height: 210px; object-fit: cover; width: 100%;" alt="Thumb">
-                                <div class="overlay">
-                                    <a href="George_Street_Campus.aspx">
-                                        <img src="assets/img/Nortwest-Logo__NW-logo_sydney-campus.png" alt="Thumb">
-                                    </a>
+                    <a href="George_Street_Campus.aspx">
+                        <div class="col-md-3 col-sm-6 equal-height">
+                            <div class="item">
+                                <div class="thumb">
+                                    <img src="assets/img/sydney.jpg" style="height: 210px; object-fit: cover; width: 100%;" alt="Thumb" />
+                                    <div class="overlay">
+                                        <span>
+                                            <img src="assets/img/Nortwest-Logo__NW-logo_sydney-campus.png" alt="Thumb" />
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="info">
+                                    <h4 style="margin-bottom: 0" class="campus">
+                                        <span>George Street Campus</span>
+                                    </h4>
+                                    <span style="font-size: 12px; font-weight: 500; color: #092247;"><i class="fas fa-map-marked-alt" style="color: #368b7d"></i>&nbsp;&nbsp;SYDNEY</span>
                                 </div>
                             </div>
-                            <div class="info">
-                                <h4 style="margin-bottom: 0" class="campus">
-                                    <a href="George_Street_Campus.aspx">George Street Campus</a>
-                                </h4>
-                                <span style="font-size: 12px; font-weight: 500; color: #092247;"><i class="fas fa-map-marked-alt" style="color: #368b7d"></i>&nbsp;&nbsp;SYDNEY</span>
-                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6 equal-height">
-                        <div class="item">
-                            <div class="thumb">
-                                <img src="assets/img/sydney.jpg" style="height: 210px; object-fit: cover; width: 100%;" alt="Thumb">
-                                <div class="overlay">
-                                    <a href="York_Street_Campus.aspx">
-                                        <img src="assets/img/Nortwest-Logo__NW-logo_sydney-campus.png" alt="Thumb">
-                                    </a>
+                    </a>
+                    <a href="York_Street_Campus.aspx">
+                        <div class="col-md-3 col-sm-6 equal-height">
+                            <div class="item">
+                                <div class="thumb">
+                                    <img src="assets/img/sydney.jpg" style="height: 210px; object-fit: cover; width: 100%;" alt="Thumb" />
+                                    <div class="overlay">
+                                        <span>
+                                            <img src="assets/img/Nortwest-Logo__NW-logo_sydney-campus.png" alt="Thumb" />
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="info">
+                                    <h4 style="margin-bottom: 0" class="campus">
+                                        <span>York Street Campus</span>
+                                    </h4>
+                                    <span style="font-size: 12px; font-weight: 500; color: #092247;"><i class="fas fa-map-marked-alt" style="color: #368b7d"></i>&nbsp;&nbsp;SYDNEY</span>
+
                                 </div>
                             </div>
-                            <div class="info">
-                                <h4 style="margin-bottom: 0" class="campus">
-                                    <a href="York_Street_Campus.aspx">York Street Campus</a>
-                                </h4>
-                                <span style="font-size: 12px; font-weight: 500; color: #092247;"><i class="fas fa-map-marked-alt" style="color: #368b7d"></i>&nbsp;&nbsp;SYDNEY</span>
-
-                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6 equal-height">
-                        <div class="item">
-                            <div class="thumb">
-                                <img src="assets/img/Adelaide_campus.jpg" style="height: 210px; object-fit: cover; width: 100%;" alt="Thumb">
-                                <div class="overlay">
-                                    <a href="adelaide_campus.aspx">
-                                        <img src="assets/img/Nortwest-Logo__NW-logo_adelaide-campus.png" alt="Thumb">
-                                    </a>
+                    </a>
+                    <a href="adelaide_campus.aspx">
+                        <div class="col-md-3 col-sm-6 equal-height">
+                            <div class="item">
+                                <div class="thumb">
+                                    <img src="assets/img/Adelaide_campus.jpg" style="height: 210px; object-fit: cover; width: 100%;" alt="Thumb" />
+                                    <div class="overlay">
+                                        <span>
+                                            <img src="assets/img/Nortwest-Logo__NW-logo_adelaide-campus.png" alt="Thumb" />
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="info">
+                                    <h4 style="margin-bottom: 0" class="campus">
+                                        <span>Adelaide Campus</span>
+
+                                    </h4>
+
+                                    <span style="font-size: 12px; font-weight: 500; color: #092247;"><i class="fas fa-map-marked-alt" style="color: #368b7d"></i>&nbsp;&nbsp;ADELAIDE</span>
                                 </div>
                             </div>
-                            <div class="info">
-                                <h4 style="margin-bottom: 0" class="campus">
-                                    <a href="adelaide_campus.aspx">Adelaide Campus</a>
-
-                                </h4>
-
-                                <span style="font-size: 12px; font-weight: 500; color: #092247;"><i class="fas fa-map-marked-alt" style="color: #368b7d"></i>&nbsp;&nbsp;ADELAIDE</span>
-                            </div>
                         </div>
-                    </div>
-
-                    <div class="col-md-3 col-sm-6 equal-height">
-                        <div class="item">
-                            <div class="thumb">
-                                <img src="assets/img/Melbourn.jpeg" style="height: 210px; object-fit: cover; width: 100%;" alt="Thumb">
-                                <div class="overlay">
-                                    <a href="Melbourne_Campus.aspx">
-                                        <img src="assets/img/Nortwest-Logo__NW-logo_melbourne-campus.png" alt="Thumb">
-                                    </a>
+                    </a>
+                    <a href="Melbourne_Campus.aspx">
+                        <div class="col-md-3 col-sm-6 equal-height">
+                            <div class="item">
+                                <div class="thumb">
+                                    <img src="assets/img/Melbourn.jpeg" style="height: 210px; object-fit: cover; width: 100%;" alt="Thumb" />
+                                    <div class="overlay">
+                                        <span>
+                                            <img src="assets/img/Nortwest-Logo__NW-logo_melbourne-campus.png" alt="Thumb" />
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="info">
+                                    <h4 style="margin-bottom: 0" class="campus">
+                                        <span>Melbourne Campus</span>
+                                    </h4>
+                                    <span style="font-size: 12px; font-weight: 500; color: #092247;"><i class="fas fa-map-marked-alt" style="color: #368b7d"></i>&nbsp;&nbsp;MELBOURNE</span>
                                 </div>
                             </div>
-                            <div class="info">
-                                <h4 style="margin-bottom: 0" class="campus">
-                                    <a href="Melbourne_Campus.aspx">Melbourne Campus</a>
-                                </h4>
-                                <span style="font-size: 12px; font-weight: 500; color: #092247;"><i class="fas fa-map-marked-alt" style="color: #368b7d"></i>&nbsp;&nbsp;MELBOURNE</span>
-                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
         </div>

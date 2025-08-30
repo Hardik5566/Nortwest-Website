@@ -65,7 +65,6 @@
                                     <th>Agency</th>
                                     <th>Business Name</th>
                                     <th>Contact</th>
-                                    <th>Email</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -75,7 +74,6 @@
                                             <td><%# Eval("agency_name") %></td>
                                             <td><%# Eval("business_name") %></td>
                                             <td><%# Eval("contact_number") %></td>
-                                            <td><%# Eval("email") %></td>
                                         </tr>
                                     </ItemTemplate>
                                 </asp:ListView>

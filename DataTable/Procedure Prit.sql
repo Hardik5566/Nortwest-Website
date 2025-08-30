@@ -655,7 +655,7 @@ END
 ----------------------------------------
 ----------Insert Agents---------------
 ----------------------------------------
-create PROCEDURE ins_tbl_agents_sp
+alter PROCEDURE ins_tbl_agents_sp
 (
     @AgentTable AgentTableType READONLY,
 	@create_by int
@@ -669,7 +669,6 @@ BEGIN
         agency_name,
         business_name,
         contact_number,
-        email,
         status,
         create_by,
         create_date
@@ -678,8 +677,7 @@ BEGIN
         agency_name,
         business_name,
         contact_number,
-        email,
-        1,           -- status
+        1,          
         @create_by,
         dbo.GetCurrentAUTTime()
     FROM @AgentTable
@@ -689,7 +687,7 @@ END
 ----------------------------------------
 ----------Display Agents---------------
 ----------------------------------------
-CREATE PROCEDURE dis_tbl_agents_sp
+alter PROCEDURE dis_tbl_agents_sp
 AS
 BEGIN
    SELECT 
@@ -697,7 +695,6 @@ BEGIN
         agency_name,
         business_name,
         contact_number,
-        email,
         status
     FROM 
 		tbl_agents

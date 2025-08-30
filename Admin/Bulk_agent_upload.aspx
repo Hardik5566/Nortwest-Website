@@ -48,19 +48,21 @@
                         </ItemTemplate>
                     </asp:TemplateField>
 
-                    <asp:TemplateField HeaderText="Business Name">
-                        <ItemTemplate>
-                            <%# Eval("business_name") %>
-                        </ItemTemplate>
-                    </asp:TemplateField>
+                   <asp:TemplateField HeaderText="Business Name">
+    <ItemTemplate>
+        <%# 
+            Eval("business_name") != null 
+            ? (Eval("business_name").ToString().Length > 50 
+                ? Eval("business_name").ToString().Substring(0, 50) + "..." 
+                : Eval("business_name").ToString()) 
+            : "" 
+        %>
+    </ItemTemplate>
+</asp:TemplateField>
+
                     <asp:TemplateField HeaderText="Mobile Number">
                         <ItemTemplate>
                             <%# Eval("contact_number") %>
-                        </ItemTemplate>
-                    </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Email">
-                        <ItemTemplate>
-                            <%# Eval("email") %>
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>

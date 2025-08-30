@@ -59,37 +59,62 @@
                 </div>
             </div>
 
-            <div class="row" style="display: flex; flex-wrap: wrap; margin: 0 -10px;">
-                <div class="col-md-4 single-item" style="padding: 10px; display: flex; flex: 0 0 25%; max-width: 25%;">
+             <div class="row" style="display: flex; flex-wrap: wrap; justify-content: center; margin: 0 -10px;">
+                <div class="col-md-4 single-item" style="padding: 10px; display: flex; flex: 0 0 25%;">
                     <div class="item" style="border: 1px solid #ddd; padding: 15px; display: flex; flex-direction: column; justify-content: space-between; height: 100%; width: 100%; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
                         <div class="info" style="flex: 1;">
                             <div class="content" style="display: flex; flex-direction: column; height: 100%;">
                                 <h4 style="margin-bottom: auto;">
-                                    <a href="#">NSW FAIR TRADING CONSUMER GUIDE</a>
+                                    <span>NSW FAIR TRADING CONSUMER GUIDE</span>
                                 </h4>
                                 <a href="#">Download</a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 single-item" style="padding: 10px; display: flex; flex: 0 0 25%; max-width: 25%;">
+
+                <div class="col-md-4 single-item" style="padding: 10px; display: flex; flex: 0 0 25%;">
                     <div class="item" style="border: 1px solid #ddd; padding: 15px; display: flex; flex-direction: column; justify-content: space-between; height: 100%; width: 100%; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
                         <div class="info" style="flex: 1;">
                             <div class="content" style="display: flex; flex-direction: column; height: 100%;">
                                 <h4 style="margin-bottom: auto;">
-                                    <a href="#">LIST OF EXTERNAL COUNSELLING AND ADVICE SERVICES</a>
+                                    <span>STUDENT SERVICES GUIDE</span>
                                 </h4>
                                 <a href="#">Download</a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 single-item" style="padding: 10px; display: flex; flex: 0 0 25%; max-width: 25%;">
+                <div class="col-md-4 single-item" style="padding: 10px; display: flex; flex: 0 0 25%;">
                     <div class="item" style="border: 1px solid #ddd; padding: 15px; display: flex; flex-direction: column; justify-content: space-between; height: 100%; width: 100%; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
                         <div class="info" style="flex: 1;">
                             <div class="content" style="display: flex; flex-direction: column; height: 100%;">
                                 <h4 style="margin-bottom: auto;">
-                                    <a href="#">STUDENT SERVICES GUIDE</a>
+                                    <span>STUDENTS ORIENTATION</span>
+                                </h4>
+                                <a href="Vet_Orientation.aspx">Download</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 single-item" style="padding: 10px; display: flex; flex: 0 0 25%;">
+                    <div class="item" style="border: 1px solid #ddd; padding: 15px; display: flex; flex-direction: column; justify-content: space-between; height: 100%; width: 100%; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+                        <div class="info" style="flex: 1;">
+                            <div class="content" style="display: flex; flex-direction: column; height: 100%;">
+                                <h4 style="margin-bottom: auto;">
+                                    <span>ACADEMIC CALENDAR</span>
+                                </h4>
+                                <a href="academic_enrolment_calenda.aspx">Download</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 single-item" style="padding: 10px; display: flex; flex: 0 0 28%;">
+                    <div class="item" style="border: 1px solid #ddd; padding: 15px; display: flex; flex-direction: column; justify-content: space-between; height: 100%; width: 100%; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+                        <div class="info" style="flex: 1;">
+                            <div class="content" style="display: flex; flex-direction: column; height: 100%;">
+                                <h4 style="margin-bottom: auto;">
+                                    <span>GUIDE FOR INTERNATIONAL STUDENTS</span>
                                 </h4>
                                 <a href="#">Download</a>
                             </div>
@@ -97,39 +122,16 @@
                     </div>
                 </div>
             </div>
-
+           
             <!-- Second Row -->
-            <div class="row" style="display: flex; flex-wrap: wrap; margin: 0 -10px; margin-top: 20px;">
+            <%--    <div class="row" style="display: flex; flex-wrap: wrap; margin: 0 -10px; margin-top: 20px;">
 
 
 
-                <div class="col-md-4 single-item" style="padding: 10px; display: flex; flex: 0 0 25%; max-width: 25%;">
-                    <div class="item" style="border: 1px solid #ddd; padding: 15px; display: flex; flex-direction: column; justify-content: space-between; height: 100%; width: 100%; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
-                        <div class="info" style="flex: 1;">
-                            <div class="content" style="display: flex; flex-direction: column; height: 100%;">
-                                <h4 style="margin-bottom: auto;">
-                                    <a href="#">STUDENTS ORIENTATION</a>
-                                </h4>
-                                <a href="#">Download</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+               
 
-                <div class="col-md-4 single-item" style="padding: 10px; display: flex; flex: 0 0 25%; max-width: 25%;">
-                    <div class="item" style="border: 1px solid #ddd; padding: 15px; display: flex; flex-direction: column; justify-content: space-between; height: 100%; width: 100%; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
-                        <div class="info" style="flex: 1;">
-                            <div class="content" style="display: flex; flex-direction: column; height: 100%;">
-                                <h4 style="margin-bottom: auto;">
-                                    <a href="#">ACADEMIC CALENDAR</a>
-                                </h4>
-                                <a href="#">Download</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+             
+            </div>--%>
         </div>
     </div>
 </asp:Content>

@@ -328,7 +328,6 @@ create table tbl_agents
 	agency_name varchar(450),
 	business_name varchar(max),
 	contact_number varchar(15),
-	email varchar(200),
 	status bit,
 	create_by int,
 	create_date datetime,
@@ -344,8 +343,7 @@ CREATE TYPE agenttabletype AS TABLE
 (
     agency_name     VARCHAR(450),
     business_name   VARCHAR(MAX),
-    contact_number  VARCHAR(15),
-    email           VARCHAR(200)
+    contact_number  VARCHAR(15)
 );
 
 
