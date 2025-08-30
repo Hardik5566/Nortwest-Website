@@ -16,14 +16,13 @@
                 width: 0px;
             }
         /* Apply Flexbox to the parent container to make items stretch equally */
-        .fa-school{
-               color: #ffb606 !important;
-                margin-right: 5px !important;
-                font-size: 12px !important;
-                position: relative !important;
-                top: 0px !important;
-
-       }
+        .fa-school {
+            color: #ffb606 !important;
+            margin-right: 5px !important;
+            font-size: 12px !important;
+            position: relative !important;
+            top: 0px !important;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="body" runat="Server">
@@ -151,7 +150,7 @@
 
             </div>
             <%--  --%>
-             <div class="row default-padding" style="display: flex; flex-wrap: wrap;">
+            <div class="row default-padding" style="display: flex; flex-wrap: wrap;">
                 <div class="col-md-6 d-flex align-items-stretch" style="display: flex; flex: 1 1 50%; box-sizing: border-box;">
                     <div class="event-items">
                         <!-- Single Item -->
@@ -183,10 +182,6 @@
                                                 <td>Weeks of holidays: 8</td>
                                             </tr>
                                         </table>
-
-
-
-
                                         <div class="bottom">
                                             <a href="Dimploma_of_Project_Management.aspx" class="btn circle btn-dark border btn-sm">
                                                 <i class="fas fa-eye">&nbsp</i>View Detail
@@ -204,7 +199,7 @@
                     </div>
                 </div>
 
-               <div class="col-md-6 d-flex align-items-stretch">
+                <div class="col-md-6 d-flex align-items-stretch">
                     <div class="event-items" style="display: flex; flex-direction: column; height: 100%;">
                         <div class="item" style="display: flex; flex-direction: column; flex-grow: 1;">
                             <div class="col-md-12 info">
@@ -253,7 +248,7 @@
             </div>
 
 
-         
+
         </div>
     </div>
     <%--  --%>

@@ -214,6 +214,111 @@ create table tbl_credit_card_auth_form
 	delete_by int,
 	delete_date datetime
 )
+----------------------------------------
+--------------Table Course--------------
+----------------------------------------
+create table tbl_course
+(
+	course_id int identity(1,1),
+	programme varchar(350),
+	course_name varchar(450),
+	course_code varchar(50),
+	cricos_code varchar(50),
+	description varchar(max),
+	flayer nvarchar(max),
+	total_week int,
+	study_week int,
+	weeks_holiday int,
+	status bit,
+	create_by int,
+	create_date datetime,
+	modify_by int,
+	modify_date datetime,
+	delete_by int,
+	delete_date datetime
+)
+----------------------------------------
+-------Table Course Intake--------------
+----------------------------------------
+create table tbl_course_intake	
+(
+	intake_id int identity(1,1),
+	intake_date varchar(30),
+	status bit,
+	create_by int,
+	create_date datetime,
+	modify_by int,
+	modify_date datetime,
+	delete_by int,
+	delete_date datetime
+)
+----------------------------------------
+----Table Course Intake TearmBreak------
+----------------------------------------
+create table tbl_course_intake_termbreak
+(
+	termbreak_id int identity(1,1),
+	intake_id int,
+	term_break_start varchar(30),
+	term_break_end varchar(30),
+	status bit,
+	create_by int,
+	create_date datetime,
+	modify_by int,
+	modify_date datetime,
+	delete_by int,
+	delete_date datetime
+)
+----------------------------------------
+---------Table Public Holiday-----------
+----------------------------------------
+create table tbl_public_holiday
+(
+	holiday_id int identity(1,1),
+	holiday_name varchar(650),
+	holiday_date DATE,
+	status bit,
+	create_by int,
+	create_date datetime,
+	modify_by int,
+	modify_date datetime,
+	delete_by int,
+	delete_date datetime
+)
+----------------------------------------
+--------------Table Admin----------------
+----------------------------------------
+create table tbl_admin
+(
+	admin_id int identity(1,1),
+	admin_name varchar(650),
+	email varchar(350),
+	pwd nvarchar(150),
+	mibile_no varchar(15),
+	status bit,
+	create_by int,
+	create_date datetime,
+	modify_by int,
+	modify_date datetime,
+	delete_by int,
+	delete_date datetime
+)
+----------------------------------------
+--------------Table Admin----------------
+----------------------------------------
+create table tbl_policies
+(
+	policies_id int identity(1,1),
+	policies_name varchar(650),
+	policies_file nvarchar(max),
+	status bit,
+	create_by int,
+	create_date datetime,
+	modify_by int,
+	modify_date datetime,
+	delete_by int,
+	delete_date datetime
+)
 
 
 

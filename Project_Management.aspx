@@ -26,25 +26,28 @@
     </style>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="body" runat="Server">
-    <div class="breadcrumb-area shadow dark bg-fixed text-center text-light" style="background-image: url(assets/img/courses_banner.png);">
+    <div class="breadcrumb-area shadow dark bg-fixed text-center text-light"
+        style="background-image: url(assets/img/courses_banner.png);">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 col-md-12">
-                    <h1>Project Managment</h1>
+                    <h1><%= Request.QueryString["page_name"] ?? "Default Page" %></h1>
                     <ul class="breadcrumb">
                         <li><a href="Default.aspx"><i class="fas fa-home"></i>Home</a></li>
-                        <li class="active">Project Managment</li>
+                        <li class="active"><%= Request.QueryString["page_name"] ?? "Default Page" %></li>
                     </ul>
                 </div>
             </div>
         </div>
     </div>
+
     <div class="event-area default-padding">
         <div class="container">
             <div class="row">
                 <div class="site-heading text-center">
                     <div class="col-md-8 col-md-offset-2">
-                        <h2><%--Project Management--%><asp:Label ID="lbl_programme" style="color:#002147" runat="server" Text=""></asp:Label></h2>
+                        <h2>
+                            <asp:Label ID="lbl_programme" Style="color: #002147" runat="server" Text=""></asp:Label></h2>
                     </div>
                 </div>
             </div>
@@ -62,8 +65,12 @@
                                                     <a href="#"><%# Eval("course_name") %></a>
                                                 </h4>
                                                 <ul>
-                                                    <li><i class="fas fa-book"></i><%# Eval("course_code") %></li>
-                                                    <li><i class="fas fa-map-marked-alt"></i>CRICOS <%# Eval("cricos_code") %></li>
+                                                    <li runat="server"
+                                                        visible='<%# !string.IsNullOrEmpty(Eval("course_code").ToString()) %>'>
+                                                        <i class="fas fa-book"></i><%# Eval("course_code") %>
+                                                    </li>
+
+                                                    <li><i class="fas fa-map-marked-alt"></i>CRICOS : <%# Eval("cricos_code") %></li>
                                                 </ul>
                                                 <ul>
                                                     <li><i class="fas fa-school"></i>Sydney CBD</li>
@@ -73,17 +80,28 @@
                                                 <p>
                                                     <%# Eval("description") %>
                                                 </p>
-                                                <table class="table tbl_course_duration">
+                                                <table class="table tbl_course_duration"
+                                                    runat="server"
+                                                    visible='<%# Convert.ToInt32(Eval("total_week")) != 0 && Convert.ToInt32(Eval("study_week")) != 0 && Convert.ToInt32(Eval("weeks_holiday")) != 0 %>'>
                                                     <tr class="row">
                                                         <td>Total weeks:  <%# Eval("total_week") %></td>
                                                         <td>Study weeks:  <%# Eval("study_week") %></td>
                                                         <td>Weeks of holidays:  <%# Eval("weeks_holiday") %></td>
                                                     </tr>
                                                 </table>
+
                                                 <div class="bottom">
-                                                    <a href="#" class="btn circle btn-dark border btn-sm">
-                                                        <i class="fas fa-download">&nbsp</i>Download Flyer
-                                                    </a>
+                                                    <asp:HyperLink
+                                                        ID="lnkFlyer"
+                                                        runat="server"
+                                                        NavigateUrl='<%# !string.IsNullOrEmpty(Eval("flyer").ToString()) ? ResolveUrl("~/Admin/assets/Flyer/" + Eval("flyer")) : "#" %>'
+                                                        Target="_blank"
+                                                        Visible='<%# !string.IsNullOrEmpty(Eval("flyer").ToString()) %>'>
+                                                         <i class="fas fa-download"></i>&nbsp;Download Flyer
+                                                    </asp:HyperLink>
+
+
+
                                                     <%-- <a href="#" class="btn circle btn-dark border btn-sm">
                                                 <i class="fas fa-eye">&nbsp</i>View Detail
                                             </a>

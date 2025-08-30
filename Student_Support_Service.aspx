@@ -85,39 +85,39 @@
         </div>
 
         <div class="container" style="margin-top: 80px">
-            <div class="row">
-                <div class="item-box">
-                    <a href="#">
-                        <div class="col-md-3 single-item">
-                            <div class="item">
-                                <h4>VET Students Handbook</h4>
-                                <p>
-                                </p>
-                                <i class="fas fa-book-open"></i>
-                            </div>
+
+            <div class="item-box">
+                <a href="#">
+                    <div class="col-md-4 single-item">
+                        <div class="item">
+                            <h4>VET Students Handbook</h4>
+                            <p>
+                            </p>
+                            <i class="fas fa-book-open"></i>
                         </div>
-                    </a>
-                    <a href="#">
-                        <div class="col-md-3 single-item">
-                            <div class="item">
-                                <h4>ELICOS Students Handbook</h4>
-                                <p>
-                                </p>
-                                <i class="fas fa-book-open"></i>
-                            </div>
+                    </div>
+                </a>
+                <a href="#">
+                    <div class="col-md-4 single-item">
+                        <div class="item">
+                            <h4>ELICOS Students Handbook</h4>
+                            <p>
+                            </p>
+                            <i class="fas fa-book-open"></i>
                         </div>
-                    </a>
-                    <a href="#">
-                        <div class="col-md-3 single-item">
-                            <div class="item">
-                                <h4>Student Services Guide</h4>
-                                <p>
-                                </p>
-                                <i class="fas fa-user-graduate"></i>
-                            </div>
+                    </div>
+                </a>
+                <a href="#">
+                    <div class="col-md-4 single-item">
+                        <div class="item">
+                            <h4>Student Services Guide</h4>
+                            <p>
+                            </p>
+                            <i class="fas fa-user-graduate"></i>
                         </div>
-                    </a>
-                    <a href="Student_Forms.aspx">
+                    </div>
+                </a>
+                <%--  <a href="Student_Forms.aspx">
                         <div class="col-md-3 single-item">
                             <div class="item">
                                 <h4>Student Online Forms</h4>
@@ -126,10 +126,10 @@
                                 <i class="fas fa-bookmark"></i>
                             </div>
                         </div>
-                    </a>
-                </div>
+                    </a>--%>
             </div>
         </div>
+
     </div>
 
 </asp:Content>

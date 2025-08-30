@@ -126,15 +126,30 @@
                             <div class="menu-title">Dashboard</div>
                         </a>
                     </li>
+
+
                     <li class="menu-label">Forms</li>
                     <li>
-                        <a href="Course_master.aspx">
+                        <a href="javascript:;" class="has-arrow">
                             <div class="parent-icon">
-                                <i class="bi bi-journal-bookmark-fill"></i>
+                                <i class="bi bi-grid-fill"></i>
                             </div>
-                            <div class="menu-title">Course Master</div>
+                            <div class="menu-title">Master</div>
                         </a>
+                        <ul>
+                            <li><a href="Course_master.aspx"><i class="bi bi-circle"></i>Course</a>
+                            </li>
+                            <li><a href="Intake_master.aspx"><i class="bi bi-circle"></i>Intake</a>
+                            </li>
+                            <li><a href="public_holidays_master.aspx"><i class="bi bi-circle"></i>Holiday</a>
+                            </li>
+                             <li><a href="Policies_master.aspx"><i class="bi bi-circle"></i>Policies</a>
+                            </li>
+                        </ul>
+
                     </li>
+
+
                     <li>
                         <a href="javascript:;" class="has-arrow">
                             <div class="parent-icon">

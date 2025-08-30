@@ -63,7 +63,7 @@
                         Nortwest College offers a wide range of courses in Business, Management, Marketing, Project Management and Website Development from Certificates up to Diploma and Advanced Diploma level. We have carefully chosen the courses and use industry representatives to consult on our curriculum. Our training focuses on gaining real experience with industry benchmark.
                        
                         </p>
-                        <a class="btn circle btn-theme effect btn-md" href="#">Know More</a>
+                        <a class="btn circle btn-theme effect btn-md" href="#about">Know More</a>
                     </div>
                     <div class="col-md-6 thumb">
                         <div class="thumb">
@@ -77,7 +77,7 @@
             </div>
         </div>
     </div>
-    <div class="features-area bg-gray default-padding bottom-less">
+    <div id="about" class="features-area bg-gray default-padding bottom-less">
         <div class="container">
             <div class="row">
                 <div class="site-heading text-center">
@@ -102,7 +102,7 @@
                     </div>
                     <div class="equal-height col-md-3 col-sm-6">
                         <div class="item mariner">
-                            <a href="#">
+                            <a href="javascript:void(0)">
                                 <div class="icon">
                                     <img src="assets/img/teacher.png" />
                                 </div>
@@ -114,7 +114,7 @@
                     </div>
                     <div class="equal-height col-md-3 col-sm-6">
                         <div class="item mariner">
-                            <a href="#">
+                            <a href="javascript:void(0)">
                                 <div class="icon">
                                     <img src="assets/img/studyroom.png" />
                                 </div>
@@ -126,7 +126,7 @@
                     </div>
                     <div class="equal-height col-md-3 col-sm-6">
                         <div class="item mariner">
-                            <a href="#">
+                            <a href="javascript:void(0)">
                                 <div class="icon">
                                     <img src="assets/img/care.png" />
                                 </div>
@@ -138,7 +138,7 @@
                     </div>
                     <div class="equal-height col-md-3 col-sm-6">
                         <div class="item mariner">
-                            <a href="#">
+                            <a href="javascript:void(0)">
                                 <div class="icon">
                                     <img src="assets/img/system-update.png" />
                                 </div>
@@ -150,7 +150,7 @@
                     </div>
                     <div class="equal-height col-md-3 col-sm-6">
                         <div class="item mariner">
-                            <a href="#">
+                            <a href="javascript:void(0)">
                                 <div class="icon">
                                     <img src="assets/img/translate.png" />
                                 </div>
@@ -162,7 +162,7 @@
                     </div>
                     <div class="equal-height col-md-3 col-sm-6">
                         <div class="item mariner">
-                            <a href="#">
+                            <a href="javascript:void(0)">
                                 <div class="icon">
                                     <img src="assets/img/job-search.png" />
                                 </div>
@@ -174,7 +174,7 @@
                     </div>
                     <div class="equal-height col-md-3 col-sm-6">
                         <div class="item mariner">
-                            <a href="#">
+                            <a href="javascript:void(0)">
                                 <div class="icon">
                                     <img src="assets/img/printer.png" />
                                 </div>
@@ -186,7 +186,7 @@
                     </div>
                     <div class="equal-height col-md-3 col-sm-6">
                         <div class="item mariner">
-                            <a href="#">
+                            <a href="javascript:void(0)">
                                 <div class="icon">
                                     <img src="assets/img/relax.png" />
                                 </div>
@@ -198,7 +198,7 @@
                     </div>
                     <div class="equal-height col-md-3 col-sm-6">
                         <div class="item mariner">
-                            <a href="#">
+                            <a href="javascript:void(0)">
                                 <div class="icon">
                                     <img src="assets/img/dinner-table.png" />
                                 </div>
@@ -210,7 +210,7 @@
                     </div>
                     <div class="equal-height col-md-3 col-sm-6">
                         <div class="item mariner">
-                            <a href="#">
+                            <a href="javascript:void(0)">
                                 <div class="icon">
                                     <img src="assets/img/fridge.png" />
                                 </div>
@@ -222,7 +222,7 @@
                     </div>
                     <div class="equal-height col-md-3 col-sm-6">
                         <div class="item mariner">
-                            <a href="#">
+                            <a href="javascript:void(0)">
                                 <div class="icon">
                                     <img src="assets/img/vending-machine.png" />
                                 </div>

@@ -45,7 +45,6 @@
             </div>
         </div>
     </div>
-
     <div class="features-area default-padding bg-gray bottom-less">
         <div class="container">
             <div class="row">
@@ -74,7 +73,6 @@
                             </a>
                         </div>
                     </div>
-
                     <div class="equal-height col-md-3 col-sm-6">
                         <div class="item mariner">
                             <a href="Project_Management.aspx?page_name=Business">
@@ -87,10 +85,9 @@
                             </a>
                         </div>
                     </div>
-
                     <div class="equal-height col-md-3 col-sm-6">
                         <div class="item mariner">
-                         <a href="Project_Management.aspx?page_name=Leadership %26 Management">
+                            <a href="Project_Management.aspx?page_name=Leadership %26 Management">
                                 <div class="icon">
                                     <img src="assets/img/team-leader.png" />
                                 </div>
@@ -100,7 +97,6 @@
                             </a>
                         </div>
                     </div>
-
                     <div class="equal-height col-md-3 col-sm-6">
                         <div class="item mariner">
                             <a href="Project_Management.aspx?page_name=English">
@@ -113,7 +109,6 @@
                             </a>
                         </div>
                     </div>
-
                     <div class="equal-height col-md-3 col-sm-6">
                         <div class="item mariner">
                             <a href="Project_Management.aspx?page_name=Information Technology">
@@ -127,7 +122,6 @@
                             </a>
                         </div>
                     </div>
-
                     <div class="equal-height col-md-3 col-sm-6">
                         <div class="item mariner">
                             <a href="Project_Management.aspx?page_name=Graduate Diploma of Management">
@@ -140,7 +134,6 @@
                             </a>
                         </div>
                     </div>
-
                     <div class="equal-height col-md-3 col-sm-6">
                         <div class="item mariner">
                             <a href="Project_Management.aspx?page_name=Cookery %26 Hospitality">
@@ -153,7 +146,6 @@
                             </a>
                         </div>
                     </div>
-
                     <div class="equal-height col-md-3 col-sm-6">
                         <div class="item mariner">
                             <a href="Project_Management.aspx?page_name=Building %26 Construction">
@@ -166,7 +158,6 @@
                             </a>
                         </div>
                     </div>
-
                     <div class="equal-height col-md-12 col-sm-12">
                         <div class="item mariner">
                             <a href="#">
@@ -178,10 +169,9 @@
                     </div>
                 </div>
             </div>
-
             <div class="row">
                 <div class="col-sm-12">
-                    <a href="https://appform.nortwest.edu.au/">
+                    <a href="App_form.aspx">
                         <img src="assets/img/click%20to%20enroll.png" style="width: 100%; border-radius: 10px" />
                     </a>
                 </div>
@@ -197,13 +187,9 @@
                 <div class="col-md-7 countdown">
                     <h2>RECOGNITION OF PRIOR LEARNING (RPL)&
 CREDIT TRANSFERS</h2>
-
                     <p>
                         RPL & Credit Transfers is an assessment process that allows for recognisation of competencies currently held, regardless of how, when or where the learning occurred. RPL assesses the individual’s prior learning to determine the extent to which that individual is currently competent against the required learning outcomes, competency outcomes, or standards for entry to, and/or partial or total completion of a qualification.
-                   
                     </p>
-
-
                 </div>
             </div>
         </div>
@@ -224,7 +210,7 @@ CREDIT TRANSFERS</h2>
             </div>
             <div class="row">
                 <div class="blog-items text-center">
-                    <a href="#" style="text-transform: uppercase; font-weight: 600; display: inline-block; padding: 8px 40px; border: 2px solid #ffb606; color: #002147; margin-top: 5px; overflow: hidden; position: relative; z-index: 1; margin-bottom: -8px; border-radius: 30px;">Read All Policies
+                    <a href="Policy.aspx" style="text-transform: uppercase; font-weight: 600; display: inline-block; padding: 8px 40px; border: 2px solid #ffb606; color: #002147; margin-top: 5px; overflow: hidden; position: relative; z-index: 1; margin-bottom: -8px; border-radius: 30px;">Read All Policies
                     </a>
                 </div>
             </div>

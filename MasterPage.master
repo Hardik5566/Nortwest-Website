@@ -8,11 +8,32 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="" />
+    
 
-    <meta property="og:title" content="VET Orientation Form - Nortwest College" />
-    <meta property="og:description" content="Fill out the form in English. You can select the language to help you fill out the form." />
-    <meta property="og:url" content="https://website.nortwest.edu.au/" />
+
+    <meta name="title" content="Nortwest Collegee" />
+    <meta name="description" content="Nortwest College has been Australia’s premier provider of education to overseas students since 2010. Nortwest College focuses on up-to-date, industry-endorsed courses in Business, Management, Project Management, IT, Trade, Commercial Cookery and Hospitality Management, and English. We have students from all over the world studying with us and experiencing life, study, and work in Australia with our support." />
+
+
+     <!-- Open Graph / Facebook / LinkedIn -->
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="https://website.nortwest.edu.au/"/>
+    <meta property="og:title" content="Nortwest College"/>
+    <meta property="og:description" content="Nortwest College has been Australia’s premier provider of education to overseas students since 2010. Nortwest College focuses on up-to-date, industry-endorsed courses in Business, Management, Project Management, IT, Trade, Commercial Cookery and Hospitality Management, and English. We have students from all over the world studying with us and experiencing life, study, and work in Australia with our support."/>
+    <meta property="og:image" content="https://website.nortwest.edu.au/image/Website_banner.jpg"/>
+
+    <meta name="twitter:url" content="https://website.nortwest.edu.au/"/>
+    <meta name="twitter:title" content="Nortwest College"/>
+    <meta name="twitter:description" content="Nortwest College has been Australia’s premier provider of education to overseas students since 2010. Nortwest College focuses on up-to-date, industry-endorsed courses in Business, Management, Project Management, IT, Trade, Commercial Cookery and Hospitality Management, and English. We have students from all over the world studying with us and experiencing life, study, and work in Australia with our support."/>
+    <meta name="twitter:image" content="https://website.nortwest.edu.au/image/Website_banner.jpg"/>
+
+    <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-WBD2B9DK');</script>
+<!-- End Google Tag Manager -->
 
     <title>
         <asp:ContentPlaceHolder ID="title" runat="server">
@@ -64,7 +85,7 @@
                                     <a href="https://www.facebook.com/nortwestedu/"><i class="fab fa-facebook-f"></i></a>
                                     <a href="#"><i class="fab fa-twitter"></i></a>
                                     <a href="https://www.linkedin.com/company/nortwesteducation/"><i class="fab fa-linkedin-in"></i></a>
-                                    <a href="#"><i class="fab fa-youtube"></i></a>
+                                    <a href="https://www.youtube.com/@NortwestCollege"><i class="fab fa-youtube"></i></a>
                                 </li>
                                 <%-- <li>
                                     <i class="fas fa-user-shield"></i>Instructor: <strong>655</strong>
@@ -80,7 +101,7 @@
                         <ul>
 
                             <li>
-                                <a href="https://appform.nortwest.edu.au/">Apply Now</a>
+                                <a href="App_form.aspx">Apply Now</a>
                             </li>
                         </ul>
                     </div>
@@ -126,7 +147,7 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">For Students</a>
                                 <ul class="dropdown-menu">
                                     <li><a href="Vet_Orientation.aspx">New Student Orientation</a></li>
-                                    <li><a href="#">Downloads</a></li>
+                                    <li><a href="downloads.aspx">Downloads</a></li>
                                     <li><a href="assets/prefix_file/NW-Brochure-copy_compressed-3-1.pdf" download="NW-Brochure.pdf">Brochure</a></li>
                                     <li><a href="https://accounts.google.com/v3/signin/identifier?continue=https%3A%2F%2Fmail.google.com%2Fmail%2F&ifkv=AXH0vVsC3NbLruWRPGrDMDXehhjhDfmqZAD10GenQPYkwt6jn3GdJFLpBNgSt8V3MhKBK_xq2bqkow&rip=1&sacu=1&service=mail&flowName=GlifWebSignIn&flowEntry=ServiceLogin&dsh=S-516335491%3A1744184120347082">Login Gmail</a></li>
                                     <li><a href="http://appv2.nortwest.edu.au/web/">Login LMS</a></li>
@@ -352,10 +373,10 @@
                                 <h4>Usefull Links</h4>
                                 <ul>
                                     <li>
-                                        <a href="Courses.aspx"><i class="ti-angle-right"></i>All Courses</a>
+                                        <a href="Courses.aspx"><i class="ti-angle-right"></i>Courses</a>
                                     </li>
                                     <li>
-                                        <a href="#"><i class="ti-angle-right"></i>Downloads</a>
+                                        <a href="downloads.aspx"><i class="ti-angle-right"></i>Downloads</a>
                                     </li>
                                     <li>
                                         <a href="Student_Forms.aspx"><i class="ti-angle-right"></i>Student Forms</a>
@@ -363,7 +384,19 @@
                                     <li>
                                         <a href="academic_enrolment_calenda.aspx"><i class="ti-angle-right"></i>Calendar</a>
                                     </li>
-                                    <li>
+                                   
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- End Single item -->
+
+                        <!-- Single item -->
+                        <div class="col-md-2 col-sm-6 item equal-height">
+                            <div class="f-item link">
+                                <h4><%--Support--%> &nbsp</h4>
+                                <ul>
+
+                                     <li>
                                         <a href="FAQ.aspx"><i class="ti-angle-right"></i>Faq</a>
                                     </li>
                                     <li>
@@ -375,17 +408,7 @@
                                     <li>
                                         <a href="assets/img/NW-Brochure-copy_compressed-3-1.pdf"><i class="ti-angle-right"></i>Brochure</a>
                                     </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- End Single item -->
-
-                        <!-- Single item -->
-                        <div class="col-md-2 col-sm-6 item equal-height">
-                            <div class="f-item link">
-                                <h4>Support</h4>
-                                <ul>
-                                    <li>
+                                  <%--  <li>
                                         <a href="#"><i class="ti-angle-right"></i>Documentation</a>
                                     </li>
                                     <li>
@@ -402,7 +425,7 @@
                                     </li>
                                     <li>
                                         <a href="#"><i class="ti-angle-right"></i>Feedback</a>
-                                    </li>
+                                    </li>--%>
                                 </ul>
                             </div>
                         </div>
@@ -449,7 +472,7 @@
                                         <img style="width: 23px;" src="assets/img/instagram.png" /></a>
                                 </li>
                                 <li>
-                                    <a href="#">
+                                    <a href="https://www.youtube.com/@NortwestCollege">
                                         <img style="width: 23px;" src="assets/img/youtube.png" /></a>
                                 </li>
                             </ul>
@@ -596,6 +619,11 @@
 
         <asp:ContentPlaceHolder ID="jqury" runat="server">
         </asp:ContentPlaceHolder>
+
+        <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WBD2B9DK"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
     </form>
 </body>
 </html>
