@@ -60,4 +60,15 @@ public class parameter
         param.Value = value;
         return param;
     }
+
+    public SqlParameter TableParam(string name, DataTable dt, string typeName)
+    {
+        SqlParameter param = new SqlParameter();
+        param.ParameterName = name;
+        param.SqlDbType = SqlDbType.Structured;
+        param.TypeName = typeName; // This is the SQL type name like 'dbo.AcCalDetailType'
+        param.Value = dt;
+        return param;
+    }
+
 }

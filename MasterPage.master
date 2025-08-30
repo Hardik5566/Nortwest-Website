@@ -8,32 +8,35 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    
+
 
 
     <meta name="title" content="Nortwest Collegee" />
     <meta name="description" content="Nortwest College has been Australia’s premier provider of education to overseas students since 2010. Nortwest College focuses on up-to-date, industry-endorsed courses in Business, Management, Project Management, IT, Trade, Commercial Cookery and Hospitality Management, and English. We have students from all over the world studying with us and experiencing life, study, and work in Australia with our support." />
 
 
-     <!-- Open Graph / Facebook / LinkedIn -->
-    <meta property="og:type" content="website"/>
-    <meta property="og:url" content="https://website.nortwest.edu.au/"/>
-    <meta property="og:title" content="Nortwest College"/>
-    <meta property="og:description" content="Nortwest College has been Australia’s premier provider of education to overseas students since 2010. Nortwest College focuses on up-to-date, industry-endorsed courses in Business, Management, Project Management, IT, Trade, Commercial Cookery and Hospitality Management, and English. We have students from all over the world studying with us and experiencing life, study, and work in Australia with our support."/>
-    <meta property="og:image" content="https://website.nortwest.edu.au/image/Website_banner.jpg"/>
+    <!-- Open Graph / Facebook / LinkedIn -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://website.nortwest.edu.au/" />
+    <meta property="og:title" content="Nortwest College" />
+    <meta property="og:description" content="Nortwest College has been Australia’s premier provider of education to overseas students since 2010. Nortwest College focuses on up-to-date, industry-endorsed courses in Business, Management, Project Management, IT, Trade, Commercial Cookery and Hospitality Management, and English. We have students from all over the world studying with us and experiencing life, study, and work in Australia with our support." />
+    <meta property="og:image" content="https://website.nortwest.edu.au/image/Website_banner.jpg" />
 
-    <meta name="twitter:url" content="https://website.nortwest.edu.au/"/>
-    <meta name="twitter:title" content="Nortwest College"/>
-    <meta name="twitter:description" content="Nortwest College has been Australia’s premier provider of education to overseas students since 2010. Nortwest College focuses on up-to-date, industry-endorsed courses in Business, Management, Project Management, IT, Trade, Commercial Cookery and Hospitality Management, and English. We have students from all over the world studying with us and experiencing life, study, and work in Australia with our support."/>
-    <meta name="twitter:image" content="https://website.nortwest.edu.au/image/Website_banner.jpg"/>
+    <meta name="twitter:url" content="https://website.nortwest.edu.au/" />
+    <meta name="twitter:title" content="Nortwest College" />
+    <meta name="twitter:description" content="Nortwest College has been Australia’s premier provider of education to overseas students since 2010. Nortwest College focuses on up-to-date, industry-endorsed courses in Business, Management, Project Management, IT, Trade, Commercial Cookery and Hospitality Management, and English. We have students from all over the world studying with us and experiencing life, study, and work in Australia with our support." />
+    <meta name="twitter:image" content="https://website.nortwest.edu.au/image/Website_banner.jpg" />
 
     <!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-WBD2B9DK');</script>
-<!-- End Google Tag Manager -->
+    <script>(function (w, d, s, l, i) {
+    w[l] = w[l] || []; w[l].push({
+        'gtm.start':
+        new Date().getTime(), event: 'gtm.js'
+    }); var f = d.getElementsByTagName(s)[0],
+    j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+})(window, document, 'script', 'dataLayer', 'GTM-WBD2B9DK');</script>
+    <!-- End Google Tag Manager -->
 
     <title>
         <asp:ContentPlaceHolder ID="title" runat="server">
@@ -83,7 +86,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                             <ul>
                                 <li class="social">
                                     <a href="https://www.facebook.com/nortwestedu/"><i class="fab fa-facebook-f"></i></a>
-                                    <a href="#"><i class="fab fa-twitter"></i></a>
+                                    <a href="https://api.whatsapp.com/send/?phone=61449955272&text&type=phone_number&app_absent=0"><i class="fab fa-whatsapp"></i></a>
                                     <a href="https://www.linkedin.com/company/nortwesteducation/"><i class="fab fa-linkedin-in"></i></a>
                                     <a href="https://www.youtube.com/@NortwestCollege"><i class="fab fa-youtube"></i></a>
                                 </li>
@@ -229,7 +232,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                             <div class="item">
                                 <div class="info campus_info">
                                     <h4>
-                                        <a href="#">GEORGE STREET CAMPUS</a>
+                                        <a href="George_Street_Campus.aspx">GEORGE STREET CAMPUS</a>
                                     </h4>
 
                                     <p style="font-size: 13px">
@@ -244,7 +247,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                                     </p>
                                     <p style="font-size: 13px">
 
-                                        <a href="#">
+                                        <a href="https://www.google.com/maps/place/9%2F108+Lonsdale+St,+Melbourne+VIC+3000/@-37.8101304,144.9690749,891m/data=!3m2!1e3!4b1!4m6!3m5!1s0x6ad642c92c70b903:0x1a52b8f482d3e7ff!8m2!3d-37.8101304!4d144.9690749!16s%2Fg%2F11w8dn7696?entry=ttu&g_ep=EgoyMDI1MDgyNS4wIKXMDSoASAFQAw%3D%3D">
                                             <i class="fas fa-map">&nbsp&nbsp</i>LEVEL2, 531 GEORGE STREET SYDNEY NSW 2000 Australia
                                         </a>
                                     </p>
@@ -258,7 +261,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
                                 <div class="info campus_info">
                                     <h4>
-                                        <a href="#">York Street Campus</a>
+                                        <a href="York_Street_Campus.aspx">York Street Campus</a>
                                     </h4>
 
                                     <p style="font-size: 13px">
@@ -274,7 +277,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                                     </p>
                                     <p style="font-size: 13px">
 
-                                        <a href="#">
+                                        <a href="https://www.google.com/maps/place/The+Grace+Sydney/@-33.8689641,151.2058908,936m/data=!3m2!1e3!4b1!4m9!3m8!1s0x6b12ae3f4100379f:0xdcefb6f023fc341f!5m2!4m1!1i2!8m2!3d-33.8689641!4d151.2058908!16zL20vMDd3dmJu?entry=ttu&g_ep=EgoyMDI1MDgyNS4wIKXMDSoASAFQAw%3D%3D">
                                             <i class="fas fa-map">&nbsp&nbsp</i>Level 2, The Grace Hotel Building 77 York Street Sydney NSW 2000 Australia
                                         </a>
                                     </p>
@@ -287,7 +290,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
                                 <div class="info campus_info">
                                     <h4>
-                                        <a href="#">Adelaide Campus</a>
+                                        <a href="adelaide_campus.aspx">Adelaide Campus</a>
                                     </h4>
 
                                     <p style="font-size: 13px">
@@ -308,7 +311,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                                     </p>
                                     <p style="font-size: 13px">
 
-                                        <a href="#">
+                                        <a href="https://www.google.com/maps/place/1+2%2F68+Grenfell+St,+Adelaide+SA+5000/@-34.9240955,138.6021704,924m/data=!3m2!1e3!4b1!4m6!3m5!1s0x6ab0ced693478bfb:0xc5535aea4c408e49!8m2!3d-34.9240955!4d138.6021704!16s%2Fg%2F11k9jddzth?entry=ttu&g_ep=EgoyMDI1MDgyNS4wIKXMDSoASAFQAw%3D%3D">
                                             <i class="fas fa-map">&nbsp&nbsp</i>Suite 1,Level 2 66-68 Grenfell Street Adelaide SA 5000 Australia
                                         </a>
                                     </p>
@@ -321,7 +324,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
                                 <div class="info campus_info">
                                     <h4>
-                                        <a href="#">MELBOURNE CAMPUS</a>
+                                        <a href="Melbourne_Campus.aspx">MELBOURNE CAMPUS</a>
                                     </h4>
 
                                     <p style="font-size: 13px">
@@ -341,7 +344,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                                     </p>
                                     <p style="font-size: 13px">
 
-                                        <a href="#">
+                                        <a href="https://www.google.com/maps/place/9%2F108+Lonsdale+St,+Melbourne+VIC+3000/@-37.8101304,144.9690749,891m/data=!3m2!1e3!4b1!4m6!3m5!1s0x6ad642c92c70b903:0x1a52b8f482d3e7ff!8m2!3d-37.8101304!4d144.9690749!16s%2Fg%2F11w8dn7696?entry=ttu&g_ep=EgoyMDI1MDgyNS4wIKXMDSoASAFQAw%3D%3D">
                                             <i class="fas fa-map">&nbsp&nbsp</i>Level 9,
                                                                 108 Lonsdale Street,
                                                                 Melbourne, VIC, 3000, Australia
@@ -384,7 +387,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                                     <li>
                                         <a href="academic_enrolment_calenda.aspx"><i class="ti-angle-right"></i>Calendar</a>
                                     </li>
-                                   
+
                                 </ul>
                             </div>
                         </div>
@@ -396,7 +399,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                                 <h4><%--Support--%> &nbsp</h4>
                                 <ul>
 
-                                     <li>
+                                    <li>
                                         <a href="FAQ.aspx"><i class="ti-angle-right"></i>Faq</a>
                                     </li>
                                     <li>
@@ -408,7 +411,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                                     <li>
                                         <a href="assets/img/NW-Brochure-copy_compressed-3-1.pdf"><i class="ti-angle-right"></i>Brochure</a>
                                     </li>
-                                  <%--  <li>
+                                    <%--  <li>
                                         <a href="#"><i class="ti-angle-right"></i>Documentation</a>
                                     </li>
                                     <li>
@@ -621,9 +624,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         </asp:ContentPlaceHolder>
 
         <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WBD2B9DK"
+        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WBD2B9DK"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
+        <!-- End Google Tag Manager (noscript) -->
     </form>
 </body>
 </html>

@@ -74,7 +74,7 @@
                     <!-- Single Item -->
                     <div class="col-md-6 col-sm-6 equal-height">
                         <div class="item mariner">
-                            <a href="javascript:void(0)">
+                            <a href="javascript:void(0)" style="cursor:default">
                                 <div class="item-box">
                                     <div class="icon">
                                         <i class="ti-pulse"></i>
@@ -91,7 +91,7 @@
                     <!-- Single Item -->
                     <div class="col-md-6 col-sm-6 equal-height">
                         <div class="item java">
-                            <a href="javascript:void(0)">
+                            <a href="javascript:void(0)" style="cursor:default">
                                 <div class="item-box">
                                     <div class="icon">
                                         <i class="ti-desktop"></i>
@@ -110,7 +110,7 @@
                     <!-- Single Item -->
                     <div class="col-md-6 col-sm-6 equal-height">
                         <div class="item malachite">
-                            <a href="javascript:void(0)">
+                            <a href="javascript:void(0)" style="cursor:default">
                                 <div class="item-box">
                                     <div class="icon">
                                         <i class="ti-server"></i>
@@ -127,7 +127,7 @@
                     <!-- Single Item -->
                     <div class="col-md-6 col-sm-6 equal-height">
                         <div class="item brilliantrose">
-                            <a href="javascript:void(0)">
+                            <a href="javascript:void(0)" style="cursor:default">
                                 <div class="item-box">
                                     <div class="icon">
                                         <i class="ti-panel"></i>

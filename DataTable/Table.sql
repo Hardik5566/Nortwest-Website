@@ -319,6 +319,34 @@ create table tbl_policies
 	delete_by int,
 	delete_date datetime
 )
+----------------------------------------
+--------------Table Agent----------------
+----------------------------------------
+create table tbl_agents
+(
+	agent_id int identity(1,1),
+	agency_name varchar(450),
+	business_name varchar(max),
+	contact_number varchar(15),
+	email varchar(200),
+	status bit,
+	create_by int,
+	create_date datetime,
+	modify_by int,
+	modify_date datetime,
+	delete_by int,
+	delete_date datetime
+)
+----------------------------------------
+--------------Table Agent Type-----------
+----------------------------------------
+CREATE TYPE agenttabletype AS TABLE
+(
+    agency_name     VARCHAR(450),
+    business_name   VARCHAR(MAX),
+    contact_number  VARCHAR(15),
+    email           VARCHAR(200)
+);
 
 
 

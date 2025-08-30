@@ -488,89 +488,131 @@
 
     </script>--%>
 
-    <script>
-        $(document).ready(function () {
-            // ---------------- Timer Setup ----------------
+   <script>
+       $(document).ready(function () {
+           // ---------------- Validation Helpers ----------------
+           function validateField(selector, errorMessage, errors) {
+               var field = $(selector);
+               if (field.val().trim() === "") {
+                   errors.push(errorMessage);
+                   field.css("border", "2px solid #ff0000a6");
+               } else {
+                   field.css("border", "1px solid #ccc");
+               }
+           }
 
+           function validateEmailValue(value, errorMessage, errors, field) {
+               var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+               if (value.trim() === "") {
+                   errors.push("Email is required");
+                   field.css("border", "2px solid #ff0000a6");
+               } else if (!emailPattern.test(value.trim())) {
+                   errors.push(errorMessage);
+                   field.css("border", "2px solid #ff0000a6");
+               } else {
+                   field.css("border", "1px solid #ccc");
+               }
+           }
 
-            // ---------------- Validation Functions ----------------
-            function validateField(selector, errorMessage, errors) {
-                var field = $(selector);
-                if (field.val().trim() === "") {
-                    errors.push(errorMessage);
-                    field.css("border", "2px solid #ff0000a6");
-                } else {
-                    field.css("border", "1px solid #ccc");
-                }
+           $(".form-control").on("input", function () {
+               $(this).css("border", "1px solid #ccc");
+           });
+
+           // ---------------- Next Step Button ----------------
+           $(".next-step").click(function (e) {
+               e.preventDefault();
+
+               var currentStep = $(this).closest(".step");
+               var nextStep = currentStep.next(".step");
+               var errors = [];
+
+               // 🔹 Step 1 Validations
+               if (currentStep.hasClass("step-1")) {
+                   validateField("#<%= txt_reg_name.ClientID %>", "Registered Business Name is required", errors);
+                validateField("#<%= txt_trading_name.ClientID %>", "Trading Name is required", errors);
+                validateField("#<%= txt_abn.ClientID %>", "ABN is required", errors);
+                validateField("#<%= txt_director_name.ClientID %>", "Director Name is required", errors);
+                validateField("#<%= txt_est_year.ClientID %>", "Established Year is required", errors);
+                validateField("#<%= txt_website.ClientID %>", "Website is required", errors);
+                validateField("#<%= TextBox1.ClientID %>", "Phone is required", errors);
+                validateField("#<%= TextBox2.ClientID %>", "Mobile is required", errors);
+                validateField("#<%= txt_address.ClientID %>", "Address is required", errors);
+                validateField("#<%= txt_post_address.ClientID %>", "Postal Address is required", errors);
+
+                // Email
+                var emailField = $("#<%= txt_email.ClientID %>");
+                validateEmailValue(emailField.val(), "Enter a valid Email", errors, emailField);
             }
 
-            function validateEmail(selector, errorMessage, errors) {
-                var field = $(selector);
-                var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-                if (field.val().trim() === "") {
-                    errors.push("Email is required");
-                    field.css("border", "2px solid #ff0000a6");
-                } else if (!emailPattern.test(field.val().trim())) {
-                    errors.push(errorMessage);
-                    field.css("border", "2px solid #ff0000a6");
-                } else {
-                    field.css("border", "1px solid #ccc");
+            // 🔹 Step 2 Validations (NO checkbox validation)
+            if (currentStep.hasClass("step-2")) {
+                // Staff Names
+                if ($(".staff-input").filter(function () { return this.value.trim() !== ""; }).length === 0) {
+                    errors.push("Please enter at least one staff name.");
+                    $(".staff-input").css("border", "2px solid #ff0000a6");
                 }
+
+                // Services + Fees (if any service filled, fee required too)
+                $(".service-input").each(function (i) {
+                    var serviceVal = $(this).val().trim();
+                    var feeVal = $(".fee-input").eq(i).val().trim();
+                    if (serviceVal !== "" && feeVal === "") {
+                        errors.push("Please enter fee for service: " + serviceVal);
+                        $(".fee-input").eq(i).css("border", "2px solid #ff0000a6");
+                    }
+                });
+
+                // Members
+                if ($(".member-input").filter(function () { return this.value.trim() !== ""; }).length === 0) {
+                    errors.push("Please enter at least one membership detail.");
+                    $(".member-input").css("border", "2px solid #ff0000a6");
+                }
+
+                // Intended Info
+                if ($(".intend-input").filter(function () { return this.value.trim() !== ""; }).length === 0) {
+                    errors.push("Please provide at least one intended info.");
+                    $(".intend-input").css("border", "2px solid #ff0000a6");
+                }
+
+                // Institutions
+                $(".institution-input").each(function (i) {
+                    var inst = $(this).val().trim();
+                    var number = $(".number-input").eq(i).val().trim();
+                    var email = $(".email-input").eq(i).val().trim();
+                    if (inst === "" && number === "" && email === "") {
+                        errors.push("Please fill at least one institution with contact details.");
+                        $(".institution-input, .number-input, .email-input").css("border", "2px solid #ff0000a6");
+                        return false; // stop loop
+                    } else {
+                        validateEmailValue(email, "Invalid institution contact email", errors, $(".email-input").eq(i));
+                    }
+                });
             }
 
-            // Remove red border on input as the user types
-            $(".form-control").on("input", function () {
-                $(this).css("border", "1px solid #ccc");
-            });
+            // ❌ If errors exist → stop
+            if (errors.length > 0) {
+                alert(errors.join("\n"));
+                return;
+            }
 
-            // ---------------- Navigation: Next & Previous Steps ----------------
-            $(".next-step").click(function (e) {
-                e.preventDefault(); // Prevent the default button behavior
-
-                var currentStep = $(this).closest(".step");
-                var nextStep = currentStep.next(".step");
-
-                var errors = []; // Array to hold validation errors
-
-                // Validate the fields (adjust selectors as needed)
-               <%-- validateField("#<%= txt_f_name.ClientID %>", "First Name is required", errors);
-                validateField("#<%= txt_l_name.ClientID %>", "Last Name is required", errors);
-                validateEmail("#<%= txt_email.ClientID %>", "Enter a valid Email Address", errors);
-                validateField("#<%= txt_sd_id.ClientID %>", "Student ID Number is required", errors);
-                validateField("#<%= txt_nationality.ClientID %>", "Nationality is required", errors);
-                validateField("#<%= txt_dob.ClientID %>", "Date of Birth is required", errors);
-                validateField("#<%= txt_passport.ClientID %>", "Passport Number is required", errors);--%>
-
-                if (errors.length > 0) {
-
-                    // alert("Please fix the following errors:\n\n" + errors.join("\n"));
-                    return; // Do not proceed if validation fails
-                }
-
-                // If validation passes, hide the current step and show the next one
-                currentStep.hide();
-                nextStep.show();
-
-                // Smooth scroll to the top (or a specific position)
-                $("html, body").animate({ scrollTop: 550 }, "fast");
-
-                // If the next step is "step-2", show the timer container and start the timer
-
-            });
-
-            // Logic for the Previous button
-            $(".prev-step").click(function () {
-                var currentStep = $(this).closest(".step");
-                var prevStep = currentStep.prev(".step");
-
-                currentStep.hide();
-                prevStep.show();
-
-                $("html, body").animate({ scrollTop: 550 }, "fast");
-            });
+            // ✅ If all valid → move to next step
+            currentStep.hide();
+            nextStep.show();
+            $("html, body").animate({ scrollTop: 550 }, "fast");
         });
-    </script>
 
+        // ---------------- Previous Button ----------------
+        $(".prev-step").click(function () {
+            var currentStep = $(this).closest(".step");
+            var prevStep = currentStep.prev(".step");
+
+            currentStep.hide();
+            prevStep.show();
+
+            $("html, body").animate({ scrollTop: 550 }, "fast");
+        });
+    });
+</script>
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
