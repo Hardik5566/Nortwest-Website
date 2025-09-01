@@ -61,7 +61,7 @@
                                         <div class="col-md-4">
                                             <ul>
                                                 <li><a href="credit_transfer_application.aspx">Credit Transfer Application</a></li>
-                                                <li><a href="#">Installment Payment Agreement</a></li>
+                                             <%--   <li><a href="#">Installment Payment Agreement</a></li>--%>
                                                 <li><a href="application_for_reassessment.aspx">Application for Reassessment</a></li>
                                                 <li><a href="appeal_form.aspx">Appeal Form</a></li>
                                                 <li><a href="complaint_and_feedback_form.aspx">Complaint and Feedback Form</a></li>
@@ -75,7 +75,7 @@
                                                 <li><a href="refund_form.aspx">Refund Form</a></li>
                                                 <li><a href="GTE_Form.aspx">GTE Form</a></li>
                                                 <li><a href="EPT_Test.aspx">English Test (EPT)</a></li>
-                                                <li><a href="#">LLN Test</a></li>
+                                                <li><a href="LLN_Test.aspx">LLN Test</a></li>
                                                 <li><a href="new_elicos_orientation_form.aspx">Student Orientation Form Elicos</a></li>
                                                 <li><a href="new_vet_orientation_form.aspx">Student Orientation Form Vet</a></li>
                                             </ul>

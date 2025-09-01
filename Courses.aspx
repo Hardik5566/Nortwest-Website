@@ -158,7 +158,7 @@
                             </a>
                         </div>
                     </div>
-                    <div class="equal-height col-md-12 col-sm-12">
+                   <%-- <div class="equal-height col-md-12 col-sm-12">
                         <div class="item mariner">
                             <a href="#">
                                 <div class="info" style="min-height: auto">
@@ -166,7 +166,7 @@
                                 </div>
                             </a>
                         </div>
-                    </div>
+                    </div>--%>
                 </div>
             </div>
             <div class="row">

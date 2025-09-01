@@ -82,7 +82,7 @@
                                                         <asp:ListView ID="list_date" runat="server">
                                                             <ItemTemplate>
                                                                 <li>
-                                                                    <a href="javascript:void(0)"><i class="fas fa-calendar-alt"></i>&nbsp <%# Container.DataItem %></a>
+                                                                    <a href="javascript:void(0)" style="cursor:default"><i class="fas fa-calendar-alt"></i>&nbsp <%# Container.DataItem %></a>
                                                                 </li>
                                                             </ItemTemplate>
                                                         </asp:ListView>
