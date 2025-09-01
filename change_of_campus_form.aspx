@@ -1,10 +1,10 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="change_of_campus_form.aspx.cs" Inherits="change_of_campus_form" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="title" Runat="Server">
+<asp:Content ID="Content1" ContentPlaceHolderID="title" runat="Server">
     Change Of Campus Form
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="head" Runat="Server">
-     
+<asp:Content ID="Content2" ContentPlaceHolderID="head" runat="Server">
+
     <link href="assets/css/select2.min.css" rel="stylesheet" />
     <link href="assets/country_code/css/intlTelInput.min.css" rel="stylesheet" />
     <style>
@@ -35,7 +35,7 @@
         }
     </style>
 </asp:Content>
-<asp:Content ID="Content3" ContentPlaceHolderID="body" Runat="Server">
+<asp:Content ID="Content3" ContentPlaceHolderID="body" runat="Server">
     <div class="form breadcrumb-area shadow dark bg-fixed text-center text-light" style="background-image: url(assets/img/courses_banner.png);">
         <div class="container">
             <div class="row">
@@ -145,10 +145,10 @@
         </div>
     </div>
 
-   
+
 </asp:Content>
-<asp:Content ID="Content4" ContentPlaceHolderID="jqury" Runat="Server">
-    
+<asp:Content ID="Content4" ContentPlaceHolderID="jqury" runat="Server">
+
     <script src="assets/js/select2.min.js"></script>
     <script>
         $("#<%= btn_submit.ClientID %>").click(function (event) {
@@ -161,118 +161,127 @@
         // Form validation function
         function validateForm() {
             var isValid = true;
+            var firstInvalid = null; // store first invalid control
 
             // Validate Full Name
             if ($("#<%= txt_s_number.ClientID %>").val().trim() == "") {
                 $("#<%= txt_s_number.ClientID %>").css("border-color", "red");
                 isValid = false;
-            } else {
-                $("#<%= txt_s_number.ClientID %>").css("border-color", "");
+                if (!firstInvalid) firstInvalid = $("#<%= txt_s_number.ClientID %>");
+        } else {
+            $("#<%= txt_s_number.ClientID %>").css("border-color", "");
             }
-
-
-
-
-
-
 
             // Validate Student ID Number
             if ($("#<%= txt_s_last_name.ClientID %>").val().trim() == "") {
                 $("#<%= txt_s_last_name.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_s_last_name.ClientID %>").css("border-color", "");
-            }
+            isValid = false;
+            if (!firstInvalid) firstInvalid = $("#<%= txt_s_last_name.ClientID %>");
+        } else {
+            $("#<%= txt_s_last_name.ClientID %>").css("border-color", "");
+        }
 
             // Validate Photo
-            if ($("#<%= txt_s_given_name.ClientID %>").val() == "") {
+        if ($("#<%= txt_s_given_name.ClientID %>").val() == "") {
                 $("#<%= txt_s_given_name.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_s_given_name.ClientID %>").css("border-color", "");
-            }
+            isValid = false;
+            if (!firstInvalid) firstInvalid = $("#<%= txt_s_given_name.ClientID %>");
+        } else {
+            $("#<%= txt_s_given_name.ClientID %>").css("border-color", "");
+        }
 
-            if ($("#<%= txt_s_full_name.ClientID %>").val().trim() == "") {
+        if ($("#<%= txt_s_full_name.ClientID %>").val().trim() == "") {
                 $("#<%= txt_s_full_name.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_s_full_name.ClientID %>").css("border-color", "");
-            }
+            isValid = false;
+            if (!firstInvalid) firstInvalid = $("#<%= txt_s_full_name.ClientID %>");
+        } else {
+            $("#<%= txt_s_full_name.ClientID %>").css("border-color", "");
+        }
+
             // Validate Email
-            var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-            if (!emailRegex.test($("#<%= txt_email.ClientID %>").val())) {
-                $("#<%= txt_email.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_email.ClientID %>").css("border-color", "");
-            }
+        var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (!emailRegex.test($("#<%= txt_email.ClientID %>").val())) {
+            $("#<%= txt_email.ClientID %>").css("border-color", "red");
+            isValid = false;
+            if (!firstInvalid) firstInvalid = $("#<%= txt_email.ClientID %>");
+        } else {
+            $("#<%= txt_email.ClientID %>").css("border-color", "");
+        }
 
-
-
-            if ($("#<%= txt_add.ClientID %>").val().trim() == "") {
+        if ($("#<%= txt_add.ClientID %>").val().trim() == "") {
                 $("#<%= txt_add.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_add.ClientID %>").css("border-color", "");
-            }
+            isValid = false;
+            if (!firstInvalid) firstInvalid = $("#<%= txt_add.ClientID %>");
+        } else {
+            $("#<%= txt_add.ClientID %>").css("border-color", "");
+        }
 
-            if ($("#<%= txt_add_line_2.ClientID %>").val().trim() == "") {
+        if ($("#<%= txt_add_line_2.ClientID %>").val().trim() == "") {
                 $("#<%= txt_add_line_2.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_add_line_2.ClientID %>").css("border-color", "");
-            }
+            isValid = false;
+            if (!firstInvalid) firstInvalid = $("#<%= txt_add_line_2.ClientID %>");
+        } else {
+            $("#<%= txt_add_line_2.ClientID %>").css("border-color", "");
+        }
 
-            if ($("#<%= ddl_country.ClientID %>").prop("selectedIndex") == 0) {
+        if ($("#<%= ddl_country.ClientID %>").prop("selectedIndex") == 0) {
                 $("#<%= ddl_country.ClientID %>").next(".nice-select").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= ddl_country.ClientID %>").next(".nice-select").css("border-color", "");
-            }
+            isValid = false;
+            if (!firstInvalid) firstInvalid = $("#<%= ddl_country.ClientID %>");
+        } else {
+            $("#<%= ddl_country.ClientID %>").next(".nice-select").css("border-color", "");
+        }
 
-            if ($("#<%= txt_city.ClientID %>").val().trim() == "") {
+        if ($("#<%= txt_city.ClientID %>").val().trim() == "") {
                 $("#<%= txt_city.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_city.ClientID %>").css("border-color", "");
-            }
+            isValid = false;
+            if (!firstInvalid) firstInvalid = $("#<%= txt_city.ClientID %>");
+        } else {
+            $("#<%= txt_city.ClientID %>").css("border-color", "");
+        }
 
-            if ($("#<%= txt_state.ClientID %>").val().trim() == "") {
+        if ($("#<%= txt_state.ClientID %>").val().trim() == "") {
                 $("#<%= txt_state.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_state.ClientID %>").css("border-color", "");
-            }
+            isValid = false;
+            if (!firstInvalid) firstInvalid = $("#<%= txt_state.ClientID %>");
+        } else {
+            $("#<%= txt_state.ClientID %>").css("border-color", "");
+        }
 
-            if ($("#<%= txt_zip.ClientID %>").val().trim() == "") {
+        if ($("#<%= txt_zip.ClientID %>").val().trim() == "") {
                 $("#<%= txt_zip.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_zip.ClientID %>").css("border-color", "");
-            }
+            isValid = false;
+            if (!firstInvalid) firstInvalid = $("#<%= txt_zip.ClientID %>");
+        } else {
+            $("#<%= txt_zip.ClientID %>").css("border-color", "");
+        }
 
-
-            if ($("#<%= hd_contact_no_code.ClientID%>").val() == "") {
+        if ($("#<%= hd_contact_no_code.ClientID%>").val() == "") {
                 $("#phone").css("border-color", "red");
                 isValid = false;
+                if (!firstInvalid) firstInvalid = $("#phone");
             } else {
                 $("#phone").css("border-color", "");
             }
 
-
-
             if ($(".ch_explanation input[type='checkbox']:not(:checked)").length > 0) {
-                $(".lbl_explanation_error.txt_error").show(); // Use the proper selector
+                $(".lbl_explanation_error.txt_error").show();
                 isValid = false;
+                if (!firstInvalid) firstInvalid = $(".ch_explanation input[type='checkbox']").first();
             } else {
-                $(".lbl_explanation_error.txt_error").hide(); // Properly hide the error
-
+                $(".lbl_explanation_error.txt_error").hide();
             }
 
+            // 👉 Scroll to the first invalid control
+            if (!isValid && firstInvalid) {
+                $('html, body').animate({
+                    scrollTop: firstInvalid.offset().top - 100
+                }, 500);
+                firstInvalid.focus();
+            }
 
             return isValid;
         }
-
     </script>
     <%--  --%>
     <script>
