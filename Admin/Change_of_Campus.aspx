@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Admin/MasterPage.master" AutoEventWireup="true" CodeFile="Change_of_Campus.aspx.cs" Inherits="Change_of_Campus" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="title" runat="Server">
-   Change Of Campus
+    Change Of Campus
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="head" runat="Server">
     <link href="assets/css/Chosen.min.css" rel="stylesheet" />
@@ -60,36 +60,36 @@
                     <asp:TemplateField HeaderText="Student Id">
                         <ItemTemplate>
                             <label>
-                                <%# Eval("student_no") %>
+                                <%# Eval("std_id") %>
                             </label>
 
                         </ItemTemplate>
                     </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Last Name">
+                    <asp:TemplateField HeaderText="Passport Number">
                         <ItemTemplate>
                             <label>
-                                <%# Eval("student_last_name") %>
+                                <%# Eval("passport_no") %>
                             </label>
                         </ItemTemplate>
                     </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Given Name">
+                    <asp:TemplateField HeaderText="Student Name">
                         <ItemTemplate>
                             <label>
-                                <%# Eval("student_given_name") %>
-                            </label>
-                        </ItemTemplate>
-                    </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Full Name">
-                        <ItemTemplate>
-                            <label>
-                                <%# Eval("student_full_name ") %>
+                                <%# Eval("student_name") %>
                             </label>
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="Email">
                         <ItemTemplate>
                             <label>
-                                <%# Eval("email") %>
+                                <%# Eval("email ") %>
+                            </label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Intake Date">
+                        <ItemTemplate>
+                            <label>
+                                <%# Eval("intake_date") %>
                             </label>
                         </ItemTemplate>
                     </asp:TemplateField>
@@ -100,21 +100,21 @@
                             </label>
                         </ItemTemplate>
                     </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Street Address">
+                    <asp:TemplateField HeaderText="Change Campus">
                         <ItemTemplate>
                             <label>
-                                <%# Eval("street_address") %>
+                                <%# Eval("change_campus") %>
                             </label>
                         </ItemTemplate>
                     </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Addressline 2">
+                    <asp:TemplateField HeaderText="Current Campus">
                         <ItemTemplate>
                             <label>
-                                <%# Eval("street_address_line_2") %>
+                                <%# Eval("current_campus") %>
                             </label>
                         </ItemTemplate>
                     </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Country">
+                   <%-- <asp:TemplateField HeaderText="Country">
                         <ItemTemplate>
                             <label>
                                 <%# Eval("country") %>
@@ -143,7 +143,7 @@
                                 <%# Eval("zip") %>
                             </label>
                         </ItemTemplate>
-                    </asp:TemplateField>
+                    </asp:TemplateField>--%>
 
                 </Columns>
             </asp:GridView>

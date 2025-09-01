@@ -705,29 +705,36 @@ public class BAL_Forms
 
         return command.ExtQueryDS(cmd);
     }
-    public static DataSet ins_change_of_campus_form(string student_no, string student_last_name, string student_given_name, string student_full_name, string email, string countrycode, string contact_no, string street_address, string address_line_2, string city, string state_region, string zip, string country, string create_by)
+    public static DataSet ins_change_of_campus_form(string std_id, string passport_no, string student_name, string date_of_birth, string street_address, string country_code, string contact_no, string email, string course_enrolled, string intake_date, string change_campus, string current_campus, string course_name, string reason_change_course, string student_signature, string sign_date, string create_by)
     {
         SqlCommand cmd = new SqlCommand();
         cmd.CommandText = "ins_change_of_campus_form_sp";
+        cmd.CommandType = CommandType.StoredProcedure;
+
         parameter param = new parameter();
 
-        cmd.Parameters.Add(param.stringparam("@student_no", student_no));
-        cmd.Parameters.Add(param.stringparam("@student_last_name", student_last_name));
-        cmd.Parameters.Add(param.stringparam("@student_given_name", student_given_name));
-        cmd.Parameters.Add(param.stringparam("@student_full_name", student_full_name));
-        cmd.Parameters.Add(param.stringparam("@email", email));
-        cmd.Parameters.Add(param.stringparam("@country_code", countrycode));
-        cmd.Parameters.Add(param.stringparam("@contact_no", contact_no));
+        cmd.Parameters.Add(param.stringparam("@std_id", std_id));
+        cmd.Parameters.Add(param.stringparam("@passport_no", passport_no));
+        cmd.Parameters.Add(param.stringparam("@student_name", student_name));
+        cmd.Parameters.Add(param.stringparam("@date_of_birth", date_of_birth));
         cmd.Parameters.Add(param.stringparam("@street_address", street_address));
-        cmd.Parameters.Add(param.stringparam("@street_address_line_2", address_line_2));
-        cmd.Parameters.Add(param.stringparam("@city", city));
-        cmd.Parameters.Add(param.stringparam("@state_region", state_region));
-        cmd.Parameters.Add(param.stringparam("@zip", zip));
-        cmd.Parameters.Add(param.stringparam("@country", country));
+        cmd.Parameters.Add(param.stringparam("@country_code", country_code));
+        cmd.Parameters.Add(param.stringparam("@contact_no", contact_no));
+        cmd.Parameters.Add(param.stringparam("@email", email));
+        cmd.Parameters.Add(param.stringparam("@course_enrolled", course_enrolled));
+        cmd.Parameters.Add(param.stringparam("@intake_date", intake_date));
+        cmd.Parameters.Add(param.stringparam("@change_campus", change_campus));
+        cmd.Parameters.Add(param.stringparam("@current_campus", current_campus));
+        cmd.Parameters.Add(param.stringparam("@course_name", course_name));
+        cmd.Parameters.Add(param.stringparam("@reason_change_course", reason_change_course));
+        cmd.Parameters.Add(param.stringparam("@student_signature", student_signature));
+        cmd.Parameters.Add(param.stringparam("@sign_date", sign_date));
         cmd.Parameters.Add(param.intparam("@create_by", create_by));
 
         return command.ExtQueryDS(cmd);
     }
+
+
     public static DataSet ins_application_for_deferment_form(string student_name, string student_id, string deferment_date, string course, string reason, string enrolment_until, string address_while_on_leave, string email, string phone_code, string phone_no, string contact_code, string contact_no, string student_signature, string sign_date, string create_by)
     {
         SqlCommand cmd = new SqlCommand();

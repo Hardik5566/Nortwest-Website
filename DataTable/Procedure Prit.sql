@@ -701,3 +701,103 @@ BEGIN
 	where 
 		status = 1
 END
+----------------------------------------
+----------Change Campus---------------
+----------------------------------------
+alter PROCEDURE [dbo].ins_change_of_campus_form_sp
+(
+    @std_id              VARCHAR(150),
+    @passport_no         VARCHAR(350),
+    @student_name        VARCHAR(MAX),
+    @date_of_birth       VARCHAR(30),
+    @street_address      VARCHAR(MAX),
+    @country_code        VARCHAR(10),
+    @contact_no          VARCHAR(20),
+    @email               VARCHAR(150),
+    @course_enrolled     VARCHAR(450),
+    @intake_date         VARCHAR(30),
+    @change_campus       VARCHAR(200),
+    @current_campus     VARCHAR(200),
+    @course_name         VARCHAR(450),
+    @reason_change_course VARCHAR(MAX),
+    @student_signature   VARCHAR(MAX), 
+    @sign_date           varchar(30),
+    @create_by           INT
+)
+AS
+BEGIN
+    INSERT INTO [dbo].[tbl_change_of_campus_form]
+		VALUES
+			(
+				@std_id,
+				@passport_no,
+				@student_name,
+				@date_of_birth,
+				@street_address,
+				@country_code,
+				@contact_no,
+				@email,
+				@course_enrolled,
+				@intake_date,
+				@change_campus,
+				@current_campus,
+				@course_name,
+				@reason_change_course,
+				@student_signature,
+				@sign_date,
+				1, -- Active by default
+				@create_by,
+				dbo.GetCurrentAUTTime(),
+				null,
+				null,
+				null,
+				null
+			)
+		declare	@id int=@@identity
+	exec [dbo].[sel_change_of_campus_form_sp] @id
+END
+----------------------------------------
+---------Display Change Campus----------
+----------------------------------------
+ALTER PROCEDURE [dbo].[dis_change_of_campus_form_sp](	@from_date datetime,	@to_date datetime)ASBEGIN	 SELECT 
+        id,
+        std_id,
+        passport_no,
+        student_name,
+        format(cast(date_of_birth as date),'dd MMM,yyyy') as date_of_birth,
+        street_address,
+        country_code,
+        contact_no,
+        email,
+        course_enrolled,
+       format(cast( intake_date as date),'dd MMM,yyyy') as intake_date,
+        change_campus,
+        current_campus,
+        course_name,
+        reason_change_course,
+        student_signature,
+        format(cast( sign_date as date),'dd MMM,yyyy') as sign_date,
+        status,
+		format(create_date,'dd MMM, yyyy') as [date]    FROM tbl_change_of_campus_form	where	status=1	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)	END;----------------------------------------
+---------Display Change Campus----------
+----------------------------------------
+create PROCEDURE [dbo].[sel_change_of_campus_form_sp](	@id int)ASBEGIN	 SELECT 
+        id,
+        std_id,
+        passport_no,
+        student_name,
+        format(cast(date_of_birth as date),'dd MMM,yyyy') as date_of_birth,
+        street_address,
+        country_code,
+        contact_no,
+        email,
+        course_enrolled,
+       format(cast( intake_date as date),'dd MMM,yyyy') as intake_date,
+        change_campus,
+        current_campus,
+        course_name,
+        reason_change_course,
+        student_signature,
+        format(cast( sign_date as date),'dd MMM,yyyy') as sign_date,
+        status,
+		format(create_date,'dd MMM, yyyy') as [date]    FROM tbl_change_of_campus_form	where	status=1	and id=@idEND

@@ -143,7 +143,7 @@ public class Send_Mail
         {
             MailMessage mail = new MailMessage();
             mail.From = new MailAddress("vaghasiyaprit799@gmail.com");
-            mail.Bcc.Add("krupali@nortwest.edu.au");
+            //mail.Bcc.Add("krupali@nortwest.edu.au");
 
             //mail.Bcc.Add("hardikvaghasiya5566@gmail.com");
 

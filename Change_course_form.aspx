@@ -74,30 +74,36 @@
 
                 <div class="row">
                     <div class="col-md-4">
-                        <label class="lbl_title">Student Number</label>
+                        <label class="lbl_title">Student Name</label>
                         <asp:TextBox ID="txt_student_no" CssClass="form-control" runat="server"></asp:TextBox>
                     </div>
                     <div class="col-md-4">
-                        <label class="lbl_title">Student Last Name</label>
+                        <label class="lbl_title">Student ID</label>
                         <asp:TextBox ID="txt_l_name" CssClass="form-control" runat="server"></asp:TextBox>
                     </div>
-                    <div class="col-md-4">
-                        <label class="lbl_title">
-                            Student Given Names</label>
-                        <asp:TextBox ID="txt_given_name" CssClass="form-control" runat="server"></asp:TextBox>
-                    </div>
+                    
                 </div>
 
                 <div class="row">
+                    <div class="col-md-4">
+                        <label class="lbl_title">
+                            Country</label>
+                        <asp:TextBox ID="txt_given_name" CssClass="form-control" runat="server"></asp:TextBox>
+                    </div>
+
                     <div class="col-md-12">
-                        <label class="lbl_title">Student Full Name</label>
+                        <label class="lbl_title">Passport No</label>
                         <asp:TextBox ID="txt_full_name" CssClass="form-control" runat="server"></asp:TextBox>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        <label class="lbl_title">Email Address</label>
+                        <label class="lbl_title">Date of Birth</label>
                         <asp:TextBox ID="txt_email" CssClass="form-control" runat="server"></asp:TextBox>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="lbl_title">Course Enrolled</label>
+                        <asp:TextBox ID="TextBox1" CssClass="form-control" runat="server"></asp:TextBox>
                     </div>
                     <div class="col-md-6">
                         <label class="lbl_title">Student Contact Number</label>
