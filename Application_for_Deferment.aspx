@@ -58,105 +58,79 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Information Section -->
             <div class="form-container">
                 <div>
-                    <h4>Student details</h4>
+                    <h4>INFORMATION TO NOTE</h4>
                 </div>
-
-                <div class="row">
-                    <div class="col-md-6">
-                        <label class="lbl_title">Student Name</label>
-                        <asp:TextBox ID="txt_f_name" CssClass="form-control" runat="server"></asp:TextBox>
-                    </div>
-
-                    <div class="col-md-6">
-                        <label class="lbl_title">Student ID</label>
-                        <asp:TextBox ID="txt_id" CssClass="form-control" runat="server"></asp:TextBox>
-                    </div>
-                </div>
-
-                <div class="row">
-
-                    <%--<div class="col-md-4">
-                    <label class="lbl_title">Student ID</label>
-                    <asp:TextBox ID="txt_student_id" CssClass="form-control" runat="server"></asp:TextBox>
-                </div>--%>
-                    <div class="col-md-6">
-                        <label class="lbl_title">Date</label>
-                        <asp:TextBox ID="txt_date" TextMode="Date" CssClass="form-control" runat="server"></asp:TextBox>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="lbl_title lbl_title" for="courseSelection">Course</label>
-                        <div id="courseSelection">
-
-                            <label class="checkbox-inline">
-                                <asp:CheckBox ID="CheckBox1" runat="server" CssClass="form-check-input" />
-                                BSB50120 - Diploma of Business
-                            </label>
-                            <label class="checkbox-inline">
-                                <asp:CheckBox ID="CheckBox2" runat="server" CssClass="form-check-input" />
-                                BSB60120 - Advanced Diploma of Business
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-
-                    <div class="col-md-12">
-                        <label class="lbl_title">I wish to defer / suspend my studies for the following reason/s:</label>
-                        <asp:TextBox ID="txt_reason" CssClass="form-control" Rows="5" TextMode="MultiLine" runat="server"></asp:TextBox>
-                    </div>
-
-                </div>
-                <div class="row">
-
-                    <div class="col-md-12">
-                        <label class="lbl_title">I wish to defer / suspend my enrolment until (insert date):</label>
-                        <asp:TextBox ID="txt_enrolment" CssClass="form-control" Rows="5" TextMode="MultiLine" runat="server"></asp:TextBox>
-                    </div>
-
-                </div>
-
-                <div class="row">
-
-                    <div class="col-md-12">
-                        <label class="lbl_title">Address while on leave:</label>
-                        <asp:TextBox ID="txt_addrsess_leave" CssClass="form-control" Rows="5" TextMode="MultiLine" runat="server"></asp:TextBox>
-                    </div>
-
-                </div>
-                <div class="row">
-
-                    <div class="col-md-12">
-                        <label class="lbl_title">Email</label>
-                        <asp:TextBox ID="txt_email" CssClass="form-control" runat="server"></asp:TextBox>
-                    </div>
-                </div>
-                <div class="row">
-
-                    <div class="col-md-6">
-                        <label class="lbl_title">Student Contact Number</label>
-                        <div class="input-group contact_no">
-                            <input id="phone" onkeypress="return only_number(event)" style="width: 100%; padding: 6px 47px !important" name="phone" class="form-control" type="tel" />
-                            <p id="output"></p>
-                            <asp:HiddenField ID="hd_contact_no_code" Value="" runat="server" />
-                            <asp:HiddenField ID="hd_contact_no" Value="" runat="server" />
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="lbl_title">Mobile</label>
-                        <div class="input-group mobile_no_no">
-                            <input id="phone1" onkeypress="return only_number(event)" style="width: 100%; padding: 6px 47px !important" name="phone1" class="form-control" type="tel" />
-                            <p id="output1"></p>
-                            <asp:HiddenField ID="hd_mobile_no_code" Value="" runat="server" />
-                            <asp:HiddenField ID="hd_mobile_no" Value="" runat="server" />
-                        </div>
-                    </div>
-                </div>
-
-
+                With reference to the Standard 9 of NCP, Registered providers can defer or suspend the enrolment of an overseas student if there are compassionate or compelling circumstances.
+                    <ol>
+                        <li>Deferment/Suspension will be approved only under compassionate and compelling circumstances.</li>
+                        <li>Students must submit the evidence of compassionate and compelling circumstances together with this request form to support the claim.</li>
+                        <li>If the student goes overseas or is returning to their home country during this time, confirmed air ticket should also be submitted with this request form.</li>
+                        <li>Deferment/Suspension may affect the course end date and future course(s) commencement date(s). This may lead you to apply for an extension of student visa to complete the course(s).</li>
+                        <li>The units that you will miss during deferment are subject to availability. Nortwest College may or may not be able to offer these units upon your return and you may need to make other arrangements to complete them.</li>
+                        <li>Please contact the Course Coordinator upon return to make arrangements for any missed units during deferment period.</li>
+                        <li>You must complete the Course Resumption Form upon return to resume classes.</li>
+                    </ol>
             </div>
+            <!-- Student Details Section -->
+            <div class="form-container">
+                <div>
+                    <h4>STUDENT DETAILS</h4>
+                </div>
 
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Student Name</label>
+                        <asp:TextBox ID="txt_student_name" CssClass="form-control" runat="server" />
+                    </div>
+                    <div class="col-md-3">
+                        <label>Student ID</label>
+                        <asp:TextBox ID="txt_std_id" CssClass="form-control" runat="server" />
+                    </div>
+                    <div class="col-md-3">
+                        <label>Date of Birth</label>
+                        <asp:TextBox ID="txt_dob" CssClass="form-control" TextMode="Date" runat="server" />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <label>Reason for request</label>
+                        <asp:TextBox ID="txt_reason" CssClass="form-control" TextMode="MultiLine" Rows="3" runat="server" />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <label>Current Course Name</label>
+                        <asp:TextBox ID="txt_course_name" CssClass="form-control" runat="server" />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Course Start Date</label>
+                        <asp:TextBox ID="txt_course_start" CssClass="form-control" TextMode="Date" runat="server" />
+                    </div>
+                    <div class="col-md-6">
+                        <label>Course End Date</label>
+                        <asp:TextBox ID="txt_course_end" CssClass="form-control" TextMode="Date" runat="server" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Deferment Start Date</label>
+                        <asp:TextBox ID="txt_def_start" CssClass="form-control" TextMode="Date" runat="server" />
+                    </div>
+                    <div class="col-md-6">
+                        <label>Deferment End Date</label>
+                        <asp:TextBox ID="txt_def_end" CssClass="form-control" TextMode="Date" runat="server" />
+                    </div>
+                </div>
+            </div>
 
 
             <div class="form-container">
@@ -190,9 +164,6 @@
                 <asp:Button ID="btn_submit" runat="server" OnClientClick="saveSignature()" OnClick="btn_submit_Click" Text="SUBMIT" CssClass="btn btn-success" />
             </div>
         </div>
-
-
-
     </div>
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
     <script>
@@ -237,63 +208,7 @@
 <asp:Content ID="Content4" ContentPlaceHolderID="jqury" runat="Server">
     <script src="assets/country_code/js/intlTelInput.js"></script>
     <script src="assets/js/select2.min.js"></script>
-    <script>
-        var input = document.querySelector("#phone");
-        var output = document.querySelector("#output");
 
-        var iti = window.intlTelInput(input, {
-            nationalMode: true,
-            separateDialCode: true,
-            //initialCountry: "auto",
-
-            preferredCountries: ['au'],
-            utilsScript: "assets/country_code/js/utils.js",
-        });
-
-        var handleChange = function () {
-
-            var text = (iti.isValidNumber()) ? "" : "Please enter a valid number";
-            var textNode = document.createTextNode(text);
-            output.innerHTML = "";
-            output.appendChild(textNode);
-            $("#<%= hd_contact_no_code.ClientID%>").val(iti.selectedCountryData.dialCode);
-            $("#<%= hd_contact_no.ClientID%>").val($("#phone").val());
-        };
-
-        input.addEventListener('countrychange', handleChange);
-        input.addEventListener('change', handleChange);
-        input.addEventListener('keyup', handleChange);
-
-    </script>
-
-    <script>
-        var input1 = document.querySelector("#phone1");
-        var output1 = document.querySelector("#output1");
-
-        var iti1 = window.intlTelInput(input1, {
-            nationalMode: true,
-            separateDialCode: true,
-            //initialCountry: "auto",
-
-            preferredCountries: ['au'],
-            utilsScript: "assets/country_code/js/utils.js",
-        });
-
-        var handleChange = function () {
-
-            var text = (iti1.isValidNumber()) ? "" : "Please enter a valid number";
-            var textNode = document.createTextNode(text);
-            output1.innerHTML = "";
-            output1.appendChild(textNode);
-            $("#<%= hd_mobile_no_code.ClientID%>").val(iti1.selectedCountryData.dialCode);
-            $("#<%= hd_mobile_no.ClientID%>").val($("#phone1").val());
-        };
-
-        input1.addEventListener('countrychange', handleChange);
-        input1.addEventListener('change', handleChange);
-        input1.addEventListener('keyup', handleChange);
-
-    </script>
 
     <script>
         function only_number(key) {
@@ -323,27 +238,27 @@
             var isValid = true;
 
             // Validate Full Name
-            if ($("#<%= txt_f_name.ClientID %>").val().trim() == "") {
-                $("#<%= txt_f_name.ClientID %>").css("border-color", "red");
+            if ($("#<%= txt_student_name.ClientID %>").val().trim() == "") {
+                $("#<%= txt_student_name.ClientID %>").css("border-color", "red");
                 isValid = false;
             } else {
-                $("#<%= txt_f_name.ClientID %>").css("border-color", "");
+                $("#<%= txt_student_name.ClientID %>").css("border-color", "");
             }
 
             // Validate Student ID Number
-            if ($("#<%= txt_id.ClientID %>").val().trim() == "") {
-                $("#<%= txt_id.ClientID %>").css("border-color", "red");
+            if ($("#<%= txt_std_id.ClientID %>").val().trim() == "") {
+                $("#<%= txt_std_id.ClientID %>").css("border-color", "red");
                 isValid = false;
             } else {
-                $("#<%= txt_id.ClientID %>").css("border-color", "");
+                $("#<%= txt_std_id.ClientID %>").css("border-color", "");
             }
 
             // Validate Photo
-            if ($("#<%= txt_date.ClientID %>").val() == "") {
-                $("#<%= txt_date.ClientID %>").css("border-color", "red");
+            if ($("#<%= txt_dob.ClientID %>").val() == "") {
+                $("#<%= txt_dob.ClientID %>").css("border-color", "red");
                 isValid = false;
             } else {
-                $("#<%= txt_date.ClientID %>").css("border-color", "");
+                $("#<%= txt_dob.ClientID %>").css("border-color", "");
             }
 
             if ($("#<%= txt_reason.ClientID %>").val().trim() == "") {
@@ -352,61 +267,47 @@
             } else {
                 $("#<%= txt_reason.ClientID %>").css("border-color", "");
             }
-            // Validate Email
-            var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-            if (!emailRegex.test($("#<%= txt_email.ClientID %>").val())) {
-                $("#<%= txt_email.ClientID %>").css("border-color", "red");
+           
+            if ($("#<%= txt_course_name.ClientID %>").val().trim() == "") {
+                $("#<%= txt_course_name.ClientID %>").css("border-color", "red");
                 isValid = false;
             } else {
-                $("#<%= txt_email.ClientID %>").css("border-color", "");
+                $("#<%= txt_course_name.ClientID %>").css("border-color", "");
             }
 
-
-
-            if ($("#<%= txt_enrolment.ClientID %>").val().trim() == "") {
-                $("#<%= txt_enrolment.ClientID %>").css("border-color", "red");
+            if ($("#<%= txt_course_start.ClientID %>").val().trim() == "") {
+                $("#<%= txt_course_start.ClientID %>").css("border-color", "red");
                 isValid = false;
             } else {
-                $("#<%= txt_enrolment.ClientID %>").css("border-color", "");
-            }
-
-            if ($("#<%= txt_addrsess_leave.ClientID %>").val().trim() == "") {
-                $("#<%= txt_addrsess_leave.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_addrsess_leave.ClientID %>").css("border-color", "");
+                $("#<%= txt_course_start.ClientID %>").css("border-color", "");
             }
 
             
 
-            if ($("#<%= txt_email.ClientID %>").val().trim() == "") {
-                $("#<%= txt_email.ClientID %>").css("border-color", "red");
+            if ($("#<%= txt_course_end.ClientID %>").val().trim() == "") {
+                $("#<%= txt_course_end.ClientID %>").css("border-color", "red");
                 isValid = false;
             } else {
-                $("#<%= txt_email.ClientID %>").css("border-color", "");
+                $("#<%= txt_course_end.ClientID %>").css("border-color", "");
             }
-
+            if ($("#<%= txt_def_start.ClientID %>").val().trim() == "") {
+                $("#<%= txt_def_start.ClientID %>").css("border-color", "red");
+                isValid = false;
+            } else {
+                $("#<%= txt_def_start.ClientID %>").css("border-color", "");
+            }
+            if ($("#<%= txt_def_end.ClientID %>").val().trim() == "") {
+                $("#<%= txt_def_end.ClientID %>").css("border-color", "red");
+                isValid = false;
+            } else {
+                $("#<%= txt_def_end.ClientID %>").css("border-color", "");
+            }
             if ($("#<%= txt_sign_date.ClientID %>").val().trim() == "") {
                 $("#<%= txt_sign_date.ClientID %>").css("border-color", "red");
                 isValid = false;
             } else {
                 $("#<%= txt_sign_date.ClientID %>").css("border-color", "");
             }
-
-            if ($("#<%= hd_contact_no_code.ClientID%>").val() == "") {
-                $("#phone").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#phone").css("border-color", "");
-            }
-
-            if ($("#<%= hd_mobile_no_code.ClientID%>").val() == "") {
-                $("#phone1").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#phone1").css("border-color", "");
-            }
-
 
             if ($(".ch_explanation input[type='checkbox']:not(:checked)").length > 0) {
                 $(".lbl_explanation_error.txt_error").show(); // Use the proper selector

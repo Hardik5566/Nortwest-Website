@@ -60,57 +60,15 @@
                     <asp:TemplateField HeaderText="Student Id">
                         <ItemTemplate>
                             <label>
-                                <%# Eval("student_no") %>
+                                <%# Eval("std_id") %>
                             </label>
 
                         </ItemTemplate>
                     </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Last Name">
+                    <asp:TemplateField HeaderText="Student Name">
                         <ItemTemplate>
                             <label>
-                                <%# Eval("student_last_name") %>
-                            </label>
-                        </ItemTemplate>
-                    </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Given Name">
-                        <ItemTemplate>
-                            <label>
-                                <%# Eval("student_given_name") %>
-                            </label>
-                        </ItemTemplate>
-                    </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Full Name">
-                        <ItemTemplate>
-                            <label>
-                                <%# Eval("student_full_name ") %>
-                            </label>
-                        </ItemTemplate>
-                    </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Email">
-                        <ItemTemplate>
-                            <label>
-                                <%# Eval("email") %>
-                            </label>
-                        </ItemTemplate>
-                    </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Contact No">
-                        <ItemTemplate>
-                            <label>
-                                <%# Eval("country_code") + Eval("contact_no").ToString() %>
-                            </label>
-                        </ItemTemplate>
-                    </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Street Address">
-                        <ItemTemplate>
-                            <label>
-                                <%# Eval("street_address") %>
-                            </label>
-                        </ItemTemplate>
-                    </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Addressline 2">
-                        <ItemTemplate>
-                            <label>
-                                <%# Eval("address_line_2") %>
+                                <%# Eval("student_name") %>
                             </label>
                         </ItemTemplate>
                     </asp:TemplateField>
@@ -121,26 +79,68 @@
                             </label>
                         </ItemTemplate>
                     </asp:TemplateField>
-                    <asp:TemplateField HeaderText="State">
+                    <asp:TemplateField HeaderText="Passport No">
                         <ItemTemplate>
                             <label>
-                                <%# Eval("state_region") %>
+                                <%# Eval("passport_no ") %>
                             </label>
                         </ItemTemplate>
                     </asp:TemplateField>
-                    <asp:TemplateField HeaderText="City">
+                    <asp:TemplateField HeaderText="Date Of Birth">
                         <ItemTemplate>
                             <label>
-                                <%# Eval("city") %>
+                                <%# Eval("dob") %>
+                            </label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Contact No">
+                        <ItemTemplate>
+                            <label>
+                                <%# Eval("country_code") + Eval("contact_no").ToString() %>
+                            </label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Course Enrolled">
+                        <ItemTemplate>
+                            <label>
+                                <%# Eval("course_enrolled") %>
+                            </label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Intake">
+                        <ItemTemplate>
+                            <label>
+                                <%# Eval("intake") %>
+                            </label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Address">
+                        <ItemTemplate>
+                            <label>
+                                <%# Eval("address") %>
+                            </label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Email">
+                        <ItemTemplate>
+                            <label>
+                                <%# Eval("email") %>
+                            </label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="change_course">
+                        <ItemTemplate>
+                            <label>
+                                <%# Eval("change_course") %>
                             </label>
                         </ItemTemplate>
                     </asp:TemplateField>
 
 
-                    <asp:TemplateField HeaderText="Zipcode">
+                    <asp:TemplateField HeaderText="Sign Date">
                         <ItemTemplate>
                             <label>
-                                <%# Eval("zip") %>
+                                <%# Eval("sign_date") %>
                             </label>
                         </ItemTemplate>
                     </asp:TemplateField>

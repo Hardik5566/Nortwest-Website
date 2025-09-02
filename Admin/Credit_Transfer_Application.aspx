@@ -51,101 +51,67 @@
         <div class="table-responsive">
             <asp:GridView ID="grid_data" runat="server" AutoGenerateColumns="false" CssClass="table tbl_bottem_boder align-middle mb-0 grid_data">
                 <Columns>
-                    <asp:TemplateField HeaderText="Sr">
-                        <ItemTemplate>
-                            <%# Container.DataItemIndex+1 %>
-                        </ItemTemplate>
-                    </asp:TemplateField>
+    <asp:TemplateField HeaderText="Sr">
+        <ItemTemplate>
+            <%# Container.DataItemIndex + 1 %>
+        </ItemTemplate>
+    </asp:TemplateField>
 
-                    <asp:TemplateField HeaderText="Student Id">
-                        <ItemTemplate>
-                            <label>
-                                <%# Eval("student_no") %>
-                            </label>
+    <asp:TemplateField HeaderText="Student ID">
+        <ItemTemplate>
+            <%# Eval("student_id") %>
+        </ItemTemplate>
+    </asp:TemplateField>
 
-                        </ItemTemplate>
-                    </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Last Name">
-                        <ItemTemplate>
-                            <label>
-                                <%# Eval("student_last_name") %>
-                            </label>
-                        </ItemTemplate>
-                    </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Given Name">
-                        <ItemTemplate>
-                            <label>
-                                <%# Eval("student_given_name") %>
-                            </label>
-                        </ItemTemplate>
-                    </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Full Name">
-                        <ItemTemplate>
-                            <label>
-                                <%# Eval("student_full_name ") %>
-                            </label>
-                        </ItemTemplate>
-                    </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Email">
-                        <ItemTemplate>
-                            <label>
-                                <%# Eval("email") %>
-                            </label>
-                        </ItemTemplate>
-                    </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Contact No">
-                        <ItemTemplate>
-                            <label>
-                                <%# Eval("country_code") + Eval("contact_no").ToString() %>
-                            </label>
-                        </ItemTemplate>
-                    </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Street Address">
-                        <ItemTemplate>
-                            <label>
-                                <%# Eval("street_address") %>
-                            </label>
-                        </ItemTemplate>
-                    </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Addressline 2">
-                        <ItemTemplate>
-                            <label>
-                                <%# Eval("street_address_line_2") %>
-                            </label>
-                        </ItemTemplate>
-                    </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Country">
-                        <ItemTemplate>
-                            <label>
-                                <%# Eval("country") %>
-                            </label>
-                        </ItemTemplate>
-                    </asp:TemplateField>
-                    <asp:TemplateField HeaderText="State">
-                        <ItemTemplate>
-                            <label>
-                                <%# Eval("state_region") %>
-                            </label>
-                        </ItemTemplate>
-                    </asp:TemplateField>
-                    <asp:TemplateField HeaderText="City">
-                        <ItemTemplate>
-                            <label>
-                                <%# Eval("city") %>
-                            </label>
-                        </ItemTemplate>
-                    </asp:TemplateField>
+    <asp:TemplateField HeaderText="Full Name">
+        <ItemTemplate>
+            <%# Eval("student_full_name") %>
+        </ItemTemplate>
+    </asp:TemplateField>
 
+    <asp:TemplateField HeaderText="Date of Birth">
+        <ItemTemplate>
+            <%# Eval("birth_date") %>
+        </ItemTemplate>
+    </asp:TemplateField>
 
-                    <asp:TemplateField HeaderText="Zipcode">
-                        <ItemTemplate>
-                            <label>
-                                <%# Eval("zip") %>
-                            </label>
-                        </ItemTemplate>
-                    </asp:TemplateField>
+    <asp:TemplateField HeaderText="Email">
+        <ItemTemplate>
+            <%# Eval("email") %>
+        </ItemTemplate>
+    </asp:TemplateField>
 
-                </Columns>
+    <asp:TemplateField HeaderText="Contact No">
+        <ItemTemplate>
+            <%# Eval("country_code") + " " + Eval("contact_no") %>
+        </ItemTemplate>
+    </asp:TemplateField>
+
+    <asp:TemplateField HeaderText="Course Code">
+        <ItemTemplate>
+            <%# Eval("course_code") %>
+        </ItemTemplate>
+    </asp:TemplateField>
+
+    <asp:TemplateField HeaderText="Course Title">
+        <ItemTemplate>
+            <%# Eval("course_title") %>
+        </ItemTemplate>
+    </asp:TemplateField>
+
+    <asp:TemplateField HeaderText="Application Date">
+        <ItemTemplate>
+            <%# Eval("application_date") %>
+        </ItemTemplate>
+    </asp:TemplateField>
+
+    <asp:TemplateField HeaderText="CT Granted">
+        <ItemTemplate>
+            <%# Eval("ct_granted") %>
+        </ItemTemplate>
+    </asp:TemplateField>
+</Columns>
+
             </asp:GridView>
         </div>
     </div>

@@ -103,20 +103,17 @@ PRIMARY KEY CLUSTERED
 ----------------------------------------
 ----------------------------------------
 ----------------------------------------
-CREATE TABLE [dbo].[tbl_application_for_deferment_form](
+create TABLE [dbo].[tbl_application_for_deferment_form](
 	[id] [int] IDENTITY(1,1) NOT NULL,
-	[student_name] [varchar](250) NULL,
+	student_name [varchar](450) NULL,
 	[student_id] [varchar](150) NULL,
-	[deferment_date] [datetime] NULL,
-	[course] [varchar](250) NULL,
+	birth_date varchar(30) NULL,
 	[reason] [varchar](max) NULL,
-	[enrolment_until] [varchar](max) NULL,
-	[address_while_on_leave] [varchar](max) NULL,
-	[email] [varchar](150) NULL,
-	[phone_code] [varchar](10) NULL,
-	[phone_no] [varchar](20) NULL,
-	[contact_code] [varchar](10) NULL,
-	[contact_no] [varchar](20) NULL,
+	[course] [varchar](250) NULL,
+	course_start varchar(30),
+	course_end varchar(30),
+	deferment_start varchar(30),
+	deferment_end varchar(30),
 	[student_signature] [varchar](max) NULL,
 	[sign_date] [datetime] NULL,
 	[status] [bit] NULL,
@@ -125,12 +122,8 @@ CREATE TABLE [dbo].[tbl_application_for_deferment_form](
 	[modify_by] [int] NULL,
 	[modify_date] [datetime] NULL,
 	[delete_by] [int] NULL,
-	[delete_date] [datetime] NULL,
-PRIMARY KEY CLUSTERED 
-(
-	[id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+	[delete_date] [datetime] NULL
+	)
 ----------------------------------------
 ----------------------------------------
 ----------------------------------------
@@ -194,33 +187,32 @@ PRIMARY KEY CLUSTERED
 ----------------------------------------
 ----------------------------------------
 ----------------------------------------
-CREATE TABLE [dbo].[tbl_change_course_forms](
-	[id] [int] IDENTITY(1,1) NOT NULL,
-	[student_no] [varchar](100) NULL,
-	[student_last_name] [varchar](100) NULL,
-	[student_given_name] [varchar](100) NULL,
-	[student_full_name] [varchar](350) NULL,
-	[email] [varchar](150) NULL,
-	[country_code] [varchar](10) NULL,
-	[contact_no] [varchar](20) NULL,
-	[street_address] [varchar](max) NULL,
-	[address_line_2] [varchar](max) NULL,
-	[city] [varchar](50) NULL,
-	[state_region] [varchar](100) NULL,
-	[zip] [varchar](50) NULL,
-	[country] [varchar](70) NULL,
-	[status] [bit] NULL,
-	[create_by] [int] NULL,
-	[create_date] [datetime] NULL,
-	[cmodify_by] [int] NULL,
-	[modify_date] [datetime] NULL,
-	[delete_by] [int] NULL,
-	[delete_date] [datetime] NULL,
-PRIMARY KEY CLUSTERED 
-(
-	[id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+CREATE TABLE dbo.tbl_change_course_forms(
+	id int IDENTITY(1,1) NOT NULL,
+	student_name varchar(450) NULL,
+	std_id varchar(150),
+	country varchar(70) NULL,
+	passport_no varchar(350),
+	dob varchar(30),
+	course_enrolled varchar(350),
+	intake varchar(30),
+	address varchar(max) NULL,
+	email varchar(150) NULL,
+	country_code varchar(10) NULL,
+	contact_no varchar(20) NULL,
+	change_course varchar(350),
+	reason_change_course varchar(max) NULL,
+	student_signature varchar(max) NULL,
+	sign_date varchar(30) NULL,
+	status bit NULL,
+	create_by int NULL,
+	create_date datetime NULL,
+	cmodify_by int NULL,
+	modify_date datetime NULL,
+	delete_by int NULL,
+	delete_date datetime NULL
+)
+
 ----------------------------------------
 ----------------------------------------
 ----------------------------------------
@@ -378,33 +370,37 @@ CREATE TABLE [dbo].[tbl_credit_card_auth_form](
 ----------------------------------------
 ----------------------------------------
 ----------------------------------------
-CREATE TABLE [dbo].[tbl_credit_transfer_application](
-	[id] [int] IDENTITY(1,1) NOT NULL,
-	[student_no] [varchar](250) NULL,
-	[student_last_name] [varchar](250) NULL,
-	[student_given_name] [varchar](max) NULL,
-	[student_full_name] [varchar](max) NULL,
-	[email] [varchar](150) NULL,
-	[country_code] [varchar](10) NULL,
-	[contact_no] [varchar](20) NULL,
-	[street_address] [varchar](max) NULL,
-	[street_address_line_2] [varchar](max) NULL,
-	[city] [varchar](50) NULL,
-	[state_region] [varchar](150) NULL,
-	[zip] [varchar](50) NULL,
-	[country] [varchar](50) NULL,
-	[status] [bit] NULL,
-	[create_by] [int] NULL,
-	[create_date] [datetime] NULL,
-	[modify_by] [int] NULL,
-	[modify_date] [datetime] NULL,
-	[delete_by] [int] NULL,
-	[delete_date] [datetime] NULL,
-PRIMARY KEY CLUSTERED 
-(
-	[id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+CREATE TABLE dbo.tbl_credit_transfer_application(
+    id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	student_last_name VARCHAR(250) NULL,
+	title VARCHAR(50) NULL,
+    student_given_name VARCHAR(MAX) NULL,
+	birth_date VARCHAR(30) NULL,
+	street_address VARCHAR(MAX) NULL,
+	postcode VARCHAR(50) NULL,
+	state_region VARCHAR(150) NULL,
+	email VARCHAR(150) NULL,
+	country_code VARCHAR(10) NULL,
+    contact_no VARCHAR(20) NULL,
+	student_id VARCHAR(150) NULL,
+	course_code VARCHAR(150) NULL,
+	course_title VARCHAR(350) NULL,
+    application_date DATETIME NULL,
+	unit_codes VARCHAR(MAX) NULL,
+    unit_titles VARCHAR(MAX) NULL,
+    evidence_supplied VARCHAR(MAX) NULL,
+    ct_granted VARCHAR(MAX) NULL,
+	student_signature VARCHAR(MAX) NULL,
+    sign_date DATETIME NULL,
+	student_full_name VARCHAR(MAX) NULL,
+    status BIT NULL,
+    create_by INT NULL,
+    create_date DATETIME NULL,
+    modify_by INT NULL,
+    modify_date DATETIME NULL,
+    delete_by INT NULL,
+    delete_date DATETIME NULL
+)
 ----------------------------------------
 ----------------------------------------
 ----------------------------------------

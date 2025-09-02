@@ -534,21 +534,6 @@ public partial class new_vet_orientation_form : System.Web.UI.Page
                 Stream ach_stream = rpt.ExportToStream(ExportFormatType.PortableDocFormat);
                 Attachment ach_attachment = new Attachment(ach_stream, name + ".pdf", "application/pdf");
 
-              
-                //using (Stream pdfStream = rpt.ExportToStream(ExportFormatType.PortableDocFormat))
-                //{
-                //    // Set the response headers
-                //    Response.Clear();
-                //    Response.Buffer = true;
-                //    Response.ContentType = "application/pdf";
-                //    Response.AddHeader("Content-Disposition", "attachment; filename=" + subject + ".pdf");
-                //    Response.AddHeader("Content-Length", pdfStream.Length.ToString());
-
-                //    // Write the stream to the response
-                //    pdfStream.CopyTo(Response.OutputStream);
-                //    Response.Flush();
-                //    Response.End();
-                //}
 
                 // Dispose of the report
                 rpt.Close();
@@ -556,7 +541,7 @@ public partial class new_vet_orientation_form : System.Web.UI.Page
 
                 string subject = "Orientation Form For New VET Student (" + ds.Tables[0].Rows[0]["student_full_name"].ToString() + "-" + ds.Tables[0].Rows[0]["student_id_no"].ToString() + ")";
                 string mail_body = get_email_body();
-                string result = Send_Mail.SendMail("himanshumakwana8281@gmail.com", subject, mail_body, ach_attachment, "", stu_photo);
+                string result = Send_Mail.SendMail("sso@nortwest.edu.au", subject, mail_body, ach_attachment, "", stu_photo);
 
                 rpt.Close();
                 rpt.Dispose();
@@ -647,7 +632,7 @@ public partial class new_vet_orientation_form : System.Web.UI.Page
 <body>
     <div class='wrapper'>
         <div class='container'>
-            <img class='logo' src='https://nortwest.edu.au/assets/uploads/2017/05/logo_nwc_transp@1x.png' alt='Nortwest Logo' width='150'>
+            <img class='logo' src='https://website.nortwest.edu.au/assets/img/logo_nwc_transp@1x.png' alt='Nortwest Logo' width='150'>
             <div class='title'>New Vet Orientation Form</div>
             <div class='content'>
                 <p>Dear team,</p>

@@ -171,31 +171,31 @@ public partial class Application_For_Deferment : System.Web.UI.Page
             throw;
         }
     }
-    protected void ddl_audit_type_filter_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        try
-        {
-            bind_data();
-        }
-        catch (Exception)
-        {
+    //protected void ddl_audit_type_filter_SelectedIndexChanged(object sender, EventArgs e)
+    //{
+    //    try
+    //    {
+    //        bind_data();
+    //    }
+    //    catch (Exception)
+    //    {
 
-            throw;
-        }
-    }
+    //        throw;
+    //    }
+    //}
     protected void btn_search_Click(object sender, EventArgs e)
     {
         bind_data();
     }
 
-    public static string set_audit_tag(string tag_name, string audit_status)
-    {
-        string css = "hide";
-        if (tag_name == audit_status)
-        {
-            css = "";
-        }
+    //public static string set_audit_tag(string tag_name, string audit_status)
+    //{
+    //    string css = "hide";
+    //    if (tag_name == audit_status)
+    //    {
+    //        css = "";
+    //    }
 
-        return css;
-    }
+    //    return css;
+    //}
 }

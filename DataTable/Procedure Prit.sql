@@ -800,4 +800,328 @@ create PROCEDURE [dbo].[sel_change_of_campus_form_sp](	@id int)ASBEGIN	 SE
         student_signature,
         format(cast( sign_date as date),'dd MMM,yyyy') as sign_date,
         status,
-		format(create_date,'dd MMM, yyyy') as [date]    FROM tbl_change_of_campus_form	where	status=1	and id=@idEND
+		format(create_date,'dd MMM, yyyy') as [date]    FROM tbl_change_of_campus_form	where	status=1	and id=@idEND----------------------------------------
+---------Display Change Course----------
+----------------------------------------
+alter PROCEDURE ins_change_course_form_sp
+(
+	@student_name varchar(450),
+	@std_id varchar(150),
+	@country varchar(70),
+	@passport_no varchar(350),
+	@dob varchar(30),
+	@course_enrolled varchar(350),
+	@intake varchar(30),
+	@address varchar(max),
+	@email varchar(150),
+	@country_code varchar(10),
+	@contact_no varchar(20),
+	@change_course varchar(350),
+	@reason_change_course varchar(max),
+	@student_signature varchar(max),
+	@sign_date varchar(30),
+	@create_by int
+)
+AS
+BEGIN
+	INSERT INTO dbo.tbl_change_course_forms
+	VALUES
+	(
+		@student_name,
+		@std_id,
+		@country,
+		@passport_no,
+		@dob,
+		@course_enrolled,
+		@intake,
+		@address,
+		@email,
+		@country_code,
+		@contact_no,
+		@change_course,
+		@reason_change_course,
+		@student_signature,
+		@sign_date,
+		1,
+		@create_by,
+		dbo.GetCurrentAUTTime(),
+		null,
+		null,
+		null,
+		null
+	)
+	declare @id int = @@identity
+	exec sel_change_course_forms_sp @id
+	
+END
+----------------------------------------
+---------Select Change Course----------
+----------------------------------------
+alter PROCEDURE sel_change_course_forms_sp
+(
+    @id int
+)
+AS
+BEGIN
+   SELECT 
+        id,
+        student_name,
+        std_id,
+        country,
+        passport_no,
+         format(cast(dob as date),'dd MMM, yyyy') as dob,
+        course_enrolled,
+         format(cast(intake as date),'dd MMM, yyyy') as intake,
+        address,
+        email,
+        country_code,
+        contact_no,
+        change_course,
+        reason_change_course,
+        student_signature,
+        format(cast(sign_date as date),'dd MMM, yyyy') as sign_date,
+        status
+    FROM dbo.tbl_change_course_forms
+    WHERE id = @id and status = 1
+END
+----------------------------------------
+---------Display Change Course----------
+----------------------------------------
+alter PROCEDURE [dbo].[dis_change_course_form_sp]
+(
+    @from_date DATETIME,
+    @to_date DATETIME
+)
+AS
+BEGIN
+    SELECT 
+        id,
+        student_name,
+        std_id,
+        country,
+        passport_no,
+        dob,
+        course_enrolled,
+        intake,
+        address,
+        email,
+        country_code,
+        contact_no,
+        change_course,
+        reason_change_course,
+        student_signature,
+        FORMAT(cast(sign_date as date), 'dd MMM, yyyy') AS sign_date,
+        FORMAT(create_date, 'dd MMM, yyyy') AS [date]
+    FROM dbo.tbl_change_course_forms
+    WHERE 
+        status = 1
+        AND CAST(create_date AS DATE) BETWEEN CAST(@from_date AS DATE) AND CAST(@to_date AS DATE)
+END;
+----------------------------------------
+---------Inser Deferment Form-----------
+----------------------------------------
+alter PROCEDURE [dbo].[ins_application_for_deferment_form_sp]
+(
+	 @student_name       VARCHAR(450),
+    @student_id         VARCHAR(150),
+    @birth_date         VARCHAR(30),
+    @reason             VARCHAR(MAX),
+    @course             VARCHAR(250),
+    @course_start       VARCHAR(30),
+    @course_end         VARCHAR(30),
+    @deferment_start    VARCHAR(30),
+    @deferment_end      VARCHAR(30),
+    @student_signature  VARCHAR(MAX),
+    @sign_date          DATETIME,
+    @create_by          INT
+	)
+AS
+BEGIN
+    INSERT INTO [dbo].[tbl_application_for_deferment_form]
+	VALUES
+    (
+        @student_name,
+        @student_id,
+        @birth_date,
+        @reason,
+        @course,
+        @course_start,
+        @course_end,
+        @deferment_start,
+        @deferment_end,
+        @student_signature,
+        @sign_date,
+        1,
+        @create_by,
+        dbo.GetCurrentAUTTime(),
+		null,
+		null,
+		null,
+		null
+    )
+	declare @id int = scope_identity()
+	select 
+		id,
+		student_name,
+		student_id,
+		format(cast(birth_date as date),'dd-MM-yyyy') as birth_date,
+		reason,
+		course,
+		format(cast(course_start as date),'dd-MM-yyyy') as course_start,
+		format(cast(course_end as date),'dd-MM-yyyy') as course_end,
+		format(cast(deferment_start as date),'dd-MM-yyyy') as deferment_start,
+		format(cast(deferment_end as date),'dd-MM-yyyy') as deferment_end,
+		student_signature,
+		format(cast(sign_date as date),'dd-MM-yyyy') as sign_date
+		from
+			tbl_application_for_deferment_form
+		where id = @id and status=1
+END 
+----------------------------------------
+---------Display Deferment Form-----------
+----------------------------------------
+alter proc [dbo].[dis_application_for_deferment_form_sp]
+(	@from_date datetime,	@to_date datetime)
+as 
+begin
+	select 
+		id,
+		student_name,
+		student_id,
+		format(cast(birth_date as date),'dd-MM-yyyy') as birth_date,
+		reason,
+		course,
+		format(cast(course_start as date),'dd-MM-yyyy') as course_start,
+		format(cast(course_end as date),'dd-MM-yyyy') as course_end,
+		format(cast(deferment_start as date),'dd-MM-yyyy') as deferment_start,
+		format(cast(deferment_end as date),'dd-MM-yyyy') as deferment_end,
+		student_signature,
+		format(cast(sign_date as date),'dd-MM-yyyy') as sign_date
+		from
+			tbl_application_for_deferment_form
+			where	status=1	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)end----------------------------------------
+---------Insert creadit transfer-----------
+----------------------------------------
+alter PROCEDURE dbo.ins_credit_transfer_application_sp
+(
+    @student_last_name    VARCHAR(250) = NULL,
+    @title                VARCHAR(50) = NULL,
+    @student_given_name   VARCHAR(MAX) = NULL,
+    @birth_date           VARCHAR(30) = NULL,
+    @street_address       VARCHAR(MAX) = NULL,
+    @postcode             VARCHAR(50) = NULL,
+    @state_region         VARCHAR(150) = NULL,
+    @email                VARCHAR(150) = NULL,
+    @country_code         VARCHAR(10) = NULL,
+    @contact_no           VARCHAR(20) = NULL,
+    @student_id           VARCHAR(150) = NULL,
+    @course_code          VARCHAR(150) = NULL,
+    @course_title         VARCHAR(350) = NULL,
+    @application_date     DATETIME = NULL,
+    @unit_codes           VARCHAR(MAX) = NULL,
+    @unit_titles          VARCHAR(MAX) = NULL,
+    @evidence_supplied    VARCHAR(MAX) = NULL,
+    @ct_granted           VARCHAR(MAX) = NULL,
+    @student_signature    VARCHAR(MAX) = NULL,
+    @sign_date            DATETIME = NULL,
+    @student_full_name    VARCHAR(MAX) = NULL,
+    @create_by            INT = NULL
+)
+AS
+BEGIN
+    INSERT INTO dbo.tbl_credit_transfer_application
+    VALUES
+    (
+        @student_last_name,
+        @title,
+        @student_given_name,
+        @birth_date,
+        @street_address,
+        @postcode,
+        @state_region,
+        @email,
+        @country_code,
+        @contact_no,
+        @student_id,
+        @course_code,
+        @course_title,
+        @application_date,
+        @unit_codes,
+        @unit_titles,
+        @evidence_supplied,
+        @ct_granted,
+        @student_signature,
+        @sign_date,
+        @student_full_name,
+        1,               -- default active status
+        @create_by,
+        dbo.GetCurrentAUTTime(),
+		null,
+		null,
+		null,
+		null
+    )
+	declare @id int = @@identity
+	exec sel_credit_transfer_application_sp @id
+END
+----------------------------------------
+---------select creadit transfer-----------
+----------------------------------------
+alter PROCEDURE dbo.sel_credit_transfer_application_sp
+(
+    @id INT 
+)
+AS
+BEGIN
+    
+       SELECT 
+        student_last_name,
+        title,
+        student_given_name,
+        format(cast(birth_date as date),'dd MMM, yyyy') as birth_date,
+        street_address,
+        postcode,
+        state_region,
+        email,
+        country_code,
+        contact_no,
+        student_id,
+        course_code,
+        course_title,
+        format(cast(application_date as date),'dd MMM, yyyy') as application_date,
+        unit_codes,
+        unit_titles,
+        evidence_supplied,
+        ct_granted,
+        student_signature,
+        format(cast(sign_date as date),'dd MMM, yyyy') as sign_date,
+        student_full_name,
+        status
+        FROM dbo.tbl_credit_transfer_application
+        WHERE id = @id AND delete_date IS NULL;
+END
+--------------------------------------------
+---------Display creadit transfer-----------
+--------------------------------------------
+alter PROCEDURE [dbo].dis_credit_transfer_application_sp(	@from_date datetime,	@to_date datetime)ASBEGINselect		student_last_name,
+        title,
+        student_given_name,
+        format(cast(birth_date as date),'dd MMM, yyyy') as birth_date,
+        street_address,
+        postcode,
+        state_region,
+        email,
+        country_code,
+        contact_no,
+        student_id,
+        course_code,
+        course_title,
+        format(cast(application_date as date),'dd MMM, yyyy') as application_date,
+        unit_codes,
+        unit_titles,
+        evidence_supplied,
+        ct_granted,
+        student_signature,
+        format(cast(sign_date as date),'dd MMM, yyyy') as sign_date,
+        student_full_name,
+        status    FROM tbl_credit_transfer_application	where	status=1	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)	END;

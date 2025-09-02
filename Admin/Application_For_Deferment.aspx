@@ -96,7 +96,7 @@
                 <Columns>
                     <asp:TemplateField HeaderText="Sr">
                         <ItemTemplate>
-                            <%# Container.DataItemIndex+1 %>
+                            <%# Container.DataItemIndex + 1 %>
                         </ItemTemplate>
                     </asp:TemplateField>
 
@@ -107,42 +107,80 @@
                             </label>
                         </ItemTemplate>
                     </asp:TemplateField>
+
                     <asp:TemplateField HeaderText="Student Name">
                         <ItemTemplate>
                             <label>
-                                <%# Eval("student_name")  %>
-                            </label>
-                        </ItemTemplate>
-                    </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Date">
-                        <ItemTemplate>
-                            <label>
-                                <%# Eval("deferment_date") %>
+                                <%# Eval("student_name") %>
                             </label>
                         </ItemTemplate>
                     </asp:TemplateField>
 
-                    <asp:TemplateField HeaderText="Contact No">
+                    <asp:TemplateField HeaderText="Birth Date">
                         <ItemTemplate>
                             <label>
-                                <%# Eval("phone_code") + Eval("phone_no").ToString() %>
+                                <%# Eval("birth_date") %>
                             </label>
                         </ItemTemplate>
                     </asp:TemplateField>
-                     <asp:TemplateField HeaderText="Email">
+
+                    <asp:TemplateField HeaderText="Reason">
                         <ItemTemplate>
                             <label>
-                                <%# Eval("email") %>
+                                <%# Eval("reason") %>
                             </label>
                         </ItemTemplate>
                     </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Date">
+
+                    <asp:TemplateField HeaderText="Course">
                         <ItemTemplate>
                             <label>
-                                <%# Eval("date") %>
+                                <%# Eval("course") %>
                             </label>
                         </ItemTemplate>
                     </asp:TemplateField>
+
+                    <asp:TemplateField HeaderText="Course Start">
+                        <ItemTemplate>
+                            <label>
+                                <%# Eval("course_start") %>
+                            </label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+
+                    <asp:TemplateField HeaderText="Course End">
+                        <ItemTemplate>
+                            <label>
+                                <%# Eval("course_end") %>
+                            </label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+
+                    <asp:TemplateField HeaderText="Deferment Start">
+                        <ItemTemplate>
+                            <label>
+                                <%# Eval("deferment_start") %>
+                            </label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+
+                    <asp:TemplateField HeaderText="Deferment End">
+                        <ItemTemplate>
+                            <label>
+                                <%# Eval("deferment_end") %>
+                            </label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+
+
+                    <asp:TemplateField HeaderText="Sign Date">
+                        <ItemTemplate>
+                            <label>
+                                <%# Eval("sign_date") %>
+                            </label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+
 
                     <asp:TemplateField HeaderText="Action" ItemStyle-Width="100px">
                         <ItemTemplate>
@@ -150,10 +188,6 @@
                                 <asp:LinkButton CommandName="btn_pdf" CommandArgument='<%# Eval("id") %>' runat="server" CssClass="text-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Form" aria-label="Views">
                                         <i class="bi bi-file-earmark-pdf"></i>
                                 </asp:LinkButton>
-
-<%--                                <asp:LinkButton CommandName="btn_delete" CommandArgument='<%# Eval("id") %>' runat="server" CssClass="text-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Delete" aria-label="Views" OnClientClick="return confirm('Are you sure delete this form ?');">
-                                        <i class="bi bi-trash-fill"></i>
-                                </asp:LinkButton>--%>
                             </div>
                         </ItemTemplate>
                     </asp:TemplateField>
@@ -214,6 +248,5 @@
             document.body.innerHTML = originalContents;
         }
     </script>--%>
-
 </asp:Content>
 

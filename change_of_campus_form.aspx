@@ -220,6 +220,45 @@
             </div>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
+    <script>
+        const canvas = document.getElementById('signatureCanvas');
+        const signaturePad = new SignaturePad(canvas);
+
+        // Resize canvas for high-DPI displays
+        function resizeCanvas() {
+            const ratio = Math.max(window.devicePixelRatio || 1, 1);
+            canvas.width = canvas.offsetWidth * ratio;
+            canvas.height = canvas.offsetHeight * ratio;
+            canvas.getContext("2d").scale(ratio, ratio);
+            signaturePad.clear();
+        }
+        window.addEventListener("resize", resizeCanvas);
+        resizeCanvas();
+
+        // Clear button
+        document.getElementById('clearBtn').addEventListener('click', () => {
+            signaturePad.clear();
+        });
+
+        function saveSignature() {
+            var canvas = document.getElementById("signatureCanvas");
+            var signatureData = canvas.toDataURL("image/png"); // Get signature as Base64
+            document.getElementById("<%= hdnSignature.ClientID %>").value = signatureData; // Set value in hidden field
+        }
+
+
+        // <%--Save button
+        document.getElementById('saveBtn').addEventListener('click', () => {
+            if (!signaturePad.isEmpty()) {
+                const signatureData = signaturePad.toDataURL('image/png');
+        document.getElementById('<%= hdnSignature.ClientID %>').value = signatureData;
+        document.getElementById('<%= btnPostBack.ClientID %>').click(); // Trigger postback
+        } else {
+            alert("Please provide a signature.");
+        }
+        });--%>
+    </script>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="jqury" runat="Server">
 

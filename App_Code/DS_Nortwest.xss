@@ -14,7 +14,7 @@
     <Shape ID="DesignTable:dt_job_description" ZOrder="4" X="226" Y="483" Height="124" Width="172" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="120" />
     <Shape ID="DesignTable:dt_refund_form" ZOrder="3" X="7" Y="637" Height="257" Width="156" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="253" />
     <Shape ID="DesignTable:dt_stu_request_form" ZOrder="2" X="221" Y="641" Height="257" Width="183" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="253" />
-    <Shape ID="DesignTable:dt_application_for_deferment" ZOrder="1" X="682" Y="637" Height="257" Width="236" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="253" />
+    <Shape ID="DesignTable:dt_application_for_deferment" ZOrder="1" X="682" Y="637" Height="238" Width="236" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="234" />
   </Shapes>
   <Connectors />
 </DiagramLayout>

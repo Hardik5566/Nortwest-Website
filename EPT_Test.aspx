@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="EPT_Test.aspx.cs" Inherits="EPT_Test" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/FormMaster.master" AutoEventWireup="true" CodeFile="EPT_Test.aspx.cs" Inherits="EPT_Test" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="title" runat="Server">
     English Test
@@ -8,6 +8,8 @@
     <link href="assets/country_code/css/intlTelInput.min.css" rel="stylesheet" />
 
     <style>
+  
+
         .step .form-container {
             background-color: white;
             border: 1px solid #e7e7e7;
@@ -58,40 +60,53 @@
             z-index: 10;
         }
 
-
-
-        /*.radio_btn table tbody {
-                display: flex !important;
-            }
-
-                .radio_btn table tbody tr {
-                    margin-right: 10px;
-                }*/
-
-        /*.row {
-            margin-right: 0px !important;
-            margin-left: 0px !important;
-        }*/
-        /*ul li {
-            list-style: disc;
+        .signature-wrap {
+            width: 100%;
+            max-width: 500px;
+            border: none;
+            border-radius: 6px;
+            /*padding: 0px;*/
+            margin: 0px 0px 20px 0px;
+            box-sizing: border-box;
+            height: 250px; /* fixed height for mobile/desktop */
+            position: relative;
         }
 
-        ul {
-            margin: 10px 30px !important;
-        }*/
+        #signatureCanvas {
+            width: 100%; /* CSS width */
+            height: 100%; /* take full parent height */
+            touch-action: none;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background: transparent;
+            display: block;
+        }
+
+        #signaturePreview {
+            display: none;
+            max-width: 100%;
+            border: 1px solid #ddd;
+            margin-top: 10px;
+        }
+        .btn{
+            margin-bottom:10px;
+        }
     </style>
     <script src="https://cdn.WebRTC-Experiment.com/MediaStreamRecorder.js"></script>
     <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
 </asp:Content>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="body" runat="Server">
+    <%--    <div class="page-container">
+        <div class="scroll-content">--%>
+
     <div class="form breadcrumb-area shadow dark bg-fixed text-center text-light" style="background-image: url(assets/img/courses_banner.png);">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 col-md-12">
                     <h1>English Test</h1>
                     <ul class="breadcrumb">
-                        <li><a href="Default.aspx"><i class="fas fa-home"></i>Home</a></li>
+                        <li><a href="https://nortwest.edu.au/"><i class="fas fa-home"></i>Home</a></li>
                         <li class="active">English Test</li>
                     </ul>
                 </div>
@@ -102,7 +117,6 @@
         <%--        <img src="image/sand-flow-unscreen.gif" width="35px" alt="Alternate Text" />--%>
         Time Remaining : <span id="timer">45:00</span>
     </div>
-
     <div class="bg-gray default-padding bg-cover">
         <div class="container">
             <div class="row">
@@ -142,7 +156,6 @@
                         </div>
                         <div class="col-md-4">
                             <label class="lbl_title">Nationality</label>
-                            <label class="lbl_title">Nationality:</label>
                             <asp:DropDownList ID="ddl_nationality" runat="server" data-live-search="true" CssClass="form-control" aria-required="true" aria-invalid="false">
                                 <asp:ListItem Text="Nationality" Value="" />
 
@@ -272,17 +285,14 @@
                             <asp:TextBox runat="server" ID="txt_passport" CssClass="form-control" />
                         </div>
                         <div class="clearfix"></div>
-                        <div class="col-md-6">
+                        <div class="col-md-6 signature-wrap">
                             <label class="lbl_title">Student Signature</label>
-
-
                             <img id="clearBtn" style="width: 22px; float: right; margin-bottom: 8px;" src="assets/img/eraser.png" />
-
                             <asp:HiddenField ID="hdnSignature" runat="server" />
-
-                            <canvas id="signatureCanvas" style="border: 1px solid rgb(223 223 223); width: 100%; height: 250px; touch-action: none; background-color: white;"></canvas>
-
+                            <canvas id="signatureCanvas"></canvas>
                         </div>
+
+
                     </div>
                     <div class="btn_step">
                         <button type="button" class="btn btn-primary next-step">Next</button>
@@ -948,7 +958,7 @@
                     <div class="row">
                         <div class="col-md-5">
                             <div class="card">
-                                <div class="card-body" style="padding: 60px; text-align: center; border: 1px solid lightgray; margin-top: 20px">
+                                <div class="card-body" style="padding: 33px; text-align: center; border: 1px solid lightgray; margin-top: 20px">
                                     <section class="experiment" style="padding: 5px;">
                                         <img src="assets/img/mic.png" width="62px" alt="Microphone Image" />
                                         <br />
@@ -957,7 +967,7 @@
                                         <p>Press a button below to record your answer.</p>
 
                                         <button id="start-recording" class="btn btn-primary"><i class="fa fa-microphone" style="margin-right: 7px"></i>Start</button>
-                                        <button id="stop-recording" disabled class="btn btn-danger"><i class="fa fa-stop" style="margin-right: 7px"></i>Stop</button>
+                                        <button id="stop-recording" disabled class="btn btn-danger"><i class="fa fa-stop" style="margin-right: 7px"></i>Stop & Save</button>
                                         <button id="retry-recording" disabled class="btn btn-warning">
                                             <i class="fa fa-retweet" style="margin-right: 7px"></i>Retry
                                         </button>
@@ -976,168 +986,462 @@
 
                     <div class="btn_step">
                         <button type="button" class="btn btn-secondary prev-step">Previous</button>
-                        <asp:Button Text="Submit" ID="btn_submit" OnClientClick="saveSignature()" OnClick="btn_submit_Click" CssClass="btn btn-success" runat="server" />
+                        <asp:Button Text="Submit" ID="btn_submit" OnClientClick="saveSignature(); return true;" OnClick="btn_submit_Click" CssClass="btn btn-success" runat="server" />
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
+    <%--    </div>
+    </div>--%>
 </asp:Content>
 
 <asp:Content ID="Content4" ContentPlaceHolderID="jqury" runat="Server">
 
-
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
+    <script src="assets/js/select2.min.js"></script>
+
     <script>
-        const canvas = document.getElementById('signatureCanvas');
-        const signaturePad = new SignaturePad(canvas);
+        let signaturePad = null;
+        let lastNonEmptyDataUrl = "";
+        let isResizing = false;
+        let userCleared = false;
+        let pendingSave = false;
+        let countdown = null;
 
-        // Resize canvas for high-DPI displays
-        function resizeCanvas() {
-            const ratio = Math.max(window.devicePixelRatio || 1, 1);
-            canvas.width = canvas.offsetWidth * ratio;
-            canvas.height = canvas.offsetHeight * ratio;
-            canvas.getContext("2d").scale(ratio, ratio);
-            signaturePad.clear();
+        function debounce(fn, wait) {
+            let t;
+            return function(...args) {
+                clearTimeout(t);
+                t = setTimeout(() => fn.apply(this, args), wait);
+            };
         }
-        window.addEventListener("resize", resizeCanvas);
-        resizeCanvas();
 
-        // Clear button
-        document.getElementById('clearBtn').addEventListener('click', () => {
-            signaturePad.clear();
+        function safeSetHidden(val) {
+            $('#<%= hdnSignature.ClientID %>').val(val || "");
+    }
+
+    /* Create signature pad */
+    function createSignaturePadInstance(canvas, savedData) {
+        if (signaturePad) signaturePad.off();
+
+        signaturePad = new SignaturePad(canvas, {
+            minWidth: 1,
+            maxWidth: 3,
+            penColor: "#000",
+            backgroundColor: "rgba(0,0,0,0)"
         });
 
-        function saveSignature() {
-            var canvas = document.getElementById("signatureCanvas");
-            var signatureData = canvas.toDataURL("image/png"); // Get signature as Base64
-            document.getElementById("<%= hdnSignature.ClientID %>").value = signatureData; // Set value in hidden field
+        const ctx = signaturePad._ctx;
+        if (ctx) {
+            ctx.lineCap = "round";
+            ctx.lineJoin = "round";
         }
+
+        if (savedData && savedData.length) {
+            try { signaturePad.fromData(savedData); } catch(e) {}
+        }
+
+        signaturePad.onEnd = function() {
+            userCleared = false;
+            saveToHidden().catch(()=>{});
+        };
+    }
+
+    /* Initialize pad */
+    function initPad() {
+        const canvas = document.getElementById("signatureCanvas");
+        if (!canvas) return;
+
+        let savedData = signaturePad && !signaturePad.isEmpty() ? signaturePad.toData() : null;
+        resizeCanvas(savedData);
+
+        // clear button
+        $("#clearBtn").off("click").on("click", function() {
+            if (!signaturePad) return;
+            signaturePad.clear();
+            userCleared = true;
+            lastNonEmptyDataUrl = "";
+            safeSetHidden("");
+            $("#signaturePreview").hide();
+        });
+
+        // Prevent scrolling while drawing
+        ["touchstart","touchmove","touchend"].forEach(evt => {
+            canvas.addEventListener(evt, function(e) { e.preventDefault(); }, { passive: false });
+    });
+
+    // sync periodically
+    if (!window.signatureSyncInterval) {
+        window.signatureSyncInterval = setInterval(()=> saveToHidden().catch(()=>{}), 1500);
+    }
+
+    window.addEventListener("resize", debounce(()=> resizeCanvas(), 200));
+    window.addEventListener("orientationchange", ()=> resizeCanvas());
+    }
+
+    /* Robust resize */
+    function resizeCanvas(savedData = null) {
+        const canvas = document.getElementById("signatureCanvas");
+        if (!canvas) return;
+
+        isResizing = true;
+        let data = savedData || (signaturePad && !signaturePad.isEmpty() ? signaturePad.toData() : null);
+
+        // Responsive width/height
+        const parent = canvas.parentElement;
+        const cssWidth = parent.clientWidth || 300;
+        const cssHeight = parent.clientHeight || 250;
+
+        const ratio = Math.max(window.devicePixelRatio || 1, 1);
+
+        // Internal resolution = CSS size * DPR
+        canvas.width = cssWidth * ratio;
+        canvas.height = cssHeight * ratio;
+
+        canvas.style.width = cssWidth + "px";
+        canvas.style.height = cssHeight + "px";
+
+        const ctx = canvas.getContext("2d");
+        ctx.setTransform(1, 0, 0, 1, 0, 0); 
+        ctx.scale(ratio, ratio); 
+
+        createSignaturePadInstance(canvas, data);
+
+        setTimeout(() => {
+            isResizing = false;
+        pendingSave = false;
+        saveToHidden().catch(() => {});
+    }, 50);
+    }
+
+
+
+
+
+    /* Export with white background */
+    /* Export PNG without cropping (safe on mobile) */
+    function exportSignatureAsPngWithWhiteBg() {
+        return new Promise((resolve) => {
+            if (!signaturePad || signaturePad.isEmpty()) return resolve("");
+
+        const origCanvas = document.getElementById("signatureCanvas");
+
+        const ratio = Math.max(window.devicePixelRatio || 1, 1);
+
+        const tmp = document.createElement("canvas");
+        tmp.width = origCanvas.width;
+        tmp.height = origCanvas.height;
+
+        const ctx = tmp.getContext("2d");
+
+        // White background
+        ctx.fillStyle = "#fff";
+        ctx.fillRect(0, 0, tmp.width, tmp.height);
+
+        // Fix DPR scaling
+        ctx.drawImage(origCanvas, 0, 0, tmp.width, tmp.height);
+
+        resolve(tmp.toDataURL("image/png"));
+    });
+    }
+
+    /* Save to hidden field */
+    function saveToHidden(forceBlank = false) {
+        return new Promise(async (resolve) => {
+            if (!signaturePad) return resolve();
+        if (isResizing) { pendingSave = true; return resolve(); }
+        if (pendingSave) pendingSave = false;
+
+        if (!signaturePad.isEmpty()) {
+            const dataUrl = await exportSignatureAsPngWithWhiteBg();
+            lastNonEmptyDataUrl = dataUrl;
+            safeSetHidden(dataUrl);
+            $("#signaturePreview").attr("src", dataUrl).show();
+            return resolve();
+        } else {
+            if (userCleared || forceBlank) {
+                lastNonEmptyDataUrl = "";
+                safeSetHidden("");
+                $("#signaturePreview").hide();
+            } else {
+                if (lastNonEmptyDataUrl) {
+                    safeSetHidden(lastNonEmptyDataUrl);
+                    $("#signaturePreview").attr("src", lastNonEmptyDataUrl).show();
+                } else {
+                    safeSetHidden("");
+                    $("#signaturePreview").hide();
+                }
+            }
+            return resolve();
+        }
+    });
+    }
+
+    /* Validation (unchanged) */
+    function validateStep1() {
+        let errors = [];
+
+        function markError(selector, message) {
+            let el = $(selector);
+            if (!el.val() || el.val().trim() === "") {
+                el.css("border", "1px solid red");
+                errors.push(message);
+            } else {
+                el.css("border", "1px solid #ccc");
+            }
+        }
+
+        markError("#<%= txt_f_name.ClientID %>", "First Name is required");
+    markError("#<%= txt_l_name.ClientID %>", "Last Name is required");
+    markError("#<%= txt_sd_id.ClientID %>", "Student ID is required");
+    markError("#<%= txt_dob.ClientID %>", "Date of Birth is required");
+    markError("#<%= txt_passport.ClientID %>", "Passport Number is required");
+
+    let email = $("#<%= txt_email.ClientID %>").val()?.trim() || "";
+    let emailPattern = /^[a-zA-Z0-9._%+-]+@(gmail|yahoo|outlook)\.com$/;
+    if (email === "" || !emailPattern.test(email)) {
+        errors.push(email === "" ? "Email is required" : "Enter a valid email address");
+        $("#<%= txt_email.ClientID %>").css("border", "1px solid red");
+    } else $("#<%= txt_email.ClientID %>").css("border", "1px solid #ccc");
+
+    if ($("#<%= ddl_nationality.ClientID %>").val() === "" || $("#<%= ddl_nationality.ClientID %>").val() == null) {
+        errors.push("Nationality is required");
+        $("#select2-<%= ddl_nationality.ClientID %>-container").css("border", "1px solid red");
+    } else {
+        $("#select2-<%= ddl_nationality.ClientID %>-container").css("border", "1px solid #ccc");
+    }
+
+    let studentId = $("#<%= txt_sd_id.ClientID %>").val()?.trim() || "";
+    let idRegex = /^(13|14|NW)[A-Za-z0-9]{6}$/;
+    if (studentId && !idRegex.test(studentId)) {
+        errors.push("Student ID must start with 13, 14, or NW and be 8 characters long.");
+        $("#<%= txt_sd_id.ClientID %>").css("border", "1px solid red");
+    }
+
+    if (!signaturePad || signaturePad.isEmpty()) {
+        if (!lastNonEmptyDataUrl) {
+            errors.push("Signature is required");
+            $("#signatureCanvas").css("border", "1px solid red");
+        } else {
+            $("#signatureCanvas").css("border", "1px solid #ccc");
+            safeSetHidden(lastNonEmptyDataUrl);
+        }
+    } else {
+        $("#signatureCanvas").css("border", "1px solid #ccc");
+        saveToHidden().catch(()=>{});
+    }
+
+    if (errors.length > 0) {
+        alert("Please fix the following errors:\n\n- " + errors.join("\n- "));
+        return false;
+    }
+    return true;
+}
+
+/* Step navigation + Timer (unchanged from yours) */
+function stepNav(cur, dir) {
+    const next = dir === 'next' ? cur.next(".step") : cur.prev(".step");
+    cur.hide();
+    next.show();
+    $("html,body").scrollTop(0);
+
+    if (next.hasClass("step-2") && !countdown) {
+        $("#timer-container").show();
+        startTimer();
+    }
+
+    if (next.hasClass("step-2")) {
+        const signatureData = $('#<%= hdnSignature.ClientID %>').val();
+        if (signatureData) $("#signaturePreview").attr("src", signatureData).show();
+        else $("#signaturePreview").hide();
+    }
+
+    if (next.hasClass("step-1")) {
+        setTimeout(() => {
+            initPad();
+        const current = $('#<%= hdnSignature.ClientID %>').val();
+        if (current) lastNonEmptyDataUrl = current;
+        saveToHidden().catch(()=>{});
+    }, 100);
+}
+}
+
+function startTimer() {
+    let duration = 45 * 60;
+    const display = document.getElementById("timer");
+
+    countdown = setInterval(() => {
+        let minutes = Math.floor(duration / 60);
+    let seconds = duration % 60;
+    seconds = seconds < 10 ? "0" + seconds : seconds;
+    if (display) display.textContent = `${minutes}:${seconds}`;
+
+    if (duration <= 0) {
+        clearInterval(countdown);
+        alert("Time is up! Your data will be submitted automatically.");
+        autoSubmitForm();
+    }
+    duration--;
+}, 1000);
+}
+
+function autoSubmitForm() {
+    saveToHidden(userCleared).then(() => {
+        __doPostBack('<%= btn_submit.ClientID %>', '');
+});
+}
+
+/* Init on page ready */
+$(function() {
+    try { $('#<%= ddl_nationality.ClientID %>').select2({ width: '100%' }); } catch(e) {}
+    initPad();
+
+    $(".next-step").off("click").on("click", function(e) {
+        e.preventDefault();
+        if (validateStep1()) {
+            saveToHidden().then(() => stepNav($(this).closest(".step"), "next"));
+        }
+    });
+
+    $(".prev-step").off("click").on("click", function(e) {
+        e.preventDefault();
+        saveToHidden().then(() => stepNav($(this).closest(".step"), "prev"));
+    });
+});
     </script>
 
-    <script>
-        var mediaRecorder;
-        var audiosContainer = document.getElementById('audios-container');
-        var messageContainer = document.getElementById('message-container');
+   <script>
+       var mediaRecorder;
+       var audiosContainer = document.getElementById('audios-container');
+       var messageContainer = document.getElementById('message-container');
+       var isRecording = false; // ✅ track recording state
 
-        document.querySelector('#start-recording').onclick = function () {
-            this.disabled = true;
-            captureUserMedia({ audio: true }, onMediaSuccess, onMediaError);
-        };
+       document.querySelector('#start-recording').onclick = function () {
+           this.disabled = true;
+           isRecording = true; // ✅ recording started
+           captureUserMedia({ audio: true }, onMediaSuccess, onMediaError);
+       };
 
-        document.querySelector('#stop-recording').onclick = function () {
-            this.disabled = true;
-            mediaRecorder.stop();
-            mediaRecorder.stream.getTracks().forEach(track => track.stop());
+       document.querySelector('#stop-recording').onclick = function () {
+           this.disabled = true;
+           mediaRecorder.stop();
+           mediaRecorder.stream.getTracks().forEach(track => track.stop());
+           isRecording = false; // ✅ recording stopped
 
-            document.querySelector('#start-recording').disabled = false;
-            document.querySelector('#retry-recording').disabled = false; // Enable retry button
-        };
+           document.querySelector('#start-recording').disabled = false;
+           document.querySelector('#retry-recording').disabled = false;
+       };
 
-        document.querySelector('#retry-recording').onclick = function () {
-            // Stop and clear the current recording
-            mediaRecorder.stop();
-            mediaRecorder.stream.getTracks().forEach(track => track.stop());
+       document.querySelector('#retry-recording').onclick = function () {
+           if (mediaRecorder) {
+               mediaRecorder.stop();
+               mediaRecorder.stream.getTracks().forEach(track => track.stop());
+           }
+           isRecording = false; // ✅ reset state
 
-            // Reset UI
+           // Reset UI
+           audiosContainer.innerHTML = '';
+           messageContainer.innerHTML = '';
+           document.getElementById('<%= hdn_audio_file.ClientID %>').value = '';
+
+        document.querySelector('#start-recording').disabled = false;
+        document.querySelector('#stop-recording').disabled = true;
+        this.disabled = true;
+    };
+
+    function captureUserMedia(mediaConstraints, successCallback, errorCallback) {
+        navigator.mediaDevices.getUserMedia(mediaConstraints).then(successCallback).catch(errorCallback);
+    }
+
+    function onMediaSuccess(stream) {
+        var audio = document.createElement('audio');
+        audio.controls = true;
+        audio.muted = true;
+        audio.srcObject = stream;
+        audio.play();
+
+        audiosContainer.appendChild(audio);
+        audiosContainer.appendChild(document.createElement('hr'));
+
+        mediaRecorder = new MediaStreamRecorder(stream);
+        mediaRecorder.stream = stream;
+
+        mediaRecorder.mimeType = 'audio/mp3';
+        mediaRecorder.audioBitsPerSecond = 128000;
+
+        mediaRecorder.ondataavailable = function (blob) {
             audiosContainer.innerHTML = '';
-            messageContainer.innerHTML = '';
-            document.getElementById('<%= hdn_audio_file.ClientID %>').value = '';
 
-            // Enable start recording again
-            document.querySelector('#start-recording').disabled = false;
-            document.querySelector('#stop-recording').disabled = true;
-            this.disabled = true; // Disable Retry button until new recording
-        };
+            var audioElement = document.createElement('audio');
+            audioElement.controls = true;
+            audioElement.src = URL.createObjectURL(blob);
+            audiosContainer.appendChild(audioElement);
 
-        function captureUserMedia(mediaConstraints, successCallback, errorCallback) {
-            navigator.mediaDevices.getUserMedia(mediaConstraints).then(successCallback).catch(errorCallback);
-        }
+            var uniqueFileName = generateUniqueFileName() + '.mp3';
+            document.getElementById('<%= hdn_audio_file.ClientID %>').value = uniqueFileName;
 
-        function onMediaSuccess(stream) {
-            var audio = document.createElement('audio');
-            audio.controls = true;
-            audio.muted = true;
-            audio.srcObject = stream;
-            audio.play();
+            var formData = new FormData();
+            formData.append('audio', blob, uniqueFileName);
+            formData.append('hdn_audio_file', uniqueFileName);
 
-            audiosContainer.appendChild(audio);
-            audiosContainer.appendChild(document.createElement('hr'));
-
-            mediaRecorder = new MediaStreamRecorder(stream);
-            mediaRecorder.stream = stream;
-
-            // Adjust the bitrate and format for MP3
-            mediaRecorder.mimeType = 'audio/mp3';
-            mediaRecorder.audioBitsPerSecond = 128000; // Set the bitrate to 128 kbps for MP3
-
-            mediaRecorder.ondataavailable = function (blob) {
-                // Remove any existing audio elements
-                audiosContainer.innerHTML = '';
-
-                var audioElement = document.createElement('audio');
-                audioElement.controls = true;
-                audioElement.src = URL.createObjectURL(blob);
-                audiosContainer.appendChild(audioElement);
-
-                // Generate a unique filename
-                var uniqueFileName = generateUniqueFileName() + '.mp3';
-
-                // Update the hidden field value
-                document.getElementById('<%= hdn_audio_file.ClientID %>').value = uniqueFileName;
-
-                // Upload the recorded audio
-                var formData = new FormData();
-                formData.append('audio', blob, uniqueFileName);
-                formData.append('hdn_audio_file', uniqueFileName);
-
-                fetch('EPT_Test.aspx', { // Ensure this points to your upload handling page
-                    method: 'POST',
-                    body: formData
-                })
-                 .then(response => {
-                     if (!response.ok) {
-                         throw new Error('Network response was not ok');
-            }
+            fetch('EPT_Test.aspx', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => {
+                    if (!response.ok) throw new Error('Network response was not ok');
             return response.text();
         })
-        .then(result => {
-            // Get the value of the hidden field
-            var fileName = document.getElementById('<%= hdn_audio_file.ClientID %>').value;
-        displayMessage(fileName + ' saved successfully!', 'green');
-        console.log('Success:', result);
-        })
-                .catch(error => {
-                    displayMessage('Error: issue storing recorded audio', 'red');
-        console.error('Error:', error);
-        });
-        };
+                .then(result => {
+                    var fileName = document.getElementById('<%= hdn_audio_file.ClientID %>').value;
+                displayMessage(fileName + ' saved successfully!', 'green');
+                console.log('Success:', result);
+            })
+            .catch(error => {
+                displayMessage('Error: issue storing recorded audio', 'red');
+            console.error('Error:', error);
+            });
+            };
 
-        var timeInterval = 6000 * 1000; // Default to 10 minutes
-        mediaRecorder.start(timeInterval);
+            var timeInterval = 6000 * 1000; // 10 minutes
+            mediaRecorder.start(timeInterval);
 
-        document.querySelector('#stop-recording').disabled = false;
+            document.querySelector('#stop-recording').disabled = false;
+            }
+
+            function onMediaError(e) {
+                console.error('Media error:', e);
+            }
+
+            function generateUniqueFileName() {
+                return 'audio_' + ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
+                    (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+                );
+            }
+
+            function displayMessage(message, color) {
+                messageContainer.innerHTML = `<p style="color: ${color};">${message}</p>`;
+            }
+
+            window.onbeforeunload = function () {
+                document.querySelector('#start-recording').disabled = false;
+            };
+
+            // ✅ ASP.NET Button Check
+            document.getElementById('<%= btn_submit.ClientID %>').addEventListener('click', function (e) {
+        if (isRecording) {
+            e.preventDefault();
+            alert("Recording is still running. Please stop the recording first.");
+            return false;
         }
 
-        function onMediaError(e) {
-            console.error('Media error:', e);
-        }
+    
 
-        function generateUniqueFileName() {
-            return 'audio_' + ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
-                (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
-            );
-        }
+        console.log("Audio ready, proceeding with submit...");
+    });
+</script>
 
-        function displayMessage(message, color) {
-            messageContainer.innerHTML = `<p style="color: ${color};">${message}</p>`;
-        }
-
-        window.onbeforeunload = function () {
-            document.querySelector('#start-recording').disabled = false;
-        };
-    </script>
 
     <script>
         window.useThisGithubPath = 'streamproc/MediaStreamRecorder';
@@ -1145,232 +1449,6 @@
     <script src="https://cdn.webrtc-experiment.com/commits.js" async></script>
 
 
-    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
-    <script>
-        const canvas = document.getElementById('signatureCanvas');
-        const signaturePad = new SignaturePad(canvas);
 
-        // Resize canvas for high-DPI displays
-        function resizeCanvas() {
-            const ratio = Math.max(window.devicePixelRatio || 1, 1);
-            canvas.width = canvas.offsetWidth * ratio;
-            canvas.height = canvas.offsetHeight * ratio;
-            canvas.getContext("2d").scale(ratio, ratio);
-            signaturePad.clear();
-        }
-        window.addEventListener("resize", resizeCanvas);
-        resizeCanvas();
-
-        // Clear button
-        document.getElementById('clearBtn').addEventListener('click', () => {
-            signaturePad.clear();
-        });
-
-        function saveSignature() {
-            var canvas = document.getElementById("signatureCanvas");
-            var signatureData = canvas.toDataURL("image/png"); // Get signature as Base64
-            document.getElementById("<%= hdnSignature.ClientID %>").value = signatureData; // Set value in hidden field
-        }
-
-    </script>
-
-    <script>
-        $(document).ready(function () {
-            // ---------------- Timer Setup ----------------
-            var totalSeconds = 45 * 60; // 45 minutes in seconds
-            var timerDisplay = document.getElementById("timer");
-            var countdown; // will hold the interval ID once the timer starts
-
-            // Update the timer display (e.g., "45:00")
-            function updateTimerDisplay() {
-                var minutes = Math.floor(totalSeconds / 60);
-                var seconds = totalSeconds % 60;
-                timerDisplay.textContent =
-                    (minutes < 10 ? "0" : "") + minutes + ":" +
-                    (seconds < 10 ? "0" : "") + seconds;
-            }
-
-            // Start the timer countdown
-            function startTimer() {
-                countdown = setInterval(function () {
-                    if (totalSeconds > 0) {
-                        totalSeconds--;
-                        updateTimerDisplay();
-                    } else {
-                        clearInterval(countdown);
-                        alert("Your time is up! The form is being submitted.");
-                        document.getElementById("<%= btn_submit.ClientID %>").click();
-                    }
-                }, 1000);
-            }
-
-            // Initialize the timer display
-            updateTimerDisplay();
-
-            // ---------------- Validation Functions ----------------
-            function validateField(selector, errorMessage, errors) {
-                var field = $(selector);
-                if (field.val().trim() === "") {
-                    errors.push(errorMessage);
-                    field.css("border", "1px solid #ff0000a6");
-                } else {
-                    field.css("border", "1px solid #ccc");
-                }
-            }
-            function validateNationality(selector, errorMessage, errors) {
-                var field = $(selector);
-                var value = field.val();
-
-                // Get the actual select2 visible element
-                var select2Element = field.siblings('.select2').find('.select2-selection');
-
-                if (value === "" || value === null) {
-                    errors.push(errorMessage);
-                    select2Element.css({
-                        "border": "1px solid #ff0000a6",
-                        "border-radius": "4px"
-                    });
-                } else {
-                    select2Element.css({
-                        "border": "1px solid #ccc",
-                        "border-radius": "4px"
-                    });
-                }
-            }
-            $("#<%= ddl_nationality.ClientID %>").on("change", function () {
-                var select2Element = $(this).siblings('.select2').find('.select2-selection');
-                if ($(this).val() !== "") {
-                    select2Element.css({
-                        "border": "1px solid #ccc",
-                        "border-radius": "4px"
-                    });
-                }
-            });
-
-            function validateEmail(selector, errorMessage, errors) {
-                var field = $(selector);
-                var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-                if (field.val().trim() === "") {
-                    errors.push("Email is required");
-                    field.css("border", "1px solid #ff0000a6");
-                } else if (!emailPattern.test(field.val().trim())) {
-                    errors.push(errorMessage);
-                    field.css("border", "1px solid #ff0000a6");
-                } else {
-                    field.css("border", "1px solid #ccc");
-                }
-            }
-            function validateNationality(selector, errorMessage, errors) {
-                var field = $(selector);
-                var value = field.val();
-
-                // Get the actual select2 visible element
-                var select2Element = field.siblings('.select2').find('.select2-selection');
-
-                if (value === "" || value === null) {
-                    errors.push(errorMessage);
-                    select2Element.css({
-                        "border": "1px solid #ff0000a6",
-                        "border-radius": "4px"
-                    });
-                } else {
-                    select2Element.css({
-                        "border": "1px solid #ccc",
-                        "border-radius": "4px"
-                    });
-                }
-            }
-            $("#<%= ddl_nationality.ClientID %>").on("change", function () {
-                var select2Element = $(this).siblings('.select2').find('.select2-selection');
-                if ($(this).val() !== "") {
-                    select2Element.css({
-                        "border": "1px solid #ccc",
-                        "border-radius": "4px"
-                    });
-                }
-            });
-
-            // Remove red border on input as the user types
-            $(".form-control").on("input", function () {
-                $(this).css("border", "1px solid #ccc");
-            });
-
-            // ---------------- Navigation: Next & Previous Steps ----------------
-            $(".next-step").click(function (e) {
-                e.preventDefault(); // Prevent the default button behavior
-
-                var currentStep = $(this).closest(".step");
-                var nextStep = currentStep.next(".step");
-
-                var errors = []; // Array to hold validation errors
-
-                // Validate the fields (adjust selectors as needed)
-                validateField("#<%= txt_f_name.ClientID %>", "First Name is required", errors);
-                validateField("#<%= txt_l_name.ClientID %>", "Last Name is required", errors);
-                validateEmail("#<%= txt_email.ClientID %>", "Enter a valid Email Address", errors);
-                validateField("#<%= txt_sd_id.ClientID %>", "Student ID Number is required", errors);
-                validateNationality("#<%= ddl_nationality.ClientID %>", "Please select a nationality.", errors);
-                validateField("#<%= txt_dob.ClientID %>", "Date of Birth is required", errors);
-                validateField("#<%= txt_passport.ClientID %>", "Passport Number is required", errors);
-
-                var studentId = $("#<%= txt_sd_id.ClientID %>").val().trim();
-                var idRegex = /^(13|14|NW)[A-Za-z0-9]{6}$/; // starts with 13, 14, or NW + 6 more chars = 8 total
-
-                if (!idRegex.test(studentId)) {
-                    $("#<%= txt_sd_id.ClientID %>").css("border-color", "red");
-                    errors.push("Student ID must start with 13, 14, or NW and be 8 characters long.");
-                } else {
-                    $("#<%= txt_sd_id.ClientID %>").css("border-color", "");
-                }
-
-                if (signaturePad.isEmpty()) {
-                    errors.push("Signature is required.");
-                    $("#signatureCanvas").css("border", "1px solid red");
-                } else {
-                    $("#signatureCanvas").css("border", "1px solid #dfdfdf");
-                    saveSignature(); // Save the drawn signature to hidden field
-                }
-
-                if (errors.length > 0) {
-                    alert("Please fix the following errors:\n\n- " + errors.join("\n- "));
-                    return; // Do not proceed if validation fails
-                }
-
-                // If validation passes, hide the current step and show the next one
-                currentStep.hide();
-                nextStep.show();
-
-                $("html, body").animate({ scrollTop: 550 }, "fast");
-
-                // If the next step is "step-2", show the timer container and start the timer
-                if (nextStep.hasClass("step-2") && !countdown) {
-                    $("#timer-container").show();
-                    startTimer();
-                }
-            });
-
-            // Logic for the Previous button
-            $(".prev-step").click(function () {
-                var currentStep = $(this).closest(".step");
-                var prevStep = currentStep.prev(".step");
-
-                currentStep.hide();
-                prevStep.show();
-
-                $("html, body").animate({ scrollTop: 550 }, "fast");
-            });
-        });
-    </script>
-    <script src="assets/js/select2.min.js"></script>
-
-    <script>
-        $(document).ready(function() {
-            // Initialize select2 on the dropdown by using ClientID
-            $('#<%= ddl_nationality.ClientID %>').select2({
-                 width: '100%' // Optional, adjust the width as needed
-             });
-         });
-
-    </script>
 
 </asp:Content>

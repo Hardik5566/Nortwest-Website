@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="new_vet_orientation_form.aspx.cs" Inherits="new_vet_orientation_form" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/FormMaster.master" AutoEventWireup="true" CodeFile="new_vet_orientation_form.aspx.cs" Inherits="new_vet_orientation_form" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="title" runat="Server">
     Orientation Form For New VET
@@ -48,6 +48,7 @@
         .ch_agree label {
             font-weight: bold;
         }
+
     </style>
 
 
@@ -60,7 +61,7 @@
                 <div class="col-lg-12 col-md-12">
                     <h1>Orientation Form For New VET</h1>
                     <ul class="breadcrumb">
-                        <li><a href="Default.aspx"><i class="fas fa-home"></i>Home</a></li>
+                        <li><a href="https://nortwest.edu.au/"><i class="fas fa-home"></i>Home</a></li>
                         <li class="active">Orientation Form For New VET</li>
                     </ul>
                 </div>
@@ -105,7 +106,7 @@
 
                     <div class="col-md-6">
                         <label class="lbl_title">Qualification Enrolled</label>
-                        <asp:DropDownList ID="ddl_qulification" CssClass="form-control qualification" runat="server">
+                        <asp:DropDownList ID="ddl_qulification" CssClass="form-control" runat="server">
                             <asp:ListItem Value="">Qualification</asp:ListItem>
                             <asp:ListItem Value="ELICOS - General English">ELICOS - General English</asp:ListItem>
                             <asp:ListItem Value="ELICOS - English for Academic Purposes">ELICOS - English for Academic Purposes</asp:ListItem>
@@ -605,29 +606,20 @@
                 <div>
                     <h4>STUDENT SIGNATURE</h4>
                 </div>
-
                 <div class="row">
-
                     <div class="col-md-6">
-
                         <div>
                             <img id="clearBtn" style="width: 22px; float: right; margin-bottom: 8px;" src="assets/img/eraser.png" />
                         </div>
-
                         <asp:HiddenField ID="hdnSignature" runat="server" />
-
                         <canvas id="signatureCanvas" style="border: 1px solid rgb(223 223 223); width: 100%; height: 250px; touch-action: none; background-color: white;"></canvas>
-
-
                     </div>
-
-
                 </div>
             </div>
 
 
             <div>
-                <asp:Button ID="btn_submit" runat="server" OnClientClick="saveSignature()" OnClick="btn_submit_Click" Text="SUBMIT" CssClass="btn btn-success" />
+                <asp:Button ID="btn_submit" runat="server"     OnClientClick="validateAndSubmit(this); saveSignature();" OnClick="btn_submit_Click" Text="SUBMIT" CssClass="btn btn-success" />
             </div>
         </div>
     </div>
@@ -663,16 +655,26 @@
 
             // Validate Campus
             if ($("#<%= ddl_campus.ClientID %>").prop("selectedIndex") == 0) {
-                $("#<%= ddl_campus.ClientID %>").next(".nice-select").css("border-color", "red");
+                $("#<%= ddl_campus.ClientID %>").css("border-color", "red");
                 isValid = false;
-                if (!firstInvalid) firstInvalid = $("#<%= ddl_campus.ClientID %>").next(".nice-select");
-            errorMessages.push("Campus selection is required.");
-        } else {
-            $("#<%= ddl_campus.ClientID %>").next(".nice-select").css("border-color", "");
+                if (!firstInvalid) firstInvalid = $("#<%= ddl_campus.ClientID %>");
+                errorMessages.push("Campus selection is required.");
+            } else {
+                $("#<%= ddl_campus.ClientID %>").css("border-color", "");
             }
 
+            if ($("#<%= ddl_qulification.ClientID %>").prop("selectedIndex") == 0) {
+                $("#<%= ddl_qulification.ClientID %>").css("border-color", "red");
+                isValid = false;
+                if (!firstInvalid) firstInvalid = $("#<%= ddl_campus.ClientID %>");
+                errorMessages.push("Qualification selection is required.");
+            } else {
+                $("#<%= ddl_qulification.ClientID %>").css("border-color", "");
+            }
+
+
             // Validate Email
-            var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            var emailRegex = /^[a-zA-Z0-9._%+-]+@(gmail|yahoo|outlook)\.com$/;
             if (!emailRegex.test($("#<%= txt_email.ClientID %>").val())) {
             $("#<%= txt_email.ClientID %>").css("border-color", "red");
             isValid = false;
@@ -685,7 +687,7 @@
             // Validate Student ID Number
             // Validate Student ID Number
         var studentId = $("#<%= txt_id_no.ClientID %>").val().trim();
-            var idRegex = /^(13|14|NW)[A-Za-z0-9]{6}$/; // starts with 13, 14, or NW + 6 more chars = 8 total
+            var idRegex = /^(13|14|NW|nw)[A-Za-z0-9]{6}$/; // starts with 13, 14, or NW + 6 more chars = 8 total
 
             if (!idRegex.test(studentId)) {
                 $("#<%= txt_id_no.ClientID %>").css("border-color", "red");
@@ -844,6 +846,17 @@
         } else {
             $(".lbl_explanation_error.txt_error").hide();
         }
+            // ------------ Signature Validation ------------
+        if (signaturePad.isEmpty()) {
+            errorMessages.push("Signature is required.");
+            $("#signatureCanvas").css("border", "1px solid red");
+            isValid = false;
+            if (!firstInvalid) firstInvalid = $("#signatureCanvas");
+        } else {
+            $("#signatureCanvas").css("border", "1px solid #dfdfdf");
+            saveSignature(); // Save the drawn signature to hidden field
+        }
+
 
 
 
@@ -859,9 +872,9 @@
         }
 
         return isValid;
-    }
-    </script>
+        }
 
+    </script>
 
 
 
@@ -956,5 +969,16 @@
         }
         });--%>
     </script>
+    
+ <script>
+     $(function () {
+         // remove all nice-select wrappers and show native select
+         $('.nice-select').remove();
+         $('select').show().css({ display: 'block', visibility: 'visible', opacity: 1 });
+         // stop plugin re-init
+         $.fn.niceSelect = function(){ return this; };
+     });
+</script>
+
 </asp:Content>
 

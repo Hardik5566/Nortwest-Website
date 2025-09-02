@@ -1,14 +1,16 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="EPT_Success.aspx.cs" Inherits="EPT_Success" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/FormMaster.master" AutoEventWireup="true" CodeFile="EPT_Success.aspx.cs" Inherits="EPT_Success" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="title" runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="head" runat="Server">
     <style>
-        body {
-            text-align: center;
+        body  {
+            
             padding: 0 0;
             background: #EBF0F5;
         }
+         
+
 
         .form-container {
             background-color: white;
@@ -87,7 +89,7 @@
             </div>
         </div>
     </div>--%>
-    <div>
+    <div style="text-align:center">
     <div class="card" style="width: 45%; margin-top: 50px; margin-bottom: 50px">
         <div class="row">
             <div class="item">

@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
@@ -84,7 +86,16 @@ public partial class EPT_Test : System.Web.UI.Page
                 ds.Tables[0].Rows[0]["true_ans"] = Server.MapPath("/assets/img/") + ds.Tables[0].Rows[0]["true_ans"].ToString();
                 ds.Tables[0].Rows[0]["false_ans"] = Server.MapPath("/assets/img/") + ds.Tables[0].Rows[0]["false_ans"].ToString();
 
-                ds.Tables[0].Rows[0]["recorded_audio"] = server_url + "Audio/" + ds.Tables[0].Rows[0]["recorded_audio"].ToString();
+                //ds.Tables[0].Rows[0]["recorded_audio"] = server_url + "Audio/" + ds.Tables[0].Rows[0]["recorded_audio"].ToString();
+                if (ds.Tables[0].Rows[0]["recorded_audio"] == DBNull.Value ||
+                        string.IsNullOrWhiteSpace(ds.Tables[0].Rows[0]["recorded_audio"].ToString()))
+                {
+                    ds.Tables[0].Rows[0]["recorded_audio"] = ""; // keep it blank, so Crystal shows "No Audio"
+                }
+                else
+                {
+                    ds.Tables[0].Rows[0]["recorded_audio"] = server_url + "Audio/" + ds.Tables[0].Rows[0]["recorded_audio"].ToString();
+                }
 
                 rpt.Load(Server.MapPath("RPT/RPT_EPT_form_Main.rpt"));
                 if (!ds.Tables[0].Columns.Contains("score"))
@@ -96,7 +107,7 @@ public partial class EPT_Test : System.Web.UI.Page
                 ds.Tables[0].Rows[0]["score"] = ds.Tables[1].Rows[0]["score"].ToString();
                 rpt.Database.Tables["dt_ept_form"].SetDataSource(ds.Tables[0]);
 
-                string name = "New English Test";
+                string name = "New English Test (" + ds.Tables[0].Rows[0]["f_name"].ToString() + " - " + ds.Tables[0].Rows[0]["std_id_number"].ToString() + ")"; ;
 
                 Stream ach_stream = rpt.ExportToStream(ExportFormatType.PortableDocFormat);
                 Attachment ach_attachment = new Attachment(ach_stream, name + ".pdf", "application/pdf");
@@ -107,7 +118,7 @@ public partial class EPT_Test : System.Web.UI.Page
 
                 string subject = "English Test (" + ds.Tables[0].Rows[0]["f_name"].ToString() + "-" + ds.Tables[0].Rows[0]["std_id_number"].ToString() + ")";
                 string mail_body = get_email_body(ds.Tables[1].Rows[0]["score"].ToString());
-                string result = Send_Mail.SendMail("himanshumakwana8281@gmail.com", subject, mail_body, ach_attachment, "", "");
+                string result = Send_Mail.SendMail("english@nortwest.edu.au", subject, mail_body, ach_attachment, "", "");
 
                 rpt.Close();
                 rpt.Dispose();
@@ -196,7 +207,7 @@ public partial class EPT_Test : System.Web.UI.Page
         <table>
             <tbody><tr style='
     border-bottom: 1px solid white;'>
-    <th colspan='1' style='text-align: left;'><img class='logo' src='https://website.nortwest.edu.au/assets/img/logo_nwc_transp@1x.png' alt='Northwest Logo' style='text-align:left;width:170px;'></th>
+    <th colspan='1' style='text-align: left;'><img class='logo' src='https://website.nortwest.edu.au/assets/img/logo_nwc_transp@1x.png' alt='Nortwest Logo' style='text-align:left;width:170px;background: white;border-radius: 4px;padding: 3px;'></th>
         <th colspan='3' style='font-size:25px;'>English Test Result</th>
 </tr>
 </tbody>
@@ -226,7 +237,7 @@ public partial class EPT_Test : System.Web.UI.Page
             <tr>
                 <td class='left-align'>PART I</td>
                 <td class='left-align'>GRAMMAR, READING AND VOCABULARY</td>
-                <td colspan='2'>" + grammar_score+ @" / 25</td>
+                <td colspan='2'>" + grammar_score + @" / 25</td>
             </tr>
             <tr>
                 <td class='left-align'>PART II</td>
@@ -264,63 +275,71 @@ public partial class EPT_Test : System.Web.UI.Page
 
     public string SaveSignature()
     {
-        // Retrieve the base64 signature from the hidden field
-        string base64Signature = hdnSignature.Value;
+        string base64Signature = hdnSignature.Value; // hidden field
         string signName = "";
 
-        if (!string.IsNullOrEmpty(base64Signature))
+        if (string.IsNullOrEmpty(base64Signature))
         {
-            try
+            // No signature data
+            return signName;
+        }
+
+        try
+        {
+            // strip data:* prefix if present
+            string base64Data = base64Signature;
+            int commaIndex = base64Data.IndexOf(',');
+            if (commaIndex >= 0) base64Data = base64Data.Substring(commaIndex + 1);
+
+            byte[] signatureBytes = Convert.FromBase64String(base64Data);
+
+            using (var ms = new MemoryStream(signatureBytes))
+            using (var srcImg = System.Drawing.Image.FromStream(ms))
             {
-                // Define the folder path to save the signature
-                string folderPath = Server.MapPath("~/assets/img/sign/");
-                if (!Directory.Exists(folderPath))
+                // Optional: limit max width for very large exports (keeps files reasonable)
+                int maxWidth = 1200; // tweak as needed
+                int targetWidth = srcImg.Width;
+                int targetHeight = srcImg.Height;
+                if (targetWidth > maxWidth)
                 {
-                    Directory.CreateDirectory(folderPath); // Create folder if it doesn't exist
+                    double ratio = (double)maxWidth / targetWidth;
+                    targetWidth = maxWidth;
+                    targetHeight = (int)(srcImg.Height * ratio);
                 }
 
-                // Generate a unique file name
-                string fileName = "Signature_" + DateTime.Now.Ticks + ".jpg"; // Save as JPG
-                string filePath = Path.Combine(folderPath, fileName);
-
-                // Remove the base64 prefix and convert to byte array
-                byte[] signatureBytes = Convert.FromBase64String(base64Signature.Replace("data:image/png;base64,", ""));
-
-                // Create and save the image
-                using (MemoryStream ms = new MemoryStream(signatureBytes))
+                // Create bitmap with white background (no transparency)
+                using (var bmp = new Bitmap(targetWidth, targetHeight, PixelFormat.Format24bppRgb))
                 {
-                    using (System.Drawing.Image signatureImage = System.Drawing.Image.FromStream(ms))
+                    using (var g = Graphics.FromImage(bmp))
                     {
-                        // Create a bitmap with white background
-                        using (Bitmap bitmap = new Bitmap(signatureImage.Width, signatureImage.Height))
-                        {
-                            using (Graphics g = Graphics.FromImage(bitmap))
-                            {
-                                g.Clear(Color.White); // Set background to white
-                                g.DrawImage(signatureImage, 0, 0); // Draw signature image
-
-                                // Save the bitmap as a JPG file
-                                bitmap.Save(filePath, System.Drawing.Imaging.ImageFormat.Jpeg);
-                            }
-                        }
+                        g.Clear(Color.White);
+                        g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                        g.SmoothingMode = SmoothingMode.AntiAlias;
+                        g.CompositingQuality = CompositingQuality.HighQuality;
+                        g.DrawImage(srcImg, 0, 0, targetWidth, targetHeight);
                     }
+
+                    string folderPath = Server.MapPath("~/assets/img/sign/");
+                    if (!Directory.Exists(folderPath)) Directory.CreateDirectory(folderPath);
+
+                    // unique filename
+                    string fileName = "Signature_" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + ".png";
+                    string filePath = Path.Combine(folderPath, fileName);
+
+                    // Save as PNG (lossless)
+                    bmp.Save(filePath, System.Drawing.Imaging.ImageFormat.Png);
+
+                    signName = fileName;
                 }
-
-                signName = fileName; // Set the file name to return
-            }
-            catch (Exception ex)
-            {
-                // Log the error (replace with a proper logging mechanism)
-                Response.Write("Error: " + ex.Message);
             }
         }
-        else
+        catch (Exception ex)
         {
-            // Handle the case where the signature is empty
-            Response.Write("Signature data is missing.");
+            // Log error properly in production (EventLog / file / db). For debug:
+            // Response.Write("Error saving signature: " + ex.Message);
+            signName = "";
         }
 
-        return signName; // Return the saved file name or an empty string
+        return signName;
     }
-
 }

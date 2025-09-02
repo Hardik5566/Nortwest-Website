@@ -23,33 +23,32 @@ public partial class Application_for_Deferment : System.Web.UI.Page
 
         try
         {
-
-            List<string> selectedCourses = new List<string>();
-
-            if (CheckBox1.Checked)
-            {
-                selectedCourses.Add("BSB50120 - Diploma of Business");
-            }
-
-            if (CheckBox2.Checked)
-            {
-                selectedCourses.Add("BSB60120 - Advanced Diploma of Business");
-            }
-
-            string courses = string.Join(", ", selectedCourses);
-
             string save_signature = SaveSignature();
-            DataSet ds = BAL_Forms.ins_application_for_deferment_form(txt_f_name.Text, txt_id.Text, txt_date.Text, courses, txt_reason.Text, txt_enrolment.Text, txt_addrsess_leave.Text, txt_email.Text, hd_contact_no_code.Value.ToString(), hd_contact_no.Value.ToString(), hd_mobile_no_code.Value.ToString(), hd_mobile_no.Value.ToString(), save_signature, txt_sign_date.Text, "1");
-
-
-
+            DataSet ds = BAL_Forms.ins_application_for_deferment_form(txt_student_name.Text, txt_std_id.Text, txt_dob.Text, txt_reason.Text, txt_course_name.Text, txt_course_start.Text, txt_course_end.Text, txt_def_start.Text, txt_def_end.Text, save_signature, txt_sign_date.Text, "1");
             if (ds.Tables.Count > 0)
             {
                 string signaturePath = Server.MapPath("~/assets/img/sign/") + ds.Tables[0].Rows[0]["student_signature"].ToString();
                 Task.Run(() =>
                 {
+                    Send_Mail.MailWithouAttachment(
+                         "himanshumakwana8281@gmail.com",
+                         "New Application for Deferment / Suspension Form (" + ds.Tables[0].Rows[0]["student_name"].ToString() + ")",
+                         mailbody(
+                             ds.Tables[0].Rows[0]["student_name"].ToString(),
+                             ds.Tables[0].Rows[0]["student_id"].ToString(),
+                             ds.Tables[0].Rows[0]["birth_date"].ToString(),
+                             ds.Tables[0].Rows[0]["reason"].ToString(),
+                             ds.Tables[0].Rows[0]["course"].ToString(),
+                             ds.Tables[0].Rows[0]["course_start"].ToString(),
+                             ds.Tables[0].Rows[0]["course_end"].ToString(),
+                             ds.Tables[0].Rows[0]["deferment_start"].ToString(),
+                             ds.Tables[0].Rows[0]["deferment_end"].ToString(),
+                             ds.Tables[0].Rows[0]["sign_date"].ToString()
+                         ),
+                         "",
+                        signaturePath
+                     );
 
-                    Send_Mail.MailWithouAttachment("himanshumakwana8281@gmail.com", "New Application for Deferment / Suspension Form (" + ds.Tables[0].Rows[0]["student_name"].ToString() + ")", mailbody(ds.Tables[0].Rows[0]["student_name"].ToString(), ds.Tables[0].Rows[0]["student_id"].ToString(), ds.Tables[0].Rows[0]["deferment_date"].ToString(), ds.Tables[0].Rows[0]["course"].ToString(), ds.Tables[0].Rows[0]["reason"].ToString(), ds.Tables[0].Rows[0]["enrolment_until"].ToString(), ds.Tables[0].Rows[0]["address_while_on_leave"].ToString(), ds.Tables[0].Rows[0]["email"].ToString(), ds.Tables[0].Rows[0]["phone_code"].ToString() + ds.Tables[0].Rows[0]["phone_no"].ToString(), ds.Tables[0].Rows[0]["contact_code"].ToString() + ds.Tables[0].Rows[0]["contact_no"].ToString(), ds.Tables[0].Rows[0]["sign_date"].ToString()), "", signaturePath);
                 });
                 Response.Redirect("Success.aspx");
             }
@@ -123,103 +122,84 @@ public partial class Application_for_Deferment : System.Web.UI.Page
         return signName; // Return the saved file name or an empty string
     }
 
-    public string mailbody(string student_name, string student_id, string deferment_date, string course, string reason, string enrolment_until, string address_while_on_leave, string email, string contact_no, string mobile_no, string sign_date)
+    public string mailbody(
+     string student_name,
+     string student_id,
+     string dob,
+     string reason,
+     string course,
+     string course_start,
+     string course_end,
+     string def_start,
+     string def_end,
+     string sign_date
+ )
     {
         string html = @"
 <div style='width: 100%; background-color: #f0f0f0; padding: 50px 0px'>
     <div style='width: 100%; text-align: center; margin-bottom: 15px'>
         <img src='https://website.nortwest.edu.au/assets/img/logo_nwc_transp@1x.png' width='160px' />
-        <h2 style='text-align: center'>Application for Deferment / Suspension Form</h2>
+        <h2 style='text-align: center'>Application for Deferment Form</h2>
     </div>
+
     <div style='margin-left: auto; margin-right: auto; width: 85%; background-color: white; border-top: 3px solid #008a7f; border-bottom: 3px solid #008a7f;'>
 
         <table style='border-collapse: collapse; margin-left: auto; margin-right: auto; width: 100%;'>
-            <tr></tr>
+            
             <tr style='border-bottom: 1px solid #d7d7d7; text-align: left'>
-                <th colspan='2' style='padding: 10px'>
-                    <label style='font-size: 20px; padding-bottom: 10px; color: black'>Student details</label>
-                </th>
+                <th colspan='2' style='padding: 10px; font-size: 20px; color: black;'>Student Details</th>
             </tr>
 
-            <tr style='border-bottom: 1px solid #d7d7d7; text-align: left'>
+            <tr>
                 <td style='padding: 10px; color: black; width: 50%'>Student Name</td>
-                <td>
-                    <label>" + student_name + @"</lable>
-                </td>
+                <td><label>" + student_name + @"</label></td>
             </tr>
-            <tr style='border-bottom: 1px solid #d7d7d7; text-align: left'>
+            <tr>
                 <td style='padding: 10px; color: black;'>Student ID</td>
-                <td>
-                    <label>" + student_id + @"</lable>
-                </td>
+                <td><label>" + student_id + @"</label></td>
+            </tr>
+            <tr>
+                <td style='padding: 10px; color: black;'>Date of Birth</td>
+                <td><label>" + dob + @"</label></td>
             </tr>
 
-            <tr style='border-bottom: 1px solid #d7d7d7; text-align: left'>
-                <td style='padding: 10px; color: black;'>Date</td>
-                <td>
-                    <label>" + deferment_date + @"</lable>
-                </td>
+            <tr>
+                <td style='padding: 10px; color: black;'>Reason for Request</td>
+                <td><label>" + reason + @"</label></td>
+            </tr>
+            <tr>
+                <td style='padding: 10px; color: black;'>Course Name</td>
+                <td><label>" + course + @"</label></td>
             </tr>
 
-            <tr style='border-bottom: 1px solid #d7d7d7; text-align: left'>
-                <td style='padding: 10px; color: black;'>Course</td>
-                <td>
-                    <label>" + course + @"</lable>
-                </td>
+            <tr>
+                <td style='padding: 10px; color: black;'>Course Start Date</td>
+                <td><label>" + course_start + @"</label></td>
             </tr>
-               <tr style='border-bottom: 1px solid #d7d7d7; text-align: left'>
-                <td style='padding: 10px; color: black;'>I wish to defer / suspend my studies for the following reason/s:</td>
-                <td>
-                    <label>" + reason + @"</lable>
-                </td>
-            </tr>
-             <tr style='border-bottom: 1px solid #d7d7d7; text-align: left'>
-                <td style='padding: 10px; color: black;'>I wish to defer / suspend my enrolment until (insert date):</td>
-                <td>
-                    <label>" + enrolment_until + @"</lable>
-                </td>
-            </tr>
-            <tr style='border-bottom: 1px solid #d7d7d7; text-align: left'>
-                <td style='padding: 10px; color: black;'>Address while on leave:</td>
-                <td>
-                    <label>" + address_while_on_leave + @"</lable>
-                </td>
+            <tr>
+                <td style='padding: 10px; color: black;'>Course End Date</td>
+                <td><label>" + course_end + @"</label></td>
             </tr>
 
-            <tr style='border-bottom: 1px solid #d7d7d7; text-align: left'>
-                <td style='padding: 10px; color: black;'>Email ID :</td>
-                <td>
-                    <label>" + email + @"</lable>
-                </td>
+            <tr>
+                <td style='padding: 10px; color: black;'>Deferment Start Date</td>
+                <td><label>" + def_start + @"</label></td>
+            </tr>
+            <tr>
+                <td style='padding: 10px; color: black;'>Deferment End Date</td>
+                <td><label>" + def_end + @"</label></td>
             </tr>
 
-            <tr style='border-bottom: 1px solid #d7d7d7; text-align: left'>
-                <td style='padding: 10px; color: black;'>Student Contact Number</td>
-                <td>
-                    <label>" + contact_no + @"</lable>
-                </td>
-            </tr>
-              <tr style='border-bottom: 1px solid #d7d7d7; text-align: left'>
-                <td style='padding: 10px; color: black;'>Mobile</td>
-                <td>
-                    <label>" + mobile_no + @"</lable>
-                </td>
-            </tr>
- <tr style='border-bottom: 1px solid #d7d7d7; text-align: left'>
+            <tr>
                 <td style='padding: 10px; color: black;'>Sign Date</td>
-                <td>
-                    <label>" + sign_date + @"</lable>
-                </td>
+                <td><label>" + sign_date + @"</label></td>
             </tr>
+
         </table>
     </div>
-
-   
 </div>";
 
-
         return html;
-
     }
 
 }
