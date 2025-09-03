@@ -5,8 +5,8 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="head" runat="Server">
     <style>
-        body {
-            text-align: center;
+        body .center_1{
+            text-align: center !important;
             padding: 0 0;
             background: #EBF0F5;
         }
@@ -63,8 +63,8 @@
             </div>
         </div>
     </div>--%>
-    <div>
-        <div class="card" style="width: 45%; margin-top: 50px; margin-bottom: 50px">
+    <div class="center_1">
+        <div class="card" style="width: 45%; margin-top: 50px; margin-bottom: 50px;">
 
             <div class="row">
 
