@@ -898,3 +898,48 @@ PRIMARY KEY CLUSTERED
 	[id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+----------------------------------------
+----------------------------------------
+----------------------------------------
+create TABLE dbo.tbl_release_request_form(
+	id int IDENTITY(1,1) NOT NULL,
+	student_name varchar(450) NULL,
+	std_id varchar(150),
+	country varchar(70) NULL,
+	passport_no varchar(350),
+	dob varchar(30),
+	course_enrolled varchar(350),
+	intake varchar(30),
+	address varchar(max) NULL,
+	email varchar(150) NULL,
+	country_code varchar(10) NULL,
+	contact_no varchar(20) NULL,
+	reason_for_release varchar(max) NULL,
+	student_signature varchar(max) NULL,
+	sign_date varchar(30) NULL,
+	status bit NULL,
+	create_by int NULL,
+	create_date datetime NULL,
+	cmodify_by int NULL,
+	modify_date datetime NULL,
+	delete_by int NULL,
+	delete_date datetime NULL
+)
+----------------------------------------
+----------------------------------------
+----------------------------------------
+create TABLE dbo.tbl_qualification_issuance_form(
+	id int IDENTITY(1,1) NOT NULL,
+	student_name varchar(450) NULL,
+	std_id varchar(150),
+	course varchar(150),
+	date_request varchar(30),
+	documents nvarchar(max),
+	status bit NULL,
+	create_by int NULL,
+	create_date datetime NULL,
+	cmodify_by int NULL,
+	modify_date datetime NULL,
+	delete_by int NULL,
+	delete_date datetime NULL
+)

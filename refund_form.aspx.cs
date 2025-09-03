@@ -151,7 +151,7 @@ public partial class refund_form : System.Web.UI.Page
 
                 string subject = "New Refund Form (" + ds.Tables[0].Rows[0]["first_name"].ToString() + ")";
                 string mail_body = get_email_body();
-                string result = Send_Mail.SendMail("himanshumakwana8281@gmail.com", subject, mail_body, ach_attachment, "", "");
+                string result = Send_Mail.SendMail("hardikvaghasiya5566@gmail.com", subject, mail_body, ach_attachment, "", "");
 
                 rpt.Close();
                 rpt.Dispose();
@@ -243,7 +243,7 @@ public partial class refund_form : System.Web.UI.Page
     <div class='wrapper'>
         <div class='container'>
             <img class='logo' src='https://nortwest.edu.au/assets/uploads/2017/05/logo_nwc_transp@1x.png' alt='Nortwest Logo' width='150'>
-            <div class='title'>English Test</div>
+            <div class='title'>Student Refund</div>
             <div class='content'>
                 <p>Dear team,</p>
                 <p>Please find the attached Student Refund Form acknowledgement for Nortwest.</p>

@@ -67,7 +67,7 @@
                                                 <li><a href="complaint_and_feedback_form.aspx">Complaint and Feedback Form</a></li>
                                                 <li><a href="change_of_campus_form.aspx">Change of Campus Form</a></li>
                                                 <li><a href="cricos_student_withdrawal_form.aspx">CRICOS Student Withdrawal Form</a></li>
-
+                                                <li><a href="release_request_form.aspx">Release Request Form</a></li>
                                             </ul>
                                         </div>
                                         <div class="col-md-4">
@@ -78,6 +78,7 @@
                                                 <li><a href="LLN_Test.aspx">LLN Test</a></li>
                                                 <li><a href="new_elicos_orientation_form.aspx">Student Orientation Form Elicos</a></li>
                                                 <li><a href="new_vet_orientation_form.aspx">Student Orientation Form Vet</a></li>
+                                                 <li><a href="qualification_issuance _form.aspx">Qualification Issuance Form</a></li>
                                             </ul>
                                         </div>
                                     </div>

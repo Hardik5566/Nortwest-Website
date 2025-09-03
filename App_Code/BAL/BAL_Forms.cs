@@ -941,4 +941,43 @@ public class BAL_Forms
         cmd.CommandText = "dis_all_form_count_sp";
         return command.ExtQueryDS(cmd);
     }
+    public static DataSet ins_release_request_form(string student_name, string std_id, string country, string passport_no, string dob, string course_enrolled, string intake, string address, string email, string country_code, string contact_no, string reason_for_release, string student_signature, string sign_date, string create_by)
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.CommandText = "ins_release_request_form_sp";
+        cmd.CommandType = CommandType.StoredProcedure;
+        parameter param = new parameter();
+        cmd.Parameters.Add(param.stringparam("@student_name", student_name));
+        cmd.Parameters.Add(param.stringparam("@std_id", std_id));
+        cmd.Parameters.Add(param.stringparam("@country", country));
+        cmd.Parameters.Add(param.stringparam("@passport_no", passport_no));
+        cmd.Parameters.Add(param.stringparam("@dob", dob));
+        cmd.Parameters.Add(param.stringparam("@course_enrolled", course_enrolled));
+        cmd.Parameters.Add(param.stringparam("@intake", intake));
+        cmd.Parameters.Add(param.stringparam("@address", address));
+        cmd.Parameters.Add(param.stringparam("@email", email));
+        cmd.Parameters.Add(param.stringparam("@country_code", country_code));
+        cmd.Parameters.Add(param.stringparam("@contact_no", contact_no));
+        cmd.Parameters.Add(param.stringparam("@reason_for_release", reason_for_release));
+        cmd.Parameters.Add(param.stringparam("@student_signature", student_signature));
+        cmd.Parameters.Add(param.stringparam("@sign_date", sign_date));
+        cmd.Parameters.Add(param.intparam("@create_by", create_by));
+        return command.ExtQueryDS(cmd);
+    }
+    public static DataSet ins_qualification_issuance_form(string student_name, string std_id, string course, string date_request, string documents, string create_by)
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.CommandText = "ins_qualification_issuance_form_sp";
+
+        parameter param = new parameter();
+        cmd.Parameters.Add(param.stringparam("@student_name", student_name));
+        cmd.Parameters.Add(param.stringparam("@std_id", std_id));
+        cmd.Parameters.Add(param.stringparam("@course", course));
+        cmd.Parameters.Add(param.stringparam("@date_request", date_request));
+        cmd.Parameters.Add(param.stringparam("@documents", documents));
+        cmd.Parameters.Add(param.intparam("@create_by", create_by));
+
+        return command.ExtQueryDS(cmd);
+    }
+
 }

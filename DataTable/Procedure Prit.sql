@@ -801,7 +801,7 @@ create PROCEDURE [dbo].[sel_change_of_campus_form_sp](	@id int)ASBEGIN	 SE
         format(cast( sign_date as date),'dd MMM,yyyy') as sign_date,
         status,
 		format(create_date,'dd MMM, yyyy') as [date]    FROM tbl_change_of_campus_form	where	status=1	and id=@idEND----------------------------------------
----------Display Change Course----------
+---------Ins Change Course----------
 ----------------------------------------
 alter PROCEDURE ins_change_course_form_sp
 (
@@ -1124,4 +1124,194 @@ alter PROCEDURE [dbo].dis_credit_transfer_application_sp(	@from_date datetime,
         student_signature,
         format(cast(sign_date as date),'dd MMM, yyyy') as sign_date,
         student_full_name,
-        status    FROM tbl_credit_transfer_application	where	status=1	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)	END;
+        status    FROM tbl_credit_transfer_application	where	status=1	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)	END;----------------------------------------
+---------ins realese form----------
+----------------------------------------
+alter PROCEDURE ins_release_request_form_sp
+(
+	@student_name varchar(450),
+	@std_id varchar(150),
+	@country varchar(70),
+	@passport_no varchar(350),
+	@dob varchar(30),
+	@course_enrolled varchar(350),
+	@intake varchar(30),
+	@address varchar(max),
+	@email varchar(150),
+	@country_code varchar(10),
+	@contact_no varchar(20),
+	@reason_for_release varchar(max),
+	@student_signature varchar(max),
+	@sign_date varchar(30),
+	@create_by int
+)
+AS
+BEGIN
+	INSERT INTO dbo.tbl_release_request_form
+	VALUES
+	(
+		@student_name,
+		@std_id,
+		@country,
+		@passport_no,
+		@dob,
+		@course_enrolled,
+		@intake,
+		@address,
+		@email,
+		@country_code,
+		@contact_no,
+		@reason_for_release,
+		@student_signature,
+		@sign_date,
+		1,
+		@create_by,
+		dbo.GetCurrentAUTTime(),
+		null,
+		null,
+		null,
+		null
+	)
+	declare @id int = @@identity
+	exec sel_release_request_form_sp @id
+	
+END
+----------------------------------------
+---------release_request_form----------
+----------------------------------------
+alter PROCEDURE sel_release_request_form_sp
+(
+    @id int
+)
+AS
+BEGIN
+   SELECT 
+        id,
+        student_name,
+        std_id,
+        country,
+        passport_no,
+         format(cast(dob as date),'dd MMM, yyyy') as dob,
+        course_enrolled,
+         format(cast(intake as date),'dd MMM, yyyy') as intake,
+        address,
+        email,
+        country_code,
+        contact_no,
+        reason_for_release,
+        student_signature,
+        format(cast(sign_date as date),'dd MMM, yyyy') as sign_date,
+        status
+    FROM dbo.tbl_release_request_form
+    WHERE id = @id and status = 1
+END
+-----------------------------------------------
+---------Display release_request_form----------
+-----------------------------------------------
+alter PROCEDURE [dbo].dis_release_request_form_sp
+(
+    @from_date DATETIME,
+    @to_date DATETIME
+)
+AS
+BEGIN
+    SELECT 
+        id,
+        student_name,
+        std_id,
+        country,
+        passport_no,
+        dob,
+        course_enrolled,
+        intake,
+        address,
+        email,
+        country_code,
+        contact_no,
+        reason_for_release,
+        student_signature,
+        FORMAT(cast(sign_date as date), 'dd MMM, yyyy') AS sign_date,
+        FORMAT(create_date, 'dd MMM, yyyy') AS [date]
+    FROM dbo.tbl_release_request_form
+    WHERE 
+        status = 1
+        AND CAST(create_date AS DATE) BETWEEN CAST(@from_date AS DATE) AND CAST(@to_date AS DATE)
+END;
+-----------------------------------------------
+---------Insert release_request_form----------
+-----------------------------------------------
+create PROCEDURE ins_qualification_issuance_form_sp
+(
+    @student_name VARCHAR(450),
+    @std_id VARCHAR(150),
+    @course VARCHAR(150),
+    @date_request VARCHAR(30),
+    @documents NVARCHAR(MAX),
+    @create_by INT
+)
+AS
+BEGIN
+    INSERT INTO dbo.tbl_qualification_issuance_form
+    VALUES
+    (
+        @student_name,
+        @std_id,
+        @course,
+        @date_request,
+        @documents,
+        1, -- active
+        @create_by,
+        dbo.GetCurrentAUTTime(),
+        NULL,
+        NULL,
+        NULL,
+        NULL
+    )
+
+    DECLARE @id INT = @@identity
+    EXEC sel_qualification_issuance_form_sp @id
+END
+
+-----------------------------------------------
+---------Select release_request_form----------
+-----------------------------------------------
+alter PROCEDURE sel_qualification_issuance_form_sp
+(
+    @id INT
+)
+AS
+BEGIN
+     SELECT 
+        id,
+        student_name,
+        std_id,
+        course,
+        format(cast(date_request as date),'dd MMM, yyyy' )as date_request,
+        documents,
+		status
+    FROM dbo.tbl_qualification_issuance_form
+    WHERE id = @id AND status = 1
+END
+-----------------------------------------------
+---------Display release_request_form----------
+-----------------------------------------------
+alter PROCEDURE dis_qualification_issuance_form_sp
+(
+    @from_date DATETIME,
+    @to_date DATETIME
+)
+AS
+BEGIN
+    SELECT 
+        id,
+        student_name,
+        std_id,
+        course,
+        format(cast(date_request as date),'dd MMM, yyyy' )as date_request,
+        documents,
+        FORMAT(create_date, 'dd MMM, yyyy') AS create_date
+    FROM dbo.tbl_qualification_issuance_form
+    WHERE 
+        status = 1
+        AND CAST(create_date AS DATE) BETWEEN CAST(@from_date AS DATE) AND CAST(@to_date AS DATE)
+END

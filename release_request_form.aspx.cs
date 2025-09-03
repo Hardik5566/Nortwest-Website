@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Drawing;
 
-public partial class Change_course_form : System.Web.UI.Page
+public partial class release_request_form : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -25,7 +25,7 @@ public partial class Change_course_form : System.Web.UI.Page
         try
         {
             string save_signature = SaveSignature();
-            DataSet ds = BAL_Forms.ins_change_course_form(txt_student_name.Text, txt_s_id.Text, ddl_country.SelectedValue.ToString(), txt_passport_no.Text, txt_dob.Text, txt_course_enroll.Text, txt_intake.Text, txt_address.Text, txt_email.Text, hd_contact_no_code.ToString(), hd_contact_no.ToString(), txt_course_change.Text, txt_reason_campus.Text, save_signature, txt_sign_date.Text, "1");
+            DataSet ds = BAL_Forms.ins_release_request_form(txt_student_name.Text, txt_s_id.Text, ddl_country.SelectedValue.ToString(), txt_passport_no.Text, txt_dob.Text, txt_course_enroll.Text, txt_intake.Text, txt_address.Text, txt_email.Text, hd_contact_no_code.ToString(), hd_contact_no.ToString(), txt_reason_release.Text, save_signature, txt_sign_date.Text, "1");
             if (ds.Tables[0].Rows.Count > 0)
             {
                 string signaturePath = Server.MapPath("~/assets/img/sign/") + ds.Tables[0].Rows[0]["student_signature"].ToString();
@@ -33,7 +33,7 @@ public partial class Change_course_form : System.Web.UI.Page
            {
                Send_Mail.MailWithouAttachment(
                      "himanshumakwana8281@gmail.com",
-                     "New Application for Change of Course Form (" + ds.Tables[0].Rows[0]["student_name"].ToString() + ")",
+                     "Release Request Form (" + ds.Tables[0].Rows[0]["student_name"].ToString() + ")",
                      mailbody(
                          ds.Tables[0].Rows[0]["student_name"].ToString(),
                          ds.Tables[0].Rows[0]["std_id"].ToString(),
@@ -46,8 +46,7 @@ public partial class Change_course_form : System.Web.UI.Page
                          ds.Tables[0].Rows[0]["email"].ToString(),
                          ds.Tables[0].Rows[0]["country_code"].ToString(),
                          ds.Tables[0].Rows[0]["contact_no"].ToString(),
-                         ds.Tables[0].Rows[0]["change_course"].ToString(),
-                         ds.Tables[0].Rows[0]["reason_change_course"].ToString(),
+                         ds.Tables[0].Rows[0]["reason_for_release"].ToString(),
                          ds.Tables[0].Rows[0]["student_signature"].ToString(),
                          ds.Tables[0].Rows[0]["sign_date"].ToString()
                      ),
@@ -143,13 +142,16 @@ public partial class Change_course_form : System.Web.UI.Page
 
         return signName; // Return the saved file name or an empty string
     }
-    public string mailbody(string student_name, string student_id, string country, string passport_no, string dob, string course_enrolled, string intake, string address, string email, string country_code, string contact_no, string change_course, string reason_change_course, string student_signature, string sign_date)
+    public string mailbody(
+       string student_name, string student_id, string country, string passport_no, string dob,
+       string course_enrolled, string intake, string address, string email, string country_code,
+       string contact_no, string reason_for_release, string student_signature, string sign_date)
     {
         string html = @"
 <div style='width: 100%; background-color: #f0f0f0; padding: 50px 0px'>
     <div style='width: 100%; text-align: center; margin-bottom: 15px'>
         <img src='https://website.nortwest.edu.au/assets/img/logo_nwc_transp@1x.png' width='160px' />
-        <h2 style='text-align: center; margin:10px 0;'>Change of Course Form</h2>
+        <h2 style='text-align: center; margin:10px 0;'>Release Request Form</h2>
     </div>
 
     <style>
@@ -192,16 +194,16 @@ public partial class Change_course_form : System.Web.UI.Page
         </table>
     </div>
 
-    <!-- Change of Course Details -->
+    <!-- Reason for Release -->
     <div style='margin: auto; width: 85%; background-color: white; border: 1px solid #ddd; border-top: 3px solid #008a7f;'>
         <table class='mail-table'>
-            <tr><th colspan='2'>Change of Course Details</th></tr>
-            <tr><td>Change To Course :</td><td>" + change_course + @"</td></tr>
-            <tr><td>Reason for Change :</td><td>" + reason_change_course + @"</td></tr>
+            <tr><th colspan='2'>Reason for Release</th></tr>
+            <tr><td>Reason :</td><td>" + reason_for_release + @"</td></tr>
             <tr><td>Date :</td><td>" + sign_date + @"</td></tr>
         </table>
     </div>
 </div>";
         return html;
     }
+
 }

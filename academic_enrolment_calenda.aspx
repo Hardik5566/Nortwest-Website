@@ -59,30 +59,32 @@
             <div class="row">
 
                 <div class="blog-items">
-                    <div class="sidebar col-md-8">
+                    <div class="sidebar col-md-12">
                         <div class="row">
-                            <%--<div class="site-heading text-center">
-                                <div class="col-md-8 col-md-offset-2">
-                                    <h2>Intake Dates</h2>
+                             <div class="row">
+                                    <div class="site-heading text-center" style="margin-bottom: 15px !important;">
+                                        <div class="col-md-8 col-md-offset-2">
+                                            <h2>Intake Dates</h2>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>--%>
-                            <div class="top-author">
+                           <%-- <div class="top-author">
                                 <h4 style="border: 0; background-color: transparent">Intake Dates</h4>
-                            </div>
+                            </div>--%>
                             <asp:ListView ID="list_cal" runat="server" OnItemDataBound="list_cal_ItemDataBound">
                                 <ItemTemplate>
-                                    <div class="sidebar col-md-4 mb-3">
+                                    <div class="sidebar col-md-2 mb-3">
                                         <aside>
-                                            <div class="sidebar-item category" style="background-color: white;">
+                                            <div class="sidebar-item category" style="background-color: white; padding: 25px !important">
                                                 <div class="title">
-                                                    <h4><%# Eval("Year") %></h4>
+                                                    <h4 style="margin-bottom: 15px !important; padding-bottom: 15px !important"><%# Eval("Year") %></h4>
                                                 </div>
                                                 <div class="sidebar-info">
                                                     <ul>
                                                         <asp:ListView ID="list_date" runat="server">
                                                             <ItemTemplate>
-                                                                <li>
-                                                                    <a href="javascript:void(0)" style="cursor:default"><i class="fas fa-calendar-alt"></i>&nbsp <%# Container.DataItem %></a>
+                                                                <li style="padding: 4px 0 !important;">
+                                                                    <a href="javascript:void(0)" style="cursor: default"><i class="fas fa-calendar-alt"></i>&nbsp <%# Container.DataItem %></a>
                                                                 </li>
                                                             </ItemTemplate>
                                                         </asp:ListView>
@@ -97,10 +99,39 @@
                         </div>
                     </div>
 
-                    <div class="blog-content col-md-4">
+                    <div class="blog-content col-md-12">
                         <div class="content-items">
+                            <div class="text-center my-4">
+                                <div class="row">
+                                    <div class="site-heading text-center" style="margin-bottom: 15px !important;">
+                                        <div class="col-md-8 col-md-offset-2">
+                                            <h2>Public Holidays</h2>
+                                        </div>
+                                    </div>
+                                </div>
 
-                            <%-- <div class="top-author" style="background-color: white; margin-bottom: 20px">
+                                <!-- Victoria -->
+                                <a href="https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2025" class="btn mx-2 px-4 py-2 rounded shadow-sm"
+                                    style="background-color: #337ab7; color: #fff; font-weight: bold; border: none; text-decoration: none;">Victoria State
+                                </a>
+
+                                <!-- NSW -->
+                                <a href="https://www.nsw.gov.au/about-nsw/public-holidays" class="btn mx-2 px-4 py-2 rounded shadow-sm"
+                                    style="background-color: #f0ad4e; color: #fff; font-weight: bold; border: none; text-decoration: none;">NSW State
+                                </a>
+
+                                <!-- SA -->
+                                <a href="Admin/assets/Holidays/Public-Holidays-2024-2027.pdf" class="btn mx-2 px-4 py-2 rounded shadow-sm"
+                                    style="background-color: #5cb85c; color: #fff; font-weight: bold; border: none; text-decoration: none;">SA State
+                                </a>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <%-- <div class="top-author" style="background-color: white; margin-bottom: 20px">
                                 <h4>Holidays 2023</h4>
                                 <div class="author-items holidays">
                                     <!-- Single Item -->
@@ -158,7 +189,7 @@
                                 </div>
                             </div>--%>
 
-                            <div class="top-author" style="background-color: white">
+                    <%--      <div class="top-author" style="background-color: white">
                                 <h4>Public Holidays (NSW)</h4>
                                 <div class="author-items holidays">
                                     <!-- Single Item -->
@@ -174,13 +205,13 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-
-                    </div>
+                            </div>--%>
                 </div>
+
             </div>
         </div>
+    </div>
+    </div>
     </div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="jqury" runat="Server">

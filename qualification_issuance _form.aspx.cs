@@ -1,0 +1,142 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Data;
+using System.Data.SqlClient;
+using System.Threading.Tasks;
+
+public partial class qualification_issuance__form : System.Web.UI.Page
+{
+    protected void Page_Load(object sender, EventArgs e)
+    {
+
+    }
+    protected void btn_submit_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            string studentName = txtStudentName.Text.Trim();
+            string studentId = txtStudentID.Text.Trim();
+            string course = txtCourse.Text.Trim();
+            string dateRequested = txtDateRequested.Text.Trim();
+
+            // Collect documents selected
+            string documents = "";
+            if (ch_attainment.Checked)
+            {
+                documents += "Statement of Attainment, ";
+            }
+            if (ch_completion.Checked)
+            {
+                documents += "Completion Letter, ";
+            }
+            if (ch_relese.Checked)
+            {
+                documents += "Release Letter, ";
+            }
+            if (ch_term.Checked)
+            {
+                documents += "Term Break Letter, ";
+            }
+            if (ch_certificate.Checked)
+            {
+                documents += "Certificate, ";
+            }
+            if (ch_letter_enrol.Checked)
+            {
+                documents += "Letter of Enrolment, ";
+            }
+            if (ch_record.Checked)
+            {
+                documents += "Academic Record, ";
+            }
+            if (!string.IsNullOrEmpty(txt_other_document.Text.Trim()))
+            {
+                documents += "Other: " + txt_other_document.Text.Trim() + ", ";
+            }
+            DataSet ds = BAL_Forms.ins_qualification_issuance_form(
+                   studentName,
+                   studentId,
+                   course,
+                   dateRequested,
+                   documents,
+                   "1"
+               );
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                Task.Run(() =>
+                {
+                    Send_Mail.MailWithouAttachment(
+                          "himanshumakwana8281@gmail.com",
+                          "Qualification Issuance Form (" + ds.Tables[0].Rows[0]["student_name"].ToString() + ")",
+                          mailbody(
+                              ds.Tables[0].Rows[0]["student_name"].ToString(),
+                              ds.Tables[0].Rows[0]["std_id"].ToString(),
+                              ds.Tables[0].Rows[0]["course"].ToString(),
+                              ds.Tables[0].Rows[0]["date_request"].ToString(),
+                              ds.Tables[0].Rows[0]["documents"].ToString()
+                          ),
+                          "",
+                          ""
+                      );
+                });
+                Response.Redirect("Success.aspx");
+            }
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
+    public string mailbody(string student_name, string student_id, string course, string date_requested, string documents)
+    {
+        string html = @"
+<div style='width: 100%; background-color: #f0f0f0; padding: 50px 0px'>
+    <div style='width: 100%; text-align: center; margin-bottom: 15px'>
+        <img src='https://website.nortwest.edu.au/assets/img/logo_nwc_transp@1x.png' width='160px' />
+        <h2 style='text-align: center; margin:10px 0;'>Qualification Issuance Form</h2>
+    </div>
+
+    <style>
+        table.mail-table { width: 100%; border-collapse: collapse; margin: auto; }
+        table.mail-table td, table.mail-table th { 
+            padding: 10px; 
+            color: black; 
+            vertical-align: top; 
+            border-bottom: 1px solid #d7d7d7; 
+        }
+        table.mail-table td:first-child { width: 30%; font-weight: 600; }
+        table.mail-table th {
+            background-color: #f9f9f9;
+            font-size: 18px;
+            text-align: left;
+        }
+    </style>
+
+    <!-- Student Information -->
+    <div style='margin: auto; width: 85%; background-color: white; border: 1px solid #ddd; border-top: 3px solid #008a7f; margin-bottom:20px;'>
+        <table class='mail-table'>
+            <tr><th colspan='2'>Student Information</th></tr>
+            <tr><td>Student Name :</td><td>" + student_name + @"</td></tr>
+            <tr><td>Student ID :</td><td>" + student_id + @"</td></tr>
+            <tr><td>Course :</td><td>" + course + @"</td></tr>
+            <tr><td>Date Requested :</td><td>" + date_requested + @"</td></tr>
+        </table>
+    </div>
+
+    <!-- Documents Requested -->
+    <div style='margin: auto; width: 85%; background-color: white; border: 1px solid #ddd; border-top: 3px solid #008a7f;'>
+        <table class='mail-table'>
+            <tr><th colspan='2'>Documents Requested</th></tr>
+            <tr><td>Documents :</td><td>" + documents + @"</td></tr>
+        </table>
+    </div>
+</div>
+  ";
+        return html;
+    }
+
+}
