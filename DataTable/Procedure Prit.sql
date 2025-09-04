@@ -1,4 +1,4 @@
-----------------------------------------
+﻿----------------------------------------
 --------------insert Course--------------
 ----------------------------------------
 alter PROCEDURE ins_course_sp
@@ -1315,3 +1315,184 @@ BEGIN
         status = 1
         AND CAST(create_date AS DATE) BETWEEN CAST(@from_date AS DATE) AND CAST(@to_date AS DATE)
 END
+----------------------------------------
+--------------insert Gst--------------
+----------------------------------------
+alter PROCEDURE dbo.ōST_Form
+(
+    @visa_type NVARCHAR(MAX),
+    @visa_from_date NVARCHAR(MAX),
+    @visa_expiry_date NVARCHAR(MAX),
+    @job_titles NVARCHAR(MAX),
+    @job_salaries NVARCHAR(MAX),
+    @job_start_date NVARCHAR(MAX),
+    @job_end_date NVARCHAR(MAX),
+    @job_current NVARCHAR(550),
+    @currently_employed VARCHAR(500),
+    @highschool VARCHAR(350),
+    @university VARCHAR(350),
+    @education_qualificaton NVARCHAR(MAX),
+    @level_of_study NVARCHAR(MAX),
+    @study_year NVARCHAR(MAX),
+    @plan_to_fund NVARCHAR(MAX),
+    @total_access_fund VARCHAR(50),
+    @financial_evidance NVARCHAR(MAX),
+    @has_course_exp VARCHAR(10),
+    @course_experience NVARCHAR(MAX),
+    @has_study_gap VARCHAR(10),
+    @study_gap NVARCHAR(MAX),
+    @reason_for_australia NVARCHAR(MAX),
+    @career_goals_australia NVARCHAR(MAX),
+    @home_country_ties NVARCHAR(MAX),
+    @australia_family_ties NVARCHAR(MAX),
+    @post_study_plan NVARCHAR(MAX),
+    @other_relevant_info NVARCHAR(MAX),
+    @student_name NVARCHAR(200),
+    @sign_date DATE,
+    @signature_img NVARCHAR(MAX),
+    @create_by INT,
+	@has_employee varchar(5),
+	@complete_highschool varchar(5),
+	@complete_university varchar(5)
+)
+AS
+BEGIN
+    INSERT INTO dbo.tbl_gst_form
+    VALUES
+    (
+        @visa_type,
+        @visa_from_date,
+        @visa_expiry_date,
+        @job_titles,
+        @job_salaries,
+        @job_start_date,
+        @job_end_date,
+        @job_current,
+       @has_employee +' '+ @currently_employed,
+        @complete_highschool  +' '+ @highschool,
+        @complete_university  +' '+ @university,
+        @education_qualificaton,
+        @level_of_study,
+        @study_year,
+        @plan_to_fund,
+        @total_access_fund,
+        @financial_evidance,
+        @has_course_exp,
+        @course_experience,
+        @has_study_gap,
+        @study_gap,
+        @reason_for_australia,
+        @career_goals_australia,
+        @home_country_ties,
+        @australia_family_ties,
+        @post_study_plan,
+        @other_relevant_info,
+        @student_name,
+        @sign_date,
+        @signature_img,
+        1,
+        @create_by,
+        dbo.GetCurrentAUTTime(),
+		null,
+		null,
+		null,
+		null
+    )
+	declare @id int = @@identity
+	exec sel_gst_form_sp @id
+END
+----------------------------------------
+--------------Select Gst--------------
+----------------------------------------
+alter proc sel_gst_form_sp
+(
+	@id int
+)
+as
+begin
+		select		
+				FormID,
+				visa_type,
+				visa_from_date,
+				visa_expiry_date,
+				job_titles,
+				job_salaries,
+				job_start_date,
+				job_end_date,
+				job_current,
+				currently_employed,
+				highschool,
+				university,
+				education_qualificaton,
+				level_of_study,
+				study_year,
+				plan_to_fund,
+				total_access_fund,
+				financial_evidance,
+				has_course_exp,
+				course_experience,
+				has_study_gap,
+				study_gap,
+				reason_for_australia,
+				career_goals_australia,
+				home_country_ties,
+				australia_family_ties,
+				post_study_plan,
+				other_relevant_info,
+				student_name,
+				sign_date,
+				signature_img,
+				status
+
+		from
+			tbl_gst_form
+		where status = 1 and FormID=@id
+		
+			SELECT 
+		t.formID,
+		s.Item AS Salary,
+		tt.Item AS JobTitle,
+		ttt.item as job_start_date,
+		je.item as job_end_date,
+		jc.item as job_current
+		FROM tbl_gst_form t
+		CROSS APPLY dbo.SplitString(t.job_salaries + '|', '|') AS s
+		CROSS APPLY dbo.SplitString(t.job_titles + '|', '|') AS tt
+		cross apply dbo.SplitString(t.job_start_date + '|', '|') AS ttt
+		cross apply dbo.SplitString(t.job_end_date + '|', '|') AS je
+		cross apply dbo.SplitString(t.job_current + '|', '|') AS jc
+
+	WHERE s.[index] = tt.[index]
+	and s.[index] = ttt.[index]
+	and s.[index] = je.[index]
+	and s.[index] = jc.[index]
+	and t.formID=@id
+
+
+		SELECT 
+			t.FormID,
+			 vt.Item AS VisaType,
+			vf.Item AS VisaFromDate,
+			ve.Item AS VisaExpiryDate
+		FROM tbl_gst_form t
+			CROSS APPLY dbo.SplitString(t.visa_type + '|', '|') AS vt
+			CROSS APPLY dbo.SplitString(t.visa_from_date + '|', '|') AS vf
+			CROSS APPLY dbo.SplitString(t.visa_expiry_date + '|', '|') AS ve
+		WHERE vt.[index] = vf.[index]
+			  AND vt.[index] = ve.[index]
+			  and t.FormID =@id
+
+			  SELECT 
+    t.formID,
+    eq.Item AS EducationQualification,
+    ls.Item AS LevelOfStudy,
+    sy.Item AS StudyYear
+FROM tbl_gst_form t
+CROSS APPLY dbo.SplitString(t.education_qualificaton + '|', '|') AS eq
+CROSS APPLY dbo.SplitString(t.level_of_study + '|', '|') AS ls
+CROSS APPLY dbo.SplitString(t.study_year + '|', '|') AS sy
+WHERE eq.[index] = ls.[index]
+  AND eq.[index] = sy.[index]
+  AND t.formID = @id
+
+end

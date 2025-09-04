@@ -943,3 +943,48 @@ create TABLE dbo.tbl_qualification_issuance_form(
 	delete_by int NULL,
 	delete_date datetime NULL
 )
+----------------------------------------
+----------------------------------------
+----------------------------------------
+CREATE TABLE dbo.tbl_gst_form
+(
+    FormID INT IDENTITY(1,1) PRIMARY KEY,
+    visa_type NVARCHAR(MAX),      -- e.g., "Tourist|Student"
+    visa_from_date NVARCHAR(MAX),  -- e.g., "2023-01-01|2024-05-01"
+    visa_expiry_date NVARCHAR(MAX),-- e.g., "2023-12-31|2025-04-30"
+    job_titles NVARCHAR(MAX),      -- e.g., "Developer|Analyst"
+    job_salaries NVARCHAR(MAX),    -- e.g., "50000|60000"
+    job_start_date NVARCHAR(MAX),  -- e.g., "2022-01-01|2023-01-01"
+    job_end_date NVARCHAR(MAX),    -- e.g., "2022-12-31|2023-12-31"
+    job_current nvarchar(550),         
+	currently_employed varchar(500),
+	highschool varchar(350),
+	university varchar(350),
+	education_qualificaton nvarchar(max),
+	level_of_study nvarchar(max),
+	study_year nvarchar(max),
+	plan_to_fund nvarchar(max),
+	total_access_fund varchar(50),
+	financial_evidance varchar(max),
+	has_course_exp varchar(10),
+	course_experience varchar(max),
+	has_study_gap varchar(10),
+	study_gap nvarchar(max),
+	reason_for_australia varchar(max),
+	career_goals_australia varchar(max),
+	home_country_ties varchar(max),
+	australia_family_ties varchar(max),
+	post_study_plan varchar(max),
+	other_relevant_info varchar(max),
+
+    student_name NVARCHAR(200),
+    sign_date DATE,
+    signature_img NVARCHAR(MAX),
+	status bit NULL,
+	create_by int NULL,
+	create_date datetime NULL,
+	cmodify_by int NULL,
+	modify_date datetime NULL,
+	delete_by int NULL,
+	delete_date datetime NULL
+);

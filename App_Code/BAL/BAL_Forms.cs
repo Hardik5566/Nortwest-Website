@@ -979,5 +979,52 @@ public class BAL_Forms
 
         return command.ExtQueryDS(cmd);
     }
+    public static DataSet ins_GST_Form(string visa_type, string visa_from_date, string visa_expiry_date, string job_titles, string job_salaries, string job_start_date, string job_end_date, string job_current, string currently_employed, string highschool, string university, string education_qualificaton, string level_of_study, string study_year, string plan_to_fund, string total_access_fund, string financial_evidance, string has_course_exp, string course_experience, string has_study_gap, string study_gap, string reason_for_australia, string career_goals_australia, string home_country_ties, string australia_family_ties, string post_study_plan, string other_relevant_info, string student_name, string sign_date, string signature_img, string create_by, string has_employee, string complete_highschool, string complete_university)
+
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.CommandText = "ins_GST_Form";
+        cmd.CommandType = CommandType.StoredProcedure;
+
+        parameter param = new parameter(); // Assuming you have this helper class
+
+        cmd.Parameters.Add(param.stringparam("@visa_type", visa_type));
+        cmd.Parameters.Add(param.stringparam("@visa_from_date", visa_from_date));
+        cmd.Parameters.Add(param.stringparam("@visa_expiry_date", visa_expiry_date));
+        cmd.Parameters.Add(param.stringparam("@job_titles", job_titles));
+        cmd.Parameters.Add(param.stringparam("@job_salaries", job_salaries));
+        cmd.Parameters.Add(param.stringparam("@job_start_date", job_start_date));
+        cmd.Parameters.Add(param.stringparam("@job_end_date", job_end_date));
+        cmd.Parameters.Add(param.stringparam("@job_current", job_current));
+        cmd.Parameters.Add(param.stringparam("@currently_employed", has_employee + " " + currently_employed));
+        cmd.Parameters.Add(param.stringparam("@highschool", complete_highschool + " " + highschool));
+        cmd.Parameters.Add(param.stringparam("@university", complete_university + " " + university));
+        cmd.Parameters.Add(param.stringparam("@education_qualificaton", education_qualificaton));
+        cmd.Parameters.Add(param.stringparam("@level_of_study", level_of_study));
+        cmd.Parameters.Add(param.stringparam("@study_year", study_year));
+        cmd.Parameters.Add(param.stringparam("@plan_to_fund", plan_to_fund));
+        cmd.Parameters.Add(param.stringparam("@total_access_fund", total_access_fund));
+        cmd.Parameters.Add(param.stringparam("@financial_evidance", financial_evidance));
+        cmd.Parameters.Add(param.stringparam("@has_course_exp", has_course_exp));
+        cmd.Parameters.Add(param.stringparam("@course_experience", course_experience));
+        cmd.Parameters.Add(param.stringparam("@has_study_gap", has_study_gap));
+        cmd.Parameters.Add(param.stringparam("@study_gap", study_gap));
+        cmd.Parameters.Add(param.stringparam("@reason_for_australia", reason_for_australia));
+        cmd.Parameters.Add(param.stringparam("@career_goals_australia", career_goals_australia));
+        cmd.Parameters.Add(param.stringparam("@home_country_ties", home_country_ties));
+        cmd.Parameters.Add(param.stringparam("@australia_family_ties", australia_family_ties));
+        cmd.Parameters.Add(param.stringparam("@post_study_plan", post_study_plan));
+        cmd.Parameters.Add(param.stringparam("@other_relevant_info", other_relevant_info));
+        cmd.Parameters.Add(param.stringparam("@student_name", student_name));
+        cmd.Parameters.Add(param.stringparam("@sign_date", sign_date));
+        cmd.Parameters.Add(param.stringparam("@signature_img", signature_img));
+        cmd.Parameters.Add(param.intparam("@create_by", create_by));
+        cmd.Parameters.Add(param.stringparam("@has_employee", has_employee));
+        cmd.Parameters.Add(param.stringparam("@complete_highschool", complete_highschool));
+        cmd.Parameters.Add(param.stringparam("@complete_university", complete_university));
+
+        return command.ExtQueryDS(cmd); // Assuming ExtQueryDS executes the command and returns a DataSet
+    }
+
 
 }
