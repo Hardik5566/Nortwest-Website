@@ -1302,23 +1302,24 @@ alter PROCEDURE dis_qualification_issuance_form_sp
 )
 AS
 BEGIN
-    SELECT 
-        id,
-        student_name,
-        std_id,
-        course,
-        format(cast(date_request as date),'dd MMM, yyyy' )as date_request,
-        documents,
-        FORMAT(create_date, 'dd MMM, yyyy') AS create_date
-    FROM dbo.tbl_qualification_issuance_form
-    WHERE 
-        status = 1
-        AND CAST(create_date AS DATE) BETWEEN CAST(@from_date AS DATE) AND CAST(@to_date AS DATE)
+		SELECT 
+			id,
+			student_name,
+			std_id,
+			course,
+			format(cast(date_request as date),'dd MMM, yyyy' )as date_request,
+			documents,
+			FORMAT(create_date, 'dd MMM, yyyy') AS create_date
+		FROM 
+			dbo.tbl_qualification_issuance_form
+		WHERE 
+			status = 1
+			AND CAST(create_date AS DATE) BETWEEN CAST(@from_date AS DATE) AND CAST(@to_date AS DATE)
 END
 ----------------------------------------
 --------------insert Gst--------------
 ----------------------------------------
-alter PROCEDURE dbo.ōST_Form
+alter PROCEDURE dbo.ins_GST_Form
 (
     @visa_type NVARCHAR(MAX),
     @visa_from_date NVARCHAR(MAX),
@@ -1449,12 +1450,12 @@ begin
 		where status = 1 and FormID=@id
 		
 			SELECT 
-		t.formID,
+		t.FormID,
 		s.Item AS Salary,
 		tt.Item AS JobTitle,
-		ttt.item as job_start_date,
-		je.item as job_end_date,
-		jc.item as job_current
+		format(cast(ttt.item as date),'dd MMM, yyyy') as job_start_date,
+		format(cast(je.item as date),'dd MMM, yyyy') as job_end_date,
+		jc.item  as job_current
 		FROM tbl_gst_form t
 		CROSS APPLY dbo.SplitString(t.job_salaries + '|', '|') AS s
 		CROSS APPLY dbo.SplitString(t.job_titles + '|', '|') AS tt
@@ -1472,8 +1473,8 @@ begin
 		SELECT 
 			t.FormID,
 			 vt.Item AS VisaType,
-			vf.Item AS VisaFromDate,
-			ve.Item AS VisaExpiryDate
+			format(cast(vf.Item as date),'dd MMM, yyyy') AS VisaFromDate,
+			format(cast(ve.Item as date),'dd MMM, yyyy')AS VisaExpiryDate
 		FROM tbl_gst_form t
 			CROSS APPLY dbo.SplitString(t.visa_type + '|', '|') AS vt
 			CROSS APPLY dbo.SplitString(t.visa_from_date + '|', '|') AS vf

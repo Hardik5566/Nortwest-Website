@@ -139,4 +139,68 @@
 </asp:Content>
 
 <asp:Content ID="Content4" ContentPlaceHolderID="jqury" runat="Server">
+    <script>
+    $("#<%= btn_submit.ClientID %>").click(function (event) {
+        if (!validateForm()) {
+            event.preventDefault(); // Prevent form submission if validation fails
+            return false;
+        }
+    });
+
+    // Form validation function
+    function validateForm() {
+        var isValid = true;
+
+        // Student Name
+        if ($("#<%= txtStudentName.ClientID %>").val().trim() == "") {
+            $("#<%= txtStudentName.ClientID %>").css("border-color", "red");
+            isValid = false;
+        } else {
+            $("#<%= txtStudentName.ClientID %>").css("border-color", "");
+        }
+
+        // Student ID
+        if ($("#<%= txtStudentID.ClientID %>").val().trim() == "") {
+            $("#<%= txtStudentID.ClientID %>").css("border-color", "red");
+            isValid = false;
+        } else {
+            $("#<%= txtStudentID.ClientID %>").css("border-color", "");
+        }
+
+        // Course
+        if ($("#<%= txtCourse.ClientID %>").val().trim() == "") {
+            $("#<%= txtCourse.ClientID %>").css("border-color", "red");
+            isValid = false;
+        } else {
+            $("#<%= txtCourse.ClientID %>").css("border-color", "");
+        }
+
+        // Date Requested
+        if ($("#<%= txtDateRequested.ClientID %>").val().trim() == "") {
+            $("#<%= txtDateRequested.ClientID %>").css("border-color", "red");
+            isValid = false;
+        } else {
+            $("#<%= txtDateRequested.ClientID %>").css("border-color", "");
+        }
+
+        // Documents Requested – check at least one checkbox or "Other" filled
+        var anyChecked = $("#<%= ch_attainment.ClientID %>").is(":checked") ||
+                         $("#<%= ch_completion.ClientID %>").is(":checked") ||
+                         $("#<%= ch_relese.ClientID %>").is(":checked") ||
+                         $("#<%= ch_term.ClientID %>").is(":checked") ||
+                         $("#<%= ch_certificate.ClientID %>").is(":checked") ||
+                         $("#<%= ch_letter_enrol.ClientID %>").is(":checked") ||
+                         $("#<%= ch_record.ClientID %>").is(":checked");
+
+        var otherDoc = $("#<%= txt_other_document.ClientID %>").val().trim();
+
+        if (!anyChecked && otherDoc == "") {
+            alert("Please select at least one document or specify in 'Other'.");
+            isValid = false;
+        }
+
+        return isValid;
+    }
+</script>
+
 </asp:Content>

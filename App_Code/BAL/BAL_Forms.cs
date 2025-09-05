@@ -1025,6 +1025,24 @@ public class BAL_Forms
 
         return command.ExtQueryDS(cmd); // Assuming ExtQueryDS executes the command and returns a DataSet
     }
+    public static DataSet dis_release_request_form(string from_date, string to_date)
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.CommandText = "dis_release_request_form_sp";
+        parameter param = new parameter();
+        cmd.Parameters.Add(param.datetimeparam("@from_date", from_date));
+        cmd.Parameters.Add(param.datetimeparam("@to_date", to_date));
+        return command.ExtQueryDS(cmd);
+    }
+    public static DataSet dis_qualification_issuance_form(string from_date, string to_date)
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.CommandText = "dis_qualification_issuance_form_sp";
+        parameter param = new parameter();
+        cmd.Parameters.Add(param.datetimeparam("@from_date", from_date));
+        cmd.Parameters.Add(param.datetimeparam("@to_date", to_date));
+        return command.ExtQueryDS(cmd);
+    }
 
 
 }

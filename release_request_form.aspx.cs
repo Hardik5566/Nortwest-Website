@@ -17,6 +17,7 @@ public partial class release_request_form : System.Web.UI.Page
         if (!IsPostBack)
         {
             bind_data();
+            ddl_country.Items.Insert(0, new ListItem("Select Country", "0"));
         }
 
     }
@@ -25,7 +26,7 @@ public partial class release_request_form : System.Web.UI.Page
         try
         {
             string save_signature = SaveSignature();
-            DataSet ds = BAL_Forms.ins_release_request_form(txt_student_name.Text, txt_s_id.Text, ddl_country.SelectedValue.ToString(), txt_passport_no.Text, txt_dob.Text, txt_course_enroll.Text, txt_intake.Text, txt_address.Text, txt_email.Text, hd_contact_no_code.ToString(), hd_contact_no.ToString(), txt_reason_release.Text, save_signature, txt_sign_date.Text, "1");
+            DataSet ds = BAL_Forms.ins_release_request_form(txt_student_name.Text, txt_s_id.Text, ddl_country.SelectedValue.ToString(), txt_passport_no.Text, txt_dob.Text, txt_course_enroll.Text, txt_intake.Text, txt_address.Text, txt_email.Text, hd_contact_no_code.Value, hd_contact_no.Value, txt_reason_release.Text, save_signature, txt_sign_date.Text, "1");
             if (ds.Tables[0].Rows.Count > 0)
             {
                 string signaturePath = Server.MapPath("~/assets/img/sign/") + ds.Tables[0].Rows[0]["student_signature"].ToString();

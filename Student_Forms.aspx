@@ -14,7 +14,6 @@
         .blog-area .sidebar .sidebar-item.category li {
             padding: 10px 0;
         }
-       
     </style>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="body" runat="Server">
@@ -46,7 +45,7 @@
                                 </div>
                                 <div class="sidebar-info">
                                     <div class="row">
-                                        <div class="col-md-4">
+                                        <div class="col-md-4" style="padding-bottom: 15px;">
                                             <ul>
                                                 <li><a href="Student_Request_Forms.aspx">Student Request Form</a></li>
                                                 <li><a href="Application_for_Deferment.aspx">Deferment or Suspension of Studies Form</a></li>
@@ -55,13 +54,13 @@
                                                 <li><a href="special_leave_request_form.aspx">Special Leave Request Form</a></li>
                                                 <li><a href="Credit_Card_Authorisation_Form.aspx">Credit Card Authorisation Form</a></li>
                                                 <li><a href="student_details_form.aspx">Student Details Form</a></li>
-
+                                                <li><a href="GST_form.aspx">GST Form</a></li>
                                             </ul>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-4" style="padding-bottom: 15px;">
                                             <ul>
                                                 <li><a href="credit_transfer_application.aspx">Credit Transfer Application</a></li>
-                                             <%--   <li><a href="#">Installment Payment Agreement</a></li>--%>
+                                                <%--   <li><a href="#">Installment Payment Agreement</a></li>--%>
                                                 <li><a href="application_for_reassessment.aspx">Application for Reassessment</a></li>
                                                 <li><a href="appeal_form.aspx">Appeal Form</a></li>
                                                 <li><a href="complaint_and_feedback_form.aspx">Complaint and Feedback Form</a></li>
@@ -70,7 +69,7 @@
                                                 <li><a href="release_request_form.aspx">Release Request Form</a></li>
                                             </ul>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-4" style="padding-bottom: 15px;">
                                             <ul>
                                                 <li><a href="refund_form.aspx">Refund Form</a></li>
                                                 <li><a href="GTE_Form.aspx">GTE Form</a></li>
@@ -78,7 +77,7 @@
                                                 <li><a href="LLN_Test.aspx">LLN Test</a></li>
                                                 <li><a href="new_elicos_orientation_form.aspx">Student Orientation Form Elicos</a></li>
                                                 <li><a href="new_vet_orientation_form.aspx">Student Orientation Form Vet</a></li>
-                                                 <li><a href="qualification_issuance _form.aspx">Qualification Issuance Form</a></li>
+                                                <li><a href="qualification_issuance _form.aspx">Qualification Issuance Form</a></li>
                                             </ul>
                                         </div>
                                     </div>

@@ -192,6 +192,10 @@
                             </li>
                             <li><a href="English_Test.aspx"><i class="bi bi-circle"></i>English Test (EPT)</a>
                             </li>
+                            <li><a href="release_request_form.aspx"><i class="bi bi-circle"></i>Release Request Form</a>
+                            </li>
+                            <li><a href="qualification_issuance__form.aspx"><i class="bi bi-circle"></i>Qualification Issuance Form</a>
+                            </li>
                         </ul>
 
                     </li>
