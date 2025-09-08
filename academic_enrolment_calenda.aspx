@@ -40,7 +40,7 @@
         }
 
         .shadow.theme-hard::after {
-            background: #44887c  none repeat scroll 0 0;
+            background: #44887c none repeat scroll 0 0;
             content: "";
             height: 100%;
             left: 0;
@@ -50,9 +50,9 @@
             width: 100%;
             z-index: -1;
         }
-        .text-white
-        {
-            color:white !important;
+
+        .text-white {
+            color: white !important;
         }
     </style>
 </asp:Content>
@@ -135,7 +135,7 @@
                                     <div class="container">
                                         <div class="row">
                                             <div class="col-md-4 col-sm-6 col-12 p20">
-                                                <a href="https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2025">
+                                                <a href="https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2025" target="_blank">
                                                     <div class="subscribe-items shadow theme-hard default-padding bg-cover text-center"
                                                         style="background-image: url('assets/img/victoria.jpg'); background-size: cover; background-position: center; border-radius: 12px !important; padding: 20px;">
 
@@ -153,7 +153,7 @@
                                                 </a>
                                             </div>
                                             <div class="col-md-4 col-sm-6 col-12 p20">
-                                                <a href="https://www.nsw.gov.au/about-nsw/public-holidays">
+                                                <a href="https://www.nsw.gov.au/about-nsw/public-holidays" target="_blank">
                                                     <div class="subscribe-items shadow theme-hard default-padding bg-cover text-center"
                                                         style="background-image: url('assets/img/NSW.jpg'); background-size: cover; background-position: center; border-radius: 12px !important; padding: 20px;">
 
@@ -171,7 +171,7 @@
                                                 </a>
                                             </div>
                                             <div class="col-md-4 col-sm-6 col-12 p20">
-                                                <a href="Admin/assets/Holidays/Public-Holidays-2024-2027.pdf">
+                                                <a href="Admin/assets/Holidays/Public-Holidays-2024-2027.pdf" target="_blank">
                                                     <div class="subscribe-items shadow theme-hard default-padding bg-cover text-center"
                                                         style="background-image: url('assets/img/SA.jpg'); background-size: cover; background-position: center; border-radius: 12px !important; padding: 20px;">
 
@@ -195,106 +195,15 @@
 
 
 
-                                <%--   <a href="https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2025" class="btn mx-2 px-4 py-2 rounded shadow-sm"
-                                    style="background-color: #337ab7; color: #fff; font-weight: bold; border: none; text-decoration: none;">Victoria State
-                                </a>
-
-                                <!-- NSW -->
-                                <a href="https://www.nsw.gov.au/about-nsw/public-holidays" class="btn mx-2 px-4 py-2 rounded shadow-sm"
-                                    style="background-color: #f0ad4e; color: #fff; font-weight: bold; border: none; text-decoration: none;">NSW State
-                                </a>
-
-                                <!-- SA -->
-                                <a href="Admin/assets/Holidays/Public-Holidays-2024-2027.pdf" class="btn mx-2 px-4 py-2 rounded shadow-sm"
-                                    style="background-color: #5cb85c; color: #fff; font-weight: bold; border: none; text-decoration: none;">SA State
-                                </a>--%>
                             </div>
                         </div>
                     </div>
 
 
-
-                    <%-- <div class="top-author" style="background-color: white; margin-bottom: 20px">
-                                <h4>Holidays 2023</h4>
-                                <div class="author-items holidays">
-                                    <!-- Single Item -->
-                                    <div class="item">
-
-                                        <div class="info">
-                                            <h5><a href="#">Summer Break: 01.01.2023 – 15.01.2023</a></h5>
-                                            <h5><a href="#">Autumn Break: 18.03.2023 – 16.04.2023</a></h5>
-                                            <h5><a href="#">Winter Break: 17.06.2023 – 16.07.2023</a></h5>
-                                            <h5><a href="#">Spring Break: 16.09.2023 – 15.10.2023</a></h5>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <div class="top-author" style="background-color: white; margin-bottom: 20px">
-                                <h4>Holidays 2024</h4>
-                                <div class="author-items holidays">
-                                    <!-- Single Item -->
-                                    <div class="item">
-
-                                        <div class="info">
-                                            <h5><a href="#">Summer Break: 01.01.2023 – 15.01.2023</a></h5>
-                                            <h5><a href="#">Autumn Break: 18.03.2023 – 16.04.2023</a></h5>
-                                            <h5><a href="#">Winter Break: 17.06.2023 – 16.07.2023</a></h5>
-                                            <h5><a href="#">Spring Break: 16.09.2023 – 15.10.2023</a></h5>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <div class="top-author" style="background-color: white; margin-bottom: 20px">
-                                <h4>Public (SA)</h4>
-                                <div class="author-items holidays">
-                                    <!-- Single Item -->
-                                    <div class="item">
-                                        <div class="info">
-                                            <h5><a href="#">New Year’s Day: 1st of January</a></h5>
-                                            <h5><a href="#">Additional New Year’s Day: 2nd of January</a></h5>
-                                            <h5><a href="#">Australia Day: 26th of January</a></h5>
-                                            <h5><a href="#">Adelaide Cup Day: 13th of March</a></h5>
-                                            <h5><a href="#">Good Friday: 7th of April</a></h5>
-                                            <h5><a href="#">Easter Saturday: 8th of April</a></h5>
-                                            <h5><a href="#">Easter Monday: 10th of April</a></h5>
-                                            <h5><a href="#">Anzac Day: 25th of April</a></h5>
-                                            <h5><a href="#">King’s Birthday: 12th of June</a></h5>
-                                            <h5><a href="#">Labour Day: 2nd of October</a></h5>
-                                            <h5><a href="#">Christmas Eve: 24th of December</a></h5>
-                                            <h5><a href="#">Christmas Day: 25th of December</a></h5>
-                                            <h5><a href="#">Boxing Day: 26th of December</a></h5>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>--%>
-
-                    <%--      <div class="top-author" style="background-color: white">
-                                <h4>Public Holidays (NSW)</h4>
-                                <div class="author-items holidays">
-                                    <!-- Single Item -->
-                                    <div class="item">
-                                        <div class="info">
-                                            <asp:ListView ID="list_holiday" runat="server">
-                                                <ItemTemplate>
-                                                    <li>
-                                                        <a href="javascript:void(0)"><i class="fas fa-circle fa-xs" style="color: black"></i>&nbsp <%#Eval("holiday_name") %> : <%#Eval("holiday_date") %></a>
-                                                    </li>
-                                                </ItemTemplate>
-                                            </asp:ListView>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>--%>
                 </div>
 
             </div>
         </div>
-    </div>
-    </div>
     </div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="jqury" runat="Server">

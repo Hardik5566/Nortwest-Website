@@ -48,6 +48,9 @@ public partial class Admin_Form_list : System.Web.UI.Page
         lbl_total_ept.Text = ds.Tables[0].Rows[0]["total_ept"].ToString();
         lbl_total_elicos.Text = ds.Tables[0].Rows[0]["total_elicos"].ToString();
         lbl_total_vet.Text = ds.Tables[0].Rows[0]["total_vet"].ToString();
+        lbl_gst.Text = ds.Tables[0].Rows[0]["total_gst"].ToString();
+        lbl_relese.Text = ds.Tables[0].Rows[0]["total_relese_req"].ToString();
+        lbl_qualification.Text = ds.Tables[0].Rows[0]["total_qualification_issuance"].ToString();
         //lbl_new_vet.Text = ds.Tables[0].Rows[0]["total_vet"].ToString();
         //lbl_new_elicos.Text = ds.Tables[0].Rows[0]["total_elicos"].ToString();
         //lbl_gte.Text = ds.Tables[0].Rows[0]["total_GTE"].ToString();

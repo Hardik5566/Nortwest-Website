@@ -137,7 +137,6 @@
         </div>
     </div>
 </asp:Content>
-
 <asp:Content ID="Content4" ContentPlaceHolderID="jqury" runat="Server">
     <script>
     $("#<%= btn_submit.ClientID %>").click(function (event) {

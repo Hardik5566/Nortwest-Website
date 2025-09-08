@@ -151,8 +151,16 @@
 
                     </li>
 
+                     <li>
+                        <a href="Form_list.aspx">
+                            <div class="parent-icon">
+                                <i class="bi bi-file-text"></i>
+                            </div>
+                            <div class="menu-title">Form</div>
+                        </a>
+                    </li>
 
-                    <li>
+                   <%-- <li>
                         <a href="javascript:;" class="has-arrow">
                             <div class="parent-icon">
                                 <i class="bi bi-grid-fill"></i>
@@ -196,9 +204,11 @@
                             </li>
                             <li><a href="qualification_issuance__form.aspx"><i class="bi bi-circle"></i>Qualification Issuance Form</a>
                             </li>
+                              <li><a href="GST_form.aspx"><i class="bi bi-circle"></i>GST Form</a>
+                            </li>
                         </ul>
 
-                    </li>
+                    </li>--%>
 
                     <li>
                         <a href="javascript:;" class="has-arrow">

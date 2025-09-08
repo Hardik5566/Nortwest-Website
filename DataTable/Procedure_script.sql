@@ -116,7 +116,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create proc [dbo].[dis_all_form_count_sp]
+alter proc [dbo].[dis_all_form_count_sp]
 as
 begin
     SELECT 
@@ -137,7 +137,10 @@ begin
         (SELECT COUNT(id) FROM tbl_gte_form) AS total_GTE,
         (SELECT COUNT(ept_form_id) FROM tbl_ept_test_form) AS total_ept,
         (SELECT COUNT(id) FROM tbl_new_elicos_orientation_form) AS total_elicos,
-        (SELECT COUNT(id) FROM tbl_new_vet_orientation_form) AS total_vet
+        (SELECT COUNT(id) FROM tbl_new_vet_orientation_form) AS total_vet,
+		(SELECT COUNT(id) FROM tbl_release_request_form) AS total_relese_req,
+		(SELECT COUNT(id) FROM tbl_qualification_issuance_form) AS total_qualification_issuance,
+		(SELECT COUNT(FormID) FROM tbl_gst_form) AS total_gst
 end
 GO
 /****** Object:  StoredProcedure [dbo].[dis_appeal_form_sp]    Script Date: 01-09-2025 18:47:59 ******/

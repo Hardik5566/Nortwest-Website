@@ -101,7 +101,7 @@ public partial class GTE_Form : System.Web.UI.Page
             Task.Run(() =>
             {
                 send_mail(ds);
-            }); 
+            });
             Response.Redirect("Success.aspx");
         }
     }
@@ -177,11 +177,31 @@ public partial class GTE_Form : System.Web.UI.Page
 
             if (ds.Tables.Count > 0)
             {
-                string doc_refused_visa_aus_upd = Server.MapPath("assets/img/document/") + ds.Tables[0].Rows[0]["refused_visa_aus_upd"];
+                string doc_refused_visa_aus_upd = "";
+                string doc_evidence_upd = "";
+                string doc_file_undertaken_IELTS = "";
 
-                string doc_evidence_upd = Server.MapPath("assets/img/document/") + ds.Tables[0].Rows[0]["doc_evidence_upd"];
+                if (ds.Tables[0].Rows[0]["refused_visa_aus_upd"] != DBNull.Value &&
+                    !string.IsNullOrWhiteSpace(ds.Tables[0].Rows[0]["refused_visa_aus_upd"].ToString()))
+                {
+                    doc_refused_visa_aus_upd = Server.MapPath("assets/img/document/") +
+                                               ds.Tables[0].Rows[0]["refused_visa_aus_upd"].ToString();
+                }
 
-                string doc_file_undertaken_IELTS = Server.MapPath("assets/img/document/") + ds.Tables[0].Rows[0]["undertaken_IELTS_upd"];
+                if (ds.Tables[0].Rows[0]["doc_evidence_upd"] != DBNull.Value &&
+                    !string.IsNullOrWhiteSpace(ds.Tables[0].Rows[0]["doc_evidence_upd"].ToString()))
+                {
+                    doc_evidence_upd = Server.MapPath("assets/img/document/") +
+                                       ds.Tables[0].Rows[0]["doc_evidence_upd"].ToString();
+                }
+
+                if (ds.Tables[0].Rows[0]["undertaken_IELTS_upd"] != DBNull.Value &&
+                    !string.IsNullOrWhiteSpace(ds.Tables[0].Rows[0]["undertaken_IELTS_upd"].ToString()))
+                {
+                    doc_file_undertaken_IELTS = Server.MapPath("assets/img/document/") +
+                                                ds.Tables[0].Rows[0]["undertaken_IELTS_upd"].ToString();
+                }
+
                 ds.Tables[0].Rows[0]["student_signature"] = Server.MapPath("assets/img/sign/") + ds.Tables[0].Rows[0]["student_signature"];
 
                 ds.Tables[0].Rows[0]["doc_evidence_upd"] = server_url + "assets/img/document/" + ds.Tables[0].Rows[0]["doc_evidence_upd"];
@@ -205,7 +225,7 @@ public partial class GTE_Form : System.Web.UI.Page
                 rpt.Dispose();
 
                 string subject = "GTE Form (" + ds.Tables[0].Rows[0]["family_name"].ToString() + "-" + ds.Tables[0].Rows[0]["student_id"].ToString() + ")";
-                string mail_body = get_email_body();
+                string mail_body = get_email_body(ds.Tables[0].Rows[0]["family_name"].ToString() + " " + ds.Tables[0].Rows[0]["given_name"].ToString(), ds.Tables[0].Rows[0]["student_id"].ToString());
                 string result = Send_Mail.SendGTEMail("himanshumakwana8281@gmail.com", subject, mail_body, ach_attachment, "", doc_refused_visa_aus_upd, doc_evidence_upd, doc_file_undertaken_IELTS);
 
                 rpt.Close();
@@ -225,7 +245,7 @@ public partial class GTE_Form : System.Web.UI.Page
         }
     }
 
-    public string get_email_body()
+    public string get_email_body(string studentName, string studentId)
     {
         try
         {
@@ -244,12 +264,10 @@ public partial class GTE_Form : System.Web.UI.Page
         }
         .wrapper {
             width: 100%;
-           
             display: block;
             text-align: center;
             padding-top: 10%;
             padding-bottom: 10%;
-
             background: #108a7c;
         }
         .container {
@@ -265,17 +283,18 @@ public partial class GTE_Form : System.Web.UI.Page
         }
         .logo {
             display: block;
-
+            margin: 0 auto; /* center the logo */
         }
         .title {
             font-size: 20px;
             font-weight: bold;
-            text-align: left;
+            text-align: center; /* center the title */
             margin-top:20px;
         }
         .content {
             margin: 20px 0;
             font-size: 14px;
+            line-height: 1.6;
         }
         .footer {
             color: #B0BEC5;
@@ -285,42 +304,62 @@ public partial class GTE_Form : System.Web.UI.Page
             border-top: 1px solid lightgray;
             padding-top: 10px;
         }
+        .note {
+            color: #FFFFFF;
+            font-size: 12px;
+            margin-top: 10px;
+            text-align: center;
+        }
         @media screen and (max-width: 480px) {
             .wrapper {
                 width: 90%;
                 padding: 15px; 
             }
         }
-
     </style>
 </head>
 <body>
     <div class='wrapper'>
+      <div class='logo' style='padding-bottom:20px;'>
+       <img  src='https://nortwest.edu.au/assets/uploads/2017/05/logo_nwc_transp@1x.png' alt='Nortwest Logo' style='background-color:white;border-radius:9px;padding:5px' width='200'>
+       </div>
         <div class='container'>
-            <img class='logo' src='https://nortwest.edu.au/assets/uploads/2017/05/logo_nwc_transp@1x.png' alt='Nortwest Logo' width='150'>
-            <div class='title'>GTE Form</div>
+           
+             <div class='title'>GTE Form</div>
             <div class='content'>
-                <p>Dear team,</p>
-                <p>Please find the attached GTE Form acknowledgement for Nortwest.</p>
+                <p>Dear Team,</p>
+                <p>Please find attached the GTE Form acknowledgement for Nortwest.</p>
+
+                <p><b>Form Details:</b></p>
+                <ul>
+                   
+                    <li>Submitted By: " + studentName + @"</li>
+                    <li>Student ID: " + studentId + @"</li>
+                     <li>Submission Date: " + DateTime.Now.ToString("dd MMM yyyy") + @"</li>
+                </ul>
+
+                <p>Kindly verify the details and keep this acknowledgement for your records. If you require any additional information, Please find attached the GTE Form.</p>
+
+                <p>Thank you for your prompt attention.</p>
+
+               
             </div>
             <div class='footer'>Nortwest Pty Ltd, All rights reserved</div>
         </div>
+
+        <!-- Note outside the container -->
+        <p class='note'><b>Note:</b> This is an automated email. Please do not reply to this email.</p>
+
     </div>
 </body>
 </html>
 ";
-
-
             return emailBody;
-
         }
         catch (Exception)
         {
-
             throw;
         }
     }
-
-
 
 }

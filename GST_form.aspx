@@ -286,7 +286,7 @@
 
             <div class="form-container">
                 <div>
-                    <h4>Education Detail</h4>
+                    <h4>Detail</h4>
                 </div>
                 <div class="row">
                     <div class="col-md-4">

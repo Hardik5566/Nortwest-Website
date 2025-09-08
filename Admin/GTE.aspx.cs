@@ -74,9 +74,38 @@ public partial class GTE : System.Web.UI.Page
 
 
                     ds.Tables[0].Rows[0]["student_signature"] = Server.MapPath("~/assets/img/sign/") + ds.Tables[0].Rows[0]["student_signature"];
-                    ds.Tables[0].Rows[0]["doc_evidence_upd"] = server_url + "assets/img/document/" + ds.Tables[0].Rows[0]["doc_evidence_upd"];
-                    ds.Tables[0].Rows[0]["refused_visa_aus_upd"] = server_url + "assets/img/document/" + ds.Tables[0].Rows[0]["refused_visa_aus_upd"];
-                    ds.Tables[0].Rows[0]["undertaken_IELTS_upd"] = server_url + "assets/img/document/" + ds.Tables[0].Rows[0]["undertaken_IELTS_upd"];
+                    if (ds.Tables[0].Rows[0]["doc_evidence_upd"] == DBNull.Value ||
+     string.IsNullOrWhiteSpace(ds.Tables[0].Rows[0]["doc_evidence_upd"].ToString()))
+                    {
+                        ds.Tables[0].Rows[0]["doc_evidence_upd"] = ""; // keep blank if no document
+                    }
+                    else
+                    {
+                        ds.Tables[0].Rows[0]["doc_evidence_upd"] = server_url + "assets/img/document/" +
+                                                                   ds.Tables[0].Rows[0]["doc_evidence_upd"].ToString();
+                    }
+
+                    if (ds.Tables[0].Rows[0]["refused_visa_aus_upd"] == DBNull.Value ||
+                        string.IsNullOrWhiteSpace(ds.Tables[0].Rows[0]["refused_visa_aus_upd"].ToString()))
+                    {
+                        ds.Tables[0].Rows[0]["refused_visa_aus_upd"] = "";
+                    }
+                    else
+                    {
+                        ds.Tables[0].Rows[0]["refused_visa_aus_upd"] = server_url + "assets/img/document/" +
+                                                                       ds.Tables[0].Rows[0]["refused_visa_aus_upd"].ToString();
+                    }
+
+                    if (ds.Tables[0].Rows[0]["undertaken_IELTS_upd"] == DBNull.Value ||
+                        string.IsNullOrWhiteSpace(ds.Tables[0].Rows[0]["undertaken_IELTS_upd"].ToString()))
+                    {
+                        ds.Tables[0].Rows[0]["undertaken_IELTS_upd"] = "";
+                    }
+                    else
+                    {
+                        ds.Tables[0].Rows[0]["undertaken_IELTS_upd"] = server_url + "assets/img/document/" +
+                                                                       ds.Tables[0].Rows[0]["undertaken_IELTS_upd"].ToString();
+                    }
 
 
                     rpt.Load(Server.MapPath("~/RPT/RPT_GTE_Form.rpt"));
@@ -123,7 +152,7 @@ public partial class GTE : System.Web.UI.Page
         {
             rpt.Close();
             rpt.Dispose();
-        }     
+        }
 
 
     }

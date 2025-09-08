@@ -980,7 +980,6 @@ public class BAL_Forms
         return command.ExtQueryDS(cmd);
     }
     public static DataSet ins_GST_Form(string visa_type, string visa_from_date, string visa_expiry_date, string job_titles, string job_salaries, string job_start_date, string job_end_date, string job_current, string currently_employed, string highschool, string university, string education_qualificaton, string level_of_study, string study_year, string plan_to_fund, string total_access_fund, string financial_evidance, string has_course_exp, string course_experience, string has_study_gap, string study_gap, string reason_for_australia, string career_goals_australia, string home_country_ties, string australia_family_ties, string post_study_plan, string other_relevant_info, string student_name, string sign_date, string signature_img, string create_by, string has_employee, string complete_highschool, string complete_university)
-
     {
         SqlCommand cmd = new SqlCommand();
         cmd.CommandText = "ins_GST_Form";
@@ -996,9 +995,9 @@ public class BAL_Forms
         cmd.Parameters.Add(param.stringparam("@job_start_date", job_start_date));
         cmd.Parameters.Add(param.stringparam("@job_end_date", job_end_date));
         cmd.Parameters.Add(param.stringparam("@job_current", job_current));
-        cmd.Parameters.Add(param.stringparam("@currently_employed", has_employee + " " + currently_employed));
-        cmd.Parameters.Add(param.stringparam("@highschool", complete_highschool + " " + highschool));
-        cmd.Parameters.Add(param.stringparam("@university", complete_university + " " + university));
+        cmd.Parameters.Add(param.stringparam("@currently_employed", currently_employed));
+        cmd.Parameters.Add(param.stringparam("@highschool", highschool));
+        cmd.Parameters.Add(param.stringparam("@university", university));
         cmd.Parameters.Add(param.stringparam("@education_qualificaton", education_qualificaton));
         cmd.Parameters.Add(param.stringparam("@level_of_study", level_of_study));
         cmd.Parameters.Add(param.stringparam("@study_year", study_year));
@@ -1044,5 +1043,21 @@ public class BAL_Forms
         return command.ExtQueryDS(cmd);
     }
 
-
+    public static DataSet sel_gst_form(string id)
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.CommandText = "sel_gst_form_sp";
+        parameter param = new parameter();
+        cmd.Parameters.Add(param.intparam("@id", id));
+        return command.ExtQueryDS(cmd);
+    }
+    public static DataSet dis_gst_form(string from_date, string to_date)
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.CommandText = "dis_gst_form_sp";
+        parameter param = new parameter();
+        cmd.Parameters.Add(param.datetimeparam("@from_date", from_date));
+        cmd.Parameters.Add(param.datetimeparam("@to_date", to_date));
+        return command.ExtQueryDS(cmd);
+    }
 }

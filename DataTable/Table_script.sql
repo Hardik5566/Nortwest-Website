@@ -956,9 +956,12 @@ CREATE TABLE dbo.tbl_gst_form
     job_salaries NVARCHAR(MAX),    -- e.g., "50000|60000"
     job_start_date NVARCHAR(MAX),  -- e.g., "2022-01-01|2023-01-01"
     job_end_date NVARCHAR(MAX),    -- e.g., "2022-12-31|2023-12-31"
-    job_current nvarchar(550),         
+    job_current nvarchar(550),  
+	has_employee varchar(50),
 	currently_employed varchar(500),
+	complete_high_school varchar(150),
 	highschool varchar(350),
+	complete_university_school varchar(150),
 	university varchar(350),
 	education_qualificaton nvarchar(max),
 	level_of_study nvarchar(max),

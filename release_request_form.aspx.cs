@@ -33,7 +33,7 @@ public partial class release_request_form : System.Web.UI.Page
                 Task.Run(() =>
            {
                Send_Mail.MailWithouAttachment(
-                     "himanshumakwana8281@gmail.com",
+                     "vaghasiyaprit799@gmail.com",
                      "Release Request Form (" + ds.Tables[0].Rows[0]["student_name"].ToString() + ")",
                      mailbody(
                          ds.Tables[0].Rows[0]["student_name"].ToString(),
@@ -144,63 +144,54 @@ public partial class release_request_form : System.Web.UI.Page
         return signName; // Return the saved file name or an empty string
     }
     public string mailbody(
-       string student_name, string student_id, string country, string passport_no, string dob,
-       string course_enrolled, string intake, string address, string email, string country_code,
-       string contact_no, string reason_for_release, string student_signature, string sign_date)
+    string student_name, string student_id, string country, string passport_no, string dob,
+    string course_enrolled, string intake, string address, string email, string country_code,
+    string contact_no, string reason_for_release, string student_signature, string sign_date)
     {
         string html = @"
-<div style='width: 100%; background-color: #f0f0f0; padding: 50px 0px'>
-    <div style='width: 100%; text-align: center; margin-bottom: 15px'>
-        <img src='https://website.nortwest.edu.au/assets/img/logo_nwc_transp@1x.png' width='160px' />
-        <h2 style='text-align: center; margin:10px 0;'>Release Request Form</h2>
+<div style='width:100%; background-color:#f0f0f0; padding:40px 0; font-family: Arial, Helvetica, sans-serif;'>
+    <!-- Header -->
+    <div style='text-align:center; margin-bottom:25px;'>
+        <img src='https://website.nortwest.edu.au/assets/img/logo_nwc_transp@1x.png' width='160' style='margin-bottom:10px; display:block; margin-left:auto; margin-right:auto;' />
+        <h2 style='margin:0; font-size:20px; font-weight:bold; color:#222;'>Release Request Form</h2>
     </div>
 
-    <style>
-        table.mail-table { width: 100%; border-collapse: collapse; margin: auto; }
-        table.mail-table td, table.mail-table th { 
-            padding: 10px; 
-            color: black; 
-            vertical-align: top; 
-            border-bottom: 1px solid #d7d7d7; 
-        }
-        table.mail-table td:first-child { width: 30%; font-weight: 600; }
-        table.mail-table th {
-            background-color: #f9f9f9;
-            font-size: 18px;
-            text-align: left;
-        }
-    </style>
-
     <!-- Student Details -->
-    <div style='margin: auto; width: 85%; background-color: white; border: 1px solid #ddd; border-top: 3px solid #008a7f; margin-bottom:20px;'>
-        <table class='mail-table'>
-            <tr><th colspan='2'>Student Details</th></tr>
-            <tr><td>Student Name :</td><td>" + student_name + @"</td></tr>
-            <tr><td>Student ID :</td><td>" + student_id + @"</td></tr>
-            <tr><td>Country :</td><td>" + country + @"</td></tr>
-            <tr><td>Passport No :</td><td>" + passport_no + @"</td></tr>
-            <tr><td>Date of Birth :</td><td>" + dob + @"</td></tr>
-            <tr><td>Course Enrolled :</td><td>" + course_enrolled + @"</td></tr>
-            <tr><td>Intake Date :</td><td>" + intake + @"</td></tr>
+    <div style='width:85%; margin:0 auto 25px auto; background:#ffffff; border:1px solid #ddd; border-top:4px solid #008a7f;'>
+        <table border='0' cellpadding='0' cellspacing='0' width='100%' style='border-collapse:collapse;'>
+            <tr>
+                <th colspan='2' align='left' style='background:#f9f9f9; font-size:16px; font-weight:bold; padding:14px 16px; border-bottom:2px solid #ddd; color:#222;'>Student Details</th>
+            </tr>
+            <tr><td style='width:32%; font-weight:bold; padding:12px 16px; border-bottom:1px solid #e5e5e5;'>Student Name :</td><td style='padding:12px 16px; border-bottom:1px solid #e5e5e5;'>" + student_name + @"</td></tr>
+            <tr><td style='width:32%; font-weight:bold; padding:12px 16px; border-bottom:1px solid #e5e5e5;'>Student ID :</td><td style='padding:12px 16px; border-bottom:1px solid #e5e5e5;'>" + student_id + @"</td></tr>
+            <tr><td style='width:32%; font-weight:bold; padding:12px 16px; border-bottom:1px solid #e5e5e5;'>Country :</td><td style='padding:12px 16px; border-bottom:1px solid #e5e5e5;'>" + country + @"</td></tr>
+            <tr><td style='width:32%; font-weight:bold; padding:12px 16px; border-bottom:1px solid #e5e5e5;'>Passport No :</td><td style='padding:12px 16px; border-bottom:1px solid #e5e5e5;'>" + passport_no + @"</td></tr>
+            <tr><td style='width:32%; font-weight:bold; padding:12px 16px; border-bottom:1px solid #e5e5e5;'>Date of Birth :</td><td style='padding:12px 16px; border-bottom:1px solid #e5e5e5;'>" + dob + @"</td></tr>
+            <tr><td style='width:32%; font-weight:bold; padding:12px 16px; border-bottom:1px solid #e5e5e5;'>Course Enrolled :</td><td style='padding:12px 16px; border-bottom:1px solid #e5e5e5;'>" + course_enrolled + @"</td></tr>
+            <tr><td style='width:32%; font-weight:bold; padding:12px 16px;'>Intake Date :</td><td style='padding:12px 16px;'>" + intake + @"</td></tr>
         </table>
     </div>
 
     <!-- Contact Details -->
-    <div style='margin: auto; width: 85%; background-color: white; border: 1px solid #ddd; border-top: 3px solid #008a7f; margin-bottom:20px;'>
-        <table class='mail-table'>
-            <tr><th colspan='2'>Contact Details in Australia</th></tr>
-            <tr><td>Address :</td><td>" + address + @"</td></tr>
-            <tr><td>Email :</td><td>" + email + @"</td></tr>
-            <tr><td>Contact No :</td><td>" + country_code + " " + contact_no + @"</td></tr>
+    <div style='width:85%; margin:0 auto 25px auto; background:#ffffff; border:1px solid #ddd; border-top:4px solid #008a7f;'>
+        <table border='0' cellpadding='0' cellspacing='0' width='100%' style='border-collapse:collapse;'>
+            <tr>
+                <th colspan='2' align='left' style='background:#f9f9f9; font-size:16px; font-weight:bold; padding:14px 16px; border-bottom:2px solid #ddd; color:#222;'>Contact Details in Australia</th>
+            </tr>
+            <tr><td style='width:32%; font-weight:bold; padding:12px 16px; border-bottom:1px solid #e5e5e5;'>Address :</td><td style='padding:12px 16px; border-bottom:1px solid #e5e5e5;'>" + address + @"</td></tr>
+            <tr><td style='width:32%; font-weight:bold; padding:12px 16px; border-bottom:1px solid #e5e5e5;'>Email :</td><td style='padding:12px 16px; border-bottom:1px solid #e5e5e5;'>" + email + @"</td></tr>
+            <tr><td style='width:32%; font-weight:bold; padding:12px 16px;'>Contact No :</td><td style='padding:12px 16px;'>" + country_code + " " + contact_no + @"</td></tr>
         </table>
     </div>
 
     <!-- Reason for Release -->
-    <div style='margin: auto; width: 85%; background-color: white; border: 1px solid #ddd; border-top: 3px solid #008a7f;'>
-        <table class='mail-table'>
-            <tr><th colspan='2'>Reason for Release</th></tr>
-            <tr><td>Reason :</td><td>" + reason_for_release + @"</td></tr>
-            <tr><td>Date :</td><td>" + sign_date + @"</td></tr>
+    <div style='width:85%; margin:0 auto; background:#ffffff; border:1px solid #ddd; border-top:4px solid #008a7f;'>
+        <table border='0' cellpadding='0' cellspacing='0' width='100%' style='border-collapse:collapse;'>
+            <tr>
+                <th colspan='2' align='left' style='background:#f9f9f9; font-size:16px; font-weight:bold; padding:14px 16px; border-bottom:2px solid #ddd; color:#222;'>Reason for Release</th>
+            </tr>
+            <tr><td style='width:32%; font-weight:bold; padding:12px 16px; border-bottom:1px solid #e5e5e5;'>Reason :</td><td style='padding:12px 16px; border-bottom:1px solid #e5e5e5;'>" + reason_for_release + @"</td></tr>
+            <tr><td style='width:32%; font-weight:bold; padding:12px 16px;'>Date :</td><td style='padding:12px 16px;'>" + sign_date + @"</td></tr>
         </table>
     </div>
 </div>";

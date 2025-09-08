@@ -921,13 +921,7 @@
                 $("#<%= txt_planing_while_study.ClientID %>").css("border-color", "");
             }
             // Validate Campus
-            if ($("#<%= ddl_country.ClientID %>").prop("selectedIndex") == 0) {
-                $("#<%= ddl_country.ClientID %>").next(".nice-select").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= ddl_country.ClientID %>").next(".nice-select").css("border-color", "");
-            }
-
+            
             if ($("#<%= txt_sign_date.ClientID %>").val().trim() == "") {
                 $("#<%= txt_sign_date.ClientID %>").css("border-color", "red");
                 isValid = false;

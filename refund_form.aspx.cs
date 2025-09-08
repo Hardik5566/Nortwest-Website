@@ -150,8 +150,8 @@ public partial class refund_form : System.Web.UI.Page
                 rpt.Dispose();
 
                 string subject = "New Refund Form (" + ds.Tables[0].Rows[0]["first_name"].ToString() + ")";
-                string mail_body = get_email_body();
-                string result = Send_Mail.SendMail("hardikvaghasiya5566@gmail.com", subject, mail_body, ach_attachment, "", "");
+                string mail_body = get_email_body(ds.Tables[0].Rows[0]["first_name"].ToString() + " " + ds.Tables[0].Rows[0]["last_name"].ToString(), ds.Tables[0].Rows[0]["reson_of_refund"].ToString());
+                string result = Send_Mail.SendMail("himanshumakwana8281@gmail.com", subject, mail_body, ach_attachment, "", "");
 
                 rpt.Close();
                 rpt.Dispose();
@@ -170,7 +170,7 @@ public partial class refund_form : System.Web.UI.Page
         }
     }
 
-    public string get_email_body()
+    public string get_email_body(string studentName, string refund)
     {
         try
         {
@@ -189,12 +189,10 @@ public partial class refund_form : System.Web.UI.Page
         }
         .wrapper {
             width: 100%;
-           
             display: block;
             text-align: center;
             padding-top: 10%;
             padding-bottom: 10%;
-
             background: #108a7c;
         }
         .container {
@@ -210,17 +208,18 @@ public partial class refund_form : System.Web.UI.Page
         }
         .logo {
             display: block;
-
+            margin: 0 auto; /* center the logo */
         }
         .title {
             font-size: 20px;
             font-weight: bold;
-            text-align: left;
+            text-align: center; /* center the title */
             margin-top:20px;
         }
         .content {
             margin: 20px 0;
             font-size: 14px;
+            line-height: 1.6;
         }
         .footer {
             color: #B0BEC5;
@@ -230,36 +229,57 @@ public partial class refund_form : System.Web.UI.Page
             border-top: 1px solid lightgray;
             padding-top: 10px;
         }
+        .note {
+            color: #FFFFFF;
+            font-size: 12px;
+            margin-top: 10px;
+            text-align: center;
+        }
         @media screen and (max-width: 480px) {
             .wrapper {
                 width: 90%;
                 padding: 15px; 
             }
         }
-
     </style>
 </head>
 <body>
     <div class='wrapper'>
+        <div class='logo' style='padding-bottom:20px;'>
+       <img  src='https://nortwest.edu.au/assets/uploads/2017/05/logo_nwc_transp@1x.png' alt='Nortwest Logo' style='background-color:white;border-radius:9px;padding:5px' width='200'>
+       </div>
         <div class='container'>
-            <img class='logo' src='https://nortwest.edu.au/assets/uploads/2017/05/logo_nwc_transp@1x.png' alt='Nortwest Logo' width='150'>
+          
             <div class='title'>Student Refund</div>
             <div class='content'>
-                <p>Dear team,</p>
-                <p>Please find the attached Student Refund Form acknowledgement for Nortwest.</p>
+                <p>Dear Team,</p>
+                <p>Please find attached the Student Refund Form acknowledgement for Nortwest.</p>
+
+                <p><b>Form Details:</b></p>
+                <ul>
+                    <li>Submission Date: " + DateTime.Now.ToString("dd MMM yyyy") + @"</li>
+                    <li>Submitted By: " + studentName + @"</li>
+                    <li>Reason For Refund: " + refund + @"</li>
+                </ul>
+
+                <p>Kindly verify the details and keep this acknowledgement for your records. If you require any additional information, Please find attached the Student Refund Form.</p>
+
+                <p>Thank you for your prompt attention.</p>
             </div>
             <div class='footer'>Nortwest Pty Ltd, All rights reserved</div>
+            
         </div>
+         <p class='note'><b>Note:</b> This is an automated email. Please do not reply to this email.</p>
+
     </div>
 </body>
 </html>
 ";
-            return emailBody;
 
+            return emailBody;
         }
         catch (Exception)
         {
-
             throw;
         }
     }

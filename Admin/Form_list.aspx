@@ -373,7 +373,46 @@
                 </div>
             </div>
         </a>
-      <%--  <a href="New_Vet_Orientation.aspx">
+        <a href="release_request_form.aspx">
+            <div class="dashboard-card">
+                <div class="card-top">
+                    <div class="card-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+                    <div class="card-title">Release Request Form</div>
+                </div>
+                <div class="card-bottom">
+                    <div class="card-value">
+                        <asp:Label ID="lbl_relese" runat="server" Text="0"></asp:Label>
+                    </div>
+                </div>
+            </div>
+        </a>
+        <a href="qualification_issuance__form.aspx">
+            <div class="dashboard-card">
+                <div class="card-top">
+                    <div class="card-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+                    <div class="card-title">Qualification Issuance Form</div>
+                </div>
+                <div class="card-bottom">
+                    <div class="card-value">
+                        <asp:Label ID="lbl_qualification" runat="server" Text="0"></asp:Label>
+                    </div>
+                </div>
+            </div>
+        </a>
+        <a href="GST_form.aspx">
+            <div class="dashboard-card">
+                <div class="card-top">
+                    <div class="card-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+                    <div class="card-title">GST Form</div>
+                </div>
+                <div class="card-bottom">
+                    <div class="card-value">
+                        <asp:Label ID="lbl_gst" runat="server" Text="0"></asp:Label>
+                    </div>
+                </div>
+            </div>
+        </a>
+        <%--  <a href="New_Vet_Orientation.aspx">
             <div class="dashboard-card">
                 <div class="card-top">
                     <div class="card-icon"><i class="fas fa-chalkboard-teacher"></i></div>
@@ -399,6 +438,5 @@
                 </div>
             </div>
         </a>--%>
-
     </div>
 </asp:Content>

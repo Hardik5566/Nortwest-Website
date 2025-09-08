@@ -1352,9 +1352,9 @@ alter PROCEDURE dbo.ins_GST_Form
     @sign_date DATE,
     @signature_img NVARCHAR(MAX),
     @create_by INT,
-	@has_employee varchar(5),
-	@complete_highschool varchar(5),
-	@complete_university varchar(5)
+	@has_employee varchar(150),
+	@complete_highschool varchar(150),
+	@complete_university varchar(150)
 )
 AS
 BEGIN
@@ -1369,9 +1369,12 @@ BEGIN
         @job_start_date,
         @job_end_date,
         @job_current,
-       @has_employee +' '+ @currently_employed,
-        @complete_highschool  +' '+ @highschool,
-        @complete_university  +' '+ @university,
+		@has_employee ,
+		@currently_employed,
+        @complete_highschool ,
+		@highschool,
+        @complete_university,
+		@university,
         @education_qualificaton,
         @level_of_study,
         @study_year,
@@ -1421,8 +1424,11 @@ begin
 				job_start_date,
 				job_end_date,
 				job_current,
+				has_employee,
 				currently_employed,
+				complete_high_school,
 				highschool,
+				complete_university_school,
 				university,
 				education_qualificaton,
 				level_of_study,
@@ -1441,7 +1447,7 @@ begin
 				post_study_plan,
 				other_relevant_info,
 				student_name,
-				sign_date,
+				format(sign_date ,'dd MMM, yyyy') as sign_date,
 				signature_img,
 				status
 
@@ -1496,4 +1502,46 @@ WHERE eq.[index] = ls.[index]
   AND eq.[index] = sy.[index]
   AND t.formID = @id
 
+end
+----------------------------------------
+--------------Display Gst--------------
+----------------------------------------
+create proc dis_gst_form_sp
+(
+    @from_date DATETIME,
+    @to_date DATETIME
+)
+as
+begin
+		select		
+				FormID,
+				has_employee,
+				currently_employed,
+				complete_high_school,
+				highschool,
+				complete_university_school,
+				university,
+				plan_to_fund,
+				total_access_fund,
+				financial_evidance,
+				has_course_exp,
+				course_experience,
+				has_study_gap,
+				study_gap,
+				reason_for_australia,
+				career_goals_australia,
+				home_country_ties,
+				australia_family_ties,
+				post_study_plan,
+				other_relevant_info,
+				student_name,
+				format(sign_date ,'dd MMM, yyyy') as sign_date,
+				signature_img,
+				status,
+				create_date
+
+		from
+			tbl_gst_form
+		where status = 1 
+			AND CAST(create_date AS DATE) BETWEEN CAST(@from_date AS DATE) AND CAST(@to_date AS DATE)
 end
