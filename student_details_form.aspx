@@ -70,14 +70,15 @@
                         <label class="lbl_title">Student Number</label>
                         <asp:TextBox ID="txt_s_number" CssClass="form-control" runat="server"></asp:TextBox>
                     </div>
+                     <div class="col-md-6">
+                        <label class="lbl_title">Student Given Names</label>
+                        <asp:TextBox ID="txt_s_given_name" CssClass="form-control" runat="server"></asp:TextBox>
+                    </div>
                     <div class="col-md-6">
                         <label class="lbl_title">Student Last Name</label>
                         <asp:TextBox ID="txt_s_last_name" CssClass="form-control" runat="server"></asp:TextBox>
                     </div>
-                    <div class="col-md-6">
-                        <label class="lbl_title">Student Given Names</label>
-                        <asp:TextBox ID="txt_s_given_name" CssClass="form-control" runat="server"></asp:TextBox>
-                    </div>
+                   
                     <div class="col-md-6">
                         <label class="lbl_title">Student Full Name</label>
                         <asp:TextBox ID="txt_s_full_name" CssClass="form-control" runat="server"></asp:TextBox>

@@ -766,7 +766,18 @@
         } else {
             $("#<%= ddl_state.ClientID %>").next(".nice-select").css("border-color", "");
         }
+            if ($("#<%= ddl_country.ClientID %>").prop("selectedIndex") == 0) {
+                $("#<%= ddl_country.ClientID %>").next(".nice-select").css("border-color", "red");
+    isValid = false;
 
+    // Set first invalid field
+    if (!firstInvalid) firstInvalid = $("#<%= ddl_country.ClientID %>").next(".nice-select");
+
+    // Add error message
+    errorMessages.push("Country selection is required.");
+} else {
+    $("#<%= ddl_country.ClientID %>").next(".nice-select").css("border-color", "");
+}
             // Aus Post Code
         if ($("#<%= txt_aus_post_code.ClientID %>").val().trim() == "") {
                 $("#<%= txt_aus_post_code.ClientID %>").css("border-color", "red");
@@ -806,6 +817,18 @@
         } else {
             $("#<%= txt_over_city.ClientID %>").css("border-color", "");
         }
+            if ($("#<%= ddl_country.ClientID %>").prop("selectedIndex") == 0) {
+                $("#<%= ddl_country.ClientID %>").next(".nice-select").css("border-color", "red");
+                isValid = false;
+
+                // Set first invalid field
+                if (!firstInvalid) firstInvalid = $("#<%= ddl_country.ClientID %>").next(".nice-select");
+
+                // Add error message
+                errorMessages.push("Country selection is required.");
+            } else {
+                $("#<%= ddl_country.ClientID %>").next(".nice-select").css("border-color", "");
+            }
 
             // Overseas Post
         if ($("#<%= txt_over_post.ClientID %>").val().trim() == "") {

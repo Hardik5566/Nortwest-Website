@@ -25,6 +25,8 @@ public partial class new_vet_orientation_form : System.Web.UI.Page
             {
             
                 bind_data();
+                ddl_country.Items.Insert(0, new ListItem("Select Country", "0"));
+
             }
         }
         catch (Exception)

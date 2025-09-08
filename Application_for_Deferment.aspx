@@ -316,7 +316,14 @@
                 $(".lbl_explanation_error.txt_error").hide(); // Properly hide the error
 
             }
-
+            var canvas = document.getElementById("signatureCanvas");
+            var blank = document.createElement("canvas");
+            blank.width = canvas.width;
+            blank.height = canvas.height;
+            if (canvas.toDataURL() === blank.toDataURL()) {
+                alert("Please provide your signature.");
+                isValid = false;
+            }
 
             return isValid;
         }

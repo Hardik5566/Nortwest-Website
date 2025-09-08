@@ -22,6 +22,7 @@ public partial class GTE_Form : System.Web.UI.Page
             if (!IsPostBack)
             {
                 bind_data();
+                ddl_country.Items.Insert(0, new ListItem("Select Country", "0"));
             }
         }
         catch (Exception)

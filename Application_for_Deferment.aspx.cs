@@ -145,52 +145,50 @@ public partial class Application_for_Deferment : System.Web.UI.Page
     <div style='margin-left: auto; margin-right: auto; width: 85%; background-color: white; border-top: 3px solid #008a7f; border-bottom: 3px solid #008a7f;'>
 
         <table style='border-collapse: collapse; margin-left: auto; margin-right: auto; width: 100%;'>
-            
+
             <tr style='border-bottom: 1px solid #d7d7d7; text-align: left'>
-                <th colspan='2' style='padding: 10px; font-size: 20px; color: black;'>Student Details</th>
+                <th colspan='2' style='padding: 10px'>
+                    <label style='font-size: 20px; padding-bottom: 10px; color: black'>Student Details</label>
+                </th>
             </tr>
 
-            <tr>
+            <tr style='border-bottom: 1px solid #d7d7d7;'>
                 <td style='padding: 10px; color: black; width: 50%'>Student Name</td>
                 <td><label>" + student_name + @"</label></td>
             </tr>
-            <tr>
+            <tr style='border-bottom: 1px solid #d7d7d7;'>
                 <td style='padding: 10px; color: black;'>Student ID</td>
                 <td><label>" + student_id + @"</label></td>
             </tr>
-            <tr>
+            <tr style='border-bottom: 1px solid #d7d7d7;'>
                 <td style='padding: 10px; color: black;'>Date of Birth</td>
                 <td><label>" + dob + @"</label></td>
             </tr>
-
-            <tr>
+            <tr style='border-bottom: 1px solid #d7d7d7;'>
                 <td style='padding: 10px; color: black;'>Reason for Request</td>
                 <td><label>" + reason + @"</label></td>
             </tr>
-            <tr>
+            <tr style='border-bottom: 1px solid #d7d7d7;'>
                 <td style='padding: 10px; color: black;'>Course Name</td>
                 <td><label>" + course + @"</label></td>
             </tr>
-
-            <tr>
+            <tr style='border-bottom: 1px solid #d7d7d7;'>
                 <td style='padding: 10px; color: black;'>Course Start Date</td>
                 <td><label>" + course_start + @"</label></td>
             </tr>
-            <tr>
+            <tr style='border-bottom: 1px solid #d7d7d7;'>
                 <td style='padding: 10px; color: black;'>Course End Date</td>
                 <td><label>" + course_end + @"</label></td>
             </tr>
-
-            <tr>
+            <tr style='border-bottom: 1px solid #d7d7d7;'>
                 <td style='padding: 10px; color: black;'>Deferment Start Date</td>
                 <td><label>" + def_start + @"</label></td>
             </tr>
-            <tr>
+            <tr style='border-bottom: 1px solid #d7d7d7;'>
                 <td style='padding: 10px; color: black;'>Deferment End Date</td>
                 <td><label>" + def_end + @"</label></td>
             </tr>
-
-            <tr>
+            <tr style='border-bottom: 1px solid #d7d7d7;'>
                 <td style='padding: 10px; color: black;'>Sign Date</td>
                 <td><label>" + sign_date + @"</label></td>
             </tr>

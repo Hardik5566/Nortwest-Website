@@ -376,20 +376,13 @@
         }
 
             // Validate Signature
-        if ($("#<%= hdnSignature.ClientID %>").val().trim() == "") {
-                $("#signatureCanvas").css("border-color", "red");
+            var canvas = document.getElementById("signatureCanvas");
+            var blank = document.createElement("canvas");
+            blank.width = canvas.width;
+            blank.height = canvas.height;
+            if (canvas.toDataURL() === blank.toDataURL()) {
+                alert("Please provide your signature.");
                 isValid = false;
-                if (!firstInvalid) firstInvalid = $("#signatureCanvas");
-            } else {
-                $("#signatureCanvas").css("border-color", "");
-            }
-
-            // Scroll to first invalid field
-            if (!isValid && firstInvalid) {
-                $('html, body').animate({
-                    scrollTop: firstInvalid.offset().top - 200
-                }, 500);
-                firstInvalid.focus();
             }
 
             return isValid;

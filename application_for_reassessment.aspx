@@ -3,8 +3,8 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="title" Runat="Server">
     Application For Reassessment
 </asp:Content>
+
 <asp:Content ID="Content2" ContentPlaceHolderID="head" Runat="Server">
-     
     <link href="assets/css/select2.min.css" rel="stylesheet" />
     <link href="assets/country_code/css/intlTelInput.min.css" rel="stylesheet" />
     <style>
@@ -14,27 +14,23 @@
             padding: 35px;
             margin-bottom: 25px;
         }
-
-            .form-container .lbl_title {
-                color: #161616;
-                font-size: 14px;
-                font-weight: 500;
-            }
-
-
+        .form-container .lbl_title {
+            color: #161616;
+            font-size: 14px;
+            font-weight: 500;
+        }
         .nice-select.qualification.open .list {
             max-height: 250px !important;
         }
-
         .select2 {
             width: 100% !important;
         }
-
         .ch_agree label {
             font-weight: bold;
         }
     </style>
 </asp:Content>
+
 <asp:Content ID="Content3" ContentPlaceHolderID="body" Runat="Server">
     <div class="form breadcrumb-area shadow dark bg-fixed text-center text-light" style="background-image: url(assets/img/courses_banner.png);">
         <div class="container">
@@ -49,6 +45,7 @@
             </div>
         </div>
     </div>
+
     <div class="bg-gray default-padding bg-cover">
         <div class="container">
             <div class="row">
@@ -59,37 +56,30 @@
                 </div>
             </div>
 
+            <!-- Student Details -->
             <div class="form-container">
-                <div>
-                    <h4>Student details</h4>
-                </div>
-
+                <h4>Student Details</h4>
                 <div class="row">
-
                     <div class="col-md-6">
                         <label class="lbl_title">Student Number</label>
                         <asp:TextBox ID="txt_s_number" CssClass="form-control" runat="server"></asp:TextBox>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="lbl_title">Student Last Name</label>
-                        <asp:TextBox ID="txt_s_last_name" CssClass="form-control" runat="server"></asp:TextBox>
                     </div>
                     <div class="col-md-6">
                         <label class="lbl_title">Student Given Names</label>
                         <asp:TextBox ID="txt_s_given_name" CssClass="form-control" runat="server"></asp:TextBox>
                     </div>
                     <div class="col-md-6">
+                        <label class="lbl_title">Student Last Name</label>
+                        <asp:TextBox ID="txt_s_last_name" CssClass="form-control" runat="server"></asp:TextBox>
+                    </div>
+                    <div class="col-md-6">
                         <label class="lbl_title">Student Full Name</label>
                         <asp:TextBox ID="txt_s_full_name" CssClass="form-control" runat="server"></asp:TextBox>
                     </div>
-
                     <div class="col-md-6">
                         <label class="lbl_title">Email id</label>
                         <asp:TextBox ID="txt_email" CssClass="form-control" runat="server"></asp:TextBox>
                     </div>
-
-
-
                     <div class="col-md-6">
                         <label class="lbl_title">Student Contact Number</label>
                         <div class="input-group contact_no">
@@ -99,15 +89,12 @@
                             <asp:HiddenField ID="hd_contact_no" Value="" runat="server" />
                         </div>
                     </div>
-
-
                 </div>
             </div>
-            <div class="form-container">
-                <div>
-                    <h4>Current Address</h4>
-                </div>
 
+            <!-- Address Details -->
+            <div class="form-container">
+                <h4>Current Address</h4>
                 <div class="row">
                     <div class="col-md-12">
                         <label class="lbl_title">Street Address</label>
@@ -121,7 +108,6 @@
                         <label class="lbl_title">City</label>
                         <asp:TextBox ID="txt_city" CssClass="form-control" runat="server"></asp:TextBox>
                     </div>
-
                     <div class="col-md-6">
                         <label class="lbl_title">State / Province / Region</label>
                         <asp:TextBox ID="txt_state" CssClass="form-control" runat="server"></asp:TextBox>
@@ -132,7 +118,6 @@
                     </div>
                     <div class="col-md-6 search_dropdown">
                         <label class="lbl_title">Country</label>
-
                         <asp:DropDownList ID="ddl_country" data-live-search="true" DataTextField="name" DataValueField="name" CssClass="form-control qualification select2" runat="server" aria-required="true" aria-invalid="false">
                         </asp:DropDownList>
                     </div>
@@ -140,195 +125,112 @@
             </div>
 
             <div>
-                <asp:Button ID="btn_submit" runat="server" OnClientClick="saveSignature()" OnClick="btn_submit_Click" Text="SUBMIT" CssClass="btn btn-success" />
+                <asp:Button ID="btn_submit" runat="server" OnClientClick="return validateForm();" OnClick="btn_submit_Click" Text="SUBMIT" CssClass="btn btn-success" />
             </div>
         </div>
     </div>
-
-   
 </asp:Content>
+
 <asp:Content ID="Content4" ContentPlaceHolderID="jqury" Runat="Server">
-    
     <script src="assets/js/select2.min.js"></script>
-    <script>
-        $("#<%= btn_submit.ClientID %>").click(function (event) {
-            if (!validateForm()) {
-                event.preventDefault(); // Prevent form submission if validation fails
-                return false;
-            }
-        });
-
-        // Form validation function
-        function validateForm() {
-            var isValid = true;
-
-            // Validate Full Name
-            if ($("#<%= txt_s_number.ClientID %>").val().trim() == "") {
-                $("#<%= txt_s_number.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_s_number.ClientID %>").css("border-color", "");
-            }
-
-
-
-
-
-
-
-            // Validate Student ID Number
-            if ($("#<%= txt_s_last_name.ClientID %>").val().trim() == "") {
-                $("#<%= txt_s_last_name.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_s_last_name.ClientID %>").css("border-color", "");
-            }
-
-            // Validate Photo
-            if ($("#<%= txt_s_given_name.ClientID %>").val() == "") {
-                $("#<%= txt_s_given_name.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_s_given_name.ClientID %>").css("border-color", "");
-            }
-
-            if ($("#<%= txt_s_full_name.ClientID %>").val().trim() == "") {
-                $("#<%= txt_s_full_name.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_s_full_name.ClientID %>").css("border-color", "");
-            }
-            // Validate Email
-            var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-            if (!emailRegex.test($("#<%= txt_email.ClientID %>").val())) {
-                $("#<%= txt_email.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_email.ClientID %>").css("border-color", "");
-            }
-
-
-
-            if ($("#<%= txt_add.ClientID %>").val().trim() == "") {
-                $("#<%= txt_add.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_add.ClientID %>").css("border-color", "");
-            }
-
-            if ($("#<%= txt_add_line_2.ClientID %>").val().trim() == "") {
-                $("#<%= txt_add_line_2.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_add_line_2.ClientID %>").css("border-color", "");
-            }
-
-            if ($("#<%= ddl_country.ClientID %>").prop("selectedIndex") == 0) {
-                $("#<%= ddl_country.ClientID %>").next(".nice-select").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= ddl_country.ClientID %>").next(".nice-select").css("border-color", "");
-            }
-
-            if ($("#<%= txt_city.ClientID %>").val().trim() == "") {
-                $("#<%= txt_city.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_city.ClientID %>").css("border-color", "");
-            }
-
-            if ($("#<%= txt_state.ClientID %>").val().trim() == "") {
-                $("#<%= txt_state.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_state.ClientID %>").css("border-color", "");
-            }
-
-            if ($("#<%= txt_zip.ClientID %>").val().trim() == "") {
-                $("#<%= txt_zip.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_zip.ClientID %>").css("border-color", "");
-            }
-
-
-            if ($("#<%= hd_contact_no_code.ClientID%>").val() == "") {
-                $("#phone").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#phone").css("border-color", "");
-            }
-
-
-
-            if ($(".ch_explanation input[type='checkbox']:not(:checked)").length > 0) {
-                $(".lbl_explanation_error.txt_error").show(); // Use the proper selector
-                isValid = false;
-            } else {
-                $(".lbl_explanation_error.txt_error").hide(); // Properly hide the error
-
-            }
-
-
-            return isValid;
-        }
-
-    </script>
-    <%--  --%>
-    <script>
-        $(document).on('ready page:load', function () {
-            // Reapply your jQuery code here
-            $('.select2').select2();
-            $('.search_dropdown .select2-container:eq(1)').hide();
-        });
-
-    </script>
-
     <script src="assets/country_code/js/intlTelInput.js"></script>
 
-
-
     <script>
+        $(document).ready(function () {
+            $('.select2').select2();
+        });
+
+        function only_number(key) {
+            var charCode = (key.which) ? key.which : key.keyCode;
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) return false;
+            return true;
+        }
+
         var input = document.querySelector("#phone");
         var output = document.querySelector("#output");
-
         var iti = window.intlTelInput(input, {
             nationalMode: true,
             separateDialCode: true,
-            //initialCountry: "auto",
-
             preferredCountries: ['au'],
             utilsScript: "assets/country_code/js/utils.js",
         });
 
-        var handleChange = function () {
-
+        function handleChange() {
             var text = (iti.isValidNumber()) ? "" : "Please enter a valid number";
-            var textNode = document.createTextNode(text);
-            output.innerHTML = "";
-            output.appendChild(textNode);
-            $("#<%= hd_contact_no_code.ClientID%>").val(iti.selectedCountryData.dialCode);
-            $("#<%= hd_contact_no.ClientID%>").val($("#phone").val());
-        };
+            output.innerHTML = text;
+            $("#<%= hd_contact_no_code.ClientID %>").val(iti.selectedCountryData.dialCode);
+            $("#<%= hd_contact_no.ClientID %>").val($("#phone").val());
+        }
 
         input.addEventListener('countrychange', handleChange);
         input.addEventListener('change', handleChange);
         input.addEventListener('keyup', handleChange);
 
-    </script>
+        function validateForm() {
+            var isValid = true;
+            var msg = "";
 
-    <script>
-        function only_number(key) {
-            var charCode = (key.which) ? key.which : key.keyCode
-            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-                return false;
-            }
-            else {
-                return true;
-            }
+            if ($("#<%= txt_s_number.ClientID %>").val().trim() == "") {
+                isValid = false; msg += "Student Number is required.\n";
+                $("#<%= txt_s_number.ClientID %>").css("border-color", "red");
+            } else $("#<%= txt_s_number.ClientID %>").css("border-color", "");
 
+            if ($("#<%= txt_s_given_name.ClientID %>").val().trim() == "") {
+                isValid = false; msg += "Student Given Name is required.\n";
+                $("#<%= txt_s_given_name.ClientID %>").css("border-color", "red");
+            } else $("#<%= txt_s_given_name.ClientID %>").css("border-color", "");
+
+            if ($("#<%= txt_s_last_name.ClientID %>").val().trim() == "") {
+                isValid = false; msg += "Student Last Name is required.\n";
+                $("#<%= txt_s_last_name.ClientID %>").css("border-color", "red");
+            } else $("#<%= txt_s_last_name.ClientID %>").css("border-color", "");
+
+            if ($("#<%= txt_s_full_name.ClientID %>").val().trim() == "") {
+                isValid = false; msg += "Student Full Name is required.\n";
+                $("#<%= txt_s_full_name.ClientID %>").css("border-color", "red");
+            } else $("#<%= txt_s_full_name.ClientID %>").css("border-color", "");
+
+            var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (!emailRegex.test($("#<%= txt_email.ClientID %>").val())) {
+                isValid = false; msg += "Valid Email is required.\n";
+                $("#<%= txt_email.ClientID %>").css("border-color", "red");
+            } else $("#<%= txt_email.ClientID %>").css("border-color", "");
+
+            if ($("#<%= txt_add.ClientID %>").val().trim() == "") {
+                isValid = false; msg += "Address is required.\n";
+                $("#<%= txt_add.ClientID %>").css("border-color", "red");
+            } else $("#<%= txt_add.ClientID %>").css("border-color", "");
+
+            if ($("#<%= txt_city.ClientID %>").val().trim() == "") {
+                isValid = false; msg += "City is required.\n";
+                $("#<%= txt_city.ClientID %>").css("border-color", "red");
+            } else $("#<%= txt_city.ClientID %>").css("border-color", "");
+
+            if ($("#<%= txt_state.ClientID %>").val().trim() == "") {
+                isValid = false; msg += "State is required.\n";
+                $("#<%= txt_state.ClientID %>").css("border-color", "red");
+            } else $("#<%= txt_state.ClientID %>").css("border-color", "");
+
+            if ($("#<%= txt_zip.ClientID %>").val().trim() == "") {
+                isValid = false; msg += "ZIP is required.\n";
+                $("#<%= txt_zip.ClientID %>").css("border-color", "red");
+            } else $("#<%= txt_zip.ClientID %>").css("border-color", "");
+
+            if ($("#<%= hd_contact_no_code.ClientID %>").val() == "") {
+                isValid = false; msg += "Valid Contact Number is required.\n";
+                $("#phone").css("border-color", "red");
+            } else $("#phone").css("border-color", "");
+
+            var ddlCountry = document.getElementById("<%= ddl_country.ClientID %>");
+            var niceCountry = ddlCountry.nextElementSibling;
+            if (ddlCountry.selectedIndex === 0) {
+                isValid = false; msg += "Please select a Country.\n";
+                niceCountry.style.border = "1px solid red";
+            } else niceCountry.style.border = "1px solid #ccc";
+
+            if (!isValid) alert(msg);
+
+            return isValid;
         }
-
     </script>
 </asp:Content>
-

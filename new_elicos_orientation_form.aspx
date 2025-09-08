@@ -86,11 +86,12 @@
 
 
 
-                    <div class="col-md-6">
-                        <label class="lbl_title">Photo To Issue Student ID Card</label>
-                        <asp:FileUpload ID="upd_id_card" CssClass="form-control" runat="server" />
-
-                    </div>
+                  <div class="col-md-6">
+    <label class="lbl_title">Photo To Issue Student ID Card</label>
+    <asp:FileUpload ID="upd_id_card" CssClass="form-control" runat="server" 
+        accept=".jpg,.jpeg,.png,.gif" />
+    <span id="photoError" class="text-danger" style="display:none;">Please upload a valid image file</span>
+</div>
                     <div class="col-md-6">
                         <label class="lbl_title">Email id</label>
                         <asp:TextBox ID="txt_email" CssClass="form-control" runat="server"></asp:TextBox>
@@ -452,7 +453,28 @@
 <asp:Content ID="Content4" ContentPlaceHolderID="jqury" runat="Server">
 
     <script src="assets/country_code/js/intlTelInput.js"></script>
-
+    <script>
+        // Optional: Validate file type on form submit
+        $("#<%= btn_submit.ClientID %>").click(function (event) {
+            var fileUpload = $("#<%= upd_id_card.ClientID %>")[0];
+        if (fileUpload.files.length > 0) {
+            var file = fileUpload.files[0];
+            var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+            if (!allowedExtensions.exec(file.name)) {
+                $("#photoError").show();
+                fileUpload.value = ''; // reset file input
+                event.preventDefault();
+                return false;
+            } else {
+                $("#photoError").hide();
+            }
+        } else {
+            $("#photoError").show();
+            event.preventDefault();
+            return false;
+        }
+    });
+</script>
     <script>
         var input = document.querySelector("#phone");
         var output = document.querySelector("#output");
@@ -571,7 +593,14 @@
             } else {
                 $("#<%= txt_name.ClientID %>").css("border-color", "");
             }
-           
+            var canvas = document.getElementById("signatureCanvas");
+            var blank = document.createElement("canvas");
+            blank.width = canvas.width;
+            blank.height = canvas.height;
+            if (canvas.toDataURL() === blank.toDataURL()) {
+                alert("Please provide your signature.");
+                isValid = false;
+            }
 
             if ($("#<%= hd_contact_no_code.ClientID%>").val() == "") {
                 $("#phone").css("border-color", "red");

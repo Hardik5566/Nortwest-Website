@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="Student_Forms.aspx.cs" Inherits="Student_Forms" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="title" runat="Server">
-    Application Request Form
+   Student Form
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="head" runat="Server">
     <style>

@@ -132,14 +132,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Last Name</label>
-                            <asp:TextBox ID="txtLastName" CssClass="form-control" runat="server"></asp:TextBox>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
+                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Title (Mr., Mrs., Ms.)</label>
                             <asp:DropDownList ID="ddlTitle" CssClass="form-control" runat="server">
@@ -150,17 +143,26 @@
                             </asp:DropDownList>
                         </div>
                     </div>
-
-                </div>
-
-                <div class="row">
-                    <div class="col-md-6">
+                       <div class="col-md-6">
                         <div class="form-group">
                             <label>Given Name</label>
                             <asp:TextBox ID="txtGivenName" CssClass="form-control" runat="server"></asp:TextBox>
                         </div>
                     </div>
 
+                   
+
+                </div>
+
+                <div class="row">
+                 
+                    
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Last Name</label>
+                            <asp:TextBox ID="txtLastName" CssClass="form-control" runat="server"></asp:TextBox>
+                        </div>
+                    </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Date of Birth</label>

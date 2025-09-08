@@ -101,130 +101,128 @@
                         <label class="lbl_title">Date of Birth:</label>
                         <asp:TextBox ID="txt_birth_date" TextMode="Date" CssClass="form-control" runat="server"></asp:TextBox>
                     </div>
-                    <div class="col-md-6">
-                        <label class="lbl_title">Nationality:</label>
-                        <asp:DropDownList ID="ddl_nationality" runat="server" data-live-search="true" CssClass="select2 search_dropdown form-control" aria-required="true" aria-invalid="false">
-                            <asp:ListItem Text="Nationality" Value="" />
+                   <div class="col-md-6">
+                            <label class="lbl_title">Nationality</label>
+                            <asp:DropDownList ID="ddl_nationality" runat="server" data-live-search="true" CssClass="form-control" aria-required="true" aria-invalid="false">
+                                <asp:ListItem Text="Nationality" Value="" />
 
-                            <asp:ListItem Text="Afghan" Value="Afghan" />
-                            <asp:ListItem Text="American" Value="American" />
-                            <asp:ListItem Text="Albanian" Value="Albanian" />
-                            <asp:ListItem Text="Algerian" Value="Algerian" />
-                            <asp:ListItem Text="Argentine" Value="Argentine" />
-                            <asp:ListItem Text="Argentinian" Value="Argentinian" />
-                            <asp:ListItem Text="Australian" Value="Australian" />
-                            <asp:ListItem Text="Austrian" Value="Austrian" />
-                            <asp:ListItem Text="Bangladeshi" Value="Bangladeshi" />
-                            <asp:ListItem Text="Belgian" Value="Belgian" />
-                            <asp:ListItem Text="British" Value="British" />
-                            <asp:ListItem Text="Bolivian" Value="Bolivian" />
-                            <asp:ListItem Text="Batswana" Value="Batswana" />
-                            <asp:ListItem Text="Brazilian" Value="Brazilian" />
-                            <asp:ListItem Text="Bulgarian" Value="Bulgarian" />
-                            <asp:ListItem Text="Bhutanese" Value="Bhutanese" />
-                            <asp:ListItem Text="Cambodian" Value="Cambodian" />
-                            <asp:ListItem Text="Cameroonian" Value="Cameroonian" />
-                            <asp:ListItem Text="Canadian" Value="Canadian" />
-                            <asp:ListItem Text="Chilean" Value="Chilean" />
-                            <asp:ListItem Text="Chinese" Value="Chinese" />
-                            <asp:ListItem Text="Colombian" Value="Colombian" />
-                            <asp:ListItem Text="Costa Rican" Value="Costa Rican" />
-                            <asp:ListItem Text="Croatian" Value="Croatian" />
-                            <asp:ListItem Text="Cuban" Value="Cuban" />
-                            <asp:ListItem Text="Czech" Value="Czech" />
-                            <asp:ListItem Text="Danish" Value="Danish" />
-                            <asp:ListItem Text="Dominican" Value="Dominican" />
-                            <asp:ListItem Text="Ecuadorian" Value="Ecuadorian" />
-                            <asp:ListItem Text="Emirati" Value="Emirati" />
-                            <asp:ListItem Text="Egyptian" Value="Egyptian" />
-                            <asp:ListItem Text="Salvadorian" Value="Salvadorian" />
-                            <asp:ListItem Text="English" Value="English" />
-                            <asp:ListItem Text="Estonian" Value="Estonian" />
-                            <asp:ListItem Text="Ethiopian" Value="Ethiopian" />
-                            <asp:ListItem Text="Fijian" Value="Fijian" />
-                            <asp:ListItem Text="Finnish" Value="Finnish" />
-                            <asp:ListItem Text="French" Value="French" />
-                            <asp:ListItem Text="German" Value="German" />
-                            <asp:ListItem Text="Ghanaian" Value="Ghanaian" />
-                            <asp:ListItem Text="Greek" Value="Greek" />
-                            <asp:ListItem Text="Guatemalan" Value="Guatemalan" />
-                            <asp:ListItem Text="Haitian" Value="Haitian" />
-                            <asp:ListItem Text="Honduran" Value="Honduran" />
-                            <asp:ListItem Text="Hungarian" Value="Hungarian" />
-                            <asp:ListItem Text="Icelandic" Value="Icelandic" />
-                            <asp:ListItem Text="Indian" Value="Indian" />
-                            <asp:ListItem Text="Indonesian" Value="Indonesian" />
-                            <asp:ListItem Text="Iranian" Value="Iranian" />
-                            <asp:ListItem Text="Iraqi" Value="Iraqi" />
-                            <asp:ListItem Text="Irish" Value="Irish" />
-                            <asp:ListItem Text="Israeli" Value="Israeli" />
-                            <asp:ListItem Text="Italian" Value="Italian" />
-                            <asp:ListItem Text="Jamaican" Value="Jamaican" />
-                            <asp:ListItem Text="Japanese" Value="Japanese" />
-                            <asp:ListItem Text="Jordanian" Value="Jordanian" />
-                            <asp:ListItem Text="Kenyan" Value="Kenyan" />
-                            <asp:ListItem Text="Kuwaiti" Value="Kuwaiti" />
-                            <asp:ListItem Text="Lao" Value="Lao" />
-                            <asp:ListItem Text="Latvian" Value="Latvian" />
-                            <asp:ListItem Text="Lebanese" Value="Lebanese" />
-                            <asp:ListItem Text="Liberian" Value="Liberian" />
-                            <asp:ListItem Text="Libyan" Value="Libyan" />
-                            <asp:ListItem Text="Lithuanian" Value="Lithuanian" />
-                            <asp:ListItem Text="Malagasy" Value="Malagasy" />
-                            <asp:ListItem Text="Malaysian" Value="Malaysian" />
-                            <asp:ListItem Text="Malian" Value="Malian" />
-                            <asp:ListItem Text="Maltese" Value="Maltese" />
-                            <asp:ListItem Text="Mexican" Value="Mexican" />
-                            <asp:ListItem Text="Mongolian" Value="Mongolian" />
-                            <asp:ListItem Text="Moroccan" Value="Moroccan" />
-                            <asp:ListItem Text="Mozambican" Value="Mozambican" />
-                            <asp:ListItem Text="Namibian" Value="Namibian" />
-                            <asp:ListItem Text="Nepalese" Value="Nepalese" />
-                            <asp:ListItem Text="Dutch" Value="Dutch" />
-                            <asp:ListItem Text="New Zealand" Value="New Zealand" />
-                            <asp:ListItem Text="Nicaraguan" Value="Nicaraguan" />
-                            <asp:ListItem Text="Nigerian" Value="Nigerian" />
-                            <asp:ListItem Text="Norwegian" Value="Norwegian" />
-                            <asp:ListItem Text="Pakistani" Value="Pakistani" />
-                            <asp:ListItem Text="Panamanian" Value="Panamanian" />
-                            <asp:ListItem Text="Paraguayan" Value="Paraguayan" />
-                            <asp:ListItem Text="Peruvian" Value="Peruvian" />
-                            <asp:ListItem Text="Philippine" Value="Philippine" />
-                            <asp:ListItem Text="Polish" Value="Polish" />
-                            <asp:ListItem Text="Portuguese" Value="Portuguese" />
-                            <asp:ListItem Text="Romanian" Value="Romanian" />
-                            <asp:ListItem Text="Russian" Value="Russian" />
-                            <asp:ListItem Text="Saudi" Value="Saudi" />
-                            <asp:ListItem Text="Scottish" Value="Scottish" />
-                            <asp:ListItem Text="Senegalese" Value="Senegalese" />
-                            <asp:ListItem Text="Serbian" Value="Serbian" />
-                            <asp:ListItem Text="Singaporean" Value="Singaporean" />
-                            <asp:ListItem Text="Slovak" Value="Slovak" />
-                            <asp:ListItem Text="South African" Value="South African" />
-                            <asp:ListItem Text="Korean" Value="Korean" />
-                            <asp:ListItem Text="Spanish" Value="Spanish" />
-                            <asp:ListItem Text="Sri Lankan" Value="Sri Lankan" />
-                            <asp:ListItem Text="Sudanese" Value="Sudanese" />
-                            <asp:ListItem Text="Swedish" Value="Swedish" />
-                            <asp:ListItem Text="Swiss" Value="Swiss" />
-                            <asp:ListItem Text="Syrian" Value="Syrian" />
-                            <asp:ListItem Text="Taiwanese" Value="Taiwanese" />
-                            <asp:ListItem Text="Tajikistani" Value="Tajikistani" />
-                            <asp:ListItem Text="Thai" Value="Thai" />
-                            <asp:ListItem Text="Tongan" Value="Tongan" />
-                            <asp:ListItem Text="Tunisian" Value="Tunisian" />
-                            <asp:ListItem Text="Turkish" Value="Turkish" />
-                            <asp:ListItem Text="Ukrainian" Value="Ukrainian" />
-                            <asp:ListItem Text="Uruguayan" Value="Uruguayan" />
-                            <asp:ListItem Text="Venezuelan" Value="Venezuelan" />
-                            <asp:ListItem Text="Vietnamese" Value="Vietnamese" />
-                            <asp:ListItem Text="Welsh" Value="Welsh" />
-                            <asp:ListItem Text="Zambian" Value="Zambian" />
-                            <asp:ListItem Text="Zimbabwean" Value="Zimbabwean" />
-                        </asp:DropDownList>
-
-
-                    </div>
+                                <asp:ListItem Text="Afghan" Value="Afghan" />
+                                <asp:ListItem Text="American" Value="American" />
+                                <asp:ListItem Text="Albanian" Value="Albanian" />
+                                <asp:ListItem Text="Algerian" Value="Algerian" />
+                                <asp:ListItem Text="Argentine" Value="Argentine" />
+                                <asp:ListItem Text="Argentinian" Value="Argentinian" />
+                                <asp:ListItem Text="Australian" Value="Australian" />
+                                <asp:ListItem Text="Austrian" Value="Austrian" />
+                                <asp:ListItem Text="Bangladeshi" Value="Bangladeshi" />
+                                <asp:ListItem Text="Belgian" Value="Belgian" />
+                                <asp:ListItem Text="British" Value="British" />
+                                <asp:ListItem Text="Bolivian" Value="Bolivian" />
+                                <asp:ListItem Text="Batswana" Value="Batswana" />
+                                <asp:ListItem Text="Brazilian" Value="Brazilian" />
+                                <asp:ListItem Text="Bulgarian" Value="Bulgarian" />
+                                <asp:ListItem Text="Bhutanese" Value="Bhutanese" />
+                                <asp:ListItem Text="Cambodian" Value="Cambodian" />
+                                <asp:ListItem Text="Cameroonian" Value="Cameroonian" />
+                                <asp:ListItem Text="Canadian" Value="Canadian" />
+                                <asp:ListItem Text="Chilean" Value="Chilean" />
+                                <asp:ListItem Text="Chinese" Value="Chinese" />
+                                <asp:ListItem Text="Colombian" Value="Colombian" />
+                                <asp:ListItem Text="Costa Rican" Value="Costa Rican" />
+                                <asp:ListItem Text="Croatian" Value="Croatian" />
+                                <asp:ListItem Text="Cuban" Value="Cuban" />
+                                <asp:ListItem Text="Czech" Value="Czech" />
+                                <asp:ListItem Text="Danish" Value="Danish" />
+                                <asp:ListItem Text="Dominican" Value="Dominican" />
+                                <asp:ListItem Text="Ecuadorian" Value="Ecuadorian" />
+                                <asp:ListItem Text="Emirati" Value="Emirati" />
+                                <asp:ListItem Text="Egyptian" Value="Egyptian" />
+                                <asp:ListItem Text="Salvadorian" Value="Salvadorian" />
+                                <asp:ListItem Text="English" Value="English" />
+                                <asp:ListItem Text="Estonian" Value="Estonian" />
+                                <asp:ListItem Text="Ethiopian" Value="Ethiopian" />
+                                <asp:ListItem Text="Fijian" Value="Fijian" />
+                                <asp:ListItem Text="Finnish" Value="Finnish" />
+                                <asp:ListItem Text="French" Value="French" />
+                                <asp:ListItem Text="German" Value="German" />
+                                <asp:ListItem Text="Ghanaian" Value="Ghanaian" />
+                                <asp:ListItem Text="Greek" Value="Greek" />
+                                <asp:ListItem Text="Guatemalan" Value="Guatemalan" />
+                                <asp:ListItem Text="Haitian" Value="Haitian" />
+                                <asp:ListItem Text="Honduran" Value="Honduran" />
+                                <asp:ListItem Text="Hungarian" Value="Hungarian" />
+                                <asp:ListItem Text="Icelandic" Value="Icelandic" />
+                                <asp:ListItem Text="Indian" Value="Indian" />
+                                <asp:ListItem Text="Indonesian" Value="Indonesian" />
+                                <asp:ListItem Text="Iranian" Value="Iranian" />
+                                <asp:ListItem Text="Iraqi" Value="Iraqi" />
+                                <asp:ListItem Text="Irish" Value="Irish" />
+                                <asp:ListItem Text="Israeli" Value="Israeli" />
+                                <asp:ListItem Text="Italian" Value="Italian" />
+                                <asp:ListItem Text="Jamaican" Value="Jamaican" />
+                                <asp:ListItem Text="Japanese" Value="Japanese" />
+                                <asp:ListItem Text="Jordanian" Value="Jordanian" />
+                                <asp:ListItem Text="Kenyan" Value="Kenyan" />
+                                <asp:ListItem Text="Kuwaiti" Value="Kuwaiti" />
+                                <asp:ListItem Text="Lao" Value="Lao" />
+                                <asp:ListItem Text="Latvian" Value="Latvian" />
+                                <asp:ListItem Text="Lebanese" Value="Lebanese" />
+                                <asp:ListItem Text="Liberian" Value="Liberian" />
+                                <asp:ListItem Text="Libyan" Value="Libyan" />
+                                <asp:ListItem Text="Lithuanian" Value="Lithuanian" />
+                                <asp:ListItem Text="Malagasy" Value="Malagasy" />
+                                <asp:ListItem Text="Malaysian" Value="Malaysian" />
+                                <asp:ListItem Text="Malian" Value="Malian" />
+                                <asp:ListItem Text="Maltese" Value="Maltese" />
+                                <asp:ListItem Text="Mexican" Value="Mexican" />
+                                <asp:ListItem Text="Mongolian" Value="Mongolian" />
+                                <asp:ListItem Text="Moroccan" Value="Moroccan" />
+                                <asp:ListItem Text="Mozambican" Value="Mozambican" />
+                                <asp:ListItem Text="Namibian" Value="Namibian" />
+                                <asp:ListItem Text="Nepalese" Value="Nepalese" />
+                                <asp:ListItem Text="Dutch" Value="Dutch" />
+                                <asp:ListItem Text="New Zealand" Value="New Zealand" />
+                                <asp:ListItem Text="Nicaraguan" Value="Nicaraguan" />
+                                <asp:ListItem Text="Nigerian" Value="Nigerian" />
+                                <asp:ListItem Text="Norwegian" Value="Norwegian" />
+                                <asp:ListItem Text="Pakistani" Value="Pakistani" />
+                                <asp:ListItem Text="Panamanian" Value="Panamanian" />
+                                <asp:ListItem Text="Paraguayan" Value="Paraguayan" />
+                                <asp:ListItem Text="Peruvian" Value="Peruvian" />
+                                <asp:ListItem Text="Philippine" Value="Philippine" />
+                                <asp:ListItem Text="Polish" Value="Polish" />
+                                <asp:ListItem Text="Portuguese" Value="Portuguese" />
+                                <asp:ListItem Text="Romanian" Value="Romanian" />
+                                <asp:ListItem Text="Russian" Value="Russian" />
+                                <asp:ListItem Text="Saudi" Value="Saudi" />
+                                <asp:ListItem Text="Scottish" Value="Scottish" />
+                                <asp:ListItem Text="Senegalese" Value="Senegalese" />
+                                <asp:ListItem Text="Serbian" Value="Serbian" />
+                                <asp:ListItem Text="Singaporean" Value="Singaporean" />
+                                <asp:ListItem Text="Slovak" Value="Slovak" />
+                                <asp:ListItem Text="South African" Value="South African" />
+                                <asp:ListItem Text="Korean" Value="Korean" />
+                                <asp:ListItem Text="Spanish" Value="Spanish" />
+                                <asp:ListItem Text="Sri Lankan" Value="Sri Lankan" />
+                                <asp:ListItem Text="Sudanese" Value="Sudanese" />
+                                <asp:ListItem Text="Swedish" Value="Swedish" />
+                                <asp:ListItem Text="Swiss" Value="Swiss" />
+                                <asp:ListItem Text="Syrian" Value="Syrian" />
+                                <asp:ListItem Text="Taiwanese" Value="Taiwanese" />
+                                <asp:ListItem Text="Tajikistani" Value="Tajikistani" />
+                                <asp:ListItem Text="Thai" Value="Thai" />
+                                <asp:ListItem Text="Tongan" Value="Tongan" />
+                                <asp:ListItem Text="Tunisian" Value="Tunisian" />
+                                <asp:ListItem Text="Turkish" Value="Turkish" />
+                                <asp:ListItem Text="Ukrainian" Value="Ukrainian" />
+                                <asp:ListItem Text="Uruguayan" Value="Uruguayan" />
+                                <asp:ListItem Text="Venezuelan" Value="Venezuelan" />
+                                <asp:ListItem Text="Vietnamese" Value="Vietnamese" />
+                                <asp:ListItem Text="Welsh" Value="Welsh" />
+                                <asp:ListItem Text="Zambian" Value="Zambian" />
+                                <asp:ListItem Text="Zimbabwean" Value="Zimbabwean" />
+                            </asp:DropDownList>
+                        </div>
                     <div class="col-md-12"></div>
                     <div class="col-md-6">
                         <label class="lbl_title">Student Contact Number:</label>
@@ -432,12 +430,9 @@
         // Form validation function
         function validateForm() {
             var isValid = true;
-            if ($("#<%= ddl_nationality.ClientID %>").prop("selectedIndex") == 0) {
-                $("#<%= ddl_nationality.ClientID %>").next(".nice-select").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= ddl_nationality.ClientID %>").next(".nice-select").css("border-color", "");
-            }
+            // Country Dropdown Validation with Nice Select
+           
+
             // Validate Full Name
             if ($("#<%= txt_first_name.ClientID %>").val().trim() == "") {
                 $("#<%= txt_first_name.ClientID %>").css("border-color", "red");
@@ -463,6 +458,7 @@
             } else {
                 $("#<%= hd_contact_no.ClientID %>").css("border-color", "");
             }
+          
             if ($("#<%= txt_passport_no.ClientID %>").val().trim() == "") {
                 $("#<%= txt_passport_no.ClientID %>").css("border-color", "red");
                 isValid = false;
@@ -544,6 +540,16 @@
                 // Hide the error message
                 $(".lbl_explanation_error").hide();
             }
+
+
+            var canvas = document.getElementById("signatureCanvas");
+            var blank = document.createElement("canvas");
+            blank.width = canvas.width;
+            blank.height = canvas.height;
+            if (canvas.toDataURL() === blank.toDataURL()) {
+                alert("Please provide your signature.");
+                isValid = false;
+            }
             return isValid;
         }
 
@@ -604,5 +610,31 @@
         }
 
     </script>
+
+    <script>
+        $(document).ready(function () {
+            // On form submit
+            $("#<%= btn_submit.ClientID %>").click(function (event) {
+            var isValid = true;
+
+            // Get value of dropdown
+            var nationality = $("#<%= ddl_nationality.ClientID %>").val();
+
+            if (nationality === "") {
+                isValid = false;
+                $("#nationalityError").show();
+                $(".bootstrap-select .dropdown-toggle").css("border", "1px solid red"); // highlight select.js dropdown
+            } else {
+                $("#nationalityError").hide();
+                $(".bootstrap-select .dropdown-toggle").css("border", ""); // remove border if valid
+            }
+
+            if (!isValid) {
+                event.preventDefault(); // stop submit
+                return false;
+            }
+        });
+    });
+</script>
 </asp:Content>
 

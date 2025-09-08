@@ -361,14 +361,17 @@ Documents attached (list all the documents you attach, ie copy of passport):
             } else {
                 $("#phone").css("border-color", "");
             }
+         
 
-            if ($("#<%= ddl_country.ClientID %>").prop("selectedIndex") == 0) {
-                $("#<%= ddl_country.ClientID %>").next(".nice-select").css("border-color", "red");
+
+            var canvas = document.getElementById("signatureCanvas");
+            var blank = document.createElement("canvas");
+            blank.width = canvas.width;
+            blank.height = canvas.height;
+            if (canvas.toDataURL() === blank.toDataURL()) {
+                alert("Please provide your signature.");
                 isValid = false;
-            } else {
-                $("#<%= ddl_country.ClientID %>").next(".nice-select").css("border-color", "");
             }
-
             if ($(".ch_explanation input[type='checkbox']:not(:checked)").length > 0) {
                 $(".lbl_explanation_error.txt_error").show(); // Use the proper selector
                 isValid = false;

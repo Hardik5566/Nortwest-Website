@@ -463,7 +463,7 @@
             </div>
 
             <div>
-                <asp:Button ID="btn_submit" runat="server" OnClientClick="saveSignature()" OnClick="btn_submit_Click" Text="SUBMIT" CssClass="btn btn-success" />
+                <asp:Button ID="btn_submit" runat="server" OnClientClick="return validateForm() && saveSignature();" OnClick="btn_submit_Click" Text="SUBMIT" CssClass="btn btn-success" />
             </div>
         </div>
     </div>
@@ -806,8 +806,146 @@
             });
         });
     </script>
+    <script>
+        function validateForm() {
+            let isValid = true;
 
+            // Helper functions to mark fields
+            function markInvalid(elem) {
+                if (elem) elem.style.borderColor = 'red';
+                isValid = false;
+            }
+            function markValid(elem) {
+                if (elem) elem.style.borderColor = '';
+            }
 
+            // 1. Validate all visible text, date, and textarea fields (skip hidden inputs)
+            const inputs = document.querySelectorAll("input[type='text'], input[type='date'], textarea");
+            inputs.forEach(input => {
+                // Skip input if not visible (display:none or hidden)
+                if (input.offsetParent === null) return;
+            if (!input.value.trim()) {
+                markInvalid(input);
+            } else {
+                markValid(input);
+            }
+        });
 
+        // 2. Validate Employment status (Yes/No)
+        const employedRadios = document.getElementsByName("rblEmployed");
+        let employedValue = '';
+        for (let radio of employedRadios) {
+            if (radio.checked) { employedValue = radio.value; break; }
+        }
+        if (!employedValue) {
+            // No option selected
+            isValid = false;
+        } else if (employedValue === 'No') {
+            const reason = document.getElementById("txt_employed_reason");
+            if (reason && !reason.value.trim()) {
+                markInvalid(reason);
+        }
+        }
+
+            // 3. Validate Experience radio (Yes/No)
+        const expRadios = document.getElementsByName("rblExperience");
+        let expValue = '';
+        for (let radio of expRadios) {
+            if (radio.checked) { expValue = radio.value; break; }
+        }
+        if (!expValue) {
+            isValid = false;
+        } else if (expValue === 'Yes') {
+            const expText = document.getElementById("txtExperience");
+            if (expText && !expText.value.trim()) {
+                markInvalid(expText);
+        }
+        }
+
+            // 4. Validate Gap radio (Yes/No)
+        const gapRadios = document.getElementsByName("rblGap");
+        let gapValue = '';
+        for (let radio of gapRadios) {
+            if (radio.checked) { gapValue = radio.value; break; }
+        }
+        if (!gapValue) {
+            isValid = false;
+        } else if (gapValue === 'Yes') {
+            const gapText = document.getElementById("txtGap");
+            if (gapText && !gapText.value.trim()) {
+                markInvalid(gapText);
+        }
+        }
+
+            // 5. Validate Visa detail rows
+        document.querySelectorAll("#visaWrapper .row").forEach(row => {
+            const type = row.querySelector(".visa-type");
+            const from = row.querySelector(".visa-from");
+            const expiry = row.querySelector(".visa-expiry");
+            if (type && !type.value.trim()) markInvalid(type);
+            if (from && !from.value) markInvalid(from);
+            if (expiry && !expiry.value) markInvalid(expiry);
+        });
+
+            // 6. Validate Job detail rows
+        document.querySelectorAll("#jobWrapper .row").forEach(row => {
+            const title = row.querySelector(".job-title");
+            const salary = row.querySelector(".job-salary");
+            const start = row.querySelector(".job-start");
+            const end = row.querySelector(".job-end");
+            const current = row.querySelector(".job-current");
+            if (title && !title.value.trim()) markInvalid(title);
+            if (salary && !salary.value.trim()) markInvalid(salary);
+            if (start && !start.value) markInvalid(start);
+            // If not current job, end date is required
+            if (current && !current.checked && end && !end.value) {
+                markInvalid(end);
+        }
+        });
+
+            // 7. Validate Education rows (courses)
+        document.querySelectorAll("#courseWrapper .course-row").forEach(row => {
+            const qual = row.querySelector(".course-input");
+            const study = row.querySelector(".year-input");
+            const year = row.querySelector(".institution-input");
+            if (qual && !qual.value.trim()) markInvalid(qual);
+            if (study && !study.value.trim()) markInvalid(study);
+            if (year && !year.value.trim()) markInvalid(year);
+        });
+
+            // 8. Validate career-plan textareas
+        const careerFields = [
+            "txtReasonAustralia", "txtCareerGoals", 
+            "txtHomeCountryTies", "txtAustraliaFamilyTies", 
+            "txtFuturePlans", "txtOtherInfo"
+        ];
+        careerFields.forEach(id => {
+            const el = document.getElementById(id);
+            if (el && !el.value.trim()) {
+                markInvalid(el);
+        }
+        });
+
+            // 9. Validate Student Signature section: name and date
+        const studentName = document.getElementById("txt_s_name");
+        const signDate = document.getElementById("txt_sign_date");
+        if (studentName && !studentName.value.trim()) markInvalid(studentName);
+        if (signDate && !signDate.value) markInvalid(signDate);
+
+            // Check that signature canvas is not blank (using SignaturePad library if available)
+        const canvas = document.getElementById("signatureCanvas");
+        if (canvas) {
+            if (typeof signaturePad !== "undefined" && signaturePad.isEmpty()) {
+                alert("Please provide your signature before submitting.");
+                isValid = false;
+        }
+        }
+
+        return isValid;
+        }
+
+    </script>
+
+   
 </asp:Content>
 

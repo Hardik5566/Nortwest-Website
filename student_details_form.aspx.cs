@@ -21,6 +21,7 @@ public partial class student_details_form : System.Web.UI.Page
                 //send_mail(ds);
 
                 bind_data();
+                ddl_country.Items.Insert(0, new ListItem("Select Country", "0"));
             }
         }
         catch (Exception)

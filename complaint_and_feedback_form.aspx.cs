@@ -17,10 +17,9 @@ public partial class complaint_and_feedback_form : System.Web.UI.Page
         {
             if (!IsPostBack)
             {
-                //DataSet ds = BAL_Forms.sel_new_vet_orientation_form("1");
-                //send_mail(ds);
-
+                
                 bind_data();
+                ddl_country.Items.Insert(0, new ListItem("Select Country", "0"));
             }
         }
         catch (Exception)

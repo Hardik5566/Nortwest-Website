@@ -260,6 +260,7 @@
                 <div class="row">
 
                     <div class="col-md-6">
+                    
 
                         <div>
                             <img id="clearBtn" style="width: 22px; float: right; margin-bottom: 8px;" src="assets/img/eraser.png" />
@@ -527,12 +528,20 @@
                 $(".lbl_explanation_error.txt_error").hide(); // Properly hide the error
 
             }
-
+            var canvas = document.getElementById("signatureCanvas");
+            var blank = document.createElement("canvas");
+            blank.width = canvas.width;
+            blank.height = canvas.height;
+            if (canvas.toDataURL() === blank.toDataURL()) {
+                alert("Please provide your signature.");
+                isValid = false;
+            }
 
             return isValid;
         }
 
     </script>
+
     <script>
         $(document).on('ready page:load', function () {
             // Reapply your jQuery code here

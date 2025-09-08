@@ -928,7 +928,12 @@
             } else {
                 $("#<%= txt_sign_date.ClientID %>").css("border-color", "");
             }
-
+            if ($("#<%= ddl_country.ClientID %>").prop("selectedIndex") == 0) {
+                $("#<%= ddl_country.ClientID %>").next(".nice-select").css("border-color", "red");
+                isValid = false;
+            } else {
+                $("#<%= ddl_country.ClientID %>").next(".nice-select").css("border-color", "");
+            }
             // Validate Email
             var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
             if (!emailRegex.test($("#<%= txt_agent_email.ClientID %>").val())) {
@@ -937,7 +942,14 @@
             } else {
                 $("#<%= txt_agent_email.ClientID %>").css("border-color", "");
             }
-
+            var canvas = document.getElementById("signatureCanvas");
+            var blank = document.createElement("canvas");
+            blank.width = canvas.width;
+            blank.height = canvas.height;
+            if (canvas.toDataURL() === blank.toDataURL()) {
+                alert("Please provide your signature.");
+                isValid = false;
+            }
             // Validate Student ID Number
        
 <%--            if ($("#<%= txt_student_id.ClientID %>").val().trim() == "") {
