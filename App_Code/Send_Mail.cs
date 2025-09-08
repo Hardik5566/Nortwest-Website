@@ -35,7 +35,11 @@ public class Send_Mail
             mail.Body = mailBody;
             mail.IsBodyHtml = true;
 
-            mail.Attachments.Add(attachmentStream);
+            if (attachmentStream != null)
+            {
+                mail.Attachments.Add(attachmentStream);
+            }
+            
 
             if (!string.IsNullOrEmpty(signatureData) && File.Exists(signatureData))
             {
