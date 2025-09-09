@@ -275,114 +275,61 @@ Documents attached (list all the documents you attach, ie copy of passport):
     <script>
         $("#<%= btn_submit.ClientID %>").click(function (event) {
             if (!validateForm()) {
-                event.preventDefault(); // Prevent form submission if validation fails
+                event.preventDefault();
                 return false;
             }
         });
 
-        // Form validation function
         function validateForm() {
+            var errors = []; // Collect all errors
             var isValid = true;
 
-            // Validate Full Name
-            if ($("#<%= txt_student_name.ClientID %>").val().trim() == "") {
-                $("#<%= txt_student_name.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_student_name.ClientID %>").css("border-color", "");
+            function checkField(id, fieldName, condition) {
+                if (!condition) {
+                    $("#" + id).css("border-color", "red");
+                    errors.push(fieldName);
+                    isValid = false;
+                } else {
+                    $("#" + id).css("border-color", "");
+                }
             }
 
-            if ($("#<%= txt_s_id.ClientID %>").val().trim() == "") {
-                $("#<%= txt_s_id.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_s_id.ClientID %>").css("border-color", "");
-            }
+            // Basic text fields
+            checkField("<%= txt_student_name.ClientID %>", "Student Name", $("#<%= txt_student_name.ClientID %>").val().trim() != "");
+            checkField("<%= txt_s_id.ClientID %>", "Student ID", $("#<%= txt_s_id.ClientID %>").val().trim() != "");
+            checkField("<%= txt_passport_no.ClientID %>", "Passport No", $("#<%= txt_passport_no.ClientID %>").val().trim() != "");
+            checkField("<%= txt_dob.ClientID %>", "Date of Birth", $("#<%= txt_dob.ClientID %>").val().trim() != "");
+            checkField("<%= txt_course_enroll.ClientID %>", "Course Enrolled", $("#<%= txt_course_enroll.ClientID %>").val().trim() != "");
+            checkField("<%= txt_intake.ClientID %>", "Intake Date", $("#<%= txt_intake.ClientID %>").val().trim() != "");
+            checkField("<%= txt_address.ClientID %>", "Address", $("#<%= txt_address.ClientID %>").val().trim() != "");
+            checkField("<%= txt_reason_release.ClientID %>", "Reason for Release", $("#<%= txt_reason_release.ClientID %>").val().trim() != "");
+            checkField("<%= txt_sign_date.ClientID %>", "Declaration Date", $("#<%= txt_sign_date.ClientID %>").val().trim() != "");
 
-
-
-            // Validate Photo
-            if ($("#<%= txt_passport_no.ClientID %>").val() == "") {
-                $("#<%= txt_passport_no.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_passport_no.ClientID %>").css("border-color", "");
-            }
-
-            if ($("#<%= txt_dob.ClientID %>").val().trim() == "") {
-                $("#<%= txt_dob.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_dob.ClientID %>").css("border-color", "");
-            }
-            if ($("#<%= txt_course_enroll.ClientID %>").val().trim() == "") {
-                $("#<%= txt_course_enroll.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_course_enroll.ClientID %>").css("border-color", "");
-            }
-            if ($("#<%= txt_intake.ClientID %>").val().trim() == "") {
-                $("#<%= txt_intake.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_intake.ClientID %>").css("border-color", "");
-            }
-            if ($("#<%= txt_address.ClientID %>").val().trim() == "") {
-                $("#<%= txt_address.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_address.ClientID %>").css("border-color", "");
-            }
-            
-            // Validate Email
+            // Email validation
+            var emailVal = $("#<%= txt_email.ClientID %>").val();
             var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-            if (!emailRegex.test($("#<%= txt_email.ClientID %>").val())) {
-                $("#<%= txt_email.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_email.ClientID %>").css("border-color", "");
-            }
-            
-            if ($("#<%= txt_reason_release.ClientID %>").val().trim() == "") {
-                $("#<%= txt_reason_release.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_reason_release.ClientID %>").css("border-color", "");
-            }
-            if ($("#<%= txt_sign_date.ClientID %>").val().trim() == "") {
-                $("#<%= txt_sign_date.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_sign_date.ClientID %>").css("border-color", "");
-            }
-            if ($("#<%= hd_contact_no_code.ClientID%>").val() == "") {
-                $("#phone").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#phone").css("border-color", "");
-            }
-         
+            checkField("<%= txt_email.ClientID %>", "Email", emailRegex.test(emailVal));
 
+            // Phone validation
+            checkField("phone", "Contact Number", $("#<%= hd_contact_no_code.ClientID %>").val() != "");
 
-            var canvas = document.getElementById("signatureCanvas");
+            // Signature validation
             var blank = document.createElement("canvas");
             blank.width = canvas.width;
             blank.height = canvas.height;
             if (canvas.toDataURL() === blank.toDataURL()) {
-                alert("Please provide your signature.");
+                errors.push("Signature");
                 isValid = false;
             }
-            if ($(".ch_explanation input[type='checkbox']:not(:checked)").length > 0) {
-                $(".lbl_explanation_error.txt_error").show(); // Use the proper selector
-                isValid = false;
-            } else {
-                $(".lbl_explanation_error.txt_error").hide(); // Properly hide the error
 
+            // Show all errors in alert
+            if (errors.length > 0) {
+                alert("Please fill/validate the following fields:\n- " + errors.join("\n- "));
             }
-
 
             return isValid;
         }
+
 
     </script>
 

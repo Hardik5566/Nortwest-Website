@@ -150,8 +150,8 @@ public partial class refund_form : System.Web.UI.Page
                 rpt.Dispose();
 
                 string subject = "New Refund Form (" + ds.Tables[0].Rows[0]["first_name"].ToString() + ")";
-                string mail_body = get_email_body(ds.Tables[0].Rows[0]["first_name"].ToString() + " " + ds.Tables[0].Rows[0]["last_name"].ToString(), ds.Tables[0].Rows[0]["reson_of_refund"].ToString());
-                string result = Send_Mail.SendMail("himanshumakwana8281@gmail.com", subject, mail_body, ach_attachment, "", "");
+                string mail_body = get_email_body(ds.Tables[0].Rows[0]["first_name"].ToString() + " " + ds.Tables[0].Rows[0]["last_name"].ToString(), ds.Tables[0].Rows[0]["passport_no"].ToString());
+                string result = Send_Mail.SendMail("vandanahl2602@gmail.com", subject, mail_body, ach_attachment, "", "");
 
                 rpt.Close();
                 rpt.Dispose();
@@ -170,7 +170,7 @@ public partial class refund_form : System.Web.UI.Page
         }
     }
 
-    public string get_email_body(string studentName, string refund)
+    public string get_email_body(string studentName, string pass_no)
     {
         try
         {
@@ -259,7 +259,7 @@ public partial class refund_form : System.Web.UI.Page
                 <ul>
                     <li>Submission Date: " + DateTime.Now.ToString("dd MMM yyyy") + @"</li>
                     <li>Submitted By: " + studentName + @"</li>
-                    <li>Reason For Refund: " + refund + @"</li>
+                    <li>Passport Number: " + pass_no + @"</li>
                 </ul>
 
                 <p>Kindly verify the details and keep this acknowledgement for your records. If you require any additional information, Please find attached the Student Refund Form.</p>

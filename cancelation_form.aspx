@@ -40,7 +40,13 @@
 
     <div class="bg-gray default-padding bg-cover">
         <div class="container">
-
+             <div class="row">
+                <div class="site-heading text-center">
+                    <div class="col-md-8 col-md-offset-2">
+                        <h2>Cancelation Form</h2>
+                    </div>
+                </div>
+            </div>
             <!-- Student Details -->
             <div class="form-container">
                 <h4>Student Details</h4>
@@ -49,7 +55,6 @@
                         <label class="lbl_title">Student Number</label>
                         <asp:TextBox ID="txt_s_number" CssClass="form-control" runat="server"></asp:TextBox>
                     </div>
-                    
                     <div class="col-md-6">
                         <label class="lbl_title">Student Given Names</label>
                         <asp:TextBox ID="txt_s_given_name" CssClass="form-control" runat="server"></asp:TextBox>
@@ -104,14 +109,15 @@
                     </div>
                     <div class="col-md-6 search_dropdown">
                         <label class="lbl_title">Country</label>
-                        <asp:DropDownList ID="ddl_country" CssClass="form-control select2" runat="server"></asp:DropDownList>
+                        <asp:DropDownList ID="ddl_country" CssClass="form-control select2" DataTextField="name" DataValueField="name" runat="server"></asp:DropDownList>
                     </div>
                 </div>
             </div>
 
             <!-- Submit -->
             <div>
-                <asp:Button ID="btn_submit" runat="server" Text="SUBMIT" CssClass="btn btn-success" />
+                <asp:Button ID="btn_submit" runat="server" OnClick="btn_submit_Click" Text="SUBMIT" CssClass="btn btn-success" 
+                    OnClientClick="return validateForm();" />
             </div>
 
         </div>
@@ -152,16 +158,18 @@
         input.addEventListener('change', handleChange);
         input.addEventListener('keyup', handleChange);
 
-        // Form validation with alert
-        $("#<%= btn_submit.ClientID %>").click(function (event) {
+        // Validation function
+        function validateForm() {
             var errorMsg = "";
             if ($("#<%= txt_s_number.ClientID %>").val().trim() == "") errorMsg += "Student Number is required.\n";
             if ($("#<%= txt_s_last_name.ClientID %>").val().trim() == "") errorMsg += "Student Last Name is required.\n";
             if ($("#<%= txt_s_given_name.ClientID %>").val().trim() == "") errorMsg += "Student Given Names are required.\n";
             if ($("#<%= txt_s_full_name.ClientID %>").val().trim() == "") errorMsg += "Student Full Name is required.\n";
+
             var email = $("#<%= txt_email.ClientID %>").val();
             var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(email)) errorMsg += "Valid Email is required.\n";
+
             if ($("#<%= txt_add.ClientID %>").val().trim() == "") errorMsg += "Street Address is required.\n";
             if ($("#<%= txt_add_line_2.ClientID %>").val().trim() == "") errorMsg += "Address Line 2 is required.\n";
             if ($("#<%= txt_city.ClientID %>").val().trim() == "") errorMsg += "City is required.\n";
@@ -172,9 +180,9 @@
 
             if (errorMsg != "") {
                 alert(errorMsg);
-                event.preventDefault();
-                return false;
+                return false; // ❌ stop postback
             }
-        });
+            return true; // ✅ allow postback
+        }
     </script>
 </asp:Content>

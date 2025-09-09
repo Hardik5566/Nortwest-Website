@@ -57,27 +57,36 @@ public partial class GTE_Form : System.Web.UI.Page
         string company = hdncompany.Value + "|";
         string job_year = hdnjob_year.Value + "|";
         string save_signature = SaveSignature();
-        string refused_visa_aus = "";
-        if (upd_refused_visa_aus.HasFile)
-        {
-            refused_visa_aus = upd_refused_visa_aus.FileName.ToString();
-            string save_path = Server.MapPath("~/assets/img/document/");
-            upd_refused_visa_aus.SaveAs(save_path + refused_visa_aus);
-        }
-        string evidence_visited = "";
-        if (upd_evidence_visited_aus_breached.HasFile)
-        {
-            evidence_visited = upd_evidence_visited_aus_breached.FileName.ToString();
-            string save_path2 = Server.MapPath("~/assets/img/document/");
-            upd_evidence_visited_aus_breached.SaveAs(save_path2 + evidence_visited);
-        }
-        string file_undertaken_IELTS = "";
-        if (upd_evidence_visited_aus_breached.HasFile)
-        {
-            file_undertaken_IELTS = upd_undertaken_IELTS.FileName.ToString();
-            string save_path2 = Server.MapPath("~/assets/img/document/");
-            upd_undertaken_IELTS.SaveAs(save_path2 + file_undertaken_IELTS);
-        }
+       string refused_visa_aus = "";
+if (upd_refused_visa_aus.HasFile)
+{
+    string extension = Path.GetExtension(upd_refused_visa_aus.FileName);
+    refused_visa_aus = "refused_visa_" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + extension;
+
+    string save_path = Server.MapPath("~/assets/img/document/");
+    upd_refused_visa_aus.SaveAs(Path.Combine(save_path, refused_visa_aus));
+}
+
+string evidence_visited = "";
+if (upd_evidence_visited_aus_breached.HasFile)
+{
+    string extension = Path.GetExtension(upd_evidence_visited_aus_breached.FileName);
+    evidence_visited = "evidence_visited_" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + extension;
+
+    string save_path2 = Server.MapPath("~/assets/img/document/");
+    upd_evidence_visited_aus_breached.SaveAs(Path.Combine(save_path2, evidence_visited));
+}
+
+string file_undertaken_IELTS = "";
+if (upd_undertaken_IELTS.HasFile)
+{
+    string extension = Path.GetExtension(upd_undertaken_IELTS.FileName);
+    file_undertaken_IELTS = "undertaken_ielts_" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + extension;
+
+    string save_path3 = Server.MapPath("~/assets/img/document/");
+    upd_undertaken_IELTS.SaveAs(Path.Combine(save_path3, file_undertaken_IELTS));
+}
+
 
         string bringing_family = rb_bringing_family_y.Checked ? "Yes" : (rb_bringing_family_n.Checked ? "No" : "No");
         string health_condition = rb_health_condition_y.Checked ? "Yes" : (rb_health_condition_n.Checked ? "No" : "No");
@@ -225,9 +234,9 @@ public partial class GTE_Form : System.Web.UI.Page
                 rpt.Close();
                 rpt.Dispose();
 
-                string subject = "GTE Form (" + ds.Tables[0].Rows[0]["family_name"].ToString() + "-" + ds.Tables[0].Rows[0]["student_id"].ToString() + ")";
+                string subject = "New Application GTE Form (" + ds.Tables[0].Rows[0]["family_name"].ToString() + "-" + ds.Tables[0].Rows[0]["student_id"].ToString() + ")";
                 string mail_body = get_email_body(ds.Tables[0].Rows[0]["family_name"].ToString() + " " + ds.Tables[0].Rows[0]["given_name"].ToString(), ds.Tables[0].Rows[0]["student_id"].ToString());
-                string result = Send_Mail.SendGTEMail("himanshumakwana8281@gmail.com", subject, mail_body, ach_attachment, "", doc_refused_visa_aus_upd, doc_evidence_upd, doc_file_undertaken_IELTS);
+                string result = Send_Mail.SendGTEMail("vaghasiyaprit799@gmail.com", subject, mail_body, ach_attachment, ds.Tables[0].Rows[0]["student_signature"].ToString(), doc_refused_visa_aus_upd, doc_evidence_upd, doc_file_undertaken_IELTS);
 
                 rpt.Close();
                 rpt.Dispose();

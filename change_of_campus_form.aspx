@@ -263,131 +263,71 @@
 <asp:Content ID="Content4" ContentPlaceHolderID="jqury" runat="Server">
 
     <script src="assets/js/select2.min.js"></script>
-    <script>
-        $("#<%= btn_submit.ClientID %>").click(function (event) {
-            if (!validateForm()) {
-                event.preventDefault(); // Prevent form submission if validation fails
-                return false;
-            }
-        });
+  <script>
+      $("#<%= btn_submit.ClientID %>").click(function (event) {
+          if (!validateForm()) {
+              event.preventDefault(); // Prevent form submission if validation fails
+              return false;
+          }
+      });
 
-        function validateForm() {
-            var isValid = true;
-            var firstInvalid = null;
+      function validateForm() {
+          var isValid = true;
+          var errorMsg = "";
 
-            // Validate Student ID
-            if ($("#<%= txt_s_id.ClientID %>").val().trim() == "") {
-                $("#<%= txt_s_id.ClientID %>").css("border-color", "red");
-                isValid = false;
-                if (!firstInvalid) firstInvalid = $("#<%= txt_s_id.ClientID %>");
-           } else {
-               $("#<%= txt_s_id.ClientID %>").css("border-color", "");
-            }
+          // Helper function for validating inputs
+          function validateInput(id, fieldName) {
+              var value = $("#" + id).val().trim();
+              if (value === "") {
+                  $("#" + id).css("border-color", "red");
+                  errorMsg += fieldName + " is required.\n";
+                  isValid = false;
+              } else {
+                  $("#" + id).css("border-color", "");
+              }
+          }
 
-            // Validate Passport No
-            if ($("#<%= txt_s_passport_no.ClientID %>").val().trim() == "") {
-                $("#<%= txt_s_passport_no.ClientID %>").css("border-color", "red");
-               isValid = false;
-               if (!firstInvalid) firstInvalid = $("#<%= txt_s_passport_no.ClientID %>");
-        } else {
-            $("#<%= txt_s_passport_no.ClientID %>").css("border-color", "");
-           }
+          // Validate fields
+          validateInput("<%= txt_s_id.ClientID %>", "Student ID");
+        validateInput("<%= txt_s_passport_no.ClientID %>", "Passport No");
+        validateInput("<%= txt_s_full_name.ClientID %>", "Full Name");
+        validateInput("<%= txt_birth_date.ClientID %>", "Date of Birth");
+        validateInput("<%= txt_email.ClientID %>", "Email");
 
-            // Validate Full Name
-           if ($("#<%= txt_s_full_name.ClientID %>").val().trim() == "") {
-                $("#<%= txt_s_full_name.ClientID %>").css("border-color", "red");
-            isValid = false;
-            if (!firstInvalid) firstInvalid = $("#<%= txt_s_full_name.ClientID %>");
-        } else {
-            $("#<%= txt_s_full_name.ClientID %>").css("border-color", "");
-        }
-
-            // Validate Date of Birth
-        if ($("#<%= txt_birth_date.ClientID %>").val().trim() == "") {
-                $("#<%= txt_birth_date.ClientID %>").css("border-color", "red");
-            isValid = false;
-            if (!firstInvalid) firstInvalid = $("#<%= txt_birth_date.ClientID %>");
-        } else {
-            $("#<%= txt_birth_date.ClientID %>").css("border-color", "");
-        }
-
-            // Validate Email
+        // Email format validation
+        var emailVal = $("#<%= txt_email.ClientID %>").val().trim();
         var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        if (!emailRegex.test($("#<%= txt_email.ClientID %>").val().trim())) {
+        if (emailVal !== "" && !emailRegex.test(emailVal)) {
             $("#<%= txt_email.ClientID %>").css("border-color", "red");
+            errorMsg += "Please enter a valid Email.\n";
             isValid = false;
-            if (!firstInvalid) firstInvalid = $("#<%= txt_email.ClientID %>");
-        } else {
-            $("#<%= txt_email.ClientID %>").css("border-color", "");
         }
 
-            // Validate Street Address
-        if ($("#<%= txt_add.ClientID %>").val().trim() == "") {
-                $("#<%= txt_add.ClientID %>").css("border-color", "red");
+        validateInput("<%= txt_add.ClientID %>", "Street Address");
+        validateInput("phone", "Contact Number");
+        validateInput("<%= txt_course_enrolled.ClientID %>", "Course Enrolled");
+        validateInput("<%= txt_intake.ClientID %>", "Intake Date");
+        validateInput("<%= txt_cource_name.ClientID %>", "Course Name");
+        validateInput("<%= txt_reason_campus.ClientID %>", "Reason for Changing Campus");
+
+        // Validate signature canvas
+        var canvas = document.getElementById("signatureCanvas");
+        var blank = document.createElement("canvas");
+        blank.width = canvas.width;
+        blank.height = canvas.height;
+        if (canvas.toDataURL() === blank.toDataURL()) {
+            errorMsg += "Please provide your signature.\n";
             isValid = false;
-            if (!firstInvalid) firstInvalid = $("#<%= txt_add.ClientID %>");
-        } else {
-            $("#<%= txt_add.ClientID %>").css("border-color", "");
         }
 
-            // Validate Contact Number
-        if ($("#<%= hd_contact_no_code.ClientID %>").val().trim() == "") {
-                $("#phone").css("border-color", "red");
-                isValid = false;
-                if (!firstInvalid) firstInvalid = $("#phone");
-            } else {
-                $("#phone").css("border-color", "");
-            }
-
-            // Validate Course Enrolled
-            if ($("#<%= txt_course_enrolled.ClientID %>").val().trim() == "") {
-                $("#<%= txt_course_enrolled.ClientID %>").css("border-color", "red");
-               isValid = false;
-               if (!firstInvalid) firstInvalid = $("#<%= txt_course_enrolled.ClientID %>");
-        } else {
-            $("#<%= txt_course_enrolled.ClientID %>").css("border-color", "");
-           }
-
-            // Validate Intake Date
-           if ($("#<%= txt_intake.ClientID %>").val().trim() == "") {
-                $("#<%= txt_intake.ClientID %>").css("border-color", "red");
-            isValid = false;
-            if (!firstInvalid) firstInvalid = $("#<%= txt_intake.ClientID %>");
-        } else {
-            $("#<%= txt_intake.ClientID %>").css("border-color", "");
+        // Show all errors in a single alert
+        if (!isValid) {
+            alert(errorMsg);
         }
 
-            // Validate Course Name (Change Campus Section)
-        if ($("#<%= txt_cource_name.ClientID %>").val().trim() == "") {
-                $("#<%= txt_cource_name.ClientID %>").css("border-color", "red");
-            isValid = false;
-            if (!firstInvalid) firstInvalid = $("#<%= txt_cource_name.ClientID %>");
-        } else {
-            $("#<%= txt_cource_name.ClientID %>").css("border-color", "");
-        }
-
-            // Validate Reason for Changing Campus
-        if ($("#<%= txt_reason_campus.ClientID %>").val().trim() == "") {
-                $("#<%= txt_reason_campus.ClientID %>").css("border-color", "red");
-            isValid = false;
-            if (!firstInvalid) firstInvalid = $("#<%= txt_reason_campus.ClientID %>");
-        } else {
-            $("#<%= txt_reason_campus.ClientID %>").css("border-color", "");
-        }
-
-            // Validate Signature
-            var canvas = document.getElementById("signatureCanvas");
-            var blank = document.createElement("canvas");
-            blank.width = canvas.width;
-            blank.height = canvas.height;
-            if (canvas.toDataURL() === blank.toDataURL()) {
-                alert("Please provide your signature.");
-                isValid = false;
-            }
-
-            return isValid;
-        }
-    </script>
+        return isValid;
+    }
+</script>
 
     <%--  --%>
     <script>

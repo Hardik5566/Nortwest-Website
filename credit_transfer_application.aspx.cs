@@ -102,7 +102,7 @@ public partial class credit_transfer_application : System.Web.UI.Page
             Task.Run(() =>
             {
                 Send_Mail.MailWithouAttachment(
-                    "himanshumakwana8281@gmail.com", // To email
+                    "vandanahl2602@gmail.com", // To email
                     "New Credit Transfer Application (" + studentFullName + ")", // Subject
                     emailBody, // HTML body
                    signaturePath, // Attachment path if any
@@ -193,10 +193,7 @@ public partial class credit_transfer_application : System.Web.UI.Page
                 </th>
             </tr>
 
-            <tr style='border-bottom: 1px solid #d7d7d7; text-align: left'>
-                <td style='padding: 10px; color: black; width: 50%'>Last Name :</td>
-                <td><label>" + lastName + @"</label></td>
-            </tr>
+           
             <tr style='border-bottom: 1px solid #d7d7d7; text-align: left'>
                 <td style='padding: 10px; color: black;'>Title :</td>
                 <td><label>" + title + @"</label></td>
@@ -204,6 +201,10 @@ public partial class credit_transfer_application : System.Web.UI.Page
             <tr style='border-bottom: 1px solid #d7d7d7; text-align: left'>
                 <td style='padding: 10px; color: black;'>Given Name :</td>
                 <td><label>" + givenName + @"</label></td>
+            </tr>
+            <tr style='border-bottom: 1px solid #d7d7d7; text-align: left'>
+                <td style='padding: 10px; color: black; width: 50%'>Last Name :</td>
+                <td><label>" + lastName + @"</label></td>
             </tr>
             <tr style='border-bottom: 1px solid #d7d7d7; text-align: left'>
                 <td style='padding: 10px; color: black;'>Date of Birth :</td>

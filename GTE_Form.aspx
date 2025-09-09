@@ -930,6 +930,7 @@
             }
             if ($("#<%= ddl_country.ClientID %>").prop("selectedIndex") == 0) {
                 $("#<%= ddl_country.ClientID %>").next(".nice-select").css("border-color", "red");
+                alert("Please select Country of Birth.\n");
                 isValid = false;
             } else {
                 $("#<%= ddl_country.ClientID %>").next(".nice-select").css("border-color", "");
@@ -950,50 +951,7 @@
                 alert("Please provide your signature.");
                 isValid = false;
             }
-            // Validate Student ID Number
        
-<%--            if ($("#<%= txt_student_id.ClientID %>").val().trim() == "") {
-                $("#<%= txt_student_id.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_student_id.ClientID %>").css("border-color", "");
-            }
-
-            // Validate Photo
-            if ($("#<%= upd_id_card.ClientID %>").val() == "") {
-                $("#<%= upd_id_card.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= upd_id_card.ClientID %>").css("border-color", "");
-            }
-
-            if ($("#<%=txt_aus_address.ClientID %>").val().trim() == "") {
-                $("#<%= txt_aus_address.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_aus_address.ClientID %>").css("border-color", "");
-            }
-
-            if ($("#<%= txt_over_address.ClientID %>").val().trim() == "") {
-                $("#<%= txt_over_address.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_over_address.ClientID %>").css("border-color", "");
-            }
-            if ($("#<%= txt_name.ClientID %>").val().trim() == "") {
-                $("#<%= txt_name.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_name.ClientID %>").css("border-color", "");
-            }
-           
-     if ($("#<%= hd_contact_no_code.ClientID%>").val() == "") {
-                $("#phone").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#phone").css("border-color", "");
-            }--%>
-
             
 
             if ($(".ch_explanation input[type='checkbox']:not(:checked)").length > 0) {

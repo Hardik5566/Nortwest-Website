@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="_Default" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="title" runat="Server">
-    Internationl College in Sydney
+   Home
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="head" runat="Server">
     <style>
@@ -394,8 +394,8 @@
         </div>
     </div>
 
-    <div class="campus-story-area video-bg-live text-light text-center bg-fixed" style="background-image: url(assets/img/2440x1578.png);">
-        <div class="player" data-property="{videoURL:'DKz_EEoJRs4',containment:'.video-bg-live', showControls:false, autoPlay:true, zoom:0, loop:true, mute:true, startAt:39, opacity:1, quality:'default'}"></div>
+    <div class="campus-story-area video-bg-live text-light text-center bg-fixed" >
+        <div class="player" data-property="{videoURL:'eTD0WWFIDAg',containment:'.video-bg-live', showControls:false, autoPlay:true, zoom:0, loop:true, mute:true, startAt:39, opacity:1, quality:'default'}"></div>
         <div class="story-items default-padding shadow dark-hard">
             <div class="container">
                 <div class="row">
@@ -410,11 +410,11 @@
                                     Decisively surrounded all admiration and not you. Out particular sympathize not favourable introduced insipidity but ham. Rather number can and set praise. Distrusts an it contented perceived attending oh. Thoroughly estimating introduced stimulated why but motionless. 
                                
                                 </p>
-                                <a href="https://www.youtube.com/watch?v=DKz_EEoJRs4" class="popup-youtube relative light video-play-button item-center">
+                                <a href="https://www.youtube.com/watch?v=D0UnqGm_miA" class="popup-youtube relative light video-play-button item-center">
                                     <i class="fa fa-play"></i>
                                 </a>
                             </div>
-                            <div class="item">
+                          <%--  <div class="item">
                                 <h4>Sydney Campus</h4>
                                 <p>
                                     Decisively surrounded all admiration and not you. Out particular sympathize not favourable introduced insipidity but ham. Rather number can and set praise. Distrusts an it contented perceived attending oh. Thoroughly estimating introduced stimulated why but motionless. 
@@ -433,7 +433,7 @@
                                 <a href="https://www.youtube.com/watch?v=DKz_EEoJRs4" class="popup-youtube relative light video-play-button item-center">
                                     <i class="fa fa-play"></i>
                                 </a>
-                            </div>
+                            </div>--%>
                         </div>
                     </div>
                 </div>

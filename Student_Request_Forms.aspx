@@ -376,171 +376,175 @@
 
 
     <script src="assets/js/select2.min.js"></script>
-    <script>
-        $("#<%= btn_submit.ClientID %>").click(function (event) {
-            if (!validateForm()) {
-                event.preventDefault(); // Prevent form submission if validation fails
-                return false;
+   <script>
+       $("#<%= btn_submit.ClientID %>").click(function (event) {
+           if (!validateForm()) {
+               event.preventDefault(); // Prevent form submission if validation fails
+               return false;
+           }
+       });
+
+       function validateForm() {
+           var isValid = true;
+           var errorMsg = "";
+
+           // Validate Title
+           if ($("#<%= ddl_title.ClientID %>").prop("selectedIndex") == 0) {
+            $("#<%= ddl_title.ClientID %>").next(".nice-select").css("border-color", "red");
+            errorMsg += "Please select a Title.\n";
+            isValid = false;
+        } else {
+            $("#<%= ddl_title.ClientID %>").next(".nice-select").css("border-color", "");
+        }
+
+        // Validate First Name
+        if ($("#<%= txt_f_name.ClientID %>").val().trim() == "") {
+            $("#<%= txt_f_name.ClientID %>").css("border-color", "red");
+            errorMsg += "First Name is required.\n";
+            isValid = false;
+        } else {
+            $("#<%= txt_f_name.ClientID %>").css("border-color", "");
+        }
+
+        // Validate Last Name
+        if ($("#<%= txt_l_name.ClientID %>").val().trim() == "") {
+            $("#<%= txt_l_name.ClientID %>").css("border-color", "red");
+            errorMsg += "Last Name is required.\n";
+            isValid = false;
+        } else {
+            $("#<%= txt_l_name.ClientID %>").css("border-color", "");
+        }
+
+        // Validate Gender
+        if ($("#<%= ddl_gender.ClientID %>").prop("selectedIndex") == 0) {
+            $("#<%= ddl_gender.ClientID %>").next(".nice-select").css("border-color", "red");
+            errorMsg += "Please select Gender.\n";
+            isValid = false;
+        } else {
+            $("#<%= ddl_gender.ClientID %>").next(".nice-select").css("border-color", "");
+        }
+
+        // Validate Student ID
+        if ($("#<%= txt_student_id.ClientID %>").val().trim() == "") {
+            $("#<%= txt_student_id.ClientID %>").css("border-color", "red");
+            errorMsg += "Student ID is required.\n";
+            isValid = false;
+        } else {
+            $("#<%= txt_student_id.ClientID %>").css("border-color", "");
+        }
+
+        // Validate Date
+        if ($("#<%= txt_date.ClientID %>").val().trim() == "") {
+            $("#<%= txt_date.ClientID %>").css("border-color", "red");
+            errorMsg += "Date is required.\n";
+            isValid = false;
+        } else {
+            $("#<%= txt_date.ClientID %>").css("border-color", "");
+        }
+
+        // Validate Address Fields
+        var addressFields = [
+            {id: "<%= txt_address.ClientID %>", name: "Address"},
+            {id: "<%= txt_suburb.ClientID %>", name: "Suburb"},
+            {id: "<%= txt_postcode.ClientID %>", name: "Postcode"},
+            {id: "<%= txt_m_address.ClientID %>", name: "Mailing Address"},
+            {id: "<%= txt_m_suburb.ClientID %>", name: "Mailing Suburb"},
+            {id: "<%= txt_m_postcode.ClientID %>", name: "Mailing Postcode"}
+        ];
+
+        addressFields.forEach(function(field) {
+            if ($("#" + field.id).val().trim() == "") {
+                $("#" + field.id).css("border-color", "red");
+                errorMsg += field.name + " is required.\n";
+                isValid = false;
+            } else {
+                $("#" + field.id).css("border-color", "");
             }
         });
 
-        // Form validation function
-        function validateForm() {
-            var isValid = true;
-
-            if ($("#<%= ddl_title.ClientID %>").prop("selectedIndex") == 0) {
-                $("#<%= ddl_title.ClientID %>").next(".nice-select").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= ddl_title.ClientID %>").next(".nice-select").css("border-color", "");
-            }
-            // Validate Full Name
-            if ($("#<%= txt_f_name.ClientID %>").val().trim() == "") {
-                $("#<%= txt_f_name.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_f_name.ClientID %>").css("border-color", "");
-            }
-
-            if ($("#<%= txt_l_name.ClientID %>").val().trim() == "") {
-                $("#<%= txt_l_name.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_l_name.ClientID %>").css("border-color", "");
-            }
-            if ($("#<%= ddl_gender.ClientID %>").prop("selectedIndex") == 0) {
-                $("#<%= ddl_gender.ClientID %>").next(".nice-select").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= ddl_gender.ClientID %>").next(".nice-select").css("border-color", "");
-            }
-            // Validate Full Name
-            if ($("#<%= txt_student_id.ClientID %>").val().trim() == "") {
-                $("#<%= txt_student_id.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_student_id.ClientID %>").css("border-color", "");
-            }
-
-            if ($("#<%= txt_date.ClientID %>").val().trim() == "") {
-                $("#<%= txt_date.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_date.ClientID %>").css("border-color", "");
-            }
-            if ($("#<%= txt_address.ClientID %>").val().trim() == "") {
-                $("#<%= txt_address.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_address.ClientID %>").css("border-color", "");
-            }
-            if ($("#<%= txt_suburb.ClientID %>").val().trim() == "") {
-                $("#<%= txt_suburb.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_suburb.ClientID %>").css("border-color", "");
-            }
-            if ($("#<%= txt_postcode.ClientID %>").val().trim() == "") {
-                $("#<%= txt_postcode.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_postcode.ClientID %>").css("border-color", "");
-            }
-            if ($("#<%= txt_m_address.ClientID %>").val().trim() == "") {
-                $("#<%= txt_m_address.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_m_address.ClientID %>").css("border-color", "");
-            }
-            if ($("#<%= txt_m_suburb.ClientID %>").val().trim() == "") {
-                $("#<%= txt_m_suburb.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_m_suburb.ClientID %>").css("border-color", "");
-            }
-            if ($("#<%= txt_m_postcode.ClientID %>").val().trim() == "") {
-                $("#<%= txt_m_postcode.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_m_postcode.ClientID %>").css("border-color", "");
-            }
-
-            var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-            if (!emailRegex.test($("#<%= txt_email.ClientID %>").val())) {
-                $("#<%= txt_email.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_email.ClientID %>").css("border-color", "");
-            }
-
-
-
-            if ($("#<%= txt_detail.ClientID %>").val().trim() == "") {
-                $("#<%= txt_detail.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_detail.ClientID %>").css("border-color", "");
-            }
-            if ($("#<%= upd_doc.ClientID %>").val() == "") {
-                $("#<%= upd_doc.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= upd_doc.ClientID %>").css("border-color", "");
-            }
-
-
-
-            if ($("#<%= hd_contact_no_code.ClientID%>").val() == "") {
-                $("#phone").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#phone").css("border-color", "");
-            }
-            if ($("#<%= txt_sign_date.ClientID %>").val().trim() == "") {
-                $("#<%= txt_sign_date.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_sign_date.ClientID %>").css("border-color", "");
-            }
-            
-            if ($("input[type='radio'][name$='tick_one']:checked").length == 0) {
-                $("#radioError").text("Please select at least one option.").css("color", "red");
-                isValid = false; 
-            } else {
-                $("#radioError").text(""); // Clear error if valid
-            }
-
-
-            
-            if ($("#<%= hd_contact_no_code.ClientID%>").val() == "") {
-                $("#phone").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#phone").css("border-color", "");
-            }
-
-            
-
-            if ($(".ch_explanation input[type='checkbox']:not(:checked)").length > 0) {
-                $(".lbl_explanation_error.txt_error").show(); // Use the proper selector
-                isValid = false;
-            } else {
-                $(".lbl_explanation_error.txt_error").hide(); // Properly hide the error
-
-            }
-            var canvas = document.getElementById("signatureCanvas");
-            var blank = document.createElement("canvas");
-            blank.width = canvas.width;
-            blank.height = canvas.height;
-            if (canvas.toDataURL() === blank.toDataURL()) {
-                alert("Please provide your signature.");
-                isValid = false;
-            }
-
-            return isValid;
+        // Validate Email
+        var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (!emailRegex.test($("#<%= txt_email.ClientID %>").val())) {
+            $("#<%= txt_email.ClientID %>").css("border-color", "red");
+            errorMsg += "Valid Email is required.\n";
+            isValid = false;
+        } else {
+            $("#<%= txt_email.ClientID %>").css("border-color", "");
         }
 
-    </script>
+        // Validate Details
+        if ($("#<%= txt_detail.ClientID %>").val().trim() == "") {
+            $("#<%= txt_detail.ClientID %>").css("border-color", "red");
+            errorMsg += "Details field is required.\n";
+            isValid = false;
+        } else {
+            $("#<%= txt_detail.ClientID %>").css("border-color", "");
+        }
+
+        // Validate Document Upload
+        if ($("#<%= upd_doc.ClientID %>").val() == "") {
+            $("#<%= upd_doc.ClientID %>").css("border-color", "red");
+            errorMsg += "Please upload a document.\n";
+            isValid = false;
+        } else {
+            $("#<%= upd_doc.ClientID %>").css("border-color", "");
+        }
+
+        // Validate Phone
+        if ($("#<%= hd_contact_no_code.ClientID%>").val() == "") {
+            $("#phone").css("border-color", "red");
+            errorMsg += "Contact number is required.\n";
+            isValid = false;
+        } else {
+            $("#phone").css("border-color", "");
+        }
+
+        // Validate Sign Date
+        if ($("#<%= txt_sign_date.ClientID %>").val().trim() == "") {
+            $("#<%= txt_sign_date.ClientID %>").css("border-color", "red");
+            errorMsg += "Sign Date is required.\n";
+            isValid = false;
+        } else {
+            $("#<%= txt_sign_date.ClientID %>").css("border-color", "");
+        }
+
+        // Validate Radio Buttons
+        if ($("input[type='radio'][name$='tick_one']:checked").length == 0) {
+            $("#radioError").text("Please select at least one option.").css("color", "red");
+            errorMsg += "Please select at least one option.\n";
+            isValid = false;
+        } else {
+            $("#radioError").text("");
+        }
+
+        // Validate Checkbox
+        if ($(".ch_explanation input[type='checkbox']:not(:checked)").length > 0) {
+            $(".lbl_explanation_error.txt_error").show();
+            errorMsg += "Please check all required checkboxes.\n";
+            isValid = false;
+        } else {
+            $(".lbl_explanation_error.txt_error").hide();
+        }
+
+        // Validate Signature Canvas
+        var canvas = document.getElementById("signatureCanvas");
+        var blank = document.createElement("canvas");
+        blank.width = canvas.width;
+        blank.height = canvas.height;
+        if (canvas.toDataURL() === blank.toDataURL()) {
+            errorMsg += "Please provide your signature.\n";
+            isValid = false;
+        }
+
+        // Show all errors in one alert
+        if (!isValid) {
+            alert(errorMsg);
+        }
+
+        return isValid;
+    }
+</script>
+
 
     <script>
         $(document).on('ready page:load', function () {

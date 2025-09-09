@@ -57,7 +57,7 @@ public partial class cancelation_form : System.Web.UI.Page
         {
             Task.Run(() =>
               {
-                  Send_Mail.MailWithouAttachment("himanshumakwana8281@gmail.com", "New Cancelation Form (" + txt_s_full_name.Text + ")", mailbody(txt_s_number.Text, txt_s_last_name.Text, txt_s_given_name.Text, txt_s_full_name.Text, txt_email.Text, hd_contact_no_code.Value.ToString() + hd_contact_no.Value.ToString(), txt_add.Text, txt_add_line_2.Text, ddl_country.SelectedValue.ToString(), txt_state.Text, txt_city.Text, txt_zip.Text), "", "");
+                  Send_Mail.MailWithouAttachment("vandanahl2602@gmail.com", "New Cancelation Form (" + txt_s_full_name.Text + ")", mailbody(txt_s_number.Text, txt_s_last_name.Text, txt_s_given_name.Text, txt_s_full_name.Text, txt_email.Text, hd_contact_no_code.Value.ToString() + hd_contact_no.Value.ToString(), txt_add.Text, txt_add_line_2.Text, ddl_country.SelectedValue.ToString(), txt_state.Text, txt_city.Text, txt_zip.Text), "", "");
               });
             Response.Redirect("Success.aspx");
         }
@@ -88,17 +88,17 @@ public partial class cancelation_form : System.Web.UI.Page
                     <label>" + stu_number + @"</lable>
                 </td>
             </tr>
-            <tr style='border-bottom: 1px solid #d7d7d7; text-align: left'>
-                <td style='padding: 10px; color: black;'>Student Last Name :</td>
-                <td>
-                    <label>" + l_name + @"</lable>
-                </td>
-            </tr>
-
+           
             <tr style='border-bottom: 1px solid #d7d7d7; text-align: left'>
                 <td style='padding: 10px; color: black;'>Student Given Names :</td>
                 <td>
                     <label>" + given_name + @"</lable>
+                </td>
+            </tr>
+ <tr style='border-bottom: 1px solid #d7d7d7; text-align: left'>
+                <td style='padding: 10px; color: black;'>Student Last Name :</td>
+                <td>
+                    <label>" + l_name + @"</lable>
                 </td>
             </tr>
 

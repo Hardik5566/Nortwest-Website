@@ -62,7 +62,7 @@ public partial class change_of_campus_form : System.Web.UI.Page
             Task.Run(() =>
            {
                Send_Mail.MailWithouAttachment(
-     "himanshumakwana8281@gmail.com",
+     "vandanahl2602@gmail.com",
      "New Application for Change of Campus Form (" + ds.Tables[0].Rows[0]["student_name"].ToString() + ")",
      mailbody(
          ds.Tables[0].Rows[0]["std_id"].ToString(),
@@ -215,44 +215,45 @@ public partial class change_of_campus_form : System.Web.UI.Page
                     </table>
                 </div>
 
-                <div style='margin-left: auto; margin-right: auto; width: 85%; margin-top: 30px; background-color: white; border-top: 3px solid #008a7f; border-bottom: 3px solid #008a7f;'>
-                    <table style='border-collapse: collapse; margin-left: auto; margin-right: auto; width: 100%;'>
-                        <tr style='border-bottom: 1px solid #d7d7d7;'>
-                            <th colspan='2' style='padding: 10px'>
-                                <label style='font-size: 20px; color: black'>Course Details</label>
-                            </th>
-                        </tr>
-                        <tr style='border-bottom: 1px solid #d7d7d7;'>
-                            <td style='padding: 10px; color: black;'>Course Enrolled</td>
-                            <td><label>" + course_enrolled + @"</label></td>
-                        </tr>
-                        <tr style='border-bottom: 1px solid #d7d7d7;'>
-                            <td style='padding: 10px; color: black;'>Intake Date</td>
-                            <td><label>" + intake_date + @"</label></td>
-                        </tr>
-                        <tr style='border-bottom: 1px solid #d7d7d7;'>
-                            <td style='padding: 10px; color: black;'>Current Campus</td>
-                            <td><label>" + current_campus + @"</label></td>
-                        </tr>
-                        <tr style='border-bottom: 1px solid #d7d7d7;'>
-                            <td style='padding: 10px; color: black;'>Change To Campus</td>
-                            <td><label>" + change_to_campus + @"</label></td>
-                        </tr>
-                        <tr style='border-bottom: 1px solid #d7d7d7;'>
-                            <td style='padding: 10px; color: black;'>Course Name</td>
-                            <td><label>" + course_name + @"</label></td>
-                        </tr>
-                        <tr style='border-bottom: 1px solid #d7d7d7;'>
-                            <td style='padding: 10px; color: black;'>Reason For Changing Campus</td>
-                            <td><label>" + reason + @"</label></td>
-                        </tr>
-                       
-                        <tr style='border-bottom: 1px solid #d7d7d7;'>
-                            <td style='padding: 10px; color: black;'>Sign Date</td>
-                            <td><label>" + sign_date + @"</label></td>
-                        </tr>
-                    </table>
-                </div>
+                <div style='margin-left: auto; margin-right: auto; width: 85%; margin-top: 30px; background-color: white; border-top: 3px solid #008a7f; border-bottom: 3px solid #008a7f; padding-bottom: 10px;'>
+
+    <table style='border-collapse: collapse; margin-left: auto; margin-right: auto; width: 100%;'>
+        <tr style='border-bottom: 1px solid #d7d7d7; text-align: left'>
+            <th colspan='2' style='padding: 10px'>
+                <label style='font-size: 20px; padding-bottom: 10px; color: black'>Course Details</label>
+            </th>
+        </tr>
+        <tr style='border-bottom: 1px solid #d7d7d7;'>
+            <td style='padding: 10px; color: black;'>Course Enrolled</td>
+            <td><label>" + course_enrolled + @"</label></td>
+        </tr>
+        <tr style='border-bottom: 1px solid #d7d7d7;'>
+            <td style='padding: 10px; color: black;'>Intake Date</td>
+            <td><label>" + intake_date + @"</label></td>
+        </tr>
+        <tr style='border-bottom: 1px solid #d7d7d7;'>
+            <td style='padding: 10px; color: black;'>Current Campus</td>
+            <td><label>" + current_campus + @"</label></td>
+        </tr>
+        <tr style='border-bottom: 1px solid #d7d7d7;'>
+            <td style='padding: 10px; color: black;'>Change To Campus</td>
+            <td><label>" + change_to_campus + @"</label></td>
+        </tr>
+        <tr style='border-bottom: 1px solid #d7d7d7;'>
+            <td style='padding: 10px; color: black;'>Course Name</td>
+            <td><label>" + course_name + @"</label></td>
+        </tr>
+        <tr style='border-bottom: 1px solid #d7d7d7;'>
+            <td style='padding: 10px; color: black;'>Reason For Changing Campus</td>
+            <td><label>" + reason + @"</label></td>
+        </tr>
+        <tr style='border-bottom: 1px solid #d7d7d7;'>
+            <td style='padding: 10px; color: black;'>Sign Date</td>
+            <td><label>" + sign_date + @"</label></td>
+        </tr>
+    </table>
+</div>
+
             </div>";
     }
 

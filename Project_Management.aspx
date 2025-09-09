@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="Project_Management.aspx.cs" Inherits="Project_Management" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="title" runat="Server">
-    Project Managment
+    <asp:Literal Text="" ID="ltr_title" runat="server" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="head" runat="Server">
     <style>

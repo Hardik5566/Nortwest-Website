@@ -27,14 +27,14 @@ public partial class Change_course_form : System.Web.UI.Page
         try
         {
             string save_signature = SaveSignature();
-            DataSet ds = BAL_Forms.ins_change_course_form(txt_student_name.Text, txt_s_id.Text, ddl_country.SelectedValue.ToString(), txt_passport_no.Text, txt_dob.Text, txt_course_enroll.Text, txt_intake.Text, txt_address.Text, txt_email.Text, hd_contact_no_code.ToString(), hd_contact_no.ToString(), txt_course_change.Text, txt_reason_campus.Text, save_signature, txt_sign_date.Text, "1");
+            DataSet ds = BAL_Forms.ins_change_course_form(txt_student_name.Text, txt_s_id.Text, ddl_country.SelectedValue.ToString(), txt_passport_no.Text, txt_dob.Text, txt_course_enroll.Text, txt_intake.Text, txt_address.Text, txt_email.Text, hd_contact_no_code.Value.ToString(), hd_contact_no.Value.ToString(), txt_course_change.Text, txt_reason_campus.Text, save_signature, txt_sign_date.Text, "1");
             if (ds.Tables[0].Rows.Count > 0)
             {
                 string signaturePath = Server.MapPath("~/assets/img/sign/") + ds.Tables[0].Rows[0]["student_signature"].ToString();
                 Task.Run(() =>
            {
                Send_Mail.MailWithouAttachment(
-                     "himanshumakwana8281@gmail.com",
+                     "vandanahl2602@gmail.com",
                      "New Application for Change of Course Form (" + ds.Tables[0].Rows[0]["student_name"].ToString() + ")",
                      mailbody(
                          ds.Tables[0].Rows[0]["student_name"].ToString(),
@@ -145,91 +145,95 @@ public partial class Change_course_form : System.Web.UI.Page
 
         return signName; // Return the saved file name or an empty string
     }
-    public string mailbody(string student_name, string student_id, string country, string passport_no, string dob, string course_enrolled, string intake, string address, string email, string country_code, string contact_no, string change_course, string reason_change_course, string student_signature, string sign_date)
+    public string mailbody(
+    string student_name, string student_id, string country, string passport_no,
+    string dob, string course_enrolled, string intake, string address,
+    string email, string country_code, string contact_no,
+    string change_course, string reason_change_course,
+    string student_signature, string sign_date)
     {
         string html = @"
-<div style='width: 100%; background-color: #f0f0f0; padding: 50px 0px'>
-                <div style='width: 100%; text-align: center; margin-bottom: 15px'>
-                    <img src='https://website.nortwest.edu.au/assets/img/logo_nwc_transp@1x.png' width='160px' />
-                    <h2 style='text-align: center'>Change Of Course Form</h2>
-                </div>
-                <div style='margin-left: auto; margin-right: auto; width: 85%; background-color: white; border-top: 3px solid #008a7f; border-bottom: 3px solid #008a7f;'>
+<div style='width:100%; background-color:#f0f0f0; padding:50px 0;'>
+    <div style='width:100%; text-align:center; margin-bottom:15px;'>
+        <img src='https://website.nortwest.edu.au/assets/img/logo_nwc_transp@1x.png' width='160' />
+        <h2 style='text-align:center; margin:10px 0; font-size:22px; color:#000;'>Change Of Course Form</h2>
+    </div>
 
-                    <table style='border-collapse: collapse; margin-left: auto; margin-right: auto; width: 100%;'>
-                        <tr style='border-bottom: 1px solid #d7d7d7; text-align: left'>
-                            <th colspan='2' style='padding: 10px'>
-                                <label style='font-size: 20px; padding-bottom: 10px; color: black'>Student details</label>
-                            </th>
-                        </tr>
-                        <tr style='border-bottom: 1px solid #d7d7d7;'>
-                            <td style='padding: 10px; color: black; width: 50%'>Student Name</td>
-                            <td><label>" + student_name + @"</label></td>
-                        </tr>
-                        <tr style='border-bottom: 1px solid #d7d7d7;'>
-                            <td style='padding: 10px; color: black;'>Student ID</td>
-                            <td><label>" + student_id + @"</label></td>
-                        </tr>
-                        <tr style='border-bottom: 1px solid #d7d7d7;'>
-                            <td style='padding: 10px; color: black;'>Country</td>
-                            <td><label>" + country + @"</label></td>
-                        </tr>
-                        <tr style='border-bottom: 1px solid #d7d7d7;'>
-                            <td style='padding: 10px; color: black;'>Passport No</td>
-                            <td><label>" + passport_no + @"</label></td>
-                        </tr>
-                        <tr style='border-bottom: 1px solid #d7d7d7;'>
-                            <td style='padding: 10px; color: black;'>Date of Birth</td>
-                            <td><label>" + dob + @"</label></td>
-                        </tr>
-                        <tr style='border-bottom: 1px solid #d7d7d7;'>
-                            <td style='padding: 10px; color: black;'>Course Enrolled</td>
-                            <td><label>" + course_enrolled + @"</label></td>
-                        </tr>
-                        <tr style='border-bottom: 1px solid #d7d7d7;'>
-                            <td style='padding: 10px; color: black;'>Intake Date</td>
-                            <td><label>" + intake + @"</label></td>
-                        </tr>
-                        <tr style='border-bottom: 1px solid #d7d7d7;'>
-                            <td style='padding: 10px; color: black;'>Address</td>
-                            <td><label>" + address + @"</label></td>
-                        </tr>
-                        <tr style='border-bottom: 1px solid #d7d7d7;'>
-                            <td style='padding: 10px; color: black;'>Email</td>
-                            <td><label>" + email + @"</label></td>
-                        </tr>
-                        <tr style='border-bottom: 1px solid #d7d7d7;'>
-                            <td style='padding: 10px; color: black;'>Contact No</td>
-                            <td><label>" + country_code + " " + contact_no + @"</label></td>
-                        </tr>
-                    </table>
-                </div>
+    <!-- Student Details Section -->
+    <div style='margin:0 auto; width:85%; background-color:#fff; border-top:3px solid #008a7f; border-bottom:3px solid #008a7f;'>
+        <table style='border-collapse:collapse; width:100%; font-family:Arial, sans-serif; font-size:14px;'>
+            <tr style='border-bottom:1px solid #d7d7d7;'>
+                <th colspan='2' style='padding:12px; text-align:left; font-size:18px; color:#000;'>Student Details</th>
+            </tr>
+            <tr style='border-bottom:1px solid #d7d7d7;'>
+                <td style='padding:10px; width:40%; color:#000;'>Student Name</td>
+                <td style='padding:10px;'>" + student_name + @"</td>
+            </tr>
+            <tr style='border-bottom:1px solid #d7d7d7;'>
+                <td style='padding:10px; color:#000;'>Student ID</td>
+                <td style='padding:10px;'>" + student_id + @"</td>
+            </tr>
+            <tr style='border-bottom:1px solid #d7d7d7;'>
+                <td style='padding:10px; color:#000;'>Country</td>
+                <td style='padding:10px;'>" + country + @"</td>
+            </tr>
+            <tr style='border-bottom:1px solid #d7d7d7;'>
+                <td style='padding:10px; color:#000;'>Passport No</td>
+                <td style='padding:10px;'>" + passport_no + @"</td>
+            </tr>
+            <tr style='border-bottom:1px solid #d7d7d7;'>
+                <td style='padding:10px; color:#000;'>Date of Birth</td>
+                <td style='padding:10px;'>" + dob + @"</td>
+            </tr>
+            <tr style='border-bottom:1px solid #d7d7d7;'>
+                <td style='padding:10px; color:#000;'>Course Enrolled</td>
+                <td style='padding:10px;'>" + course_enrolled + @"</td>
+            </tr>
+            <tr style='border-bottom:1px solid #d7d7d7;'>
+                <td style='padding:10px; color:#000;'>Intake Date</td>
+                <td style='padding:10px;'>" + intake + @"</td>
+            </tr>
+            <tr style='border-bottom:1px solid #d7d7d7;'>
+                <td style='padding:10px; color:#000;'>Address</td>
+                <td style='padding:10px;'>" + address + @"</td>
+            </tr>
+            <tr style='border-bottom:1px solid #d7d7d7;'>
+                <td style='padding:10px; color:#000;'>Email</td>
+                <td style='padding:10px;'>" + email + @"</td>
+            </tr>
+            <tr>
+                <td style='padding:10px; color:#000;'>Contact No</td>
+                <td style='padding:10px;'>" + country_code + " " + contact_no + @"</td>
+            </tr>
+        </table>
+    </div>
 
-                <div style='margin-left: auto; margin-right: auto; width: 85%; margin-top: 30px; background-color: white; border-top: 3px solid #008a7f; border-bottom: 3px solid #008a7f;'>
-                    <table style='border-collapse: collapse; margin-left: auto; margin-right: auto; width: 100%;'>
-                        <tr style='border-bottom: 1px solid #d7d7d7;'>
-                            <th colspan='2' style='padding: 10px'>
-                                <label style='font-size: 20px; color: black'>Change of Course Details</label>
-                            </th>
-                        </tr>
-                        <tr style='border-bottom: 1px solid #d7d7d7;'>
-                            <td style='padding: 10px; color: black;'>Change To Course</td>
-                            <td><label>" + change_course + @"</label></td>
-                        </tr>
-                        <tr style='border-bottom: 1px solid #d7d7d7;'>
-                            <td style='padding: 10px; color: black;'>Reason For Change</td>
-                            <td><label>" + reason_change_course + @"</label></td>
-                        </tr>
-                        <tr style='border-bottom: 1px solid #d7d7d7;'>
-                            <td style='padding: 10px; color: black;'>Student Signature</td>
-                            <td><label>" + student_signature + @"</label></td>
-                        </tr>
-                        <tr style='border-bottom: 1px solid #d7d7d7;'>
-                            <td style='padding: 10px; color: black;'>Sign Date</td>
-                            <td><label>" + sign_date + @"</label></td>
-                        </tr>
-                    </table>
-                </div>
-            </div>";
+    <!-- Change of Course Section -->
+    <div style='margin:30px auto 0 auto; width:85%; background-color:#fff; border-top:3px solid #008a7f; border-bottom:3px solid #008a7f;'>
+        <table style='border-collapse:collapse; width:100%; font-family:Arial, sans-serif; font-size:14px;'>
+            <tr style='border-bottom:1px solid #d7d7d7;'>
+                <th colspan='2' style='padding:12px; text-align:left; font-size:18px; color:#000;'>Change of Course Details</th>
+            </tr>
+            <tr style='border-bottom:1px solid #d7d7d7;'>
+                <td style='padding:10px; width:40%; color:#000;'>Change To Course</td>
+                <td style='padding:10px;'>" + change_course + @"</td>
+            </tr>
+            <tr style='border-bottom:1px solid #d7d7d7;'>
+                <td style='padding:10px; color:#000;'>Reason For Change</td>
+                <td style='padding:10px;'>" + reason_change_course + @"</td>
+            </tr>
+            <tr style='border-bottom:1px solid #d7d7d7;'>
+                <td style='padding:10px; color:#000;'>Student Signature</td>
+                <td style='padding:10px;'>" + student_signature + @"</td>
+            </tr>
+            <tr>
+                <td style='padding:10px; color:#000;'>Sign Date</td>
+                <td style='padding:10px;'>" + sign_date + @"</td>
+            </tr>
+        </table>
+    </div>
+</div>";
         return html;
     }
+
 }

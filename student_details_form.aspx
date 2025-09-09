@@ -159,120 +159,67 @@
             }
         });
 
-        // Form validation function
         function validateForm() {
+            var errors = []; // collect errors
             var isValid = true;
 
-            // Validate Full Name
-            if ($("#<%= txt_s_number.ClientID %>").val().trim() == "") {
-                $("#<%= txt_s_number.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_s_number.ClientID %>").css("border-color", "");
+            function checkField(id, fieldName, condition) {
+                if (!condition) {
+                    $("#" + id).css("border-color", "red");
+                    errors.push(fieldName);
+                    isValid = false;
+                } else {
+                    $("#" + id).css("border-color", "");
+                }
             }
 
+            // Student details
+            checkField("<%= txt_s_number.ClientID %>", "Student Number", $("#<%= txt_s_number.ClientID %>").val().trim() != "");
+            checkField("<%= txt_s_given_name.ClientID %>", "Student Given Names", $("#<%= txt_s_given_name.ClientID %>").val().trim() != "");
+            checkField("<%= txt_s_last_name.ClientID %>", "Student Last Name", $("#<%= txt_s_last_name.ClientID %>").val().trim() != "");
+            checkField("<%= txt_s_full_name.ClientID %>", "Student Full Name", $("#<%= txt_s_full_name.ClientID %>").val().trim() != "");
 
-
-
-
-
-
-            // Validate Student ID Number
-            if ($("#<%= txt_s_last_name.ClientID %>").val().trim() == "") {
-                $("#<%= txt_s_last_name.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_s_last_name.ClientID %>").css("border-color", "");
-            }
-
-            // Validate Photo
-            if ($("#<%= txt_s_given_name.ClientID %>").val() == "") {
-                $("#<%= txt_s_given_name.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_s_given_name.ClientID %>").css("border-color", "");
-            }
-
-            if ($("#<%= txt_s_full_name.ClientID %>").val().trim() == "") {
-                $("#<%= txt_s_full_name.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_s_full_name.ClientID %>").css("border-color", "");
-            }
-            // Validate Email
+            // Email
+            var emailVal = $("#<%= txt_email.ClientID %>").val();
             var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-            if (!emailRegex.test($("#<%= txt_email.ClientID %>").val())) {
-                $("#<%= txt_email.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_email.ClientID %>").css("border-color", "");
-            }
+            checkField("<%= txt_email.ClientID %>", "Email", emailRegex.test(emailVal));
 
+            // Phone
+            checkField("phone", "Contact Number", $("#<%= hd_contact_no_code.ClientID %>").val() != "");
 
+            // Address
+            checkField("<%= txt_add.ClientID %>", "Street Address", $("#<%= txt_add.ClientID %>").val().trim() != "");
+            checkField("<%= txt_add_line_2.ClientID %>", "Address Line 2", $("#<%= txt_add_line_2.ClientID %>").val().trim() != "");
+            checkField("<%= txt_city.ClientID %>", "City", $("#<%= txt_city.ClientID %>").val().trim() != "");
+            checkField("<%= txt_state.ClientID %>", "State / Province / Region", $("#<%= txt_state.ClientID %>").val().trim() != "");
+            checkField("<%= txt_zip.ClientID %>", "ZIP / Postal Code", $("#<%= txt_zip.ClientID %>").val().trim() != "");
 
-            if ($("#<%= txt_add.ClientID %>").val().trim() == "") {
-                $("#<%= txt_add.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_add.ClientID %>").css("border-color", "");
-            }
-
-            if ($("#<%= txt_add_line_2.ClientID %>").val().trim() == "") {
-                $("#<%= txt_add_line_2.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_add_line_2.ClientID %>").css("border-color", "");
-            }
-
+            // Country dropdown
             if ($("#<%= ddl_country.ClientID %>").prop("selectedIndex") == 0) {
-                $("#<%= ddl_country.ClientID %>").next(".nice-select").css("border-color", "red");
+                $("#<%= ddl_country.ClientID %>").next(".select2").css("border-color", "red");
+                errors.push("Country");
                 isValid = false;
             } else {
-                $("#<%= ddl_country.ClientID %>").next(".nice-select").css("border-color", "");
+                $("#<%= ddl_country.ClientID %>").next(".select2").css("border-color", "");
             }
 
-            if ($("#<%= txt_city.ClientID %>").val().trim() == "") {
-                $("#<%= txt_city.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_city.ClientID %>").css("border-color", "");
-            }
-
-            if ($("#<%= txt_state.ClientID %>").val().trim() == "") {
-                $("#<%= txt_state.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_state.ClientID %>").css("border-color", "");
-            }
-
-            if ($("#<%= txt_zip.ClientID %>").val().trim() == "") {
-                $("#<%= txt_zip.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_zip.ClientID %>").css("border-color", "");
-            }
-
-
-            if ($("#<%= hd_contact_no_code.ClientID%>").val() == "") {
-                $("#phone").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#phone").css("border-color", "");
-            }
-
-
-
+            // Checkbox validation (if any)
             if ($(".ch_explanation input[type='checkbox']:not(:checked)").length > 0) {
-                $(".lbl_explanation_error.txt_error").show(); // Use the proper selector
+                $(".lbl_explanation_error.txt_error").show();
+                errors.push("Agreements / Explanations");
                 isValid = false;
             } else {
-                $(".lbl_explanation_error.txt_error").hide(); // Properly hide the error
-
+                $(".lbl_explanation_error.txt_error").hide();
             }
 
+            // Show all errors in alert
+            if (errors.length > 0) {
+                alert("Please fill/validate the following fields:\n- " + errors.join("\n- "));
+            }
 
             return isValid;
         }
+
 
     </script>
     <%--  --%>

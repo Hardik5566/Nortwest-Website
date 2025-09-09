@@ -8,6 +8,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
 using System.Data.SqlClient;
+using System.Threading.Tasks;
 
 public partial class Student_Request_Forms : System.Web.UI.Page
 {
@@ -22,22 +23,35 @@ public partial class Student_Request_Forms : System.Web.UI.Page
         {
             string save_signature = SaveSignature();
             string file_name = "";
+
             if (upd_doc.HasFile)
             {
-                file_name = upd_doc.FileName.ToString();
+                string originalName = Path.GetFileNameWithoutExtension(upd_doc.FileName);
+                string extension = Path.GetExtension(upd_doc.FileName);
+
+                // create unique file name: originalName_20250909_103012.png
+                file_name = originalName + "_" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + extension;
+
                 string save_path = Server.MapPath("~/assets/img/document/");
-                upd_doc.SaveAs(save_path + file_name);
+                string fullPath = Path.Combine(save_path, file_name);
+
+                upd_doc.SaveAs(fullPath);
             }
 
-            DataSet ds = BAL_Forms.ins_student_request(ddl_title.SelectedValue.ToString(), txt_f_name.Text, txt_l_name.Text, ddl_gender.SelectedValue.ToString(), txt_student_id.Text, txt_date.Text, txt_address.Text, txt_suburb.Text, txt_postcode.Text, txt_m_address.Text, txt_m_suburb.Text, txt_m_postcode.Text, txt_email.Text, hd_contact_no_code.Value.ToString(), hd_contact_no.Value.ToString(), selected_value(), txt_detail.Text, file_name, save_signature,txt_sign_date.Text,"1");
+
+            DataSet ds = BAL_Forms.ins_student_request(ddl_title.SelectedValue.ToString(), txt_f_name.Text, txt_l_name.Text, ddl_gender.SelectedValue.ToString(), txt_student_id.Text, txt_date.Text, txt_address.Text, txt_suburb.Text, txt_postcode.Text, txt_m_address.Text, txt_m_suburb.Text, txt_m_postcode.Text, txt_email.Text, hd_contact_no_code.Value.ToString(), hd_contact_no.Value.ToString(), selected_value(), txt_detail.Text, file_name, save_signature, txt_sign_date.Text, "1");
             if (ds.Tables[0].Rows.Count > 0)
             {
 
                 string signaturePath = Server.MapPath("~/assets/img/sign/") + ds.Tables[0].Rows[0]["student_signature"].ToString();
                 string documents = Server.MapPath("~/assets/img/document/") + ds.Tables[0].Rows[0]["documents"].ToString();
                 string full_name = ds.Tables[0].Rows[0]["first_name"].ToString() + ds.Tables[0].Rows[0]["last_name"].ToString();
+                Task.Run(() =>
+  {
+      Send_Mail.MailWithouAttachment("vandanahl2602@gmail.com", "New Student Request Form (" + full_name + ")", mailbody(ds.Tables[0].Rows[0]["title"].ToString(), ds.Tables[0].Rows[0]["first_name"].ToString(), ds.Tables[0].Rows[0]["last_name"].ToString(), ds.Tables[0].Rows[0]["gender"].ToString(), ds.Tables[0].Rows[0]["student_id"].ToString(), ds.Tables[0].Rows[0]["register_date"].ToString(), ds.Tables[0].Rows[0]["residential_adress"].ToString(), ds.Tables[0].Rows[0]["residential_suburb"].ToString(), ds.Tables[0].Rows[0]["residential_postcode"].ToString(), ds.Tables[0].Rows[0]["mailing_adress"].ToString(), ds.Tables[0].Rows[0]["mailing_suburb"].ToString(), ds.Tables[0].Rows[0]["mailing_postcode"].ToString(), ds.Tables[0].Rows[0]["email"].ToString(), ds.Tables[0].Rows[0]["country_code"].ToString() + ds.Tables[0].Rows[0]["contact_no"].ToString(), ds.Tables[0].Rows[0]["request"].ToString(), ds.Tables[0].Rows[0]["detail"].ToString(), ds.Tables[0].Rows[0]["sign_date"].ToString()), documents, signaturePath);
 
-                Send_Mail.MailWithouAttachment("himanshumakwana8281@gmail.com", "New Student Request Form (" + full_name + ")", mailbody(ds.Tables[0].Rows[0]["title"].ToString(), ds.Tables[0].Rows[0]["first_name"].ToString(), ds.Tables[0].Rows[0]["last_name"].ToString(), ds.Tables[0].Rows[0]["gender"].ToString(), ds.Tables[0].Rows[0]["student_id"].ToString(), ds.Tables[0].Rows[0]["register_date"].ToString(), ds.Tables[0].Rows[0]["residential_adress"].ToString(), ds.Tables[0].Rows[0]["residential_suburb"].ToString(), ds.Tables[0].Rows[0]["residential_postcode"].ToString(), ds.Tables[0].Rows[0]["mailing_adress"].ToString(), ds.Tables[0].Rows[0]["mailing_suburb"].ToString(), ds.Tables[0].Rows[0]["mailing_postcode"].ToString(), ds.Tables[0].Rows[0]["email"].ToString(), ds.Tables[0].Rows[0]["country_code"].ToString() + ds.Tables[0].Rows[0]["contact_no"].ToString(), ds.Tables[0].Rows[0]["request"].ToString(), ds.Tables[0].Rows[0]["detail"].ToString(), ds.Tables[0].Rows[0]["sign_date"].ToString()), documents, signaturePath);
+  });
+
                 Response.Redirect("Success.aspx");
             }
 

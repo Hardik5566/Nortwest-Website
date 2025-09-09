@@ -80,7 +80,7 @@ public partial class English_Test : System.Web.UI.Page
 
                     ds.Tables[0].Rows[0]["recorded_audio"] = server_url + "Audio/" + ds.Tables[0].Rows[0]["recorded_audio"].ToString();
 
-                    rpt.Load(Server.MapPath("~/RPT/RPT_EPT_form.rpt"));
+                    rpt.Load(Server.MapPath("~/RPT/RPT_EPT_form_main.rpt"));
                     rpt.Database.Tables["dt_ept_form"].SetDataSource(ds.Tables[0]);
 
                     string name = "New English Test";

@@ -47,7 +47,6 @@
                 <div class="site-heading text-center">
                     <div class="col-md-8 col-md-offset-2">
                         <h2>Qualification Issuance Form</h2>
-                        <p>Complete the following section and submit the form to Student Administration</p>
                     </div>
                 </div>
             </div>
@@ -138,21 +137,23 @@
     </div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="jqury" runat="Server">
-    <script>
-    $("#<%= btn_submit.ClientID %>").click(function (event) {
-        if (!validateForm()) {
-            event.preventDefault(); // Prevent form submission if validation fails
-            return false;
-        }
-    });
+  <script>
+      $("#<%= btn_submit.ClientID %>").click(function (event) {
+          if (!validateForm()) {
+              event.preventDefault(); // Prevent form submission if validation fails
+              return false;
+          }
+      });
 
-    // Form validation function
-    function validateForm() {
-        var isValid = true;
+      // Form validation function
+      function validateForm() {
+          var isValid = true;
+          var msg = "";
 
-        // Student Name
-        if ($("#<%= txtStudentName.ClientID %>").val().trim() == "") {
+          // Student Name
+          if ($("#<%= txtStudentName.ClientID %>").val().trim() == "") {
             $("#<%= txtStudentName.ClientID %>").css("border-color", "red");
+            msg += "- Student Name is required\n";
             isValid = false;
         } else {
             $("#<%= txtStudentName.ClientID %>").css("border-color", "");
@@ -161,6 +162,7 @@
         // Student ID
         if ($("#<%= txtStudentID.ClientID %>").val().trim() == "") {
             $("#<%= txtStudentID.ClientID %>").css("border-color", "red");
+            msg += "- Student ID is required\n";
             isValid = false;
         } else {
             $("#<%= txtStudentID.ClientID %>").css("border-color", "");
@@ -169,6 +171,7 @@
         // Course
         if ($("#<%= txtCourse.ClientID %>").val().trim() == "") {
             $("#<%= txtCourse.ClientID %>").css("border-color", "red");
+            msg += "- Course is required\n";
             isValid = false;
         } else {
             $("#<%= txtCourse.ClientID %>").css("border-color", "");
@@ -177,6 +180,7 @@
         // Date Requested
         if ($("#<%= txtDateRequested.ClientID %>").val().trim() == "") {
             $("#<%= txtDateRequested.ClientID %>").css("border-color", "red");
+            msg += "- Date Requested is required\n";
             isValid = false;
         } else {
             $("#<%= txtDateRequested.ClientID %>").css("border-color", "");
@@ -194,12 +198,18 @@
         var otherDoc = $("#<%= txt_other_document.ClientID %>").val().trim();
 
         if (!anyChecked && otherDoc == "") {
-            alert("Please select at least one document or specify in 'Other'.");
+            msg += "- Please select at least one document or specify in 'Other'\n";
             isValid = false;
+        }
+
+        // Show alert if any validation failed
+        if (!isValid) {
+            alert("Please fix the following errors:\n\n" + msg);
         }
 
         return isValid;
     }
 </script>
+
 
 </asp:Content>

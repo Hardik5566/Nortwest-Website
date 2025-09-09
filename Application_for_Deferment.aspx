@@ -236,99 +236,117 @@
         // Form validation function
         function validateForm() {
             var isValid = true;
+            var messages = [];
 
             // Validate Full Name
             if ($("#<%= txt_student_name.ClientID %>").val().trim() == "") {
-                $("#<%= txt_student_name.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_student_name.ClientID %>").css("border-color", "");
-            }
-
-            // Validate Student ID Number
-            if ($("#<%= txt_std_id.ClientID %>").val().trim() == "") {
-                $("#<%= txt_std_id.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_std_id.ClientID %>").css("border-color", "");
-            }
-
-            // Validate Photo
-            if ($("#<%= txt_dob.ClientID %>").val() == "") {
-                $("#<%= txt_dob.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_dob.ClientID %>").css("border-color", "");
-            }
-
-            if ($("#<%= txt_reason.ClientID %>").val().trim() == "") {
-                $("#<%= txt_reason.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_reason.ClientID %>").css("border-color", "");
-            }
-           
-            if ($("#<%= txt_course_name.ClientID %>").val().trim() == "") {
-                $("#<%= txt_course_name.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_course_name.ClientID %>").css("border-color", "");
-            }
-
-            if ($("#<%= txt_course_start.ClientID %>").val().trim() == "") {
-                $("#<%= txt_course_start.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_course_start.ClientID %>").css("border-color", "");
-            }
-
-            
-
-            if ($("#<%= txt_course_end.ClientID %>").val().trim() == "") {
-                $("#<%= txt_course_end.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_course_end.ClientID %>").css("border-color", "");
-            }
-            if ($("#<%= txt_def_start.ClientID %>").val().trim() == "") {
-                $("#<%= txt_def_start.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_def_start.ClientID %>").css("border-color", "");
-            }
-            if ($("#<%= txt_def_end.ClientID %>").val().trim() == "") {
-                $("#<%= txt_def_end.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_def_end.ClientID %>").css("border-color", "");
-            }
-            if ($("#<%= txt_sign_date.ClientID %>").val().trim() == "") {
-                $("#<%= txt_sign_date.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_sign_date.ClientID %>").css("border-color", "");
-            }
-
-            if ($(".ch_explanation input[type='checkbox']:not(:checked)").length > 0) {
-                $(".lbl_explanation_error.txt_error").show(); // Use the proper selector
-                isValid = false;
-            } else {
-                $(".lbl_explanation_error.txt_error").hide(); // Properly hide the error
-
-            }
-            var canvas = document.getElementById("signatureCanvas");
-            var blank = document.createElement("canvas");
-            blank.width = canvas.width;
-            blank.height = canvas.height;
-            if (canvas.toDataURL() === blank.toDataURL()) {
-                alert("Please provide your signature.");
-                isValid = false;
-            }
-
-            return isValid;
+            $("#<%= txt_student_name.ClientID %>").css("border-color", "red");
+            messages.push("Full Name is required.");
+            isValid = false;
+        } else {
+            $("#<%= txt_student_name.ClientID %>").css("border-color", "");
         }
 
-    </script>
+        // Validate Student ID Number
+        if ($("#<%= txt_std_id.ClientID %>").val().trim() == "") {
+            $("#<%= txt_std_id.ClientID %>").css("border-color", "red");
+            messages.push("Student ID is required.");
+            isValid = false;
+        } else {
+            $("#<%= txt_std_id.ClientID %>").css("border-color", "");
+        }
+
+        // Validate DOB
+        if ($("#<%= txt_dob.ClientID %>").val() == "") {
+            $("#<%= txt_dob.ClientID %>").css("border-color", "red");
+            messages.push("Date of Birth is required.");
+            isValid = false;
+        } else {
+            $("#<%= txt_dob.ClientID %>").css("border-color", "");
+        }
+
+        // Validate Reason
+        if ($("#<%= txt_reason.ClientID %>").val().trim() == "") {
+            $("#<%= txt_reason.ClientID %>").css("border-color", "red");
+            messages.push("Reason is required.");
+            isValid = false;
+        } else {
+            $("#<%= txt_reason.ClientID %>").css("border-color", "");
+        }
+
+        // Validate Course Name
+        if ($("#<%= txt_course_name.ClientID %>").val().trim() == "") {
+            $("#<%= txt_course_name.ClientID %>").css("border-color", "red");
+            messages.push("Course Name is required.");
+            isValid = false;
+        } else {
+            $("#<%= txt_course_name.ClientID %>").css("border-color", "");
+        }
+
+        // Validate Course Start
+        if ($("#<%= txt_course_start.ClientID %>").val().trim() == "") {
+            $("#<%= txt_course_start.ClientID %>").css("border-color", "red");
+            messages.push("Course Start Date is required.");
+            isValid = false;
+        } else {
+            $("#<%= txt_course_start.ClientID %>").css("border-color", "");
+        }
+
+        // Validate Course End
+        if ($("#<%= txt_course_end.ClientID %>").val().trim() == "") {
+            $("#<%= txt_course_end.ClientID %>").css("border-color", "red");
+            messages.push("Course End Date is required.");
+            isValid = false;
+        } else {
+            $("#<%= txt_course_end.ClientID %>").css("border-color", "");
+        }
+
+        // Validate Deferral Start
+        if ($("#<%= txt_def_start.ClientID %>").val().trim() == "") {
+            $("#<%= txt_def_start.ClientID %>").css("border-color", "red");
+            messages.push("Deferral Start Date is required.");
+            isValid = false;
+        } else {
+            $("#<%= txt_def_start.ClientID %>").css("border-color", "");
+        }
+
+        // Validate Deferral End
+        if ($("#<%= txt_def_end.ClientID %>").val().trim() == "") {
+            $("#<%= txt_def_end.ClientID %>").css("border-color", "red");
+            messages.push("Deferral End Date is required.");
+            isValid = false;
+        } else {
+            $("#<%= txt_def_end.ClientID %>").css("border-color", "");
+        }
+
+        // Validate Sign Date
+        if ($("#<%= txt_sign_date.ClientID %>").val().trim() == "") {
+            $("#<%= txt_sign_date.ClientID %>").css("border-color", "red");
+            messages.push("Sign Date is required.");
+            isValid = false;
+        } else {
+            $("#<%= txt_sign_date.ClientID %>").css("border-color", "");
+        }
+
+        // Validate Signature
+        var canvas = document.getElementById("signatureCanvas");
+        var blank = document.createElement("canvas");
+        blank.width = canvas.width;
+        blank.height = canvas.height;
+        if (canvas.toDataURL() === blank.toDataURL()) {
+            messages.push("Please provide your signature.");
+            isValid = false;
+        }
+
+        // Show all messages together
+        if (!isValid && messages.length > 0) {
+            alert(messages.join("\n"));
+        }
+
+        return isValid;
+    }
+</script>
+
     <%--  --%>
     <script>
         $(document).on('ready page:load', function () {

@@ -57,6 +57,13 @@
     <div class="bg-gray default-padding bg-cover">
         <div class="container">
             <!-- Student Details -->
+             <div class="row">
+                <div class="site-heading text-center">
+                    <div class="col-md-8 col-md-offset-2">
+                        <h2>Change Of a Course Form</h2>
+                    </div>
+                </div>
+            </div>
             <div class="form-container">
                 <h4>Student Details</h4>
                 <div class="row">
@@ -163,45 +170,45 @@
 </asp:Content>
 
 <asp:Content ID="Content4" ContentPlaceHolderID="jqury" runat="Server">
-    <script src="assets/js/select2.min.js"></script>
+     <script src="assets/js/select2.min.js"></script>
     <script src="assets/country_code/js/intlTelInput.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
 
     <script>
-        // Initialize Select2
         $(document).ready(function () {
             $('.select2').select2();
         });
 
-        // Only numbers for phone
-        function only_number(key) {
-            var charCode = key.which ? key.which : key.keyCode;
+        // Only numbers
+        function only_number(e) {
+            var charCode = e.which ? e.which : e.keyCode;
             return !(charCode > 31 && (charCode < 48 || charCode > 57));
         }
 
-        // intlTelInput
+        // Phone input
         var input = document.querySelector("#phone");
-        var output = document.querySelector("#output");
         var iti = window.intlTelInput(input, {
-            nationalMode: true,
             separateDialCode: true,
+            nationalMode: true,
             preferredCountries: ['au'],
-            utilsScript: "assets/country_code/js/utils.js",
+            utilsScript: "assets/country_code/js/utils.js"
         });
 
-        function handleChange() {
-            output.textContent = iti.isValidNumber() ? "" : "Please enter a valid number";
-            $("#<%= hd_contact_no_code.ClientID %>").val(iti.selectedCountryData.dialCode);
-            $("#<%= hd_contact_no.ClientID %>").val($("#phone").val());
+        function updatePhoneFields() {
+            var country = iti.getSelectedCountryData().dialCode || '';
+            var number = iti.getNumber() || '';
+            $("#<%= hd_contact_no_code.ClientID %>").val(country);
+            $("#<%= hd_contact_no.ClientID %>").val(number);
         }
 
-        input.addEventListener('change', handleChange);
-        input.addEventListener('keyup', handleChange);
-        input.addEventListener('countrychange', handleChange);
+        input.addEventListener('change', updatePhoneFields);
+        input.addEventListener('keyup', updatePhoneFields);
+        input.addEventListener('countrychange', updatePhoneFields);
 
         // Signature Pad
         const canvas = document.getElementById('signatureCanvas');
         const signaturePad = new SignaturePad(canvas);
+
         function resizeCanvas() {
             const ratio = Math.max(window.devicePixelRatio || 1, 1);
             canvas.width = canvas.offsetWidth * ratio;
@@ -209,58 +216,76 @@
             canvas.getContext('2d').scale(ratio, ratio);
             signaturePad.clear();
         }
+
         window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
 
-        document.getElementById('clearBtn').addEventListener('click', () => signaturePad.clear());
+        document.getElementById('clearBtn').addEventListener('click', function () {
+            signaturePad.clear();
+            $("#<%= hdnSignature.ClientID %>").val("");
+        });
 
         function saveSignature() {
-            $("#<%= hdnSignature.ClientID %>").val(signaturePad.toDataURL());
+            if (!signaturePad.isEmpty()) {
+                $("#<%= hdnSignature.ClientID %>").val(signaturePad.toDataURL());
+            } else {
+                $("#<%= hdnSignature.ClientID %>").val("");
+            }
         }
 
-        // Form validation
+        // Form Validation
         function validateForm() {
             saveSignature();
+            updatePhoneFields();
             var isValid = true;
-            var msg = "";
+            var msg = '';
 
-            // Helper function
             function highlight(id, condition, errorMsg) {
+                var $el = $("#" + id);
                 if (!condition) {
-                    $("#" + id).css("border-color", "red");
-                    msg += errorMsg + "\n";
+                    $el.css("border-color", "red");
+                    msg += errorMsg + '\n';
                     isValid = false;
-                } else $("#" + id).css("border-color", "");
+                } else $el.css("border-color", "");
             }
 
-            highlight("<%= txt_student_name.ClientID %>", $("#<%= txt_student_name.ClientID %>").val().trim() != "", "Student Name is required");
-            highlight("<%= txt_s_id.ClientID %>", $("#<%= txt_s_id.ClientID %>").val().trim() != "", "Student ID is required");
-            highlight("<%= txt_passport_no.ClientID %>", $("#<%= txt_passport_no.ClientID %>").val().trim() != "", "Passport No is required");
-            highlight("<%= txt_dob.ClientID %>", $("#<%= txt_dob.ClientID %>").val().trim() != "", "Date of Birth is required");
-            highlight("<%= txt_course_enroll.ClientID %>", $("#<%= txt_course_enroll.ClientID %>").val().trim() != "", "Course Enrolled is required");
-            highlight("<%= txt_intake.ClientID %>", $("#<%= txt_intake.ClientID %>").val().trim() != "", "Intake Date is required");
-            highlight("<%= txt_address.ClientID %>", $("#<%= txt_address.ClientID %>").val().trim() != "", "Address is required");
+            highlight("<%= txt_student_name.ClientID %>", $("#<%= txt_student_name.ClientID %>").val().trim() !== "", "Student Name is required");
+            highlight("<%= txt_s_id.ClientID %>", $("#<%= txt_s_id.ClientID %>").val().trim() !== "", "Student ID is required");
+            highlight("<%= txt_passport_no.ClientID %>", $("#<%= txt_passport_no.ClientID %>").val().trim() !== "", "Passport No is required");
+            highlight("<%= txt_dob.ClientID %>", $("#<%= txt_dob.ClientID %>").val().trim() !== "", "Date of Birth is required");
+            highlight("<%= txt_course_enroll.ClientID %>", $("#<%= txt_course_enroll.ClientID %>").val().trim() !== "", "Course Enrolled is required");
+            highlight("<%= txt_intake.ClientID %>", $("#<%= txt_intake.ClientID %>").val().trim() !== "", "Intake Date is required");
+            highlight("<%= txt_address.ClientID %>", $("#<%= txt_address.ClientID %>").val().trim() !== "", "Address is required");
 
-            var emailValid = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test($("#<%= txt_email.ClientID %>").val());
-            highlight("<%= txt_email.ClientID %>", emailValid, "Valid Email is required");
+            var email = $("#<%= txt_email.ClientID %>").val().trim();
+            highlight("<%= txt_email.ClientID %>", /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email), "Valid Email is required");
 
-            highlight("<%= txt_course_change.ClientID %>", $("#<%= txt_course_change.ClientID %>").val().trim() != "", "New Course is required");
-            highlight("<%= txt_reason_campus.ClientID %>", $("#<%= txt_reason_campus.ClientID %>").val().trim() != "", "Reason is required");
-            highlight("<%= txt_sign_date.ClientID %>", $("#<%= txt_sign_date.ClientID %>").val().trim() != "", "Signature Date is required");
+            highlight("<%= txt_course_change.ClientID %>", $("#<%= txt_course_change.ClientID %>").val().trim() !== "", "New Course is required");
+            highlight("<%= txt_reason_campus.ClientID %>", $("#<%= txt_reason_campus.ClientID %>").val().trim() !== "", "Reason is required");
+            highlight("<%= txt_sign_date.ClientID %>", $("#<%= txt_sign_date.ClientID %>").val().trim() !== "", "Signature Date is required");
 
-            // Validate country dropdown
-            var ddlCountry = document.getElementById("<%= ddl_country.ClientID %>");
-            var niceCountry = ddlCountry.nextElementSibling;
-            if (ddlCountry.selectedIndex === 0) { isValid = false; msg += "Country is required\n"; niceCountry.style.border = "1px solid red"; } else { niceCountry.style.border = "1px solid #ccc"; }
+            // Country
+            var countryVal = $("#<%= ddl_country.ClientID %>").val();
+            if (!countryVal || countryVal === "") {
+                $("#<%= ddl_country.ClientID %>").next('.select2-container').css('border', '1px solid red');
+                msg += 'Country is required\n';
+                isValid = false;
+            } else {
+                $("#<%= ddl_country.ClientID %>").next('.select2-container').css('border', '');
+            }
 
-            // Validate phone
-            if ($("#<%= hd_contact_no_code.ClientID %>").val() == "") { $("#phone").css("border-color", "red"); msg += "Phone is required\n"; isValid = false; } else $("#phone").css("border-color", "");
+            // Phone
+            if (!iti.isValidNumber()) {
+                $("#phone").css('border-color', 'red');
+                msg += 'Valid Phone number is required\n';
+                isValid = false;
+            } else $("#phone").css('border-color', '');
 
-            // Validate signature
-            var blank = document.createElement("canvas");
-            blank.width = canvas.width;
-            blank.height = canvas.height;
-            if (canvas.toDataURL() === blank.toDataURL()) { msg += "Signature is required\n"; isValid = false; }
+            // Signature
+            if (signaturePad.isEmpty()) {
+                msg += 'Signature is required\n';
+                isValid = false;
+            }
 
             if (!isValid) alert(msg);
             return isValid;

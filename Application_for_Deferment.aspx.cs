@@ -31,7 +31,7 @@ public partial class Application_for_Deferment : System.Web.UI.Page
                 Task.Run(() =>
                 {
                     Send_Mail.MailWithouAttachment(
-                         "himanshumakwana8281@gmail.com",
+                         "vandanahl2602@gmail.com",
                          "New Application for Deferment / Suspension Form (" + ds.Tables[0].Rows[0]["student_name"].ToString() + ")",
                          mailbody(
                              ds.Tables[0].Rows[0]["student_name"].ToString(),

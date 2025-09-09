@@ -395,47 +395,50 @@
 </asp:Content>
 
 <asp:Content ID="Content4" ContentPlaceHolderID="jqury" runat="Server">
-    <script>
-        // Trigger validation on submit button click
-        $("#<%= btn_submit.ClientID %>").click(function (event) {
-            if (!validateForm()) {
-                event.preventDefault(); // Prevent submission if validation fails
-                return false;
-            }
-        });
+  <script>
+      // Trigger validation on submit button click
+      $("#<%= btn_submit.ClientID %>").click(function (event) {
+          if (!validateForm()) {
+              event.preventDefault(); // Prevent submission if validation fails
+              return false;
+          }
+      });
 
-        function validateForm() {
-            var isValid = true;
+      function validateForm() {
+          var isValid = true;
+          var errorMsg = "";
 
-            // Helper function to validate input
-            function validateInput(id) {
-                if ($("#" + id).val().trim() === "") {
-                    $("#" + id).css("border-color", "red");
-                    isValid = false;
-                } else {
-                    $("#" + id).css("border-color", "");
-                }
-            }
+          // Helper function to validate input
+          function validateInput(id, fieldName) {
+              if ($("#" + id).val().trim() === "") {
+                  $("#" + id).css("border-color", "red");
+                  errorMsg += fieldName + " is required.\n";
+                  isValid = false;
+              } else {
+                  $("#" + id).css("border-color", "");
+              }
+          }
 
-            // Validate Student Details
-            validateInput("<%= txtLastName.ClientID %>");
-        validateInput("<%= txtGivenName.ClientID %>");
-        validateInput("<%= txtDOB.ClientID %>");
-        validateInput("<%= txtAddress.ClientID %>");
-        validateInput("<%= txtPostcode.ClientID %>");
-        validateInput("<%= txtState.ClientID %>");
-        validateInput("<%= txtEmail.ClientID %>");
-        validateInput("phone"); // Contact number input
-        validateInput("<%= txtStudentID.ClientID %>");
-        validateInput("<%= txtCourseCode.ClientID %>");
-        validateInput("<%= txtCourseTitle.ClientID %>");
-        validateInput("<%= txtApplicationDate.ClientID %>");
-        validateInput("<%= txt_s_name.ClientID %>");
-        validateInput("<%= txt_sign_date.ClientID %>");
+          // Validate Student Details
+          validateInput("<%= txtLastName.ClientID %>", "Last Name");
+        validateInput("<%= txtGivenName.ClientID %>", "Given Name");
+        validateInput("<%= txtDOB.ClientID %>", "Date of Birth");
+        validateInput("<%= txtAddress.ClientID %>", "Address");
+        validateInput("<%= txtPostcode.ClientID %>", "Postcode");
+        validateInput("<%= txtState.ClientID %>", "State");
+        validateInput("<%= txtEmail.ClientID %>", "Email");
+        validateInput("phone", "Contact Number"); // Contact number input
+        validateInput("<%= txtStudentID.ClientID %>", "Student ID");
+        validateInput("<%= txtCourseCode.ClientID %>", "Course Code");
+        validateInput("<%= txtCourseTitle.ClientID %>", "Course Title");
+        validateInput("<%= txtApplicationDate.ClientID %>", "Application Date");
+        validateInput("<%= txt_s_name.ClientID %>", "Student Name");
+        validateInput("<%= txt_sign_date.ClientID %>", "Sign Date");
 
         // Validate Title Dropdown
         if ($("#<%= ddlTitle.ClientID %>").prop("selectedIndex") === 0) {
             $("#<%= ddlTitle.ClientID %>").css("border-color", "red");
+            errorMsg += "Please select a Title.\n";
             isValid = false;
         } else {
             $("#<%= ddlTitle.ClientID %>").css("border-color", "");
@@ -446,13 +449,14 @@
         var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         if (!emailRegex.test(emailVal)) {
             $("#<%= txtEmail.ClientID %>").css("border-color", "red");
+            errorMsg += "Please enter a valid Email.\n";
             isValid = false;
         } else {
             $("#<%= txtEmail.ClientID %>").css("border-color", "");
         }
 
         // Validate dynamic Credit Transfer rows
-        $("#courseWrapper .course-row").each(function () {
+        $("#courseWrapper .course-row").each(function (index) {
             var unitCode = $(this).find(".course-input").val().trim();
             var unitTitle = $(this).find(".institution-input").val().trim();
             var evidence = $(this).find(".year-input").val().trim();
@@ -460,25 +464,32 @@
 
             if (unitCode === "" || unitTitle === "" || evidence === "" || ctGranted === "") {
                 $(this).find("input").css("border-color", "red");
+                errorMsg += "Please fill all fields in Credit Transfer row " + (index + 1) + ".\n";
                 isValid = false;
             } else {
                 $(this).find("input").css("border-color", "");
             }
         });
 
-        // Optional: Validate signature canvas (check if empty)
+        // Validate signature canvas
         var canvas = document.getElementById("signatureCanvas");
         var blank = document.createElement("canvas");
         blank.width = canvas.width;
         blank.height = canvas.height;
         if (canvas.toDataURL() === blank.toDataURL()) {
-            alert("Please provide your signature.");
+            errorMsg += "Please provide your signature.\n";
             isValid = false;
+        }
+
+        // Show all errors in a single alert
+        if (!isValid) {
+            alert(errorMsg);
         }
 
         return isValid;
     }
 </script>
+
 
     <!-- dynamic rows script (pure JS) -->
     <script type="text/javascript">

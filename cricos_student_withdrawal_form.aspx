@@ -76,24 +76,24 @@
             <div class="form-container">
 
 
-                <div class="row" style="font-size:12px">
+                <div class="row" style="font-size: 12px">
 
                     <div class="col-md-12">
                         <label>Students who wish to withdraw their course should fill this form and submit to the student services. Please Note:</label>
                     </div>
-                    <div class="col-md-12" style="padding-left:50px">
+                    <div class="col-md-12" style="padding-left: 50px">
                         <ul>
-                            <li style="list-style:disc">Withdrawing from your course will result in cancellation of your COE and this may affect your student visa.</li>
-                            <li style="list-style:disc">You should attach all the necessary supporting documents to validate your reason.</li>
-                            <li style="list-style:disc">If you are withdrawing course due to change of provider, you should attach an offer letter from your new provider.</li>
-                            <li style="list-style:disc">If you wish to seek release from your enrolment at MILCOM, please fill the release request form. Letter of release will be issued only under certain circumstances as per the transfer between registered provider policy.</li>
-                            <li style="list-style:disc">If you are withdrawing from the course due to refusal of Student Visa, please submit the letter of Visa Refusal along with this form. Any refund applicable will only be processed on submission of evidence of VISA refusal.</li>
-                            <li style="list-style:disc">If there is any refund request, Refund application form should be submitted along with this form.</li>
+                            <li style="list-style: disc">Withdrawing from your course will result in cancellation of your COE and this may affect your student visa.</li>
+                            <li style="list-style: disc">You should attach all the necessary supporting documents to validate your reason.</li>
+                            <li style="list-style: disc">If you are withdrawing course due to change of provider, you should attach an offer letter from your new provider.</li>
+                            <li style="list-style: disc">If you wish to seek release from your enrolment at MILCOM, please fill the release request form. Letter of release will be issued only under certain circumstances as per the transfer between registered provider policy.</li>
+                            <li style="list-style: disc">If you are withdrawing from the course due to refusal of Student Visa, please submit the letter of Visa Refusal along with this form. Any refund applicable will only be processed on submission of evidence of VISA refusal.</li>
+                            <li style="list-style: disc">If there is any refund request, Refund application form should be submitted along with this form.</li>
                         </ul>
                     </div>
                 </div>
             </div>
-          <div class="form-container">
+            <div class="form-container">
                 <div>
                     <h4>Student details</h4>
                 </div>
@@ -104,7 +104,7 @@
                         <label class="lbl_title">First Name:</label>
                         <asp:TextBox ID="txt_f_name" CssClass="form-control" runat="server"></asp:TextBox>
                     </div>
-                     <div class="col-md-6">
+                    <div class="col-md-6">
                         <label class="lbl_title">Last Name:</label>
                         <asp:TextBox ID="txt_l_name" CssClass="form-control" runat="server"></asp:TextBox>
                     </div>
@@ -116,9 +116,9 @@
                         <label class="lbl_title">Student ID:</label>
                         <asp:TextBox ID="txt_student_id" CssClass="form-control" runat="server"></asp:TextBox>
                     </div>
-                    </div>
-              </div>
-             <div class="form-container">
+                </div>
+            </div>
+            <div class="form-container">
                 <div>
                     <h4>Course withdrawal details</h4>
                     <label><b>Course(s) currently enrolled and want to withdraw:</b>(If the student wants to withdraw from all the subsequent courses enrolled with the Institute, he/she should list the courses below.)</label>
@@ -130,17 +130,17 @@
                         <label class="lbl_title">Current Course:</label>
                         <asp:TextBox ID="txt_course" CssClass="form-control" runat="server"></asp:TextBox>
                     </div>
-                     <div class="col-md-6">
+                    <div class="col-md-6">
                         <label class="lbl_title">Subsequent Course(s):</label>
                         <asp:TextBox ID="txt_subsequent" CssClass="form-control" runat="server"></asp:TextBox>
                     </div>
-                       <div class="col-md-12">
+                    <div class="col-md-12">
                         <label class="lbl_title">Reason for withdrawal</label>
                         <asp:TextBox ID="txt_reason" CssClass="form-control" runat="server"></asp:TextBox>
                     </div>
-                    </div>
-                 </div>
-            
+                </div>
+            </div>
+
             <div class="form-container">
                 <div>
                     <h4>STUDENT SIGNATURE</h4>
@@ -161,157 +161,136 @@
 
                     </div>
 
-                      <div class="col-md-6" style="margin-top: 15px">
+                    <div class="col-md-6" style="margin-top: 15px">
                         <label class="lbl_title">Date:</label>
                         <asp:TextBox ID="txt_sign_date" CssClass="form-control" TextMode="Date" runat="server"></asp:TextBox>
                     </div>
                 </div>
             </div>
-             <div>
+            <div>
                 <asp:Button ID="btn_submit" runat="server" OnClientClick="saveSignature()" OnClick="btn_submit_Click" Text="SUBMIT" CssClass="btn btn-success" />
             </div>
         </div>
     </div>
-    
+
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="jqury" runat="Server">
-   
+
 
     <script src="assets/js/select2.min.js"></script>
-    <script>
-        $("#<%= btn_submit.ClientID %>").click(function (event) {
-            if (!validateForm()) {
-                event.preventDefault(); // Prevent form submission if validation fails
-                return false;
-            }
-        });
+  <script>
+      $("#<%= btn_submit.ClientID %>").click(function (event) {
+          if (!validateForm()) {
+              event.preventDefault(); // Prevent form submission if validation fails
+              return false;
+          }
+      });
 
-        // Form validation function
-        function validateForm() {
-            var isValid = true;
+      // Form validation function
+      function validateForm() {
+          var isValid = true;
+          var errorMsg = "";
 
-            // Validate Full Name
-            if ($("#<%= txt_f_name.ClientID %>").val().trim() == "") {
-                $("#<%= txt_f_name.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_f_name.ClientID %>").css("border-color", "");
-            }
-
-            // Validate Campus
-           
-
-            // Validate Student ID Number
-            if ($("#<%= txt_l_name.ClientID %>").val().trim() == "") {
-                $("#<%= txt_l_name.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_l_name.ClientID %>").css("border-color", "");
-            }
-
-            if ($("#<%= txt_date.ClientID %>").val().trim() == "") {
-                $("#<%= txt_date.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_date.ClientID %>").css("border-color", "");
-            }
-
-            if ($("#<%= txt_student_id.ClientID %>").val().trim() == "") {
-                $("#<%= txt_student_id.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_student_id.ClientID %>").css("border-color", "");
-            }
-
-            if ($("#<%= txt_course.ClientID %>").val().trim() == "") {
-                $("#<%= txt_course.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_course.ClientID %>").css("border-color", "");
-            }
-
-
-            if ($("#<%= txt_subsequent.ClientID %>").val().trim() == "") {
-                $("#<%= txt_subsequent.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_subsequent.ClientID %>").css("border-color", "");
-            }
-
-            if ($("#<%= txt_reason.ClientID %>").val().trim() == "") {
-                $("#<%= txt_reason.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_reason.ClientID %>").css("border-color", "");
-            }
-
-            if ($("#<%= txt_sign_date.ClientID %>").val().trim() == "") {
-                $("#<%= txt_sign_date.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_sign_date.ClientID %>").css("border-color", "");
-            }
-
-            var canvas = document.getElementById("signatureCanvas");
-            var blank = document.createElement("canvas");
-            blank.width = canvas.width;
-            blank.height = canvas.height;
-            if (canvas.toDataURL() === blank.toDataURL()) {
-                alert("Please provide your signature.");
-                isValid = false;
-            }
-            
-
-            if ($(".ch_explanation input[type='checkbox']:not(:checked)").length > 0) {
-                $(".lbl_explanation_error.txt_error").show(); // Use the proper selector
-                isValid = false;
-            } else {
-                $(".lbl_explanation_error.txt_error").hide(); // Properly hide the error
-
-            }
-
-            
-
-            //// Validate Overseas Address
-            //if ($("#txt_over_line1").val().trim() == "" ||
-            //  $("#txt_over_line2").val().trim() == "" ||
-            //  $("#txt_over_city").val().trim() == "" ||
-            //  $("#ddl_country").val() == "" ||
-            //  $("#txt_over_post").val().trim() == "") {
-            //    $("#txt_over_line1, #txt_over_line2, #txt_over_city, #ddl_country, #txt_over_post").css("border-color", "red");
-            //    isValid = false;
-            //} else {
-            //    $("#txt_over_line1, #txt_over_line2, #txt_over_city, #ddl_country, #txt_over_post").css("border-color", "");
-            //}
-
-            //// Validate USI Number
-            //if ($("#txt_usi_no").val().trim() == "") {
-            //    $("#txt_usi_no").css("border-color", "red");
-            //    isValid = false;
-            //} else {
-            //    $("#txt_usi_no").css("border-color", "");
-            //}
-
-            //// Validate Student Declaration
-            //if (!$("#CheckBox1").is(":checked")) {
-            //    $("#CheckBox1").css("border-color", "red");
-            //    isValid = false;
-            //} else {
-            //    $("#CheckBox1").css("border-color", "");
-            //}
-
-            //// Validate Signature
-            //if ($("#signatureCanvas").val() == "") {
-            //    $("#signatureCanvas").css("border-color", "red");
-            //    isValid = false;
-            //} else {
-            //    $("#signatureCanvas").css("border-color", "");
-            //}
-
-            return isValid;
+          // Validate First Name
+          if ($("#<%= txt_f_name.ClientID %>").val().trim() == "") {
+            $("#<%= txt_f_name.ClientID %>").css("border-color", "red");
+            errorMsg += "First Name is required.\n";
+            isValid = false;
+        } else {
+            $("#<%= txt_f_name.ClientID %>").css("border-color", "");
         }
 
-    </script>
+        // Validate Last Name
+        if ($("#<%= txt_l_name.ClientID %>").val().trim() == "") {
+            $("#<%= txt_l_name.ClientID %>").css("border-color", "red");
+            errorMsg += "Last Name is required.\n";
+            isValid = false;
+        } else {
+            $("#<%= txt_l_name.ClientID %>").css("border-color", "");
+        }
+
+        // Validate Date
+        if ($("#<%= txt_date.ClientID %>").val().trim() == "") {
+            $("#<%= txt_date.ClientID %>").css("border-color", "red");
+            errorMsg += "Date is required.\n";
+            isValid = false;
+        } else {
+            $("#<%= txt_date.ClientID %>").css("border-color", "");
+        }
+
+        // Validate Student ID
+        if ($("#<%= txt_student_id.ClientID %>").val().trim() == "") {
+            $("#<%= txt_student_id.ClientID %>").css("border-color", "red");
+            errorMsg += "Student ID is required.\n";
+            isValid = false;
+        } else {
+            $("#<%= txt_student_id.ClientID %>").css("border-color", "");
+        }
+
+        // Validate Course
+        if ($("#<%= txt_course.ClientID %>").val().trim() == "") {
+            $("#<%= txt_course.ClientID %>").css("border-color", "red");
+            errorMsg += "Course is required.\n";
+            isValid = false;
+        } else {
+            $("#<%= txt_course.ClientID %>").css("border-color", "");
+        }
+
+        // Validate Subsequent
+        if ($("#<%= txt_subsequent.ClientID %>").val().trim() == "") {
+            $("#<%= txt_subsequent.ClientID %>").css("border-color", "red");
+            errorMsg += "Subsequent field is required.\n";
+            isValid = false;
+        } else {
+            $("#<%= txt_subsequent.ClientID %>").css("border-color", "");
+        }
+
+        // Validate Reason
+        if ($("#<%= txt_reason.ClientID %>").val().trim() == "") {
+            $("#<%= txt_reason.ClientID %>").css("border-color", "red");
+            errorMsg += "Reason is required.\n";
+            isValid = false;
+        } else {
+            $("#<%= txt_reason.ClientID %>").css("border-color", "");
+        }
+
+        // Validate Sign Date
+        if ($("#<%= txt_sign_date.ClientID %>").val().trim() == "") {
+            $("#<%= txt_sign_date.ClientID %>").css("border-color", "red");
+            errorMsg += "Sign Date is required.\n";
+            isValid = false;
+        } else {
+            $("#<%= txt_sign_date.ClientID %>").css("border-color", "");
+        }
+
+        // Validate Signature Canvas
+        var canvas = document.getElementById("signatureCanvas");
+        var blank = document.createElement("canvas");
+        blank.width = canvas.width;
+        blank.height = canvas.height;
+        if (canvas.toDataURL() === blank.toDataURL()) {
+            errorMsg += "Signature is required.\n";
+            isValid = false;
+        }
+
+        // Validate Checkbox
+        if ($(".ch_explanation input[type='checkbox']:not(:checked)").length > 0) {
+            $(".lbl_explanation_error.txt_error").show();
+            errorMsg += "You must check the explanation checkbox.\n";
+            isValid = false;
+        } else {
+            $(".lbl_explanation_error.txt_error").hide();
+        }
+
+        // Show all errors in one alert
+        if (!isValid) {
+            alert(errorMsg);
+        }
+
+        return isValid;
+    }
+</script>
+
     <script>
         $(document).on('ready page:load', function () {
             // Reapply your jQuery code here

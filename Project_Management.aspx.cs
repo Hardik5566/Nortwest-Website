@@ -38,6 +38,7 @@ public partial class Project_Management : System.Web.UI.Page
                 {
                     list_course.DataSource = ds.Tables[0];
                     list_course.DataBind();
+                    ltr_title.Text = Request.QueryString["page_name"].ToString();
                 }
                 else
                 {

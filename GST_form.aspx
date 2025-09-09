@@ -806,145 +806,128 @@
             });
         });
     </script>
-    <script>
-        function validateForm() {
-            let isValid = true;
+<script>
+    function validateForm() {
+        let isValid = true;
+        let errorMessages = [];
 
-            // Helper functions to mark fields
-            function markInvalid(elem) {
-                if (elem) elem.style.borderColor = 'red';
-                isValid = false;
+        // Helper
+        function validateField(elem, message) {
+            if (elem && (!elem.value || !elem.value.trim())) {
+                elem.style.borderColor = "red";
+                errorMessages.push(message);
+                return false;
+            } else if (elem) {
+                elem.style.borderColor = "";
             }
-            function markValid(elem) {
-                if (elem) elem.style.borderColor = '';
-            }
-
-            // 1. Validate all visible text, date, and textarea fields (skip hidden inputs)
-            const inputs = document.querySelectorAll("input[type='text'], input[type='date'], textarea");
-            inputs.forEach(input => {
-                // Skip input if not visible (display:none or hidden)
-                if (input.offsetParent === null) return;
-            if (!input.value.trim()) {
-                markInvalid(input);
-            } else {
-                markValid(input);
-            }
-        });
-
-        // 2. Validate Employment status (Yes/No)
-        const employedRadios = document.getElementsByName("rblEmployed");
-        let employedValue = '';
-        for (let radio of employedRadios) {
-            if (radio.checked) { employedValue = radio.value; break; }
-        }
-        if (!employedValue) {
-            // No option selected
-            isValid = false;
-        } else if (employedValue === 'No') {
-            const reason = document.getElementById("txt_employed_reason");
-            if (reason && !reason.value.trim()) {
-                markInvalid(reason);
-        }
+            return true;
         }
 
-            // 3. Validate Experience radio (Yes/No)
-        const expRadios = document.getElementsByName("rblExperience");
-        let expValue = '';
-        for (let radio of expRadios) {
-            if (radio.checked) { expValue = radio.value; break; }
-        }
-        if (!expValue) {
-            isValid = false;
-        } else if (expValue === 'Yes') {
-            const expText = document.getElementById("txtExperience");
-            if (expText && !expText.value.trim()) {
-                markInvalid(expText);
-        }
-        }
+        // Reset borders
+        document.querySelectorAll("input, textarea").forEach(input => {
+            input.style.borderColor = "";
+    });
 
-            // 4. Validate Gap radio (Yes/No)
-        const gapRadios = document.getElementsByName("rblGap");
-        let gapValue = '';
-        for (let radio of gapRadios) {
-            if (radio.checked) { gapValue = radio.value; break; }
-        }
-        if (!gapValue) {
-            isValid = false;
-        } else if (gapValue === 'Yes') {
-            const gapText = document.getElementById("txtGap");
-            if (gapText && !gapText.value.trim()) {
-                markInvalid(gapText);
-        }
-        }
+    // 1. Visa details
+    document.querySelectorAll("#visaWrapper .row").forEach((row, index) => {
+        const type = row.querySelector(".visa-type");
+    const from = row.querySelector(".visa-from");
+    const expiry = row.querySelector(".visa-expiry");
+    if (!validateField(type, `Visa type is required for entry ${index + 1}`)) isValid = false;
+    if (!validateField(from, `Valid from date is required for entry ${index + 1}`)) isValid = false;
+    if (!validateField(expiry, `Expiry date is required for entry ${index + 1}`)) isValid = false;
+    });
 
-            // 5. Validate Visa detail rows
-        document.querySelectorAll("#visaWrapper .row").forEach(row => {
-            const type = row.querySelector(".visa-type");
-            const from = row.querySelector(".visa-from");
-            const expiry = row.querySelector(".visa-expiry");
-            if (type && !type.value.trim()) markInvalid(type);
-            if (from && !from.value) markInvalid(from);
-            if (expiry && !expiry.value) markInvalid(expiry);
-        });
+    // 2. Job details
+    document.querySelectorAll("#jobWrapper .row").forEach((row, index) => {
+        const title = row.querySelector(".job-title");
+    const salary = row.querySelector(".job-salary");
+    const start = row.querySelector(".job-start");
+    const end = row.querySelector(".job-end");
+    const current = row.querySelector(".job-current");
+    if (!validateField(title, `Job title is required for entry ${index + 1}`)) isValid = false;
+    if (!validateField(salary, `Salary is required for entry ${index + 1}`)) isValid = false;
+    if (!validateField(start, `Start date is required for entry ${index + 1}`)) isValid = false;
+    if ((!current || !current.checked) && end && !end.value) {
+        end.style.borderColor = "red";
+        errorMessages.push(`End date is required for job entry ${index + 1}`);
+    isValid = false;
+    }
+    });
 
-            // 6. Validate Job detail rows
-        document.querySelectorAll("#jobWrapper .row").forEach(row => {
-            const title = row.querySelector(".job-title");
-            const salary = row.querySelector(".job-salary");
-            const start = row.querySelector(".job-start");
-            const end = row.querySelector(".job-end");
-            const current = row.querySelector(".job-current");
-            if (title && !title.value.trim()) markInvalid(title);
-            if (salary && !salary.value.trim()) markInvalid(salary);
-            if (start && !start.value) markInvalid(start);
-            // If not current job, end date is required
-            if (current && !current.checked && end && !end.value) {
-                markInvalid(end);
+    // 3. Education details
+    document.querySelectorAll("#courseWrapper .course-row").forEach((row, index) => {
+        const qual = row.querySelector(".course-input");
+    const study = row.querySelector(".year-input");
+    const year = row.querySelector(".institution-input");
+    if (!validateField(qual, `Education qualification is required for entry ${index + 1}`)) isValid = false;
+    if (!validateField(study, `Level of study is required for entry ${index + 1}`)) isValid = false;
+    if (!validateField(year, `Year is required for entry ${index + 1}`)) isValid = false;
+    });
+
+    // 4. Extra education textboxes (Highschool + University)
+    const highschoolYear = document.getElementById("<%= txt_highschool_year.ClientID %>");
+        const universityYear = document.getElementById("<%= txt_university_year.ClientID %>");
+    if (!validateField(highschoolYear, "Highschool completion year is required")) isValid = false;
+    if (!validateField(universityYear, "University completion year is required")) isValid = false;
+
+    // 5. Funding - total funds
+    const funds = document.getElementById("<%= txtFunds.ClientID %>");
+    if (!validateField(funds, "Please specify your total access to funds")) isValid = false;
+
+    // 6. Experience & Study Gap textareas
+    const experience = document.getElementById("<%= txtExperience.ClientID %>");
+    const gap = document.getElementById("<%= txtGap.ClientID %>");
+    if (!validateField(experience, "Please provide details about your experience")) isValid = false;
+    if (!validateField(gap, "Please provide details about your study gap")) isValid = false;
+
+    // 7. Career Plan textareas
+    const careerFields = [
+        {id: "txtReasonAustralia", message: "Please explain why you chose to study in Australia"},
+        {id: "txtCareerGoals", message: "Please describe your career goals"},
+        {id: "txtHomeCountryTies", message: "Please describe your ties to your home country"},
+        {id: "txtAustraliaFamilyTies", message: "Please describe any family ties in Australia"},
+        {id: "txtFuturePlans", message: "Please describe your future plans after studies"},
+        {id: "txtOtherInfo", message: "Please provide any other relevant information"}
+    ];
+    careerFields.forEach(field => {
+        const el = document.getElementById(field.id);
+    if (!validateField(el, field.message)) isValid = false;
+    });
+
+    // 8. Student Signature section
+    const studentName = document.getElementById("<%= txt_s_name.ClientID %>");
+        const signDate = document.getElementById("<%= txt_sign_date.ClientID %>");
+    if (!validateField(studentName, "Student name is required")) isValid = false;
+    if (!validateField(signDate, "Signature date is required")) isValid = false;
+
+    // 9. Signature pad
+    const canvas = document.getElementById("signatureCanvas");
+    if (canvas && typeof signaturePad !== "undefined" && signaturePad.isEmpty()) {
+        errorMessages.push("Please provide your signature before submitting");
+        isValid = false;
+    }
+
+    // Show errors
+    if (!isValid && errorMessages.length > 0) {
+        alert("Please fix the following errors:\n\n- " + errorMessages.join("\n- "));
+    }
+
+    return isValid;
+    }
+
+    // Attach on form submit
+    document.addEventListener("DOMContentLoaded", function() {
+        const form = document.querySelector("form");
+        if (form) {
+            form.addEventListener("submit", function(e) {
+                if (!validateForm()) {
+                    e.preventDefault();
+                }
+            });
         }
-        });
-
-            // 7. Validate Education rows (courses)
-        document.querySelectorAll("#courseWrapper .course-row").forEach(row => {
-            const qual = row.querySelector(".course-input");
-            const study = row.querySelector(".year-input");
-            const year = row.querySelector(".institution-input");
-            if (qual && !qual.value.trim()) markInvalid(qual);
-            if (study && !study.value.trim()) markInvalid(study);
-            if (year && !year.value.trim()) markInvalid(year);
-        });
-
-            // 8. Validate career-plan textareas
-        const careerFields = [
-            "txtReasonAustralia", "txtCareerGoals", 
-            "txtHomeCountryTies", "txtAustraliaFamilyTies", 
-            "txtFuturePlans", "txtOtherInfo"
-        ];
-        careerFields.forEach(id => {
-            const el = document.getElementById(id);
-            if (el && !el.value.trim()) {
-                markInvalid(el);
-        }
-        });
-
-            // 9. Validate Student Signature section: name and date
-        const studentName = document.getElementById("txt_s_name");
-        const signDate = document.getElementById("txt_sign_date");
-        if (studentName && !studentName.value.trim()) markInvalid(studentName);
-        if (signDate && !signDate.value) markInvalid(signDate);
-
-            // Check that signature canvas is not blank (using SignaturePad library if available)
-        const canvas = document.getElementById("signatureCanvas");
-        if (canvas) {
-            if (typeof signaturePad !== "undefined" && signaturePad.isEmpty()) {
-                alert("Please provide your signature before submitting.");
-                isValid = false;
-        }
-        }
-
-        return isValid;
-        }
-
-    </script>
+    });
+</script>
 
    
 </asp:Content>

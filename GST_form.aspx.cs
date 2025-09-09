@@ -189,6 +189,7 @@ public partial class GST_form : System.Web.UI.Page
                 // Fix signature path
                 ds.Tables[0].Rows[0]["signature_img"] = Server.MapPath("~/assets/img/sign/")
                     + ds.Tables[0].Rows[0]["signature_img"];
+                string signature_path = Server.MapPath("~/assets/img/sign/") + ds.Tables[0].Rows[0]["signature_img"];
 
                 // Load main report
                 rpt.Load(Server.MapPath("~/RPT/RPT_GST_Form.rpt"));
@@ -218,16 +219,7 @@ public partial class GST_form : System.Web.UI.Page
                 string mail_body = get_email_body_gst(ds.Tables[0].Rows[0]["student_name"].ToString()); // <-- reuse your email body builder
 
                 // Send email (adjust Send_Mail method as per your project)
-                string result = Send_Mail.SendGTEMail(
-                    "vaghasiyaprit799@gmail.com",
-                    subject,
-                    mail_body,
-                    pdfAttachment,
-                    "",
-                    "",
-                    "",
-                    ""
-                );
+                string result = Send_Mail.SendMail("vandanahl2602@gmail.com", subject, mail_body, pdfAttachment,signature_path, "");
             }
         }
         catch (Exception ex)

@@ -177,111 +177,136 @@
     <script src="assets/country_code/js/intlTelInput.js"></script>
     <script src="assets/js/select2.min.js"></script>
 
-    <script>
-        $("#<%= btn_submit.ClientID %>").click(function (event) {
-            if (!validateForm()) {
-                event.preventDefault(); // Prevent form submission if validation fails
-                return false;
-            }
-            function validateForm() {
-                var isValid = true;
+   <script>
+       $("#<%= btn_submit.ClientID %>").click(function (event) {
+           if (!validateForm()) {
+               event.preventDefault(); // Prevent form submission if validation fails
+               return false;
+           }
+       });
 
-                // Validate Full Name
-                if ($("#<%= txt_stu_num.ClientID %>").val().trim() == "") {
-                    $("#<%= txt_stu_num.ClientID %>").css("border-color", "red");
-                    isValid = false;
-                } else {
-                    $("#<%= txt_stu_num.ClientID %>").css("border-color", "");
-                }
+       function validateForm() {
+           var isValid = true;
+           var errorMsg = "";
 
-                if ($("#<%= txt_stu_l_name.ClientID %>").val().trim() == "") {
-                    $("#<%= txt_stu_l_name.ClientID %>").css("border-color", "red");
-                    isValid = false;
-                } else {
-                    $("#<%= txt_stu_l_name.ClientID %>").css("border-color", "");
-                }
+           // Validate Student Number
+           if ($("#<%= txt_stu_num.ClientID %>").val().trim() == "") {
+            $("#<%= txt_stu_num.ClientID %>").css("border-color", "red");
+            errorMsg += "Student Number is required.\n";
+            isValid = false;
+        } else {
+            $("#<%= txt_stu_num.ClientID %>").css("border-color", "");
+        }
 
-                if ($("#<%= txt_stu_given_name.ClientID %>").val().trim() == "") {
-                    $("#<%= txt_stu_given_name.ClientID %>").css("border-color", "red");
-                    isValid = false;
-                } else {
-                    $("#<%= txt_stu_given_name.ClientID %>").css("border-color", "");
-                }
+        // Validate Student Last Name
+        if ($("#<%= txt_stu_l_name.ClientID %>").val().trim() == "") {
+            $("#<%= txt_stu_l_name.ClientID %>").css("border-color", "red");
+            errorMsg += "Student Last Name is required.\n";
+            isValid = false;
+        } else {
+            $("#<%= txt_stu_l_name.ClientID %>").css("border-color", "");
+        }
 
-                if ($("#<%= txt_stu_full_name.ClientID %>").val().trim() == "") {
-                    $("#<%= txt_stu_full_name.ClientID %>").css("border-color", "red");
-                    isValid = false;
-                } else {
-                    $("#<%= txt_stu_full_name.ClientID %>").css("border-color", "");
-                }
+        // Validate Student Given Names
+        if ($("#<%= txt_stu_given_name.ClientID %>").val().trim() == "") {
+            $("#<%= txt_stu_given_name.ClientID %>").css("border-color", "red");
+            errorMsg += "Student Given Names are required.\n";
+            isValid = false;
+        } else {
+            $("#<%= txt_stu_given_name.ClientID %>").css("border-color", "");
+        }
 
-                // Validate Email
-                var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-                if (!emailRegex.test($("#<%= txt_email.ClientID %>").val())) {
-                    $("#<%= txt_email.ClientID %>").css("border-color", "red");
-                    isValid = false;
-                } else {
-                    $("#<%= txt_email.ClientID %>").css("border-color", "");
-                }
+        // Validate Student Full Name
+        if ($("#<%= txt_stu_full_name.ClientID %>").val().trim() == "") {
+            $("#<%= txt_stu_full_name.ClientID %>").css("border-color", "red");
+            errorMsg += "Student Full Name is required.\n";
+            isValid = false;
+        } else {
+            $("#<%= txt_stu_full_name.ClientID %>").css("border-color", "");
+        }
 
-                if ($("#<%= hd_contact_no_code.ClientID%>").val() == "") {
-                    $("#phone").css("border-color", "red");
-                    isValid = false;
-                } else {
-                    $("#phone").css("border-color", "");
-                }
+        // Validate Email
+        var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (!emailRegex.test($("#<%= txt_email.ClientID %>").val().trim())) {
+            $("#<%= txt_email.ClientID %>").css("border-color", "red");
+            errorMsg += "Valid Email is required.\n";
+            isValid = false;
+        } else {
+            $("#<%= txt_email.ClientID %>").css("border-color", "");
+        }
 
+        // Validate Contact Number
+        if ($("#<%= hd_contact_no_code.ClientID%>").val() == "") {
+            $("#phone").css("border-color", "red");
+            errorMsg += "Contact Number is required.\n";
+            isValid = false;
+        } else {
+            $("#phone").css("border-color", "");
+        }
 
-                if ($("#<%= txt_street_address.ClientID %>").val().trim() == "") {
-                    $("#<%= txt_street_address.ClientID %>").css("border-color", "red");
-                    isValid = false;
-                } else {
-                    $("#<%= txt_street_address.ClientID %>").css("border-color", "");
-                }
+        // Validate Street Address
+        if ($("#<%= txt_street_address.ClientID %>").val().trim() == "") {
+            $("#<%= txt_street_address.ClientID %>").css("border-color", "red");
+            errorMsg += "Street Address is required.\n";
+            isValid = false;
+        } else {
+            $("#<%= txt_street_address.ClientID %>").css("border-color", "");
+        }
 
-                if ($("#<%= txt_address_line2.ClientID %>").val().trim() == "") {
-                    $("#<%= txt_address_line2.ClientID %>").css("border-color", "red");
-                    isValid = false;
-                } else {
-                    $("#<%= txt_address_line2.ClientID %>").css("border-color", "");
-                }
+        // Validate Address Line 2
+        if ($("#<%= txt_address_line2.ClientID %>").val().trim() == "") {
+            $("#<%= txt_address_line2.ClientID %>").css("border-color", "red");
+            errorMsg += "Address Line 2 is required.\n";
+            isValid = false;
+        } else {
+            $("#<%= txt_address_line2.ClientID %>").css("border-color", "");
+        }
 
+        // Validate Country
+        if ($("#<%= ddl_country.ClientID %>").prop("selectedIndex") == 0) {
+            $("#<%= ddl_country.ClientID %>").next(".nice-select").css("border-color", "red");
+            errorMsg += "Country is required.\n";
+            isValid = false;
+        } else {
+            $("#<%= ddl_country.ClientID %>").next(".nice-select").css("border-color", "");
+        }
 
-                // Validate Country
-                if ($("#<%= ddl_country.ClientID %>").prop("selectedIndex") == 0) {
-                    $("#<%= ddl_country.ClientID %>").next(".nice-select").css("border-color", "red");
-                    isValid = false;
-                } else {
-                    $("#<%= ddl_country.ClientID %>").next(".nice-select").css("border-color", "");
-                }
+        // Validate City
+        if ($("#<%= txt_city.ClientID %>").val().trim() == "") {
+            $("#<%= txt_city.ClientID %>").css("border-color", "red");
+            errorMsg += "City is required.\n";
+            isValid = false;
+        } else {
+            $("#<%= txt_city.ClientID %>").css("border-color", "");
+        }
 
-                if ($("#<%= txt_city.ClientID %>").val().trim() == "") {
-                    $("#<%= txt_city.ClientID %>").css("border-color", "red");
-                    isValid = false;
-                } else {
-                    $("#<%= txt_city.ClientID %>").css("border-color", "");
-                }
+        // Validate State
+        if ($("#<%= txt_state.ClientID %>").val().trim() == "") {
+            $("#<%= txt_state.ClientID %>").css("border-color", "red");
+            errorMsg += "State is required.\n";
+            isValid = false;
+        } else {
+            $("#<%= txt_state.ClientID %>").css("border-color", "");
+        }
 
-                if ($("#<%= txt_state.ClientID %>").val().trim() == "") {
-                    $("#<%= txt_state.ClientID %>").css("border-color", "red");
-                    isValid = false;
-                } else {
-                    $("#<%= txt_state.ClientID %>").css("border-color", "");
-                }
+        // Validate ZIP
+        if ($("#<%= txt_zip_code.ClientID %>").val().trim() == "") {
+            $("#<%= txt_zip_code.ClientID %>").css("border-color", "red");
+            errorMsg += "ZIP Code is required.\n";
+            isValid = false;
+        } else {
+            $("#<%= txt_zip_code.ClientID %>").css("border-color", "");
+        }
 
-                if ($("#<%= txt_zip_code.ClientID %>").val().trim() == "") {
-                    $("#<%= txt_zip_code.ClientID %>").css("border-color", "red");
-                    isValid = false;
-                } else {
-                    $("#<%= txt_zip_code.ClientID %>").css("border-color", "");
-                }
+        // Show alert if there are errors
+        if (!isValid) {
+            alert(errorMsg);
+        }
 
-                return isValid;
-            }
+        return isValid;
+    }
+</script>
 
-        });
-
-    </script>
     <script>
         $(document).on('ready page:load', function () {
             // Reapply your jQuery code here
