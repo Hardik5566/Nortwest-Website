@@ -395,7 +395,7 @@
     </div>
 
     <div class="campus-story-area video-bg-live text-light text-center bg-fixed" >
-        <div class="player" data-property="{videoURL:'eTD0WWFIDAg',containment:'.video-bg-live', showControls:false, autoPlay:true, zoom:0, loop:true, mute:true, startAt:39, opacity:1, quality:'default'}"></div>
+        <div class="player" data-property="{videoURL:'H1kiuR_Vams',containment:'.video-bg-live', showControls:false, autoPlay:true, zoom:0, loop:true, mute:true, startAt:39, opacity:1, quality:'default'}"></div>
         <div class="story-items default-padding shadow dark-hard">
             <div class="container">
                 <div class="row">

@@ -63,19 +63,39 @@
                             Nortwest College offers a wide range of courses in Business, Management, Marketing, Project Management and Website Development from Certificates up to Diploma and Advanced Diploma level. We have carefully chosen the courses and use industry representatives to consult on our curriculum. Our training focuses on gaining real experience with industry benchmark.
                        
                         </p>
-                        <a class="btn circle btn-theme effect btn-md" href="#about">Know More</a>
+                        <a class="btn circle btn-theme effect btn-md" style="margin-bottom: 15px" href="#about">Know More</a>
                     </div>
-                <div class="col-md-6 thumb">
-    <div class="thumb">
-        <video class="img-responsive" autoplay loop muted playsinline style="width:100%; height:auto; border-radius:8px;">
-            <source src="image/Video/dummy_video.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-        <a href="https://www.youtube.com/watch?v=DKz_EEoJRs4" class="popup-youtube light video-play-button">
-            <i class="fa fa-play"></i>
-        </a>
-    </div>
-</div>
+
+                    <%--    <div class="col-md-6 thumb">
+                        <div class="thumb" style="position: relative; width: 100%; padding-bottom: 66.66%; height: 0; overflow: hidden; border-radius: 8px;">
+                            <iframe
+                                src="https://www.youtube.com/embed/NuDOU3V1Xno?autoplay=1&mute=1&loop=1&playlist=NuDOU3V1Xno&controls=0&modestbranding=1&rel=0&showinfo=0"
+                                frameborder="0"
+                                allow="autoplay; encrypted-media; fullscreen"
+                                allowfullscreen
+                                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 8px;"></iframe>
+                        </div>
+                    </div>--%>
+
+
+                    <div class="col-md-6 thumb">
+                        <div class="thumb" style="position: relative; width: 100%; padding-bottom: 66.66%; height: 0; overflow: hidden; border-radius: 8px;">
+                            <iframe
+                                src="https://www.youtube.com/embed/NuDOU3V1Xno?autoplay=1&mute=1&loop=1&playlist=NuDOU3V1Xno&controls=0&modestbranding=1&rel=0&showinfo=0"
+                                frameborder="0"
+                                allow="autoplay; encrypted-media; fullscreen"
+                                allowfullscreen
+                                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 8px; pointer-events: none;"></iframe>
+
+                            <a href="https://www.youtube.com/watch?v=NuDOU3V1Xno" class="popup-youtube light video-play-button" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                                <i class="fa fa-play"></i>
+                            </a>
+                        </div>
+                    </div>
+
+
+
+
 
 
                 </div>

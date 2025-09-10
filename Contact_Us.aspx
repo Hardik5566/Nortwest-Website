@@ -9,6 +9,7 @@
             font-size: 17px !important;
         }
     </style>
+
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="body" runat="Server">
     <div class="banner-area inc-form bg-gradient slider-less text-light">
@@ -188,7 +189,7 @@
                                 <p style="font-size: 13px">
 
                                     <a href="https://www.google.com/maps/place/9%2F108+Lonsdale+St,+Melbourne+VIC+3000/@-37.8101304,144.9690749,891m/data=!3m2!1e3!4b1!4m6!3m5!1s0x6ad642c92c70b903:0x1a52b8f482d3e7ff!8m2!3d-37.8101304!4d144.9690749!16s%2Fg%2F11w8dn7696?entry=ttu&g_ep=EgoyMDI1MDgyNS4wIKXMDSoASAFQAw%3D%3D">
-                                        <i class="fas fa-map">&nbsp&nbsp</i>Level 9, 108 Lonsdale st, Melbourne VIC
+                                        <i class="fas fa-map">&nbsp&nbsp</i>Level 9, 108 Lonsdale Street, Melbourne, VIC, 3000, Australia
                                     </a>
                                 </p>
 

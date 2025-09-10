@@ -65,14 +65,31 @@
                         </p>
                         <a class="btn circle btn-theme effect btn-md" href="#about">Know More</a>
                     </div>
-                    <div class="col-md-6 thumb">
+                        <div class="col-md-6 thumb">
+    <div class="thumb" style="position: relative; width: 100%; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px;">
+        <iframe
+            src="https://www.youtube.com/embed/L-MudjY5Uf0?autoplay=1&mute=1&loop=1&playlist=L-MudjY5Uf0&controls=0&modestbranding=1&rel=0&showinfo=0"
+            frameborder="0"
+            allow="autoplay; encrypted-media; fullscreen"
+            allowfullscreen
+            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 8px; pointer-events: none;">
+        </iframe>
+
+        <a href="https://www.youtube.com/watch?v=L-MudjY5Uf0" class="popup-youtube light video-play-button" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+            <i class="fa fa-play"></i>
+        </a>
+    </div>
+</div>
+
+
+                  <%--  <div class="col-md-6 thumb">
                         <div class="thumb">
                             <img src="assets/img/800x600.png" alt="Thumb" />
                             <a href="https://www.youtube.com/watch?v=DKz_EEoJRs4" class="popup-youtube light video-play-button">
                                 <i class="fa fa-play"></i>
                             </a>
                         </div>
-                    </div>
+                    </div>--%>
                 </div>
             </div>
         </div>

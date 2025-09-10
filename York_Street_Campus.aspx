@@ -66,13 +66,21 @@
                         <a class="btn circle btn-theme effect btn-md" href="#about">Know More</a>
                     </div>
                     <div class="col-md-6 thumb">
-                        <div class="thumb">
-                            <img src="assets/img/800x600.png" alt="Thumb" />
-                            <a href="https://www.youtube.com/watch?v=DKz_EEoJRs4" class="popup-youtube light video-play-button">
+                        <div class="thumb" style="position: relative; width: 100%; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px;">
+                            <iframe
+                                src="https://www.youtube.com/embed/4YtGrK5Umlk?autoplay=1&mute=1&loop=1&playlist=4YtGrK5Umlk&controls=0&modestbranding=1&rel=0&showinfo=0"
+                                frameborder="0"
+                                allow="autoplay; encrypted-media; fullscreen"
+                                allowfullscreen
+                                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 8px; pointer-events: none;"></iframe>
+
+                            <a href="https://www.youtube.com/watch?v=4YtGrK5Umlk" class="popup-youtube light video-play-button" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
                                 <i class="fa fa-play"></i>
                             </a>
                         </div>
                     </div>
+
+
                 </div>
             </div>
         </div>
@@ -232,7 +240,7 @@
                             </a>
                         </div>
                     </div>
-                   
+
                     <%-- <div class="col-md-12 new-sec" style="padding: 0;">
                         <div class="col-md-2"></div>
                         <div class="col-sm-12 col-md-4 col-lg-4 bg-color-border blue" style="padding: 0; border: solid 5px; margin-left: 0; flex-basis: 40%;">
@@ -258,7 +266,7 @@
             </div>
         </div>
     </div>
-   <div class="event-area flex-less" style="padding-top:30px">
+    <div class="event-area flex-less" style="padding-top: 30px">
         <div class="container">
             <div class="row">
                 <div class="event-items">
@@ -311,7 +319,7 @@
             </div>
         </div>
     </div>
-   <%-- <div id="portfolio" class="portfolio-area default-padding" style="padding-top:30px">
+    <%-- <div id="portfolio" class="portfolio-area default-padding" style="padding-top:30px">
         <div class="container">
             <div class="portfolio-items-area text-center">
                 <div class="row">
@@ -410,7 +418,7 @@
                                         </div>
                                     </div>
                                 </div>--%>
-                          <%--  </div>
+    <%--  </div>
                         </div>
                     </div>
                 </div>
@@ -420,7 +428,7 @@
     <div class="features-area bg-gray default-padding bottom-less">
         <div class="container">
 
-          <%--  <div class="col-md-12 contact-details caps" style="margin-top: 10px !important; font-size: 20px; color: black; text-align: center;">
+            <%--  <div class="col-md-12 contact-details caps" style="margin-top: 10px !important; font-size: 20px; color: black; text-align: center;">
                 <strong>GEORGE STREET CAMPUS</strong><br />
                 <span style="font-size: 15px">LEVEL 2, 531 GEORGE STREET,<br />
                     SYDNEY NSW 2000 AUSTRALIA<br />
