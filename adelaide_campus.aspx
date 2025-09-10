@@ -55,24 +55,29 @@
                 <div class="about-items">
                     <div class="col-md-6 about-info">
                         <h2>Adelaide Campus</h2>
-                       <%-- <blockquote>
+                        <%-- <blockquote>
                             A man who has never gone to school may steal from a freight car; but if he has a university education, he may steal the whole railroad.
                        
                         </blockquote>--%>
                         <p>
-                        Nortwest College offers a wide range of courses in Business, Management, Marketing, Project Management and Website Development from Certificates up to Diploma and Advanced Diploma level. We have carefully chosen the courses and use industry representatives to consult on our curriculum. Our training focuses on gaining real experience with industry benchmark.
+                            Nortwest College offers a wide range of courses in Business, Management, Marketing, Project Management and Website Development from Certificates up to Diploma and Advanced Diploma level. We have carefully chosen the courses and use industry representatives to consult on our curriculum. Our training focuses on gaining real experience with industry benchmark.
                        
                         </p>
                         <a class="btn circle btn-theme effect btn-md" href="#about">Know More</a>
                     </div>
-                    <div class="col-md-6 thumb">
-                        <div class="thumb">
-                            <img src="assets/img/800x600.png" alt="Thumb">
-                            <a href="https://www.youtube.com/watch?v=DKz_EEoJRs4" class="popup-youtube light video-play-button">
-                                <i class="fa fa-play"></i>
-                            </a>
-                        </div>
-                    </div>
+                <div class="col-md-6 thumb">
+    <div class="thumb">
+        <video class="img-responsive" autoplay loop muted playsinline style="width:100%; height:auto; border-radius:8px;">
+            <source src="image/Video/dummy_video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <a href="https://www.youtube.com/watch?v=DKz_EEoJRs4" class="popup-youtube light video-play-button">
+            <i class="fa fa-play"></i>
+        </a>
+    </div>
+</div>
+
+
                 </div>
             </div>
         </div>
@@ -236,7 +241,7 @@
             </div>
         </div>
     </div>
-      <div class="event-area flex-less" style="padding-top:30px">
+    <div class="event-area flex-less" style="padding-top: 30px">
         <div class="container">
             <div class="row">
                 <div class="event-items">
@@ -289,20 +294,20 @@
             </div>
         </div>
     </div>
-    <div id="portfolio" class="portfolio-area default-padding" style="padding-top:30px">
+    <div id="portfolio" class="portfolio-area default-padding" style="padding-top: 30px">
         <div class="container">
             <div class="portfolio-items-area text-center">
                 <div class="row">
-                <div class="site-heading text-center">
-                    <div class="col-md-8 col-md-offset-2">
-                        <h2>Campus Images</h2>
-                        <p>Have a tour on our campus images</p>
+                    <div class="site-heading text-center">
+                        <div class="col-md-8 col-md-offset-2">
+                            <h2>Campus Images</h2>
+                            <p>Have a tour on our campus images</p>
+                        </div>
                     </div>
                 </div>
-            </div>
                 <div class="row">
                     <div class="col-md-12 portfolio-content">
-                        
+
                         <div class="row magnific-mix-gallery masonary text-light">
                             <div id="portfolio-grid" class="portfolio-items col-3">
                                 <div class="pf-item ceremony students">
@@ -317,7 +322,7 @@
                                     <div class="item-effect">
                                         <img src="assets/img/Banner/ad_g_2.jpg" alt="thumb" />
                                         <div class="overlay">
-                                           
+
                                             <a href="assets/img/Banner/ad_g_2.jpg" class="item popup-link"><i class="fa fa-eye"></i></a>
                                             <a href="#"><i class="fas fa-link"></i></a>
                                         </div>
@@ -327,7 +332,7 @@
                                     <div class="item-effect">
                                         <img src="assets/img/Banner/ad_g_3.jpg" alt="thumb" />
                                         <div class="overlay">
-                                            
+
                                             <a href="assets/img/Banner/ad_g_3.jpg" class="item popup-link"><i class="fa fa-eye"></i></a>
                                             <a href="#"><i class="fas fa-link"></i></a>
                                         </div>
@@ -337,7 +342,7 @@
                                     <div class="item-effect">
                                         <img src="assets/img/Banner/ad_g_4.jpg" alt="thumb" />
                                         <div class="overlay">
-                                           
+
                                             <a href="assets/img/Banner/ad_g_4.jpg" class="item popup-link"><i class="fa fa-eye"></i></a>
                                             <a href="#"><i class="fas fa-link"></i></a>
                                         </div>
@@ -347,7 +352,7 @@
                                     <div class="item-effect">
                                         <img src="assets/img/Banner/ad_g_5.jpg" alt="thumb" />
                                         <div class="overlay">
-                                           
+
                                             <a href="assets/img/Banner/ad_g_5.jpg" class="item popup-link"><i class="fa fa-eye"></i></a>
                                             <a href="#"><i class="fas fa-link"></i></a>
                                         </div>
@@ -357,7 +362,7 @@
                                     <div class="item-effect">
                                         <img src="assets/img/Banner/ad_g_6.jpg" alt="thumb" />
                                         <div class="overlay">
-                                           
+
                                             <a href="assets/img/Banner/ad_g_6.jpg" class="item popup-link"><i class="fa fa-eye"></i></a>
                                             <a href="#"><i class="fas fa-link"></i></a>
                                         </div>
@@ -377,13 +382,13 @@
                                     <div class="item-effect">
                                         <img src="assets/img/Banner/ad_g_8.jpg" alt="thumb" />
                                         <div class="overlay">
-                                           
+
                                             <a href="assets/img/Banner/ad_g_8.jpg" class="item popup-link"><i class="fa fa-eye"></i></a>
                                             <a href="#"><i class="fas fa-link"></i></a>
                                         </div>
                                     </div>
                                 </div>
-                                 <div class="pf-item ceremony students">
+                                <div class="pf-item ceremony students">
                                     <div class="item-effect">
                                         <img src="assets/img/Banner/ad_g_1.jpg" alt="thumb" />
                                         <div class="overlay">

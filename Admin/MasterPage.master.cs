@@ -16,15 +16,15 @@ public partial class MasterPage : System.Web.UI.MasterPage
         {
             if (!IsPostBack)
             {
-                //if (Request.Cookies["user_id"] != null)
-                //{
-                //    string userId = Request.Cookies["user_id"].Value;
-                //    Session["user_id"] = userId;
-                //}
-                //else
-                //{
-                //    Response.Redirect("Default.aspx");
-                //}
+                if (Request.Cookies["user_id"] != null)
+                {
+                    string userId = Request.Cookies["user_id"].Value;
+                    Session["user_id"] = userId;
+                }
+                else
+                {
+                    Response.Redirect("Default.aspx");
+                }
             }
         }
         catch (Exception)

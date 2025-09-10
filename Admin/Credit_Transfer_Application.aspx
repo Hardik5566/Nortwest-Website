@@ -93,9 +93,9 @@
         </ItemTemplate>
     </asp:TemplateField>
 
-    <asp:TemplateField HeaderText="Course Title">
+    <asp:TemplateField HeaderText="Unit Code">
         <ItemTemplate>
-            <%# Eval("course_title") %>
+            <%# Eval("unit_codes") %>
         </ItemTemplate>
     </asp:TemplateField>
 

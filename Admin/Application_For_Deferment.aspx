@@ -124,21 +124,27 @@
                         </ItemTemplate>
                     </asp:TemplateField>
 
-                    <asp:TemplateField HeaderText="Reason">
-                        <ItemTemplate>
-                            <label>
-                                <%# Eval("reason") %>
-                            </label>
-                        </ItemTemplate>
-                    </asp:TemplateField>
+                <%--   <asp:TemplateField HeaderText="Reason">
+    <ItemTemplate>
+        <label>
+            <%# Eval("reason").ToString().Length > 40 
+                   ? Eval("reason").ToString().Substring(0, 40) + "..." 
+                   : Eval("reason") %>
+        </label>
+    </ItemTemplate>
+</asp:TemplateField>--%>
 
-                    <asp:TemplateField HeaderText="Course">
-                        <ItemTemplate>
-                            <label>
-                                <%# Eval("course") %>
-                            </label>
-                        </ItemTemplate>
-                    </asp:TemplateField>
+
+                   <asp:TemplateField HeaderText="Course">
+    <ItemTemplate>
+        <label>
+            <%# Eval("course").ToString().Length > 50 
+                   ? Eval("course").ToString().Substring(0, 50) + "..." 
+                   : Eval("course") %>
+        </label>
+    </ItemTemplate>
+</asp:TemplateField>
+
 
                     <asp:TemplateField HeaderText="Course Start">
                         <ItemTemplate>

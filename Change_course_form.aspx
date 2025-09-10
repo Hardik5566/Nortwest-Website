@@ -173,37 +173,72 @@
      <script src="assets/js/select2.min.js"></script>
     <script src="assets/country_code/js/intlTelInput.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
+    <script>
+        // Initialize phone input with intlTelInput
+        var input = document.querySelector("#phone");
+        var iti = window.intlTelInput(input, {
+            separateDialCode: true,
+            nationalMode: true,
+            preferredCountries: ['au'], // default country
+            utilsScript: "assets/country_code/js/utils.js"
+        });
 
+        // Update hidden fields
+        function updatePhoneFields() {
+            var country = iti.getSelectedCountryData().dialCode || '';
+            var number = iti.getNumber() || '';
+            $("#<%= hd_contact_no_code.ClientID %>").val(country);
+        $("#<%= hd_contact_no.ClientID %>").val(number);
+    }
+
+    input.addEventListener('change', updatePhoneFields);
+    input.addEventListener('keyup', updatePhoneFields);
+    input.addEventListener('countrychange', updatePhoneFields);
+
+    // Validation function for phone number
+    function validatePhone() {
+        updatePhoneFields();
+        if (!iti.isValidNumber()) {
+            $("#phone").css('border-color', 'red');
+            alert('Valid Phone number is required');
+            return false;
+        } else {
+            $("#phone").css('border-color', '');
+            return true;
+        }
+    }
+</script>
     <script>
         $(document).ready(function () {
             $('.select2').select2();
         });
 
         // Only numbers
-        function only_number(e) {
-            var charCode = e.which ? e.which : e.keyCode;
-            return !(charCode > 31 && (charCode < 48 || charCode > 57));
+        function only_number(key) {
+            var charCode = (key.which) ? key.which : key.keyCode;
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) return false;
+            return true;
         }
 
-        // Phone input
         var input = document.querySelector("#phone");
+        var output = document.querySelector("#output");
         var iti = window.intlTelInput(input, {
-            separateDialCode: true,
             nationalMode: true,
+            separateDialCode: true,
             preferredCountries: ['au'],
-            utilsScript: "assets/country_code/js/utils.js"
+            utilsScript: "assets/country_code/js/utils.js",
         });
 
-        function updatePhoneFields() {
-            var country = iti.getSelectedCountryData().dialCode || '';
-            var number = iti.getNumber() || '';
-            $("#<%= hd_contact_no_code.ClientID %>").val(country);
-            $("#<%= hd_contact_no.ClientID %>").val(number);
+        function handleChange() {
+            var text = (iti.isValidNumber()) ? "" : "Please enter a valid number";
+            output.innerHTML = text;
+            $("#<%= hd_contact_no_code.ClientID %>").val(iti.selectedCountryData.dialCode);
+            $("#<%= hd_contact_no.ClientID %>").val($("#phone").val());
         }
 
-        input.addEventListener('change', updatePhoneFields);
-        input.addEventListener('keyup', updatePhoneFields);
-        input.addEventListener('countrychange', updatePhoneFields);
+        input.addEventListener('countrychange', handleChange);
+        input.addEventListener('change', handleChange);
+        input.addEventListener('keyup', handleChange);
 
         // Signature Pad
         const canvas = document.getElementById('signatureCanvas');
@@ -265,8 +300,10 @@
             highlight("<%= txt_sign_date.ClientID %>", $("#<%= txt_sign_date.ClientID %>").val().trim() !== "", "Signature Date is required");
 
             // Country
-            var countryVal = $("#<%= ddl_country.ClientID %>").val();
-            if (!countryVal || countryVal === "") {
+            var countryVal = $("#<%= ddl_country.ClientID %>").prop("selectedIndex");
+
+            if (countryVal === 0) {
+                // First item selected → invalid
                 $("#<%= ddl_country.ClientID %>").next('.select2-container').css('border', '1px solid red');
                 msg += 'Country is required\n';
                 isValid = false;

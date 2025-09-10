@@ -181,27 +181,21 @@ public partial class GST_form : System.Web.UI.Page
         ReportDocument rpt = new ReportDocument();
         try
         {
-            string server_url = ConfigurationManager.ConnectionStrings["server_url"].ToString();
-
             DataSet ds = BAL_Forms.sel_gst_form(id);
             if (ds.Tables.Count > 0)
             {
                 // Fix signature path
                 ds.Tables[0].Rows[0]["signature_img"] = Server.MapPath("~/assets/img/sign/")
                     + ds.Tables[0].Rows[0]["signature_img"];
-                string signature_path = Server.MapPath("~/assets/img/sign/") + ds.Tables[0].Rows[0]["signature_img"];
 
                 // Load main report
                 rpt.Load(Server.MapPath("~/RPT/RPT_GST_Form.rpt"));
 
                 // Set datasource for main report
                 rpt.Database.Tables["dt_gst_form"].SetDataSource(ds.Tables[0]);
-
-                // Bind subreports
-                rpt.Subreports["RPT_job_his_gst.rpt"].SetDataSource(ds.Tables[1]);
-                rpt.Subreports["RPT_visa_gst.rpt"].SetDataSource(ds.Tables[2]);
-                rpt.Subreports["RPT_education_gst.rpt"].SetDataSource(ds.Tables[3]);
-
+                rpt.Database.Tables["dt_job_gst"].SetDataSource(ds.Tables[1]);
+                rpt.Database.Tables["dt_visa_gst"].SetDataSource(ds.Tables[2]);
+                rpt.Database.Tables["dt_education_gst"].SetDataSource(ds.Tables[3]);
                 // Export to stream
                 string name = "GST Form";
                 Stream pdfStream = rpt.ExportToStream(ExportFormatType.PortableDocFormat);
@@ -219,7 +213,7 @@ public partial class GST_form : System.Web.UI.Page
                 string mail_body = get_email_body_gst(ds.Tables[0].Rows[0]["student_name"].ToString()); // <-- reuse your email body builder
 
                 // Send email (adjust Send_Mail method as per your project)
-                string result = Send_Mail.SendMail("vandanahl2602@gmail.com", subject, mail_body, pdfAttachment,signature_path, "");
+                string result = Send_Mail.SendMail("vandanahl2602@gmail.com", subject, mail_body, pdfAttachment, "", "");
             }
         }
         catch (Exception ex)

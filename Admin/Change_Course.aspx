@@ -114,13 +114,7 @@
                             </label>
                         </ItemTemplate>
                     </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Address">
-                        <ItemTemplate>
-                            <label>
-                                <%# Eval("address") %>
-                            </label>
-                        </ItemTemplate>
-                    </asp:TemplateField>
+                  
                     <asp:TemplateField HeaderText="Email">
                         <ItemTemplate>
                             <label>

@@ -100,20 +100,7 @@
                             </label>
                         </ItemTemplate>
                     </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Street Address">
-                        <ItemTemplate>
-                            <label>
-                                <%# Eval("street_address") %>
-                            </label>
-                        </ItemTemplate>
-                    </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Addressline 2">
-                        <ItemTemplate>
-                            <label>
-                                <%# Eval("street_address_line_2") %>
-                            </label>
-                        </ItemTemplate>
-                    </asp:TemplateField>
+                   
                     <asp:TemplateField HeaderText="Country">
                         <ItemTemplate>
                             <label>
