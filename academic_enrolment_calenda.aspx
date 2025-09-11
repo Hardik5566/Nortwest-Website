@@ -61,7 +61,6 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 col-md-12">
-
                     <h1>Academic Calendar</h1>
                     <ul class="breadcrumb">
                         <li><a href="Default.aspx"><i class="fas fa-home"></i>Home</a></li>
@@ -71,13 +70,11 @@
             </div>
         </div>
     </div>
-
     <div class="blog-area single full-blog left-sidebar full-blog default-padding" style="background-color: #eaf1f0">
         <div class="container">
             <div class="row">
             </div>
             <div class="row">
-
                 <div class="blog-items">
                     <div class="sidebar col-md-12">
                         <div class="row">
@@ -115,10 +112,8 @@
                                     </div>
                                 </ItemTemplate>
                             </asp:ListView>
-
                         </div>
                     </div>
-
                     <div class="blog-content col-md-12">
                         <div class="content-items">
                             <div class="text-center my-4">
@@ -129,8 +124,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <!-- Victoria -->
                                 <div class="newsletter-area py-4">
                                     <div class="container">
                                         <div class="row">
@@ -138,13 +131,9 @@
                                                 <a href="https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2025" target="_blank">
                                                     <div class="subscribe-items shadow theme-hard default-padding bg-cover text-center"
                                                         style="background-image: url('assets/img/victoria.jpg'); background-size: cover; background-position: center; border-radius: 12px !important; padding: 20px;">
-
-                                                        <!-- Icon -->
                                                         <div class="icon mb-3">
                                                             <img src="assets/img/holiday.png" alt="Holiday Icon" style="width: 60px; opacity: 0.9; height: auto;" />
                                                         </div>
-
-                                                        <!-- Info -->
                                                         <div class="info">
                                                             <h3 class="text-white mb-2">Victoria</h3>
                                                         </div>
@@ -156,13 +145,9 @@
                                                 <a href="https://www.nsw.gov.au/about-nsw/public-holidays" target="_blank">
                                                     <div class="subscribe-items shadow theme-hard default-padding bg-cover text-center"
                                                         style="background-image: url('assets/img/NSW.jpg'); background-size: cover; background-position: center; border-radius: 12px !important; padding: 20px;">
-
-                                                        <!-- Icon -->
                                                         <div class="icon mb-3">
                                                             <img src="assets/img/holiday.png" alt="Holiday Icon" style="width: 60px; opacity: 0.9; height: auto;" />
                                                         </div>
-
-                                                        <!-- Info -->
                                                         <div class="info">
                                                             <h3 class="text-white mb-2">NSW</h3>
                                                         </div>
@@ -174,34 +159,22 @@
                                                 <a href="Admin/assets/Holidays/Public-Holidays-2024-2027.pdf" target="_blank">
                                                     <div class="subscribe-items shadow theme-hard default-padding bg-cover text-center"
                                                         style="background-image: url('assets/img/SA.jpg'); background-size: cover; background-position: center; border-radius: 12px !important; padding: 20px;">
-
-                                                        <!-- Icon -->
                                                         <div class="icon mb-3">
                                                             <img src="assets/img/holiday.png" alt="Holiday Icon" style="width: 60px; opacity: 0.9; height: auto;" />
                                                         </div>
-
-                                                        <!-- Info -->
                                                         <div class="info">
                                                             <h3 class="text-white mb-2">SA</h3>
                                                         </div>
-
                                                     </div>
                                                 </a>
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>
-
-
-
                             </div>
                         </div>
                     </div>
-
-
                 </div>
-
             </div>
         </div>
     </div>

@@ -395,7 +395,7 @@
     </div>
 
     <div class="campus-story-area video-bg-live text-light text-center bg-fixed" >
-        <div class="player" data-property="{videoURL:'H1kiuR_Vams',containment:'.video-bg-live', showControls:false, autoPlay:true, zoom:0, loop:true, mute:true, startAt:39, opacity:1, quality:'default'}"></div>
+        <div class="player" data-property="{videoURL:'NuDOU3V1Xno',containment:'.video-bg-live', showControls:false, autoPlay:true, zoom:0, loop:true, mute:true, opacity:1, quality:'default'}"></div>
         <div class="story-items default-padding shadow dark-hard">
             <div class="container">
                 <div class="row">
@@ -410,7 +410,7 @@
                                     Decisively surrounded all admiration and not you. Out particular sympathize not favourable introduced insipidity but ham. Rather number can and set praise. Distrusts an it contented perceived attending oh. Thoroughly estimating introduced stimulated why but motionless. 
                                
                                 </p>
-                                <a href="https://www.youtube.com/watch?v=D0UnqGm_miA" class="popup-youtube relative light video-play-button item-center">
+                                <a href="https://www.youtube.com/watch?v=NuDOU3V1Xno" class="popup-youtube relative light video-play-button item-center">
                                     <i class="fa fa-play"></i>
                                 </a>
                             </div>

@@ -60,29 +60,28 @@
                        
                         </blockquote>--%>
                         <p>
-                           Nortwest College offers a wide range of courses in General English, Business, Management, Project Management,IT, Trade, Commercial Cookery and Hospitality Management from Certificates up to Diploma and Graduate Diploma level. We have carefully chosen the courses and use industry representatives to consult on our curriculum. Our training focuses on gaining real experience with industry benchmark.
+                            Nortwest College offers a wide range of courses in General English, Business, Management, Project Management,IT, Trade, Commercial Cookery and Hospitality Management from Certificates up to Diploma and Graduate Diploma level. We have carefully chosen the courses and use industry representatives to consult on our curriculum. Our training focuses on gaining real experience with industry benchmark.
                        
                         </p>
-                        <a class="btn circle btn-theme effect btn-md" href="#about">Know More</a>
+                        <a class="btn circle btn-theme effect btn-md" style="margin-bottom:15px" href="#about">Know More</a>
                     </div>
-                        <div class="col-md-6 thumb">
-    <div class="thumb" style="position: relative; width: 100%; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px;">
-        <iframe
-            src="https://www.youtube.com/embed/L-MudjY5Uf0?autoplay=1&mute=1&loop=1&playlist=L-MudjY5Uf0&controls=0&modestbranding=1&rel=0&showinfo=0"
-            frameborder="0"
-            allow="autoplay; encrypted-media; fullscreen"
-            allowfullscreen
-            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 8px; pointer-events: none;">
-        </iframe>
+                    <div class="col-md-6 thumb">
+                        <div class="thumb" style="position: relative; width: 100%; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px;">
+                            <iframe
+                                src="https://www.youtube.com/embed/L-MudjY5Uf0?autoplay=1&mute=1&loop=1&playlist=L-MudjY5Uf0&controls=0&modestbranding=1&rel=0&showinfo=0"
+                                frameborder="0"
+                                allow="autoplay; encrypted-media; fullscreen"
+                                allowfullscreen
+                                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 8px; pointer-events: none;"></iframe>
 
-        <a href="https://www.youtube.com/watch?v=L-MudjY5Uf0" class="popup-youtube light video-play-button" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
-            <i class="fa fa-play"></i>
-        </a>
-    </div>
-</div>
+                            <a href="https://www.youtube.com/watch?v=L-MudjY5Uf0" class="popup-youtube light video-play-button" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                                <i class="fa fa-play"></i>
+                            </a>
+                        </div>
+                    </div>
 
 
-                  <%--  <div class="col-md-6 thumb">
+                    <%--  <div class="col-md-6 thumb">
                         <div class="thumb">
                             <img src="assets/img/800x600.png" alt="Thumb" />
                             <a href="https://www.youtube.com/watch?v=DKz_EEoJRs4" class="popup-youtube light video-play-button">
@@ -105,7 +104,7 @@
             </div>
             <div class="row">
                 <div class="features">
-                   <%-- <div class="equal-height col-md-3 col-sm-6">
+                    <%-- <div class="equal-height col-md-3 col-sm-6">
                         <div class="item mariner">
                             <a href="#">
                                 <div class="icon">
@@ -249,7 +248,7 @@
                             </a>
                         </div>
                     </div>
-                   
+
                     <%-- <div class="col-md-12 new-sec" style="padding: 0;">
                         <div class="col-md-2"></div>
                         <div class="col-sm-12 col-md-4 col-lg-4 bg-color-border blue" style="padding: 0; border: solid 5px; margin-left: 0; flex-basis: 40%;">
@@ -275,7 +274,7 @@
             </div>
         </div>
     </div>
-   <div class="event-area flex-less" style="padding-top:30px">
+    <div class="event-area flex-less" style="padding-top: 30px">
         <div class="container">
             <div class="row">
                 <div class="event-items">
@@ -328,11 +327,11 @@
             </div>
         </div>
     </div>
-  
+
     <div class="features-area bg-gray default-padding bottom-less">
         <div class="container">
 
-          <%--  <div class="col-md-12 contact-details caps" style="margin-top: 10px !important; font-size: 20px; color: black; text-align: center;">
+            <%--  <div class="col-md-12 contact-details caps" style="margin-top: 10px !important; font-size: 20px; color: black; text-align: center;">
                 <strong>GEORGE STREET CAMPUS</strong><br />
                 <span style="font-size: 15px">LEVEL 2, 531 GEORGE STREET,<br />
                     SYDNEY NSW 2000 AUSTRALIA<br />
@@ -340,7 +339,8 @@
                 </span>
             </div>--%>
             <div class="col-md-12" style="padding-top: 20px">
-<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12607.720517387303!2d144.97189765016876!3d-37.81510553775917!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad642c92c70b903%3A0x1a52b8f482d3e7ff!2s9%2F108%20Lonsdale%20St%2C%20Melbourne%20VIC%203000%2C%20Australia!5e0!3m2!1sen!2sin!4v1741327930874!5m2!1sen!2sin" width="1050" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>            </div>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12607.720517387303!2d144.97189765016876!3d-37.81510553775917!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad642c92c70b903%3A0x1a52b8f482d3e7ff!2s9%2F108%20Lonsdale%20St%2C%20Melbourne%20VIC%203000%2C%20Australia!5e0!3m2!1sen!2sin!4v1741327930874!5m2!1sen!2sin" width="1050" height="300" style="border: 0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
         </div>
 
     </div>

@@ -63,7 +63,7 @@
                             Nortwest College offers a wide range of courses in Business, Management, Marketing, Project Management and Website Development from Certificates up to Diploma and Advanced Diploma level. We have carefully chosen the courses and use industry representatives to consult on our curriculum. Our training focuses on gaining real experience with industry benchmark.
                        
                         </p>
-                        <a class="btn circle btn-theme effect btn-md" href="#about">Know More</a>
+                        <a class="btn circle btn-theme effect btn-md" style="margin-bottom:15px" href="#about">Know More</a>
                     </div>
                     <div class="col-md-6 thumb">
                         <div class="thumb" style="position: relative; width: 100%; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px;">
