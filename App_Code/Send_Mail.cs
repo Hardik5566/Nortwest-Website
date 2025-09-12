@@ -121,7 +121,7 @@ public class Send_Mail
             smtp.Host = "smtp.gmail.com"; // Or Your SMTP Server Address
             smtp.Port = 587;
             smtp.UseDefaultCredentials = false;
-            smtp.Credentials = new NetworkCredential("vaghasiyaprit799@gmail.com", "akyp gcnw knip zlpx"); // Replace with your sender email and password
+            smtp.Credentials = new NetworkCredential("noreply@nortwest.edu.au", "hxfp xylb wtpw oipe"); // Replace with your sender email and password
 
             smtp.EnableSsl = true;
 

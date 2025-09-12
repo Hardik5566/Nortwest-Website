@@ -415,7 +415,7 @@ public partial class new_elicos_orientation_form : System.Web.UI.Page
 
                 string subject = "Orientation Form For New Elicos Student (" + ds.Tables[0].Rows[0]["student_full_name"].ToString() + "-" + ds.Tables[0].Rows[0]["student_id_no"].ToString() + ")";
                 string mail_body = get_email_body(ds.Tables[0].Rows[0]["student_full_name"].ToString());
-                string result = Send_Mail.SendMail("himanshumakwana8281@gmail.com", subject, mail_body, ach_attachment, "", stu_photo);
+                string result = Send_Mail.SendMail("sso@nortwest.edu.au", subject, mail_body, ach_attachment, "", stu_photo);
 
                 rpt.Close();
                 rpt.Dispose();

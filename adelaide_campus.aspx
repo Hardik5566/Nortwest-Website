@@ -344,7 +344,7 @@
                                         <div class="overlay">
 
                                             <a href="assets/img/Banner/ad_g_2.jpg" class="item popup-link"><i class="fa fa-eye"></i></a>
-                                            <a href="#"><i class="fas fa-link"></i></a>
+                                           <%-- <a href="#"><i class="fas fa-link"></i></a>--%>
                                         </div>
                                     </div>
                                 </div>
@@ -354,7 +354,7 @@
                                         <div class="overlay">
 
                                             <a href="assets/img/Banner/ad_g_3.jpg" class="item popup-link"><i class="fa fa-eye"></i></a>
-                                            <a href="#"><i class="fas fa-link"></i></a>
+                                           <%-- <a href="#"><i class="fas fa-link"></i></a>--%>
                                         </div>
                                     </div>
                                 </div>
@@ -364,7 +364,7 @@
                                         <div class="overlay">
 
                                             <a href="assets/img/Banner/ad_g_4.jpg" class="item popup-link"><i class="fa fa-eye"></i></a>
-                                            <a href="#"><i class="fas fa-link"></i></a>
+                                          <%--  <a href="#"><i class="fas fa-link"></i></a>--%>
                                         </div>
                                     </div>
                                 </div>
@@ -374,7 +374,7 @@
                                         <div class="overlay">
 
                                             <a href="assets/img/Banner/ad_g_5.jpg" class="item popup-link"><i class="fa fa-eye"></i></a>
-                                            <a href="#"><i class="fas fa-link"></i></a>
+                                         <%--   <a href="#"><i class="fas fa-link"></i></a>--%>
                                         </div>
                                     </div>
                                 </div>
@@ -384,7 +384,7 @@
                                         <div class="overlay">
 
                                             <a href="assets/img/Banner/ad_g_6.jpg" class="item popup-link"><i class="fa fa-eye"></i></a>
-                                            <a href="#"><i class="fas fa-link"></i></a>
+                                          <%--  <a href="#"><i class="fas fa-link"></i></a>--%>
                                         </div>
                                     </div>
                                 </div>
@@ -394,7 +394,7 @@
                                         <div class="overlay">
                                             <h4>Live Drawing</h4>
                                             <a href="assets/img/Banner/ad_g_7.jpg" class="item popup-link"><i class="fa fa-eye"></i></a>
-                                            <a href="#"><i class="fas fa-link"></i></a>
+                                          <%--  <a href="#"><i class="fas fa-link"></i></a>--%>
                                         </div>
                                     </div>
                                 </div>
@@ -404,7 +404,7 @@
                                         <div class="overlay">
 
                                             <a href="assets/img/Banner/ad_g_8.jpg" class="item popup-link"><i class="fa fa-eye"></i></a>
-                                            <a href="#"><i class="fas fa-link"></i></a>
+                                          <%--  <a href="#"><i class="fas fa-link"></i></a>--%>
                                         </div>
                                     </div>
                                 </div>

@@ -14,62 +14,60 @@ public partial class Code_Test : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        send_mail_gst("22");
+        download_gst_report("2");
     }
 
-    public void send_mail_gst(string id)
+    public void download_gst_report(string id)
     {
         ReportDocument rpt = new ReportDocument();
         try
         {
-            DataSet ds = BAL_Forms.sel_gst_form(id);
-            if (ds.Tables.Count > 0)
+            DataSet ds = BAL_Forms.sel_credit_transfer_Report(id);
+
+            if (ds.Tables.Count == 0)
+                throw new Exception("No tables returned from stored procedure.");
+
+            if (ds.Tables[0].Rows.Count == 0)
+                throw new Exception("No rows returned in main dataset.");
+
+            // Fix signature path only if column exists
+            if (ds.Tables[0].Columns.Contains("student_signature"))
             {
-                // Fix signature path
-                ds.Tables[0].Rows[0]["signature_img"] = Server.MapPath("~/assets/img/sign/")
-                    + ds.Tables[0].Rows[0]["signature_img"];
+                ds.Tables[0].Rows[0]["student_signature"] =
+                    Server.MapPath("~/assets/img/sign/") + ds.Tables[0].Rows[0]["student_signature"];
+            }
 
-                // Load main report
-                rpt.Load(Server.MapPath("~/RPT/RPT_GST_Form.rpt"));
+            // Load main report
+            rpt.Load(Server.MapPath("~/RPT/RPT_creadit_transfer_app.rpt"));
+            rpt.Database.Tables["dt_credit_transfer"].SetDataSource(ds.Tables[0]);
 
-                // Set datasource for main report
-                rpt.Database.Tables["dt_gst_form"].SetDataSource(ds.Tables[0]);
+            // If second table exists, bind it
+            if (ds.Tables.Count > 1)
+                rpt.Database.Tables["dt_ct_credit_transfer"].SetDataSource(ds.Tables[1]);
 
+            // Export to PDF Stream
+            using (System.IO.Stream pdfStream = rpt.ExportToStream(ExportFormatType.PortableDocFormat))
+            {
+                byte[] bytes;
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    pdfStream.CopyTo(ms);
+                    bytes = ms.ToArray();
+                }
 
-                rpt.Database.Tables["dt_job_gst"].SetDataSource(ds.Tables[1]);
-                rpt.Database.Tables["dt_visa_gst"].SetDataSource(ds.Tables[2]);
-                rpt.Database.Tables["dt_education_gst"].SetDataSource(ds.Tables[3]);
-
-
-                // Bind subreports
-             
-                // Export to stream
-                string name = "GST Form";
-                Stream pdfStream = rpt.ExportToStream(ExportFormatType.PortableDocFormat);
-                pdfStream.Seek(0, SeekOrigin.Begin);
-
-                // Create attachment
-                Attachment pdfAttachment = new Attachment(pdfStream, name + ".pdf", "application/pdf");
-
-                // Dispose report
-                rpt.Close();
-                rpt.Dispose();
-
-                // Prepare mail subject & body
-                string subject = "GST Form (" + ds.Tables[0].Rows[0]["student_name"].ToString() + ")";
-                string mail_body = get_email_body_gst(ds.Tables[0].Rows[0]["student_name"].ToString()); // <-- reuse your email body builder
-
-                // Send email (adjust Send_Mail method as per your project)
-                string result = Send_Mail.SendMail("vaghasiyaprit799@gmail.com", subject, mail_body, pdfAttachment, "", "");
-
-
-                lbl_error.Text = result;
+                // Send file to browser
+                Response.Clear();
+                Response.ContentType = "application/pdf";
+                Response.AddHeader("content-disposition", "attachment;filename=Credit_Transfer_Form.pdf");
+                Response.Buffer = true;
+                Response.Cache.SetCacheability(HttpCacheability.NoCache);
+                Response.BinaryWrite(bytes);
+                Response.End();
             }
         }
         catch (Exception ex)
         {
             lbl_error.Text = ex.ToString();
-            throw ex;
         }
         finally
         {
@@ -77,6 +75,8 @@ public partial class Code_Test : System.Web.UI.Page
             rpt.Dispose();
         }
     }
+
+
     public string get_email_body_gst(string name)
     {
         try
@@ -152,29 +152,8 @@ public partial class Code_Test : System.Web.UI.Page
 <body>
     <div class='wrapper'>
       <div class='logo' style='padding-bottom:20px;'>
-       <img  src='https://nortwest.edu.au/assets/uploads/2017/05/logo_nwc_transp@1x.png' alt='Nortwest Logo' style='background-color:white;border-radius:9px;padding:5px' width='200'>
-       </div>
-        <div class='container'>
-           
-            <div class='title'>GST Form</div>
-            <div class='content'>
-                <p>Dear Team,</p>
-                <p>Please find attached the GST Form acknowledgement for Nortwest.</p>
-                <p><b>Form Details:</b></p>
-                <ul>
-    <li>Submitted By: " + name + @"</li>
-                    <li>Submission Date: " + DateTime.Now.ToString("dd MMM yyyy") + @"</li>
-                
-                </ul>
-                <p>Kindly verify the details and keep this acknowledgement for your records. 
-                If you require any additional information, Please find attached the GST Form.</p>
-                <p>Thank you for your prompt attention.</p>
-            </div>
-            <div class='footer'>Nortwest Pty Ltd, All rights reserved</div>
+       Credit Transfer Application
         </div>
-
-        <!-- Note outside the container -->
-        <p class='note'><b>Note:</b> This is an automated email. Please do not reply to this email.</p>
 
     </div>
 </body>

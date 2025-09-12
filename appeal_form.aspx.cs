@@ -58,7 +58,7 @@ public partial class appeal_form : System.Web.UI.Page
         {
             Task.Run(() =>
             {
-                Send_Mail.MailWithouAttachment("vandanahl2602@gmail.com", "New Application For Appeal Form (" + txt_s_full_name.Text + ")", mailbody(txt_s_number.Text, txt_s_last_name.Text, txt_s_given_name.Text, txt_s_full_name.Text, txt_email.Text, hd_contact_no_code.Value.ToString() + hd_contact_no.Value.ToString(), txt_add.Text, txt_add_line_2.Text, ddl_country.SelectedValue.ToString(), txt_state.Text, txt_city.Text, txt_zip.Text), "", "");
+                Send_Mail.MailWithouAttachment("sso@nortwest.edu.au", "New Application For Appeal Form (" + txt_s_full_name.Text + ")", mailbody(txt_s_number.Text, txt_s_last_name.Text, txt_s_given_name.Text, txt_s_full_name.Text, txt_email.Text, hd_contact_no_code.Value.ToString() + hd_contact_no.Value.ToString(), txt_add.Text, txt_add_line_2.Text, ddl_country.SelectedValue.ToString(), txt_state.Text, txt_city.Text, txt_zip.Text), "", "");
             });
             Response.Redirect("Success.aspx");
         }

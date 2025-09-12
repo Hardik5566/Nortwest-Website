@@ -236,7 +236,7 @@ if (upd_undertaken_IELTS.HasFile)
 
                 string subject = "New Application GTE Form (" + ds.Tables[0].Rows[0]["family_name"].ToString() + "-" + ds.Tables[0].Rows[0]["student_id"].ToString() + ")";
                 string mail_body = get_email_body(ds.Tables[0].Rows[0]["family_name"].ToString() + " " + ds.Tables[0].Rows[0]["given_name"].ToString(), ds.Tables[0].Rows[0]["student_id"].ToString());
-                string result = Send_Mail.SendGTEMail("vaghasiyaprit799@gmail.com", subject, mail_body, ach_attachment, ds.Tables[0].Rows[0]["student_signature"].ToString(), doc_refused_visa_aus_upd, doc_evidence_upd, doc_file_undertaken_IELTS);
+                string result = Send_Mail.SendGTEMail("applynow@nortwest.edu.au", subject, mail_body, ach_attachment, ds.Tables[0].Rows[0]["student_signature"].ToString(), doc_refused_visa_aus_upd, doc_evidence_upd, doc_file_undertaken_IELTS);
 
                 rpt.Close();
                 rpt.Dispose();

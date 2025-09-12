@@ -9,6 +9,9 @@ using System.Data.SqlClient;
 using System.Threading.Tasks;
 using System.IO;
 using System.Drawing;
+using CrystalDecisions.Shared;
+using System.Net.Mail;
+using CrystalDecisions.CrystalReports.Engine;
 
 public partial class credit_transfer_application : System.Web.UI.Page
 {
@@ -83,11 +86,6 @@ public partial class credit_transfer_application : System.Web.UI.Page
         // Create_by (your current user id or default "1")
         string createBy = "1";
 
-        string emailBody = mailbody(
-    lastName, title, givenName, dob, address, postcode, state, email,
-    countryCode, contactNo, studentId, courseCode, courseTitle, applicationDate,
-    unitCodes, unitTitles, evidenceSupplied, ctGranted, studentSignature, signDate, studentFullName
-);
 
         DataSet ds = BAL_Forms.ins_credit_transfer_application(
             lastName, title, givenName, dob, address, postcode, state, email,
@@ -101,19 +99,175 @@ public partial class credit_transfer_application : System.Web.UI.Page
             string signaturePath = Server.MapPath("~/assets/img/sign/") + ds.Tables[0].Rows[0]["student_signature"].ToString();
             Task.Run(() =>
             {
-                Send_Mail.MailWithouAttachment(
-                    "vandanahl2602@gmail.com", // To email
-                    "New Credit Transfer Application (" + studentFullName + ")", // Subject
-                    emailBody, // HTML body
-                   signaturePath, // Attachment path if any
-                    ""  // CC or other optional parameters
-                    );
-
+                send_mail(ds.Tables[0].Rows[0]["id"].ToString());
                 //Send_Mail.MailWithouAttachment("himanshumakwana8281@gmail.com", "New Credit Transfer Application (" + txt_s_full_name.Text + ")", mailbody(txt_s_number.Text, txt_s_last_name.Text, txt_s_given_name.Text, txt_s_full_name.Text, txt_email.Text, hd_contact_no_code.Value.ToString() + hd_contact_no.Value.ToString(), txt_add.Text, txt_add_line_2.Text, ddl_country.SelectedValue.ToString(), txt_state.Text, txt_city.Text, txt_zip.Text), "", "");
             });
             Response.Redirect("Success.aspx");
         }
+    }public void send_mail(string id)
+    {
+        ReportDocument rpt = new ReportDocument();
+        try
+        {
+            DataSet ds = BAL_Forms.sel_credit_transfer_Report(id);
+
+            if (ds.Tables.Count == 0)
+                throw new Exception("No tables returned from stored procedure.");
+
+            if (ds.Tables[0].Rows.Count == 0)
+                throw new Exception("No rows returned in main dataset.");
+
+            // Fix signature path only if column exists
+            if (ds.Tables[0].Columns.Contains("student_signature"))
+            {
+                ds.Tables[0].Rows[0]["student_signature"] =
+                    Server.MapPath("~/assets/img/sign/") + ds.Tables[0].Rows[0]["student_signature"];
+            }
+
+            // Load main report
+            rpt.Load(Server.MapPath("RPT/RPT_creadit_transfer_app.rpt"));
+            rpt.Database.Tables["dt_credit_transfer"].SetDataSource(ds.Tables[0]);
+
+
+            rpt.Database.Tables["dt_ct_credit_transfer"].SetDataSource(ds.Tables[1]);
+            
+            // Export to PDF
+            string name = "RPT Creadit Transfer Application Form";
+            Stream pdfStream = rpt.ExportToStream(ExportFormatType.PortableDocFormat);
+            pdfStream.Seek(0, SeekOrigin.Begin);
+
+            Attachment pdfAttachment = new Attachment(pdfStream, name + ".pdf", "application/pdf");
+
+            // Prepare email
+            string subject = "Creadit Transfer Application Form (" + ds.Tables[0].Rows[0]["student_full_name"] + ")";
+            string mail_body = get_email_body(ds.Tables[0].Rows[0]["student_full_name"].ToString());
+
+            string result = Send_Mail.SendMail("sso@nortwest.edu.au", subject, mail_body, pdfAttachment, "", "");
+        }
+        catch (Exception )
+        {
+           
+            throw; // don't use throw ex (it resets stack trace)
+        }
+        finally
+        {
+            rpt.Close();
+            rpt.Dispose();
+        }
     }
+    public string get_email_body(string name)
+    {
+        try
+        {
+            string emailBody = @"<!DOCTYPE html>
+<html>
+<head>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Student Request Form</title>
+    <style>
+        body {
+            background: #108a7c;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+        }
+        .wrapper {
+            width: 100%;
+            display: block;
+            text-align: center;
+            padding-top: 10%;
+            padding-bottom: 10%;
+            background: #108a7c;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: left;
+            max-width: 550px;
+            width: 90%;
+            margin: 0 auto;
+            display: inline-block;
+        }
+        .logo {
+            display: block;
+            margin: 0 auto; /* center the logo */
+        }
+        .title {
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center; /* center the title */
+            margin-top:20px;
+        }
+        .content {
+            margin: 20px 0;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .footer {
+            color: #B0BEC5;
+            font-size: 12px;
+            margin-top: 20px;
+            text-align: center;
+            border-top: 1px solid lightgray;
+            padding-top: 10px;
+        }
+        .note {
+            color: #FFFFFF;
+            font-size: 12px;
+            margin-top: 10px;
+            text-align: center;
+        }
+        @media screen and (max-width: 480px) {
+            .wrapper {
+                width: 90%;
+                padding: 15px; 
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class='wrapper'>
+      <div class='logo' style='padding-bottom:20px;'>
+       <img  src='https://nortwest.edu.au/assets/uploads/2017/05/logo_nwc_transp@1x.png' alt='Nortwest Logo' style='background-color:white;border-radius:9px;padding:5px' width='200'>
+       </div>
+        <div class='container'>
+           
+            <div class='title'>Credit Transfer Application</div>
+            <div class='content'>
+                <p>Dear Team,</p>
+                <p>Please find attached the Credit Transfer Application acknowledgement for Nortwest.</p>
+                <p><b>Form Details:</b></p>
+                <ul>
+    <li>Submitted By: " + name + @"</li>
+                    <li>Submission Date: " + DateTime.Now.ToString("dd MMM yyyy") + @"</li>
+                
+                </ul>
+                <p>Kindly verify the details and keep this acknowledgement for your records. 
+                If you require any additional information, Please find attached the Credit Transfer Application.</p>
+                <p>Thank you for your prompt attention.</p>
+            </div>
+            <div class='footer'>Nortwest Pty Ltd, All rights reserved</div>
+        </div>
+
+        <!-- Note outside the container -->
+        <p class='note'><b>Note:</b> This is an automated email. Please do not reply to this email.</p>
+
+    </div>
+</body>
+</html>
+";
+
+            return emailBody;
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
+
+
     public string SaveSignature()
     {
         // Retrieve the base64 signature from the hidden field
@@ -175,136 +329,5 @@ public partial class credit_transfer_application : System.Web.UI.Page
         return signName; // Return the saved file name or an empty string
     }
 
-    public string mailbody(string lastName, string title, string givenName, string dob, string address, string postcode, string state, string email, string countryCode, string contactNo, string studentID, string courseCode, string courseTitle, string applicationDate, string unitCodes, string unitTitles, string evidenceSupplied, string ctGranted, string studentSignature, string signDate, string studentFullName)
-    {
-        string html = @"
-<div style='width: 100%; background-color: #f0f0f0; padding: 50px 0px'>
-    <div style='width: 100%; text-align: center; margin-bottom: 15px'>
-        <img src='https://website.nortwest.edu.au/assets/img/logo_nwc_transp@1x.png' width='160px' />
-        <h2 style='text-align: center'>Credit Transfer Application Form</h2>
-    </div>
-
-    <!-- Student Details -->
-    <div style='margin-left: auto; margin-right: auto; width: 85%; background-color: white; border-top: 3px solid #008a7f; border-bottom: 3px solid #008a7f;'>
-        <table style='border-collapse: collapse; margin-left: auto; margin-right: auto; width: 100%;'>
-            <tr style='border-bottom: 1px solid #d7d7d7; text-align: left'>
-                <th colspan='2' style='padding: 10px'>
-                    <label style='font-size: 20px; padding-bottom: 10px; color: black'>Student details</label>
-                </th>
-            </tr>
-
-           
-            <tr style='border-bottom: 1px solid #d7d7d7; text-align: left'>
-                <td style='padding: 10px; color: black;'>Title :</td>
-                <td><label>" + title + @"</label></td>
-            </tr>
-            <tr style='border-bottom: 1px solid #d7d7d7; text-align: left'>
-                <td style='padding: 10px; color: black;'>Given Name :</td>
-                <td><label>" + givenName + @"</label></td>
-            </tr>
-            <tr style='border-bottom: 1px solid #d7d7d7; text-align: left'>
-                <td style='padding: 10px; color: black; width: 50%'>Last Name :</td>
-                <td><label>" + lastName + @"</label></td>
-            </tr>
-            <tr style='border-bottom: 1px solid #d7d7d7; text-align: left'>
-                <td style='padding: 10px; color: black;'>Date of Birth :</td>
-                <td><label>" + dob + @"</label></td>
-            </tr>
-            <tr style='border-bottom: 1px solid #d7d7d7; text-align: left'>
-                <td style='padding: 10px; color: black;'>Email :</td>
-                <td><label>" + email + @"</label></td>
-            </tr>
-            <tr style='border-bottom: 1px solid #d7d7d7; text-align: left'>
-                <td style='padding: 10px; color: black;'>Contact No :</td>
-                <td><label>+" + countryCode + " " + contactNo + @"</label></td>
-            </tr>
-            <tr style='border-bottom: 1px solid #d7d7d7; text-align: left'>
-                <td style='padding: 10px; color: black;'>Student ID :</td>
-                <td><label>" + studentID + @"</label></td>
-            </tr>
-            <tr style='border-bottom: 1px solid #d7d7d7; text-align: left'>
-                <td style='padding: 10px; color: black;'>Course Code :</td>
-                <td><label>" + courseCode + @"</label></td>
-            </tr>
-            <tr style='border-bottom: 1px solid #d7d7d7; text-align: left'>
-                <td style='padding: 10px; color: black;'>Course Title :</td>
-                <td><label>" + courseTitle + @"</label></td>
-            </tr>
-            <tr style='border-bottom: 1px solid #d7d7d7; text-align: left'>
-                <td style='padding: 10px; color: black;'>Date of Application :</td>
-                <td><label>" + applicationDate + @"</label></td>
-            </tr>
-
-            <!-- Credit Transfer -->
-           <tr style='border-bottom: 1px solid #d7d7d7; text-align: left'>
-             <td style='padding: 10px; color: black; width: 50%'>Unit Code :</td>
-             <td style='padding: 10px; color: black;'>" + unitCodes + @"</td>
-            </tr>
-            <tr style='border-bottom: 1px solid #d7d7d7; text-align: left'>
-                 <td style='padding: 10px; color: black; width: 50%'>Unit Title :</td>
-                 <td style='padding: 10px; color: black;'>" + unitTitles + @"</td>
-            </tr>
-            <tr style='border-bottom: 1px solid #d7d7d7; text-align: left'>
-                <td style='padding: 10px; color: black; width: 50%'>Evidence Supplied :</td>
-                <td style='padding: 10px; color: black;'>" + evidenceSupplied + @"</td>
-            </tr>
-            <tr style='border-bottom: 1px solid #d7d7d7; text-align: left'>
-                <td style='padding: 10px; color: black; width: 50%'>CT Granted :</td>
-                <td style='padding: 10px; color: black;'>" + ctGranted + @"</td>
-            </tr>
-
-        </table>
-    </div>
-
-    <!-- Address Details -->
-    <div style='width: 100%; background-color: #f0f0f0; padding: 50px 0px 50px 0px'>
-        <div style='margin-left: auto; margin-right: auto; width: 85%; background-color: white; border-top: 3px solid #008a7f; border-bottom: 3px solid #008a7f;'>
-            <table style='border-collapse: collapse; margin-left: auto; margin-right: auto; width: 100%;'>
-                <tr style='border-bottom: 1px solid #d7d7d7; text-align: left'>
-                    <th colspan='2' style='padding: 10px'>
-                        <label style='font-size: 20px; padding-bottom: 10px; color: black'>Current Address</label>
-                    </th>
-                </tr>
-
-                <tr style='border-bottom: 1px solid #d7d7d7; text-align: left'>
-                    <td style='padding: 10px;'>
-                        <div style='font-weight:bold;margin-bottom: 5px'>Street Address</div>
-                        <label>" + address + @"</label>
-                    </td>
-                </tr>
-                <tr style='border-bottom: 1px solid #d7d7d7; text-align: left'>
-                    <td style='padding: 10px;'>
-                        <div style='font-weight:bold;margin-bottom: 5px'>Postcode</div>
-                        <label>" + postcode + @"</label>
-                    </td>
-                </tr>
-                <tr style='border-bottom: 1px solid #d7d7d7; text-align: left'>
-                    <td style='padding: 10px;'>
-                        <div style='font-weight:bold;margin-bottom: 5px'>State</div>
-                        <label>" + state + @"</label>
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </div>
-
-    <!-- Student Signature -->
-    <div style='margin-left: auto; margin-right: auto; width: 85%;'>
-        <table style='width: 100%;'>
-          
-            <tr style='border-bottom: 1px solid #d7d7d7; text-align: left'>
-                <td style='padding: 10px; color: black;'>Signature Date :</td>
-                <td><label>" + signDate + @"</label></td>
-            </tr>
-            <tr style='text-align: left'>
-                <td style='padding: 10px; color: black;'>Student Name :</td>
-                <td><label>" + studentFullName + @"</label></td>
-            </tr>
-        </table>
-    </div>
-</div>";
-
-        return html;
-    }
 
 }

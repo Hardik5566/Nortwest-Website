@@ -59,7 +59,7 @@ public partial class qualification_issuance__form : System.Web.UI.Page
                 Task.Run(() =>
                 {
                     Send_Mail.MailWithouAttachment(
-                          "vandanahl2602@gmail.com",
+                          "sso@nortwest.edu.au",
                           "Qualification Issuance Form (" + ds.Tables[0].Rows[0]["student_name"].ToString() + ")",
                           mailbody_qualification(
                               ds.Tables[0].Rows[0]["student_name"].ToString(),

@@ -991,3 +991,75 @@ CREATE TABLE dbo.tbl_gst_form
 	delete_by int NULL,
 	delete_date datetime NULL
 );
+----------------------------------------
+----------------------------------------
+----------------------------------------
+create table tbl_course_entrty_form
+(
+	stu_id int identity(1,1),
+	name varchar(200),
+	dob datetime,
+	phone varchar(15),
+	email varchar(50),
+	std_id varchar(50),
+	interested_course varchar(max),
+	hope_from_course varchar(max),
+	career_goal varchar(max),
+	past_course varchar(max),
+	course_experience varchar(max),
+	learning_style varchar(max),
+	sel_learning_style varchar(max),
+ 
+	learning_material varchar(max),
+	learning_material_other varchar(200),
+	support_for_course varchar(max),
+	other_support varchar(max),
+ 
+	currently_working bit,
+	workspace varchar(200),
+	updated_cv varchar(max),
+	worked_in_industry bit,
+	role varchar(100),
+	applying_rpl bit,
+	other_information varchar(max),
+	completed_course bit,
+	transcripts varchar(max),
+ 
+	regular_access bit,
+	solution_and_strategy varchar(max),
+	approx_computer_use varchar(200),
+	digital_literacy bit,
+	discuss_solution varchar(max),
+	score varchar(30),
+ 
+	login_pc varchar(100),
+	send_email varchar(100),
+	navigate_website varchar(100),
+	create_folder varchar(100),
+	find_information varchar(100),
+	attach_document varchar(100),
+	save_emails varchar(100),
+	login_on_system varchar(100),
+	use_social_media varchar(100),
+ 
+	candidate_suitable bit,
+	additional_information bit,
+	details varchar(max),
+	additional_support varchar(max),
+	contain_online_component bit,
+	comments varchar(max),
+ 
+	suitable_for_enrolment varchar(max),
+	staff_name varchar(100),
+	position varchar(100),
+	signature varchar(max),
+	signature_date datetime,
+ 
+	create_by int,
+	create_date datetime,
+	modify_by int,
+	modify_date datetime,
+	delete_by int,
+	delete_date datetime,
+)
+ 

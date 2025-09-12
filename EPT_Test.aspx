@@ -1198,12 +1198,14 @@
     markError("#<%= txt_dob.ClientID %>", "Date of Birth is required");
     markError("#<%= txt_passport.ClientID %>", "Passport Number is required");
 
-    let email = $("#<%= txt_email.ClientID %>").val()?.trim() || "";
-    let emailPattern = /^[a-zA-Z0-9._%+-]+@(gmail|yahoo|outlook)\.com$/;
-    if (email === "" || !emailPattern.test(email)) {
-        errors.push(email === "" ? "Email is required" : "Enter a valid email address");
-        $("#<%= txt_email.ClientID %>").css("border", "1px solid red");
-    } else $("#<%= txt_email.ClientID %>").css("border", "1px solid #ccc");
+        let email = $("#<%= txt_email.ClientID %>").val()?.trim() || "";
+
+        if (email === "") {
+            errors.push("Email is required");
+            $("#<%= txt_email.ClientID %>").css("border", "1px solid red");
+        } else {
+            $("#<%= txt_email.ClientID %>").css("border", "1px solid #ccc");
+        }
 
     if ($("#<%= ddl_nationality.ClientID %>").val() === "" || $("#<%= ddl_nationality.ClientID %>").val() == null) {
         errors.push("Nationality is required");

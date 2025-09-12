@@ -74,7 +74,7 @@
                             </div>
                             <div class="info campus_info">
                                 <h4>
-                                    <a href="#">George Street Campus</a>
+                                    <a href="George_Street_Campus.aspx">George Street Campus</a>
                                 </h4>
 
                                 <p style="font-size: 13px">
@@ -105,7 +105,7 @@
                             </div>
                             <div class="info campus_info">
                                 <h4>
-                                    <a href="#">York Street Campus</a>
+                                    <a href="York_Street_Campus.aspx">York Street Campus</a>
                                 </h4>
 
                                 <p style="font-size: 13px">
@@ -167,7 +167,7 @@
                             </div>
                             <div class="info campus_info">
                                 <h4>
-                                    <a href="#">Melbourne Campus</a>
+                                    <a href="Melbourne_Campus.aspx">Melbourne Campus</a>
                                 </h4>
 
                                 <p style="font-size: 13px">

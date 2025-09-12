@@ -67,6 +67,7 @@
                                                 <li><a href="change_of_campus_form.aspx">Change of Campus Form</a></li>
                                                 <li><a href="cricos_student_withdrawal_form.aspx">CRICOS Student Withdrawal Form</a></li>
                                                 <li><a href="release_request_form.aspx">Release Request Form</a></li>
+                                                 <li><a href="course_entry_form.aspx">Course Entry Interview Form</a></li>
                                             </ul>
                                         </div>
                                         <div class="col-md-4" style="padding-bottom: 15px;">

@@ -33,7 +33,7 @@ public partial class release_request_form : System.Web.UI.Page
                 Task.Run(() =>
            {
                Send_Mail.MailWithouAttachment(
-                     "vandanahl2602@gmail.com",
+                     "sso@nortwest.edu.au",
                      "Release Request Form (" + ds.Tables[0].Rows[0]["student_name"].ToString() + ")",
                      mailbody(
                          ds.Tables[0].Rows[0]["student_name"].ToString(),

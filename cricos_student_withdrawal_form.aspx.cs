@@ -30,7 +30,7 @@ public partial class cricos_student_withdrawal_form : System.Web.UI.Page
                 Task.Run(() =>
            {
 
-               Send_Mail.MailWithouAttachment("vandanahl2602@gmail.com", "New Cricos Student Withdraw Form (" + full_name + ")", mailbody(ds.Tables[0].Rows[0]["first_name"].ToString(), ds.Tables[0].Rows[0]["last_name"].ToString(), ds.Tables[0].Rows[0]["withdraw_date"].ToString(), ds.Tables[0].Rows[0]["student_id"].ToString(), ds.Tables[0].Rows[0]["current_course"].ToString(), ds.Tables[0].Rows[0]["subsequent_course"].ToString(), ds.Tables[0].Rows[0]["reason_for_withdrawal"].ToString(), ds.Tables[0].Rows[0]["student_signature"].ToString(), ds.Tables[0].Rows[0]["sign_date"].ToString()), "", signaturePath);
+               Send_Mail.MailWithouAttachment("sso@nortwest.edu.au", "New Cricos Student Withdraw Form (" + full_name + ")", mailbody(ds.Tables[0].Rows[0]["first_name"].ToString(), ds.Tables[0].Rows[0]["last_name"].ToString(), ds.Tables[0].Rows[0]["withdraw_date"].ToString(), ds.Tables[0].Rows[0]["student_id"].ToString(), ds.Tables[0].Rows[0]["current_course"].ToString(), ds.Tables[0].Rows[0]["subsequent_course"].ToString(), ds.Tables[0].Rows[0]["reason_for_withdrawal"].ToString(), ds.Tables[0].Rows[0]["student_signature"].ToString(), ds.Tables[0].Rows[0]["sign_date"].ToString()), "", signaturePath);
            });
                 Response.Redirect("Success.aspx");
             }

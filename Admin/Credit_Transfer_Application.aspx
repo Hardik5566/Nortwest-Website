@@ -49,68 +49,67 @@
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <asp:GridView ID="grid_data" runat="server" AutoGenerateColumns="false" CssClass="table tbl_bottem_boder align-middle mb-0 grid_data">
+            <asp:GridView ID="grid_data" runat="server" OnRowCommand="grid_data_RowCommand" AutoGenerateColumns="false" CssClass="table tbl_bottem_boder align-middle mb-0 grid_data">
                 <Columns>
-    <asp:TemplateField HeaderText="Sr">
-        <ItemTemplate>
-            <%# Container.DataItemIndex + 1 %>
-        </ItemTemplate>
-    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Sr">
+                        <ItemTemplate>
+                            <%# Container.DataItemIndex + 1 %>
+                        </ItemTemplate>
+                    </asp:TemplateField>
 
-    <asp:TemplateField HeaderText="Student ID">
-        <ItemTemplate>
-            <%# Eval("student_id") %>
-        </ItemTemplate>
-    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Student ID">
+                        <ItemTemplate>
+                            <%# Eval("student_id") %>
+                        </ItemTemplate>
+                    </asp:TemplateField>
 
-    <asp:TemplateField HeaderText="Full Name">
-        <ItemTemplate>
-            <%# Eval("student_full_name") %>
-        </ItemTemplate>
-    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Full Name">
+                        <ItemTemplate>
+                            <%# Eval("student_full_name") %>
+                        </ItemTemplate>
+                    </asp:TemplateField>
 
-    <asp:TemplateField HeaderText="Date of Birth">
-        <ItemTemplate>
-            <%# Eval("birth_date") %>
-        </ItemTemplate>
-    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Date of Birth">
+                        <ItemTemplate>
+                            <%# Eval("birth_date") %>
+                        </ItemTemplate>
+                    </asp:TemplateField>
 
-    <asp:TemplateField HeaderText="Email">
-        <ItemTemplate>
-            <%# Eval("email") %>
-        </ItemTemplate>
-    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Email">
+                        <ItemTemplate>
+                            <%# Eval("email") %>
+                        </ItemTemplate>
+                    </asp:TemplateField>
 
-    <asp:TemplateField HeaderText="Contact No">
-        <ItemTemplate>
-            <%# Eval("country_code") + " " + Eval("contact_no") %>
-        </ItemTemplate>
-    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Contact No">
+                        <ItemTemplate>
+                            <%# Eval("country_code") + " " + Eval("contact_no") %>
+                        </ItemTemplate>
+                    </asp:TemplateField>
 
-    <asp:TemplateField HeaderText="Course Code">
-        <ItemTemplate>
-            <%# Eval("course_code") %>
-        </ItemTemplate>
-    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Course Code">
+                        <ItemTemplate>
+                            <%# Eval("course_code") %>
+                        </ItemTemplate>
+                    </asp:TemplateField>
 
-    <asp:TemplateField HeaderText="Unit Code">
-        <ItemTemplate>
-            <%# Eval("unit_codes") %>
-        </ItemTemplate>
-    </asp:TemplateField>
 
-    <asp:TemplateField HeaderText="Application Date">
-        <ItemTemplate>
-            <%# Eval("application_date") %>
-        </ItemTemplate>
-    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Application Date">
+                        <ItemTemplate>
+                            <%# Eval("application_date") %>
+                        </ItemTemplate>
+                    </asp:TemplateField>
 
-    <asp:TemplateField HeaderText="CT Granted">
-        <ItemTemplate>
-            <%# Eval("ct_granted") %>
-        </ItemTemplate>
-    </asp:TemplateField>
-</Columns>
+                    <asp:TemplateField HeaderText="Action" ItemStyle-Width="100px">
+                        <ItemTemplate>
+                            <div class="d-flex align-items-center gap-3 fs-6">
+                                <asp:LinkButton CommandName="btn_pdf" CommandArgument='<%# Eval("id") %>' runat="server" CssClass="text-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Form" aria-label="Views">
+                                        <i class="bi bi-file-earmark-pdf"></i>
+                                </asp:LinkButton>
+                            </div>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                </Columns>
 
             </asp:GridView>
         </div>

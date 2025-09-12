@@ -298,6 +298,19 @@
                 </div>
             </div>
         </a>
+        <a href="Cricos_student_Withdraw_Form.aspx">
+            <div class="dashboard-card">
+                <div class="card-top">
+                    <div class="card-icon"><i class="fas fa-sign-out-alt"></i></div>
+                    <div class="card-title">LLN Test</div>
+                </div>
+                <div class="card-bottom">
+                    <div class="card-value">
+                        <asp:Label ID="lln_test" runat="server" Text="0"></asp:Label>
+                    </div>
+                </div>
+            </div>
+        </a>
 
         <!-- Refund -->
         <a href="Refund.aspx">
@@ -408,6 +421,19 @@
                 <div class="card-bottom">
                     <div class="card-value">
                         <asp:Label ID="lbl_gst" runat="server" Text="0"></asp:Label>
+                    </div>
+                </div>
+            </div>
+        </a>
+        <a href="GST_form.aspx">
+            <div class="dashboard-card">
+                <div class="card-top">
+                    <div class="card-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+                    <div class="card-title">Course Entry Interview Form</div>
+                </div>
+                <div class="card-bottom">
+                    <div class="card-value">
+                        <asp:Label ID="lbl_course_entry" runat="server" Text="0"></asp:Label>
                     </div>
                 </div>
             </div>

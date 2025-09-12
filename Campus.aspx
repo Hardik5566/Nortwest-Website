@@ -35,6 +35,19 @@
     </style>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="body" runat="Server">
+    <div class="form breadcrumb-area shadow dark bg-fixed text-center text-light" style="background-image: url(assets/img/courses_banner.png);">
+        <div class="container">
+            <div class="row"> 
+                <div class="col-lg-12 col-md-12">
+                    <h1>Our Campus</h1>
+                    <ul class="breadcrumb">
+                        <li><a href="Default.aspx"><i class="fas fa-home"></i>Home</a></li>
+                        <li class="active">Our Campus</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="popular-courses-area weekly-top-items bottom-less" style="padding-top: 75px; padding-bottom: 50px">
         <div class="container">
             <div class="row">

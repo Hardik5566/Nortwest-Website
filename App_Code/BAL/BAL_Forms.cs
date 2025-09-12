@@ -14,6 +14,87 @@ public class BAL_Forms
     {
 
     }
+    public static DataSet ins_interview_form(string name, string dob, string phone, string email, string std_id, string interested_course, string hope_from_course, string career_goal, string past_course, string course_experience, string learning_style, string sel_learning_style, string learning_material, string learning_material_other, string support_for_course, string other_support, string currently_working, string workspace, string updated_cv, string worked_in_industry, string role, string applying_rpl, string other_information, string completed_course, string transcripts, string regular_access, string solution_and_strategy, string approx_computer_use, string digital_literacy, string discuss_solution, string score, string login_pc, string send_email, string navigate_website, string create_folder, string find_information, string attach_document, string save_emails, string login_on_system, string use_social_media, string candidate_suitable, string additional_information, string details, string additional_support, string contain_online_component, string comments, string suitable_for_enrolment, string staff_name, string position, string signature, string signature_date)
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.CommandText = "ins_course_entry_form_sp";
+        cmd.CommandType = CommandType.StoredProcedure;
+
+        // Create an instance of the Parameter class
+        parameter param = new parameter();
+
+        // Add parameters using the Parameter class
+        cmd.Parameters.Add(param.stringparam("@name", name));
+        cmd.Parameters.Add(param.stringparam("@dob", dob));
+        cmd.Parameters.Add(param.stringparam("@phone", phone));
+        cmd.Parameters.Add(param.stringparam("@email", email));
+        cmd.Parameters.Add(param.stringparam("@std_id", std_id));
+        cmd.Parameters.Add(param.stringparam("@interested_course", interested_course));
+        cmd.Parameters.Add(param.stringparam("@hope_from_course", hope_from_course));
+        cmd.Parameters.Add(param.stringparam("@career_goal", career_goal));
+        cmd.Parameters.Add(param.stringparam("@past_course", past_course));
+        cmd.Parameters.Add(param.stringparam("@course_experience", course_experience));
+        cmd.Parameters.Add(param.stringparam("@learning_style", learning_style));
+        cmd.Parameters.Add(param.stringparam("@sel_learning_style", sel_learning_style));
+        cmd.Parameters.Add(param.stringparam("@learning_material", learning_material));
+        cmd.Parameters.Add(param.stringparam("@learning_material_other", learning_material_other));
+        cmd.Parameters.Add(param.stringparam("@support_for_course", support_for_course));
+        cmd.Parameters.Add(param.stringparam("@other_support", other_support));
+        cmd.Parameters.Add(param.boolparam("@currently_working", currently_working));
+        cmd.Parameters.Add(param.stringparam("@workspace", workspace));
+        cmd.Parameters.Add(param.stringparam("@updated_cv", updated_cv));
+        cmd.Parameters.Add(param.boolparam("@worked_in_industry", worked_in_industry));
+        cmd.Parameters.Add(param.stringparam("@role", role));
+        cmd.Parameters.Add(param.boolparam("@applying_rpl", applying_rpl)); // Assuming applying_rpl 
+        cmd.Parameters.Add(param.stringparam("@other_information", other_information));
+        cmd.Parameters.Add(param.boolparam("@completed_course", completed_course)); // Assuming completed_course 
+        cmd.Parameters.Add(param.stringparam("@transcripts", transcripts));
+        cmd.Parameters.Add(param.boolparam("@regular_access", regular_access)); // Assuming regular_access 
+        cmd.Parameters.Add(param.stringparam("@solution_and_strategy", solution_and_strategy));
+        cmd.Parameters.Add(param.stringparam("@approx_computer_use", approx_computer_use));
+        cmd.Parameters.Add(param.boolparam("@digital_literacy", digital_literacy)); // Assuming digital_literacy 
+        cmd.Parameters.Add(param.stringparam("@discuss_solution", discuss_solution));
+        cmd.Parameters.Add(param.stringparam("@score", score));
+        cmd.Parameters.Add(param.stringparam("@login_pc", login_pc));
+        cmd.Parameters.Add(param.stringparam("@send_email", send_email));
+        cmd.Parameters.Add(param.stringparam("@navigate_website", navigate_website));
+        cmd.Parameters.Add(param.stringparam("@create_folder", create_folder));
+        cmd.Parameters.Add(param.stringparam("@find_information", find_information));
+        cmd.Parameters.Add(param.stringparam("@attach_document", attach_document));
+        cmd.Parameters.Add(param.stringparam("@save_emails", save_emails));
+        cmd.Parameters.Add(param.stringparam("@login_on_system", login_on_system));
+        cmd.Parameters.Add(param.stringparam("@use_social_media", use_social_media));
+        cmd.Parameters.Add(param.boolparam("@candidate_suitable", candidate_suitable)); // Assuming candidate_suitable 
+        cmd.Parameters.Add(param.boolparam("@additional_information", additional_information)); // Assuming candidate_suitable 
+        cmd.Parameters.Add(param.stringparam("@details", details));
+        cmd.Parameters.Add(param.stringparam("@additional_support", additional_support));
+        cmd.Parameters.Add(param.boolparam("@contain_online_component", contain_online_component)); // Assuming contain_online_component 
+        cmd.Parameters.Add(param.stringparam("@comments", comments));
+        cmd.Parameters.Add(param.stringparam("@suitable_for_enrolment", suitable_for_enrolment));
+        cmd.Parameters.Add(param.stringparam("@staff_name", staff_name));
+        cmd.Parameters.Add(param.stringparam("@position", position));
+        cmd.Parameters.Add(param.stringparam("@signature", signature));
+        cmd.Parameters.Add(param.datetimeparam("@signature_date", signature_date));
+        return command.ExtQueryDS(cmd); // Assuming Command.ExecuteDS executes the command and returns a DataSet
+    }
+
+    public static DataSet print_course_entry_form(string id)
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.CommandText = "print_course_entry_form_sp";
+        parameter param = new parameter();
+        cmd.Parameters.Add(param.intparam("@stu_id", id));
+        return command.ExtQueryDS(cmd);
+    }
+    public static DataSet dis_course_entry_form(string from_date, string to_date)
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.CommandText = "dis_course_entry_form_sp";
+        parameter param = new parameter();
+        cmd.Parameters.Add(param.datetimeparam("@from_date", from_date));
+        cmd.Parameters.Add(param.datetimeparam("@to_date", to_date));
+        return command.ExtQueryDS(cmd);
+    }
 
     public static DataSet dis_country()
     {
@@ -1058,6 +1139,14 @@ public class BAL_Forms
         parameter param = new parameter();
         cmd.Parameters.Add(param.datetimeparam("@from_date", from_date));
         cmd.Parameters.Add(param.datetimeparam("@to_date", to_date));
+        return command.ExtQueryDS(cmd);
+    }
+    public static DataSet sel_credit_transfer_Report(string id)
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.CommandText = "sel_credit_transfer_Report_sp";
+        parameter param = new parameter();
+        cmd.Parameters.Add(param.intparam("@id", id));
         return command.ExtQueryDS(cmd);
     }
 }

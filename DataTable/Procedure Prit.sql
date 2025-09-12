@@ -1062,48 +1062,13 @@ BEGIN
 		null
     )
 	declare @id int = @@identity
-	exec sel_credit_transfer_application_sp @id
+	exec sel_credit_transfer_Report_sp @id
 END
-----------------------------------------
----------select creadit transfer-----------
-----------------------------------------
-alter PROCEDURE dbo.sel_credit_transfer_application_sp
-(
-    @id INT 
-)
-AS
-BEGIN
-    
-       SELECT 
-        student_last_name,
-        title,
-        student_given_name,
-        format(cast(birth_date as date),'dd MMM, yyyy') as birth_date,
-        street_address,
-        postcode,
-        state_region,
-        email,
-        country_code,
-        contact_no,
-        student_id,
-        course_code,
-        course_title,
-        format(cast(application_date as date),'dd MMM, yyyy') as application_date,
-        unit_codes,
-        unit_titles,
-        evidence_supplied,
-        ct_granted,
-        student_signature,
-        format(cast(sign_date as date),'dd MMM, yyyy') as sign_date,
-        student_full_name,
-        status
-        FROM dbo.tbl_credit_transfer_application
-        WHERE id = @id AND delete_date IS NULL;
-END
+ 
 --------------------------------------------
 ---------Display creadit transfer-----------
 --------------------------------------------
-alter PROCEDURE [dbo].dis_credit_transfer_application_sp(	@from_date datetime,	@to_date datetime)ASBEGINselect		student_last_name,
+alter PROCEDURE [dbo].dis_credit_transfer_application_sp(	@from_date datetime,	@to_date datetime)ASBEGINselect		id,		student_last_name,
         title,
         student_given_name,
         format(cast(birth_date as date),'dd MMM, yyyy') as birth_date,
@@ -1544,4 +1509,322 @@ begin
 			tbl_gst_form
 		where status = 1 
 			AND CAST(create_date AS DATE) BETWEEN CAST(@from_date AS DATE) AND CAST(@to_date AS DATE)
+end
+--------------------------------------------------
+--------------Select Credit Transfer--------------
+--------------------------------------------------
+alter PROCEDURE [dbo].[sel_credit_transfer_Report_sp](	@id int)ASBEGIN     SELECT 
+		id,
+       title,
+	   student_given_name,
+	   student_last_name,
+        format(cast(birth_date as date),'dd MMM, yyyy') as birth_date,
+        street_address,
+        postcode,
+        state_region,
+        email,
+        (country_code+contact_no) as contact_no,
+        student_id,
+        course_code,
+        course_title,
+        format(cast(application_date as date),'dd MMM, yyyy') as application_date,
+        student_signature,
+        format(cast(sign_date as date),'dd MMM, yyyy') as sign_date,
+        student_full_name,
+        status
+        FROM dbo.tbl_credit_transfer_application	where status=1	and id = @id	exec sel_CT_sp @idEND;--------------------------------------------------
+--------------Select Credit Transfer--------------
+--------------------------------------------------
+alter proc sel_CT_sp
+(
+	@id int
+)
+as
+begin
+	SELECT 
+    u.Item AS unit_codes,
+    i.Item AS unit_titles,
+    t.Item AS evidence_supplied,
+    ct.Item as ct_granted
+FROM tbl_credit_transfer_application cta
+CROSS APPLY dbo.SplitString(cta.unit_titles, '|') AS i
+CROSS APPLY dbo.SplitString(cta.evidence_supplied, '|') AS t
+CROSS APPLY dbo.SplitString(cta.unit_codes, '|') AS u
+cross apply dbo.SplitString(cta.ct_granted, '|') AS ct
+WHERE i.[Index] = t.[Index]
+  AND i.[Index] = u.[Index]
+   AND i.[Index] = ct.[Index]
+   and id=@id
+
+end
+--------------------------------------------------
+--------------Select Course Entry--------------
+--------------------------------------------------
+ALTER proc [dbo].[print_course_entry_form_sp]
+(
+@stu_id int
+)
+as
+begin
+(
+	select 
+		stu_id,
+		 name,
+		 dob,
+		 phone,
+		 email,
+		 std_id,
+		 interested_course,
+		 hope_from_course,
+		 career_goal,
+		 past_course,
+		 course_experience,
+		 learning_style,
+		 sel_learning_style,
+		 learning_material,
+		 learning_material_other,
+		 support_for_course,
+		 other_support,
+		 currently_working,
+		 workspace,
+		 updated_cv,
+		 worked_in_industry,
+		 role,
+		 applying_rpl,
+		 other_information,
+		 completed_course,
+		 transcripts,
+		 regular_access,
+		 solution_and_strategy,
+		 approx_computer_use,
+		 digital_literacy,
+		 discuss_solution,
+		 score,
+		 login_pc,
+		 send_email,
+		 navigate_website,
+		 create_folder,
+		 find_information,
+		 attach_document,
+		 save_emails,
+		 login_on_system,
+		 use_social_media,
+		 candidate_suitable,
+		 additional_information,
+		 details,
+		 additional_support,
+		 contain_online_component,
+		 comments,
+		 suitable_for_enrolment,
+		 staff_name,
+		 position,
+		 signature,
+		 format(signature_date , 'dd MMM, yyyy') as signature_date,
+		format (create_date ,'dd MMM, yyyy') as create_date
+	from 
+		tbl_course_entrty_form
+	where
+		stu_id = @stu_id
+)
+end
+--------------------------------------------------
+--------------Insert Course Entry--------------
+--------------------------------------------------
+create PROCEDURE [dbo].[ins_course_entry_form_sp]
+(
+    @name varchar(200),
+    @dob datetime,
+    @phone varchar(15),
+    @email varchar(50),
+	@std_id varchar(50),
+    @interested_course varchar(max),
+    @hope_from_course varchar(max),
+    @career_goal varchar(max),
+    @past_course varchar(max),
+    @course_experience varchar(max),
+    @learning_style varchar(max),
+    @sel_learning_style varchar(max),
+    @learning_material varchar(max),
+    @learning_material_other varchar(200),
+    @support_for_course varchar(max),
+    @other_support varchar(max),
+    @currently_working bit,
+    @workspace varchar(200),
+    @updated_cv varchar(max),
+    @worked_in_industry bit,
+    @role varchar(100),
+    @applying_rpl bit,
+    @other_information varchar(max),
+    @completed_course bit,
+    @transcripts varchar(max),
+    @regular_access bit,
+    @solution_and_strategy varchar(max),
+    @approx_computer_use varchar(200),
+    @digital_literacy bit,
+    @discuss_solution varchar(max),
+    @score varchar(30),
+    @login_pc varchar(100),
+    @send_email varchar(100),
+    @navigate_website varchar(100),
+    @create_folder varchar(100),
+    @find_information varchar(100),
+    @attach_document varchar(100),
+    @save_emails varchar(100),
+    @login_on_system varchar(100),
+    @use_social_media varchar(100),
+    @candidate_suitable varchar(100),
+    @additional_information bit,
+    @details varchar(max),
+    @additional_support varchar(max),
+    @contain_online_component bit,
+    @comments varchar(max),
+    @suitable_for_enrolment varchar(max),
+    @staff_name varchar(100),
+    @position varchar(100),
+    @signature varchar(max),
+	@signature_date datetime
+   
+)
+AS
+BEGIN
+    INSERT INTO tbl_course_entrty_form
+    
+    VALUES
+    (
+        @name,
+        @dob,
+        @phone,
+        @email,
+		@std_id,
+        @interested_course,
+        @hope_from_course,
+        @career_goal,
+        @past_course,
+        @course_experience,
+        @learning_style,
+        @sel_learning_style,
+        @learning_material,
+        @learning_material_other,
+        @support_for_course,
+        @other_support,
+        @currently_working,
+        @workspace,
+        @updated_cv,
+        @worked_in_industry,
+        @role,
+        @applying_rpl,
+        @other_information,
+        @completed_course,
+        @transcripts,
+        @regular_access,
+        @solution_and_strategy,
+        @approx_computer_use,
+        @digital_literacy,
+        @discuss_solution,
+        @score,
+        @login_pc,
+        @send_email,
+        @navigate_website,
+        @create_folder,
+        @find_information,
+        @attach_document,
+        @save_emails,
+        @login_on_system,
+        @use_social_media,
+        @candidate_suitable,
+        @additional_information,
+        @details,
+        @additional_support,
+        @contain_online_component,
+        @comments,
+        @suitable_for_enrolment,
+        @staff_name,
+        @position,
+        @signature,
+		@signature_date,
+        0,
+        dbo.getcurrentauttime(),
+        NULL,
+        NULL,
+        NULL,
+        NULL
+    )
+	
+
+	declare @stu_id int = @@identity
+	--select @stu_id as stu_id
+
+	exec print_course_entry_form_sp @stu_id
+
+END
+--------------------------------------------------
+--------------Display Course Entry--------------
+--------------------------------------------------
+alter proc [dbo].[dis_course_entry_form_sp]
+(
+    @from_date DATETIME,
+    @to_date DATETIME
+)
+as
+begin
+(
+	select 
+		stu_id,
+		 name,
+		 dob,
+		 phone,
+		 email,
+		 std_id,
+		 interested_course,
+		 hope_from_course,
+		 career_goal,
+		 past_course,
+		 course_experience,
+		 learning_style,
+		 sel_learning_style,
+		 learning_material,
+		 learning_material_other,
+		 support_for_course,
+		 other_support,
+		 currently_working,
+		 workspace,
+		 updated_cv,
+		 worked_in_industry,
+		 role,
+		 applying_rpl,
+		 other_information,
+		 completed_course,
+		 transcripts,
+		 regular_access,
+		 solution_and_strategy,
+		 approx_computer_use,
+		 digital_literacy,
+		 discuss_solution,
+		 score,
+		 login_pc,
+		 send_email,
+		 navigate_website,
+		 create_folder,
+		 find_information,
+		 attach_document,
+		 save_emails,
+		 login_on_system,
+		 use_social_media,
+		 candidate_suitable,
+		 additional_information,
+		 details,
+		 additional_support,
+		 contain_online_component,
+		 comments,
+		 suitable_for_enrolment,
+		 staff_name,
+		 position,
+		 signature,	
+		 format(signature_date , 'dd MMM, yyyy') as signature_date,
+		format (create_date ,'dd MMM, yyyy') as create_date
+	from 
+		tbl_course_entrty_form
+	where
+		 CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)
+)
 end

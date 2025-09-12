@@ -151,7 +151,7 @@ public partial class refund_form : System.Web.UI.Page
 
                 string subject = "New Refund Form (" + ds.Tables[0].Rows[0]["first_name"].ToString() + ")";
                 string mail_body = get_email_body(ds.Tables[0].Rows[0]["first_name"].ToString() + " " + ds.Tables[0].Rows[0]["last_name"].ToString(), ds.Tables[0].Rows[0]["passport_no"].ToString());
-                string result = Send_Mail.SendMail("vandanahl2602@gmail.com", subject, mail_body, ach_attachment, "", "");
+                string result = Send_Mail.SendMail("refund@nortwest.edu.au", subject, mail_body, ach_attachment, "", "");
 
                 rpt.Close();
                 rpt.Dispose();

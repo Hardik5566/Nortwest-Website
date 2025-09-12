@@ -140,7 +140,8 @@ begin
         (SELECT COUNT(id) FROM tbl_new_vet_orientation_form) AS total_vet,
 		(SELECT COUNT(id) FROM tbl_release_request_form) AS total_relese_req,
 		(SELECT COUNT(id) FROM tbl_qualification_issuance_form) AS total_qualification_issuance,
-		(SELECT COUNT(FormID) FROM tbl_gst_form) AS total_gst
+		(SELECT COUNT(FormID) FROM tbl_gst_form) AS total_gst,
+		(SELECT COUNT(stu_id) FROM tbl_course_entrty_form) AS total_course_entry
 end
 GO
 /****** Object:  StoredProcedure [dbo].[dis_appeal_form_sp]    Script Date: 01-09-2025 18:47:59 ******/

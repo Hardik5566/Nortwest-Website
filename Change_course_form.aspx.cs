@@ -34,7 +34,7 @@ public partial class Change_course_form : System.Web.UI.Page
                 Task.Run(() =>
            {
                Send_Mail.MailWithouAttachment(
-                     "vandanahl2602@gmail.com",
+                     "sso@nortwest.edu.au",
                      "New Application for Change of Course Form (" + ds.Tables[0].Rows[0]["student_name"].ToString() + ")",
                      mailbody(
                          ds.Tables[0].Rows[0]["student_name"].ToString(),

@@ -50,7 +50,7 @@ public partial class Credit_Card_Authorisation_Form : System.Web.UI.Page
             string contact_no = ds.Tables[0].Rows[0]["contact_code"].ToString() + ds.Tables[0].Rows[0]["contact"].ToString();
             Task.Run(() =>
             {
-                Send_Mail.MailWithouAttachment("vandanahl2602@gmail.com", "New Credit Card Authorisation Form (" + ds.Tables[0].Rows[0]["stu_full_name"].ToString() + ")", mailbody(ds.Tables[0].Rows[0]["stu_number"].ToString(), ds.Tables[0].Rows[0]["stu_l_name"].ToString(), ds.Tables[0].Rows[0]["stu_given_name"].ToString(), ds.Tables[0].Rows[0]["stu_full_name"].ToString(), ds.Tables[0].Rows[0]["email"].ToString(), contact_no, ds.Tables[0].Rows[0]["street_address"].ToString(), ds.Tables[0].Rows[0]["address_line2"].ToString(), ds.Tables[0].Rows[0]["country"].ToString(), ds.Tables[0].Rows[0]["state"].ToString(), ds.Tables[0].Rows[0]["city"].ToString(), ds.Tables[0].Rows[0]["zip_code"].ToString()), "", "");
+                Send_Mail.MailWithouAttachment("sso@nortwest.edu.au", "New Credit Card Authorisation Form (" + ds.Tables[0].Rows[0]["stu_full_name"].ToString() + ")", mailbody(ds.Tables[0].Rows[0]["stu_number"].ToString(), ds.Tables[0].Rows[0]["stu_l_name"].ToString(), ds.Tables[0].Rows[0]["stu_given_name"].ToString(), ds.Tables[0].Rows[0]["stu_full_name"].ToString(), ds.Tables[0].Rows[0]["email"].ToString(), contact_no, ds.Tables[0].Rows[0]["street_address"].ToString(), ds.Tables[0].Rows[0]["address_line2"].ToString(), ds.Tables[0].Rows[0]["country"].ToString(), ds.Tables[0].Rows[0]["state"].ToString(), ds.Tables[0].Rows[0]["city"].ToString(), ds.Tables[0].Rows[0]["zip_code"].ToString()), "", "");
             });
             clear();
             Response.Redirect("Success.aspx");
