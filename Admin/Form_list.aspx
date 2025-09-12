@@ -425,7 +425,7 @@
                 </div>
             </div>
         </a>
-        <a href="GST_form.aspx">
+        <a href="course_entry_form.aspx">
             <div class="dashboard-card">
                 <div class="card-top">
                     <div class="card-icon"><i class="fas fa-chalkboard-teacher"></i></div>

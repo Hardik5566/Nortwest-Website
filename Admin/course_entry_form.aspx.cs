@@ -87,41 +87,36 @@ public partial class course_entry_form : System.Web.UI.Page
         ReportDocument rpt = new ReportDocument();
         try
         {
-            DataSet ds = BAL_Forms.sel_gst_form(id);
+            DataSet ds = BAL_Forms.print_course_entry_form(id);
+
             if (ds.Tables.Count > 0)
             {
-                // Fix signature path
-                ds.Tables[0].Rows[0]["signature_img"] = Server.MapPath("~/assets/img/sign/")
-                    + ds.Tables[0].Rows[0]["signature_img"];
+                // Fixing paths for Crystal Report fields
+                ds.Tables[0].Rows[0]["signature"] = Server.MapPath("~/assets/img/sign/") + ds.Tables[0].Rows[0]["signature"];
 
-                // Load main report
-                rpt.Load(Server.MapPath("~/RPT/RPT_GST_Form.rpt"));
+                string ack_cv = Server.MapPath("image/student_doc/") + ds.Tables[0].Rows[0]["updated_cv"];
+                string ack_transcript = Server.MapPath("image/student_doc/") + ds.Tables[0].Rows[0]["transcripts"];
 
-                // Set datasource for main report
-                rpt.Database.Tables["dt_gst_form"].SetDataSource(ds.Tables[0]);
-                rpt.Database.Tables["dt_job_gst"].SetDataSource(ds.Tables[1]);
-                rpt.Database.Tables["dt_visa_gst"].SetDataSource(ds.Tables[2]);
-                rpt.Database.Tables["dt_education_gst"].SetDataSource(ds.Tables[3]);
+                rpt.Load(Server.MapPath("~/RPT/interview_form1.rpt"));
+                rpt.Database.Tables["ds_interview_form"].SetDataSource(ds.Tables[0]);
 
-                //// Bind subreports
-                //rpt.Subreports["RPT_job_his_gst.rpt"].SetDataSource(ds.Tables[1]);
-                //rpt.Subreports["RPT_visa_gst.rpt"].SetDataSource(ds.Tables[2]);
-                //rpt.Subreports["RPT_education_gst.rpt"].SetDataSource(ds.Tables[3]);
+                string name = ds.Tables[0].Rows[0]["name"].ToString();
 
-                // Export to PDF stream
-                string fileName = "GST_Form_" + ds.Tables[0].Rows[0]["student_name"].ToString() + ".pdf";
-                Stream pdfStream = rpt.ExportToStream(ExportFormatType.PortableDocFormat);
-                pdfStream.Seek(0, SeekOrigin.Begin);
+                // Export report to stream
+                using (Stream pdfStream = rpt.ExportToStream(ExportFormatType.PortableDocFormat))
+                {
+                    byte[] pdfBytes = new byte[pdfStream.Length];
+                    pdfStream.Read(pdfBytes, 0, pdfBytes.Length);
 
-                // Send PDF to browser for download
-                Response.Clear();
-                Response.ContentType = "application/pdf";
-                Response.AddHeader("content-disposition", "attachment;filename=" + fileName);
-                byte[] buffer = new byte[pdfStream.Length];
-                pdfStream.Read(buffer, 0, buffer.Length);
-                Response.BinaryWrite(buffer);
-                Response.Flush();
-                Response.End();
+                    // Send PDF to browser for download
+                    Response.Clear();
+                    Response.Buffer = true;
+                    Response.ContentType = "application/pdf";
+                    Response.AddHeader("content-disposition", "attachment;filename=" + name + ".pdf");
+                    Response.BinaryWrite(pdfBytes);
+                    Response.Flush();
+                    Response.End();
+                }
             }
         }
         catch (Exception ex)

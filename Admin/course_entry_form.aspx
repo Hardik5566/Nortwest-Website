@@ -68,7 +68,7 @@
     <div class="messagealert" id="alert_container">
     </div>
     <div class="page-breadcrumb d-sm-flex align-items-center mb-3">
-        <div class="breadcrumb-title pe-3"><i class="bx bx-file">&nbsp</i>GST Form Data</div>
+        <div class="breadcrumb-title pe-3"><i class="bx bx-file">&nbsp</i>Course Entry Form</div>
     </div>
     <div class="card">
         <div class="card-header py-3">
