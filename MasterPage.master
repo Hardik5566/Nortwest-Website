@@ -150,12 +150,12 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">For Students</a>
                                 <ul class="dropdown-menu">
                                     <li><a href="Vet_Orientation.aspx">New Student Orientation</a></li>
-                                     <li><a href="academic_enrolment_calenda.aspx">ACADEMIC CALENDAR</a></li>
-                                  <%--  <li><a href="downloads.aspx">Downloads</a></li>--%>
+                                    <li><a href="academic_enrolment_calenda.aspx">ACADEMIC CALENDAR</a></li>
+                                    <%--  <li><a href="downloads.aspx">Downloads</a></li>--%>
                                     <li><a href="assets/prefix_file/NW-Brochure-copy_compressed-3-1.pdf" download="NW-Brochure.pdf">Brochure</a></li>
                                     <li><a href="https://accounts.google.com/v3/signin/identifier?continue=https%3A%2F%2Fmail.google.com%2Fmail%2F&ifkv=AXH0vVsC3NbLruWRPGrDMDXehhjhDfmqZAD10GenQPYkwt6jn3GdJFLpBNgSt8V3MhKBK_xq2bqkow&rip=1&sacu=1&service=mail&flowName=GlifWebSignIn&flowEntry=ServiceLogin&dsh=S-516335491%3A1744184120347082" target="_blank">Login Gmail</a></li>
                                     <li><a href="http://appv2.nortwest.edu.au/web/" target="_blank">Login LMS</a></li>
-                                   
+
                                 </ul>
                             </li>
                             <li>
@@ -249,7 +249,7 @@
                                     </p>
                                     <p style="font-size: 13px">
 
-                                        <a href="https://goo.gl/maps/rrK2MkmPbKX2EWWA8">
+                                        <a href="https://goo.gl/maps/rrK2MkmPbKX2EWWA8" target="_blank">
                                             <i class="fas fa-map">&nbsp&nbsp</i>LEVEL2, 531 GEORGE STREET SYDNEY NSW 2000 Australia
                                         </a>
                                     </p>
@@ -279,7 +279,7 @@
                                     </p>
                                     <p style="font-size: 13px">
 
-                                        <a href="https://www.google.com/maps/place/The+Grace+Sydney/@-33.8689641,151.2058908,936m/data=!3m2!1e3!4b1!4m9!3m8!1s0x6b12ae3f4100379f:0xdcefb6f023fc341f!5m2!4m1!1i2!8m2!3d-33.8689641!4d151.2058908!16zL20vMDd3dmJu?entry=ttu&g_ep=EgoyMDI1MDgyNS4wIKXMDSoASAFQAw%3D%3D">
+                                        <a href="https://www.google.com/maps/place/The+Grace+Sydney/@-33.8689641,151.2058908,936m/data=!3m2!1e3!4b1!4m9!3m8!1s0x6b12ae3f4100379f:0xdcefb6f023fc341f!5m2!4m1!1i2!8m2!3d-33.8689641!4d151.2058908!16zL20vMDd3dmJu?entry=ttu&g_ep=EgoyMDI1MDgyNS4wIKXMDSoASAFQAw%3D%3D" target="_blank">
                                             <i class="fas fa-map">&nbsp&nbsp</i>Level 2, The Grace Hotel Building 77 York Street Sydney NSW 2000 Australia
                                         </a>
                                     </p>
@@ -313,7 +313,7 @@
                                     </p>
                                     <p style="font-size: 13px">
 
-                                        <a href="https://www.google.com/maps/place/1+2%2F68+Grenfell+St,+Adelaide+SA+5000/@-34.9240955,138.6021704,924m/data=!3m2!1e3!4b1!4m6!3m5!1s0x6ab0ced693478bfb:0xc5535aea4c408e49!8m2!3d-34.9240955!4d138.6021704!16s%2Fg%2F11k9jddzth?entry=ttu&g_ep=EgoyMDI1MDgyNS4wIKXMDSoASAFQAw%3D%3D">
+                                        <a href="https://www.google.com/maps/place/1+2%2F68+Grenfell+St,+Adelaide+SA+5000/@-34.9240955,138.6021704,924m/data=!3m2!1e3!4b1!4m6!3m5!1s0x6ab0ced693478bfb:0xc5535aea4c408e49!8m2!3d-34.9240955!4d138.6021704!16s%2Fg%2F11k9jddzth?entry=ttu&g_ep=EgoyMDI1MDgyNS4wIKXMDSoASAFQAw%3D%3D" target="_blank">
                                             <i class="fas fa-map">&nbsp&nbsp</i>Suite 1,Level 2 66-68 Grenfell Street Adelaide SA 5000 Australia
                                         </a>
                                     </p>
@@ -346,7 +346,7 @@
                                     </p>
                                     <p style="font-size: 13px">
 
-                                        <a href="https://www.google.com/maps/place/9%2F108+Lonsdale+St,+Melbourne+VIC+3000/@-37.8101304,144.9690749,891m/data=!3m2!1e3!4b1!4m6!3m5!1s0x6ad642c92c70b903:0x1a52b8f482d3e7ff!8m2!3d-37.8101304!4d144.9690749!16s%2Fg%2F11w8dn7696?entry=ttu&g_ep=EgoyMDI1MDgyNS4wIKXMDSoASAFQAw%3D%3D">
+                                        <a href="https://www.google.com/maps/place/9%2F108+Lonsdale+St,+Melbourne+VIC+3000/@-37.8101304,144.9690749,891m/data=!3m2!1e3!4b1!4m6!3m5!1s0x6ad642c92c70b903:0x1a52b8f482d3e7ff!8m2!3d-37.8101304!4d144.9690749!16s%2Fg%2F11w8dn7696?entry=ttu&g_ep=EgoyMDI1MDgyNS4wIKXMDSoASAFQAw%3D%3D" target="_blankx">
                                             <i class="fas fa-map">&nbsp&nbsp</i>Level 9,
                                                                 108 Lonsdale Street,
                                                                 Melbourne, VIC, 3000, Australia
@@ -380,7 +380,7 @@
                                     <li>
                                         <a href="Courses.aspx"><i class="ti-angle-right"></i>Courses</a>
                                     </li>
-                                   <%-- <li>
+                                    <%-- <li>
                                         <a href="downloads.aspx"><i class="ti-angle-right"></i>Downloads</a>
                                     </li>--%>
                                     <li>
@@ -389,7 +389,7 @@
                                     <li>
                                         <a href="academic_enrolment_calenda.aspx"><i class="ti-angle-right"></i>Calendar</a>
                                     </li>
-                                     <li>
+                                    <li>
                                         <a href="Agent_List.aspx"><i class="ti-angle-right"></i>Agent Application</a>
                                     </li>
                                 </ul>
@@ -406,7 +406,7 @@
                                     <li>
                                         <a href="FAQ.aspx"><i class="ti-angle-right"></i>Faq</a>
                                     </li>
-                                   
+
                                     <li>
                                         <a href="Policy.aspx"><i class="ti-angle-right"></i>Policies & Procedures</a>
                                     </li>
