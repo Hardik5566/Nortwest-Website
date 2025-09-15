@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/FormMaster.master" AutoEventWireup="true" CodeFile="new_vet_orientation_form.aspx.cs" Inherits="new_vet_orientation_form" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="title" runat="Server">
-    Orientation Form For New VET
+    Orientation Form
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="head" runat="Server">
 
@@ -59,10 +59,10 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 col-md-12">
-                    <h1>Orientation Form For New VET</h1>
+                    <h1>Orientation Form</h1>
                     <ul class="breadcrumb">
                         <li><a href="https://nortwest.edu.au/"><i class="fas fa-home"></i>Home</a></li>
-                        <li class="active">Orientation Form For New VET</li>
+                        <li class="active">Orientation Form</li>
                     </ul>
                 </div>
             </div>
@@ -74,7 +74,7 @@
             <div class="row">
                 <div class="site-heading text-center">
                     <div class="col-md-8 col-md-offset-2">
-                        <h2>Orientation Form For New VET</h2>
+                        <h2>Orientation Form</h2>
                     </div>
                 </div>
             </div>
