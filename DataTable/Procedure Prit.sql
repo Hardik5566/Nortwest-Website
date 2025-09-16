@@ -1828,3 +1828,313 @@ begin
 		 CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)
 )
 end
+--------------------------------------------------
+--------------Insert Agent Application--------------
+--------------------------------------------------
+alter PROCEDURE ins_agent_app_form_sp
+(
+    @register_buissness_name VARCHAR(450),
+    @trading_name VARCHAR(350),
+    @abn VARCHAR(450),
+    @proprietor_directors_name VARCHAR(350),
+    @year_established VARCHAR(30),
+    @website VARCHAR(450),
+    @email VARCHAR(550),
+    @phone VARCHAR(15),
+    @country_code VARCHAR(10),
+	@contact varchar(15),
+    @address VARCHAR(MAX),
+    @postal_address VARCHAR(MAX),
+    @employed_agents_names VARCHAR(MAX),
+    @services_international_student VARCHAR(80),
+    @staff_count VARCHAR(50),
+    @staff_name VARCHAR(MAX),
+    @service VARCHAR(MAX),
+    @fee VARCHAR(MAX),
+    @agent_association_details VARCHAR(MAX),
+    @referral_origin_countries VARCHAR(MAX),
+    @staff_update_plan VARCHAR(MAX),
+    @partner_institution_details VARCHAR(MAX),
+    @contact_person_name_number VARCHAR(MAX),
+    @contact_person_email VARCHAR(MAX),
+    @full_name VARCHAR(450),
+    @position VARCHAR(450),
+    @signature VARCHAR(MAX),
+    @signature_date datetime null,
+    @create_by INT
+)
+AS
+BEGIN
+    INSERT INTO tbl_agent_app_form
+    VALUES
+    (
+        @register_buissness_name,
+        @trading_name,
+        @abn,
+        @proprietor_directors_name,
+        @year_established,
+        @website,
+        @email,
+        @phone,
+        @country_code,
+		@contact,
+        @address,
+        @postal_address,
+        @employed_agents_names,
+        @services_international_student,
+        @staff_count,
+        @staff_name,
+        @service,
+        @fee,
+        @agent_association_details,
+        @referral_origin_countries,
+        @staff_update_plan,
+        @partner_institution_details,
+        @contact_person_name_number,
+        @contact_person_email,
+        @full_name,
+        @position,
+        @signature,
+        @signature_date,
+        1,
+        @create_by,
+        dbo.getcurrentauttime(),
+		null,
+		null,
+		null,
+		null
+    )
+	declare @id int = @@identity
+	exec sel_agent_app_form_sp @id
+	exec sel_employed_agents_sp @id
+	exec sel_staff_name_sp @id
+	exec sel_service_fee_sp @id
+	exec sel_staff_update_plan_sp @id
+	exec sel_agents_association_sp @id
+	exec sel_institutes_detail_sp @id
+END
+--------------------------------------------------
+--------------Select Agent Application--------------
+--------------------------------------------------
+alter PROCEDURE sel_agent_app_form_sp
+(
+    @agent_id INT
+)
+AS
+BEGIN
+    
+    SELECT 
+        agent_form_id,
+        register_buissness_name,
+        trading_name,
+        abn,
+        proprietor_directors_name,
+        year_established,
+        website,
+        email,
+        phone,
+        country_code,
+        contact_no,
+        address,
+        postal_address,
+        services_international_student,
+         REPLACE(staff_count, '|', ',') as staff_count,
+        referral_origin_countries,
+        REPLACE(staff_count, '|', ',') as referral_origin_countries,
+        staff_update_plan,
+        partner_institution_details,
+        contact_person_name_number,
+        contact_person_email,
+        full_name,
+        position,
+        signature,
+        signature_date,
+        status
+    FROM tbl_agent_app_form
+    WHERE agent_form_id = @agent_id
+	and status = 1
+END
+--------------------------------------------------
+--------------Select Employee Agents--------------
+--------------------------------------------------
+alter proc sel_employed_agents_sp
+(
+	@id int
+)
+as
+begin 
+SELECT 
+    t.agent_form_id,
+    ea.Item AS employed_agents_names
+	FROM 
+		tbl_agent_app_form t
+	CROSS APPLY dbo.SplitString(t.employed_agents_names + '|', '|') AS ea
+		WHERE 
+		t.status = 1
+    AND t.agent_form_id = @id	
+end
+--------------------------------------------------
+--------------Select Employee Agents--------------
+--------------------------------------------------
+alter proc sel_staff_name_sp
+(
+	@id int
+)
+as
+begin 
+SELECT 
+    t.agent_form_id,
+    s.Item AS staff_full_name
+FROM 
+    tbl_agent_app_form t
+CROSS APPLY dbo.SplitString(t.staff_name + '|', '|') AS s
+WHERE 
+    t.status = 1
+    AND t.agent_form_id = @id
+ORDER BY 
+    t.agent_form_id, 
+    s.[Index];
+end
+--------------------------------------------------
+--------------Select Service Fee--------------
+--------------------------------------------------
+alter proc sel_service_fee_sp
+(
+	@id int
+)
+as
+begin 
+		SELECT 
+			t.agent_form_id,
+			s.Item AS service,
+			f.Item AS fee
+		FROM 
+			tbl_agent_app_form t
+		CROSS APPLY
+			dbo.SplitString(t.service + '|', '|') AS s
+		CROSS APPLY 
+			dbo.SplitString(t.fee + '|', '|') AS f
+		WHERE
+			t.status = 1
+			 AND s.[Index] = f.[Index]  
+			 AND t.agent_form_id = @id
+		ORDER BY 
+			t.agent_form_id,
+			s.[Index];
+end
+--------------------------------------------------
+--------------Select Service Fee--------------
+--------------------------------------------------
+ALTER proc sel_staff_update_plan_sp
+(
+	@id int
+)
+as
+begin 
+	SELECT 
+		t.agent_form_id,
+		s.Item AS staff_update_plan
+	FROM tbl_agent_app_form t
+	CROSS APPLY 
+			dbo.SplitString(t.staff_update_plan + '|', '|') AS s
+	WHERE 
+		t.status = 1
+	AND 
+		t.agent_form_id = @id
+	ORDER BY 
+		t.agent_form_id, s.[Index]
+end
+--------------------------------------------------
+--------------Select Employee Agents--------------
+--------------------------------------------------
+alter proc sel_agents_association_sp
+(
+	@id int
+)
+as
+begin 
+	-- Split agent_association_details by '|' and keep index
+SELECT 
+    t.agent_form_id,
+    s.Item AS agent_association_details
+FROM tbl_agent_app_form t
+CROSS APPLY dbo.SplitString(t.agent_association_details+ '|', '|') AS s
+WHERE t.status = 1
+  AND t.agent_form_id = @id
+ORDER BY t.agent_form_id, s.[Index];
+
+end
+--------------------------------------------------
+--------------Select Employee Agents--------------
+--------------------------------------------------
+alter proc sel_institutes_detail_sp
+(
+	@id int
+)
+as
+begin 
+		SELECT 
+			t.agent_form_id,
+			p.Item AS partner_institution_details,
+			c.Item AS contact_person_name_number,
+			e.Item AS contact_person_email
+		FROM
+			tbl_agent_app_form t
+		CROSS APPLY 
+			dbo.SplitString(t.partner_institution_details+ '|', '|') AS p
+		CROSS APPLY 
+			dbo.SplitString(t.contact_person_name_number+ '|', '|') AS c
+		CROSS APPLY 
+			dbo.SplitString(t.contact_person_email+ '|', '|') AS e
+		WHERE
+			t.status = 1
+		  AND p.[Index] = c.[Index]
+		  AND p.[Index] = e.[Index]
+		  AND t.agent_form_id = @id
+		ORDER BY 
+			t.agent_form_id, p.[Index];
+
+end
+--------------------------------------------------
+--------------test Employee Agents--------------
+--------------------------------------------------
+create proc sel_agent_application_sp
+(
+	@id int
+)
+as
+begin 
+	exec sel_agent_app_form_sp @id
+	exec sel_employed_agents_sp @id
+	exec sel_staff_name_sp @id
+	exec sel_service_fee_sp @id
+	exec sel_staff_update_plan_sp @id
+	exec sel_agents_association_sp @id
+	exec sel_institutes_detail_sp @id
+end
+--------------------------------------------------
+--------------test Employee Agents--------------
+--------------------------------------------------
+CREATE PROCEDURE dis_agent_application_sp
+(
+    @from_date DATETIME,
+    @to_date   DATETIME
+)
+AS
+BEGIN
+   SELECT 
+        agent_form_id,
+        register_buissness_name,
+        trading_name,
+        abn,
+        proprietor_directors_name,
+        full_name,
+		register_buissness_name,
+		trading_name,
+        signature,
+        create_date
+    FROM tbl_agent_app_form
+    WHERE status = 1
+      AND CAST(create_date AS DATE) 
+          BETWEEN CAST(@from_date AS DATE) AND CAST(@to_date AS DATE);
+END

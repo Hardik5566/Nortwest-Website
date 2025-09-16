@@ -14,6 +14,66 @@ public class BAL_Forms
     {
 
     }
+    public static DataSet dis_agent_application(string from_date, string to_date)
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.CommandText = "dis_agent_application_sp";
+        parameter param = new parameter();
+        cmd.Parameters.Add(param.datetimeparam("@from_date", from_date));
+        cmd.Parameters.Add(param.datetimeparam("@to_date", to_date));
+        return command.ExtQueryDS(cmd);
+    }
+    public static DataSet sel_agent_application(string id)
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.CommandText = "sel_agent_application_sp";
+        parameter param = new parameter();
+        cmd.Parameters.Add(param.intparam("@id", id));
+        return command.ExtQueryDS(cmd);
+    }
+    public static DataSet ins_agent_app_form(string register_buissness_name, string trading_name, string abn, string proprietor_directors_name, string year_established, string website, string email, string phone, string country_code, string contact, string address, string postal_address, string employed_agents_names, string services_international_student, string staff_count, string staff_name, string service, string fee, string agent_association_details, string referral_origin_countries, string staff_update_plan, string partner_institution_details, string contact_person_name_number, string contact_person_email, string full_name, string position, string signature, string signature_date, string create_by)
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.CommandText = "ins_agent_app_form_sp";
+        cmd.CommandType = CommandType.StoredProcedure;
+
+        // Create an instance of the Parameter class
+        parameter param = new parameter();
+
+        // Add parameters using the Parameter class
+        cmd.Parameters.Add(param.stringparam("@register_buissness_name", register_buissness_name));
+        cmd.Parameters.Add(param.stringparam("@trading_name", trading_name));
+        cmd.Parameters.Add(param.stringparam("@abn", abn));
+        cmd.Parameters.Add(param.stringparam("@proprietor_directors_name", proprietor_directors_name));
+        cmd.Parameters.Add(param.stringparam("@year_established", year_established));
+        cmd.Parameters.Add(param.stringparam("@website", website));
+        cmd.Parameters.Add(param.stringparam("@email", email));
+        cmd.Parameters.Add(param.stringparam("@phone", phone));
+        cmd.Parameters.Add(param.stringparam("@country_code", country_code));
+        cmd.Parameters.Add(param.stringparam("@contact", contact));
+        cmd.Parameters.Add(param.stringparam("@address", address));
+        cmd.Parameters.Add(param.stringparam("@postal_address", postal_address));
+        cmd.Parameters.Add(param.stringparam("@employed_agents_names", employed_agents_names));
+        cmd.Parameters.Add(param.stringparam("@services_international_student", services_international_student));
+        cmd.Parameters.Add(param.stringparam("@staff_count", staff_count));
+        cmd.Parameters.Add(param.stringparam("@staff_name", staff_name));
+        cmd.Parameters.Add(param.stringparam("@service", service));
+        cmd.Parameters.Add(param.stringparam("@fee", fee));
+        cmd.Parameters.Add(param.stringparam("@agent_association_details", agent_association_details));
+        cmd.Parameters.Add(param.stringparam("@referral_origin_countries", referral_origin_countries));
+        cmd.Parameters.Add(param.stringparam("@staff_update_plan", staff_update_plan));
+        cmd.Parameters.Add(param.stringparam("@partner_institution_details", partner_institution_details));
+        cmd.Parameters.Add(param.stringparam("@contact_person_name_number", contact_person_name_number));
+        cmd.Parameters.Add(param.stringparam("@contact_person_email", contact_person_email));
+        cmd.Parameters.Add(param.stringparam("@full_name", full_name));
+        cmd.Parameters.Add(param.stringparam("@position", position));
+        cmd.Parameters.Add(param.stringparam("@signature", signature));
+        cmd.Parameters.Add(param.datetimeparam("@signature_date", signature_date));
+        cmd.Parameters.Add(param.intparam("@create_by", create_by));
+
+        return command.ExtQueryDS(cmd); // Assuming ExtQueryDS executes the stored procedure and returns DataSet
+    }
+
     public static DataSet ins_interview_form(string name, string dob, string phone, string email, string std_id, string interested_course, string hope_from_course, string career_goal, string past_course, string course_experience, string learning_style, string sel_learning_style, string learning_material, string learning_material_other, string support_for_course, string other_support, string currently_working, string workspace, string updated_cv, string worked_in_industry, string role, string applying_rpl, string other_information, string completed_course, string transcripts, string regular_access, string solution_and_strategy, string approx_computer_use, string digital_literacy, string discuss_solution, string score, string login_pc, string send_email, string navigate_website, string create_folder, string find_information, string attach_document, string save_emails, string login_on_system, string use_social_media, string candidate_suitable, string additional_information, string details, string additional_support, string contain_online_component, string comments, string suitable_for_enrolment, string staff_name, string position, string signature, string signature_date)
     {
         SqlCommand cmd = new SqlCommand();

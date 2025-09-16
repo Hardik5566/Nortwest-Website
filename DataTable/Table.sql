@@ -345,6 +345,48 @@ CREATE TYPE agenttabletype AS TABLE
     business_name   VARCHAR(MAX),
     contact_number  VARCHAR(15)
 );
+----------------------------------------
+--------------Table Agent----------------
+----------------------------------------
+create table tbl_agent_app_form
+(
+	agent_form_id int identity(1,1),
+	register_buissness_name varchar(450),
+	trading_name varchar(350),
+	abn varchar(450),
+	proprietor_directors_name varchar(350),
+	year_established varchar(30),
+	website varchar(450),
+	email varchar(550),
+	phone varchar(15),
+	country_code varchar(10),
+	contact_no varchar(15),
+	address varchar(max),
+	postal_address varchar(max),
+	employed_agents_names varchar(max),
+	services_international_student varchar(80),
+	staff_count varchar(50),
+	staff_name varchar(max),
+	service varchar(max),
+	fee varchar(max),
+	agent_association_details varchar(max),
+	referral_origin_countries varchar(max),
+	staff_update_plan varchar(max),
+	partner_institution_details varchar(max),
+	contact_person_name_number varchar(max),
+	contact_person_email varchar(max),
+	full_name varchar(450),
+	position varchar(450),
+	signature varchar(max),
+	signature_date datetime,
+	status bit,
+	create_by int,
+	create_date datetime,
+	modify_by int,
+	modify_date datetime,
+	delete_by int,
+	delete_date datetime
+)
 
 
 

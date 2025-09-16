@@ -56,7 +56,8 @@ public partial class Admin_Form_list : System.Web.UI.Page
         //lbl_new_elicos.Text = ds.Tables[0].Rows[0]["total_elicos"].ToString();
         //lbl_gte.Text = ds.Tables[0].Rows[0]["total_GTE"].ToString();
         //lbl_english_test.Text = ds.Tables[0].Rows[0]["total_ept"].ToString();
-
+        lbl_agent_app.Text = ds.Tables[0].Rows[0]["total_agent_form"].ToString();
+        
 
 
 

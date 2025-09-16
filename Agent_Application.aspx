@@ -144,12 +144,17 @@
                         </div>
                         <div class="col-md-4">
                             <label class="lbl_title">Phone</label>
-                            <asp:TextBox runat="server" ID="TextBox1" CssClass="form-control" />
+                            <asp:TextBox runat="server" ID="txt_phone" CssClass="form-control" />
                         </div>
-                        <div class="col-md-4">
-                            <label class="lbl_title">Mobile</label>
-                            <asp:TextBox runat="server" ID="TextBox2" CssClass="form-control" />
+                       <div class="col-md-4">
+                        <label class="lbl_title">Mobile</label>
+                        <div class="input-group contact_no">
+                            <input id="phone" onkeypress="return only_number(event)" style="width: 100%; padding: 6px 47px !important" name="phone" class="form-control" type="tel" />
+                            <p id="output"></p>
+                            <asp:HiddenField ID="hd_contact_no_code" Value="" runat="server" />
+                            <asp:HiddenField ID="hd_contact_no" Value="" runat="server" />
                         </div>
+                    </div>
                         <div class="col-md-12">
                             <label class="lbl_title">Address (include Postcode and Country)</label>
                             <asp:TextBox runat="server" ID="txt_address" TextMode="MultiLine" Rows="3" CssClass="form-control" />
@@ -216,7 +221,7 @@
                                     <asp:CheckBox Text="" runat="server" />Migration
                                 </label>
                             </div>--%>
-                            <asp:CheckBoxList runat="server">
+                            <asp:CheckBoxList runat="server" ID="intend_provide">
                                 <asp:ListItem Text="Education" />
                                 <asp:ListItem Text="Migration" />
                             </asp:CheckBoxList>
@@ -236,7 +241,7 @@
                                 </label>
                             </div>--%>
 
-                            <asp:CheckBoxList runat="server">
+                            <asp:CheckBoxList runat="server" ID="number_of_staff">
                                 <asp:ListItem Text="1-2" />
                                 <asp:ListItem Text="3-5" />
                                 <asp:ListItem Text="more than 5" />
@@ -302,7 +307,7 @@
                         <div class="col-md-12">
                             <label class="lbl_title">5. Which countries do most of your student referrals originate from?</label>
 
-                            <asp:CheckBoxList runat="server">
+                            <asp:CheckBoxList runat="server" ID="org_country">
                                 <asp:ListItem Text="China" />
                                 <asp:ListItem Text="India" />
                                 <asp:ListItem Text="Philippines" />
@@ -382,8 +387,110 @@
                     </ul>
 
                 </div>
+                <div class="form-container">
+                    <h4>Northwest College Responsibilities</h4>
+                    <ol>
+                        <li>Northwest College fosters and maintains a learning environment that is conducive to the success of all students.</li>
+                        <li>Northwest College has demonstrated a strong capacity to deliver the nominated course(s), provide modern and up to date facilities and use appropriate, valid, sufficient and current teaching and assessment methods and materials.</li>
+                        <li>Northwest College undertakes to market all education and training products with absolute integrity, accuracy and professionalism.</li>
+                        <li>In the provision of information, Northwest College will make no false or misleading comparisons with any other provider or course.</li>
+                        <li>Northwest College strives to provide accurate, relevant and up to date information to education agents and students prior to course application and enrolment procedures.</li>
+                        <li>Northwest College undertakes to provide all enrolled students with:
+                <ol type="I">
+                    <li>Orientation/Induction</li>
+                    <li>Student Handbook</li>
+                    <li>All necessary course materials</li>
+                </ol>
+                        </li>
+                        <li>Northwest College follows a firm practice in the recruiting, monitoring and termination of education agents domestically and internationally to ensure honest and professional representation of Northwest College with the highest integrity.</li>
+                        <li>Education Agents will be actively monitored for performance and quality and those not meeting Northwest College’s standard will be removed from the register.</li>
+                        <li>Northwest College will publish a list of all approved education agents on their website.</li>
+                        <li>Northwest College will list all approved agents on Provider Registration and International Student Management System (PRISMS).</li>
+                    </ol>
+                </div>
 
                 <div class="form-container">
+                    <h4>Education Agent Responsibilities</h4>
+                    <ol>
+                        <li>The Student Recruitment Education Agent should be aware of their responsibilities as defined in the National Code of Practice 2018 for Providers of Education and Training to Overseas Students, established under the ESOS Act 2000 and in particular that as a representative of Nortwest College, the Student Recruitment Education Agent undertakes to ensure that they and any of their staff are fully informed of any changes to the National Code of Practice as they may occur from time to time.
+                        </li>
+                        <li>The Student Recruitment Education Agent undertakes to ensure that the recruitment of students is conducted at all times in an ethical and responsible manner and consistent with the requirements of the relevant course or curriculum as detailed in materials published by Nortwest College.
+                        </li>
+                        <li>The Student Recruitment Education Agent agrees to ensure that all student selection decisions comply with equal opportunity legislation.
+                        </li>
+                        <li>The Student Recruitment Education Agent agrees to employ appropriately qualified staff, or to train all staff that will assess the extent to which the applicant meets the prerequisites of the course for which they are applying based on the applicant’s qualifications and proficiencies.
+                        </li>
+                        <li>The Student Recruitment Education Agent must not assign this Agreement or any right under this Agreement without the prior consent of Nortwest College.
+                        </li>
+                        <li>If the Student Recruitment Education Agent uses sub-contractors, their names should be listed in this Agreement and the Education Agent must not sub-contract to any other person or party the performance of any of its obligations under this Agreement without the prior consent of Nortwest College.
+                        </li>
+                        <li>Despite any sub-contract, the Student Recruitment Agent remains liable for performing its obligations under this Agreement.
+                        </li>
+                        <li>All responsibilities applicable to Nortwest College's obligations as an RTO in accordance with the Standards for RTOs 2015 apply to the Student Recruitment Agent, by virtue of the agreement between the two. These obligations include:
+                <ul class="mt-2">
+                    <li>cooperating with ASQA, the regulatory body by providing data and information as required;</li>
+                    <li>complying with advertising and marketing standards;</li>
+                    <li>informing prospective learners;</li>
+                    <li>dealing with complaints and appeals;</li>
+                    <li>collecting fees, and</li>
+                    <li>recordkeeping.</li>
+                </ul>
+                        </li>
+                        <li>The Student Recruitment Education Agent will agree be actively monitored for performance and quality and understands that and those not meeting the Nortwest College’s standards will be removed from the register.
+                        </li>
+                        <li>The Student Recruitment Education Agent will agree to their name appearing in a list of approved agents published on Nortwest College’s website.
+                        </li>
+                        <li>The Student Recruitment Education Agent will agree Nortwest College listing them as approved agent on Provider Registration and International Student Management System (PRISMS).
+                        </li>
+                        <li>The Student Recruitment Education Agent undertakes to follow the enrolment procedures as published by Nortwest College and to make available all original applicant documentation to Nortwest College upon request.
+                        </li>
+                        <li>The Student Recruitment Education Agent agrees to ensure that all applicant information collected as part of the application and enrolment process is securely kept and that the handling and divulging of all applicant information complies with Australian Privacy Legislation.
+                        </li>
+                        <li>In representing Nortwest College, the Student Recruitment Education Agent confirms that they have never been convicted of engaging in dishonest or deceptive practices.
+                        </li>
+                        <li>In representing Nortwest College, the Student Recruitment Education Agent, agrees to abide by Items 1. to 15. of the Education Agent Responsibilities as outlined above and contained within the Student Recruitment Education Agent Code of Conduct.
+                        </li>
+                    </ol>
+                </div>
+                 <div class="form-container">
+
+                <h4>STUDENT DECLARATION</h4>
+                <p>I am interested in representing Nortwest College T/A City Institute as a Student Recruitment Education Agent and I agree to do so in an honest and professional manner.<br /> I agree to:</p>
+               <ul>
+                   <li>Regularly monitor policies and changes to the policies as reported on the DIBP website.</li>
+                   <li>I have read the National Code of Practice for Providers of Education and Training to Overseas Students 2018 and agree to adhere to the relevant Standards</li>
+                   <li>
+                       I agree to cooperate with the National Regulator (ASQA) as required, in accordance with the Standards for RTOs 2015.
+                   </li>
+               </ul>
+                 <div class="row">
+                      <div class="col-md-12">
+                        <label class="lbl_title">Full Name</label>
+                        <asp:TextBox ID="txt_full_name" CssClass="form-control" runat="server"></asp:TextBox>
+                    </div>
+                      <div class="col-md-12">
+                        <label class="lbl_title">Position</label>
+                        <asp:TextBox ID="txt_position" CssClass="form-control" runat="server"></asp:TextBox>
+                    </div>
+                    <div class="col-md-6">
+                        <div>
+                            <img id="clearBtn" style="width: 22px; float: right; margin-bottom: 8px;" src="assets/img/eraser.png" />
+                        </div>
+                        <asp:HiddenField ID="hdnSignature" runat="server" />
+                        <canvas id="signatureCanvas" style="border: 1px solid #dfdfdf; width: 100%; height: 250px; background: white;"></canvas>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="lbl_title">Date</label>
+                        <asp:TextBox ID="txt_sign_date" CssClass="form-control" TextMode="Date" runat="server"></asp:TextBox>
+                    </div>
+                </div>
+                <div class="btn_step">
+                    <button type="button" class="btn btn-secondary prev-step">Previous</button>
+                    <asp:Button Text="Submit" ID="btn_submit" OnClientClick="saveSignature()" OnClick="btn_submit_Click" CssClass="btn btn-success" runat="server" />
+                </div>
+            </div>
+
+              <%--  <div class="form-container">
                     <h5>Think about learning English in your country.</h5>
                     <h5>Answer the questions below in your own words. Questions 46-48 is worth 2 mark each, Question 49 is worth 4 marks</h5>
 
@@ -391,36 +498,15 @@
                         <button type="button" class="btn btn-secondary prev-step">Previous</button>
                         <button type="button" class="btn btn-primary next-step">Next</button>
                     </div>
-                </div>
-
+                </div>--%>
             </div>
+        <%--  --%>
 
-            <div class="step step-4">
-                <div class="form-container">
 
-                    <label>
-                        I am interested in representing Nortwest College T/A City Institute as a Student Recruitment Education Agent and I agree to do so in an honest and professional manner.
-                        <br />
-                        I agree to:
 
-                    </label>
-                    <ul>
-                        <li>Regularly monitor policies and changes to the policies as reported on the DIBP website.
-
-                        </li>
-                        <li>I have read the National Code of Practice for Providers of Education and Training to Overseas Students 2018 and agree to adhere to the relevant Standards
-                        </li>
-                        <li>I agree to cooperate with the National Regulator (ASQA) as required, in accordance with the Standards for RTOs 2015.
-
-                        </li>
-                    </ul>
-                    <div class="btn_step">
-                        <button type="button" class="btn btn-secondary prev-step">Previous</button>
-                        <asp:Button Text="Submit" ID="btn_submit" OnClientClick="saveSignature()" OnClick="btn_submit_Click" CssClass="btn btn-success" runat="server" />
-                    </div>
-                </div>
-            </div>
-        </div>
+        <%--  --%>
+      
+    </div>
     </div>
 
 
@@ -436,72 +522,76 @@
     <asp:HiddenField runat="server" ID="hd_email_list" />
 
 
+   
 
 </asp:Content>
 
 <asp:Content ID="Content4" ContentPlaceHolderID="jqury" runat="Server">
+<script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
+<script>
+    let signaturePad;
 
-
-    <%--<script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
-    <script>
+    document.addEventListener('DOMContentLoaded', function() {
         const canvas = document.getElementById('signatureCanvas');
-        const signaturePad = new SignaturePad(canvas);
-
-        // Resize canvas for high-DPI displays
-        function resizeCanvas() {
-            const ratio = Math.max(window.devicePixelRatio || 1, 1);
-            canvas.width = canvas.offsetWidth * ratio;
-            canvas.height = canvas.offsetHeight * ratio;
-            canvas.getContext("2d").scale(ratio, ratio);
-            signaturePad.clear();
+        if (!canvas) {
+            console.error('Canvas element not found!');
+            return;
         }
-        window.addEventListener("resize", resizeCanvas);
-        resizeCanvas();
 
-        // Clear button
-        document.getElementById('clearBtn').addEventListener('click', () => {
-            signaturePad.clear();
+        signaturePad = new SignaturePad(canvas);
+
+        function resizeCanvas() {
+            const data = signaturePad.isEmpty() ? null : signaturePad.toData();
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+            if (data) {
+                signaturePad.fromData(data);
+            }
+        }
+        
+        // Use requestAnimationFrame for a more robust solution
+        function checkAndResizeCanvas() {
+            // Check if the canvas has a valid size
+            if (canvas.offsetWidth > 0 && canvas.offsetHeight > 0) {
+                resizeCanvas();
+            } else {
+                // If not, continue checking on the next animation frame
+                window.requestAnimationFrame(checkAndResizeCanvas);
+            }
+        }
+
+        checkAndResizeCanvas(); // Initial call to start the check
+
+        let resizeTimeout;
+        window.addEventListener("resize", function() {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(resizeCanvas, 100);
         });
 
-        function saveSignature() {
-            var canvas = document.getElementById("signatureCanvas");
-            var signatureData = canvas.toDataURL("image/png"); // Get signature as Base64
-            document.getElementById("<%= hdnSignature.ClientID %>").value = signatureData; // Set value in hidden field
-        }
-    </script>--%>
-
-
-    <script src="https://cdn.webrtc-experiment.com/commits.js" async></script>
-
-
-    <%-- <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
-    <script>
-        const canvas = document.getElementById('signatureCanvas');
-        const signaturePad = new SignaturePad(canvas);
-
-        // Resize canvas for high-DPI displays
-        function resizeCanvas() {
-            const ratio = Math.max(window.devicePixelRatio || 1, 1);
-            canvas.width = canvas.offsetWidth * ratio;
-            canvas.height = canvas.offsetHeight * ratio;
-            canvas.getContext("2d").scale(ratio, ratio);
-            signaturePad.clear();
-        }
-        window.addEventListener("resize", resizeCanvas);
-        resizeCanvas();
-
-        // Clear button
-        document.getElementById('clearBtn').addEventListener('click', () => {
-            signaturePad.clear();
-        });
-
-        function saveSignature() {
-            var canvas = document.getElementById("signatureCanvas");
-            var signatureData = canvas.toDataURL("image/png"); // Get signature as Base64
-            document.getElementById("<%= hdnSignature.ClientID %>").value = signatureData; // Set value in hidden field
+        const clearBtn = document.getElementById('clearBtn');
+        if (clearBtn) {
+            clearBtn.addEventListener('click', function() {
+                signaturePad.clear();
+            });
         }
 
-    </script>--%>
+        window.saveSignature = function() {
+            if (signaturePad.isEmpty()) {
+                alert("Please provide a signature.");
+                return false;
+            }
+            const hdnSignature = document.getElementById('<%= hdnSignature.ClientID %>');
+            if (hdnSignature) {
+                hdnSignature.value = signaturePad.toDataURL();
+            } else {
+                console.error('HiddenField element not found!');
+                return false;
+            }
+            return true;
+        };
+    });
+</script>
+
 
     <script>
         $(document).ready(function () {
@@ -542,93 +632,137 @@
                 var errors = [];
 
                 // 🔹 Step 1 Validations
-                if (currentStep.hasClass("step-1")) {
+              if (currentStep.hasClass("step-1")) {
                     validateField("#<%= txt_reg_name.ClientID %>", "Registered Business Name is required", errors);
-                   validateField("#<%= txt_trading_name.ClientID %>", "Trading Name is required", errors);
-                   validateField("#<%= txt_abn.ClientID %>", "ABN is required", errors);
-                   validateField("#<%= txt_director_name.ClientID %>", "Director Name is required", errors);
-                   validateField("#<%= txt_est_year.ClientID %>", "Established Year is required", errors);
-                   validateField("#<%= txt_website.ClientID %>", "Website is required", errors);
-                   validateField("#<%= TextBox1.ClientID %>", "Phone is required", errors);
-                   validateField("#<%= TextBox2.ClientID %>", "Mobile is required", errors);
-                   validateField("#<%= txt_address.ClientID %>", "Address is required", errors);
-                   validateField("#<%= txt_post_address.ClientID %>", "Postal Address is required", errors);
+                    validateField("#<%= txt_trading_name.ClientID %>", "Trading Name is required", errors);
+                    validateField("#<%= txt_abn.ClientID %>", "ABN is required", errors);
+                    validateField("#<%= txt_director_name.ClientID %>", "Director Name is required", errors);
+                    validateField("#<%= txt_est_year.ClientID %>", "Established Year is required", errors);
+                    validateField("#<%= txt_website.ClientID %>", "Website is required", errors);
+                    validateField("#<%= txt_phone.ClientID %>", "Phone is required", errors);
+                    validateField("#<%= txt_address.ClientID %>", "Address is required", errors);
+                    validateField("#<%= txt_post_address.ClientID %>", "Postal Address is required", errors);
 
-                   // Email
-                   var emailField = $("#<%= txt_email.ClientID %>");
-                   validateEmailValue(emailField.val(), "Enter a valid Email", errors, emailField);
-               }
+                    // Email
+                    var emailField = $("#<%= txt_email.ClientID %>");
+                    validateEmailValue(emailField.val(), "Enter a valid Email", errors, emailField);
+                }
 
-               // 🔹 Step 2 Validations (NO checkbox validation)
-               if (currentStep.hasClass("step-2")) {
-                   // Staff Names
-                   if ($(".staff-input").filter(function () { return this.value.trim() !== ""; }).length === 0) {
-                       errors.push("Please enter at least one staff name.");
-                       $(".staff-input").css("border", "2px solid #ff0000a6");
-                   }
+                // 🔹 Step 2 Validations (NO checkbox validation)
+                if (currentStep.hasClass("step-2")) {
+                    // Staff Names
+                    if ($(".staff-input").filter(function () { return this.value.trim() !== ""; }).length === 0) {
+                        errors.push("Please enter at least one staff name.");
+                        $(".staff-input").css("border", "2px solid #ff0000a6");
+                    }
 
-                   // Services + Fees (if any service filled, fee required too)
-                   $(".service-input").each(function (i) {
-                       var serviceVal = $(this).val().trim();
-                       var feeVal = $(".fee-input").eq(i).val().trim();
-                       if (serviceVal !== "" && feeVal === "") {
-                           errors.push("Please enter fee for service: " + serviceVal);
-                           $(".fee-input").eq(i).css("border", "2px solid #ff0000a6");
-                       }
-                   });
+                    // Services + Fees (if any service filled, fee required too)
+                    $(".service-input").each(function (i) {
+                        var serviceVal = $(this).val().trim();
+                        var feeVal = $(".fee-input").eq(i).val().trim();
+                        if (serviceVal !== "" && feeVal === "") {
+                            errors.push("Please enter fee for service: " + serviceVal);
+                            $(".fee-input").eq(i).css("border", "2px solid #ff0000a6");
+                        }
+                    });
 
-                   // Members
-                   if ($(".member-input").filter(function () { return this.value.trim() !== ""; }).length === 0) {
-                       errors.push("Please enter at least one membership detail.");
-                       $(".member-input").css("border", "2px solid #ff0000a6");
-                   }
+                    // Members
+                    if ($(".member-input").filter(function () { return this.value.trim() !== ""; }).length === 0) {
+                        errors.push("Please enter at least one membership detail.");
+                        $(".member-input").css("border", "2px solid #ff0000a6");
+                    }
 
-                   // Intended Info
-                   if ($(".intend-input").filter(function () { return this.value.trim() !== ""; }).length === 0) {
-                       errors.push("Please provide at least one intended info.");
-                       $(".intend-input").css("border", "2px solid #ff0000a6");
-                   }
+                    // Intended Info
+                    if ($(".intend-input").filter(function () { return this.value.trim() !== ""; }).length === 0) {
+                        errors.push("Please provide at least one intended info.");
+                        $(".intend-input").css("border", "2px solid #ff0000a6");
+                    }
 
-                   // Institutions
-                   $(".institution-input").each(function (i) {
-                       var inst = $(this).val().trim();
-                       var number = $(".number-input").eq(i).val().trim();
-                       var email = $(".email-input").eq(i).val().trim();
-                       if (inst === "" && number === "" && email === "") {
-                           errors.push("Please fill at least one institution with contact details.");
-                           $(".institution-input, .number-input, .email-input").css("border", "2px solid #ff0000a6");
-                           return false; // stop loop
-                       } else {
-                           validateEmailValue(email, "Invalid institution contact email", errors, $(".email-input").eq(i));
-                       }
-                   });
-               }
+                    // Institutions
+                    $(".institution-input").each(function (i) {
+                        var inst = $(this).val().trim();
+                        var number = $(".number-input").eq(i).val().trim();
+                        var email = $(".email-input").eq(i).val().trim();
+                        if (inst === "" && number === "" && email === "") {
+                            errors.push("Please fill at least one institution with contact details.");
+                            $(".institution-input, .number-input, .email-input").css("border", "2px solid #ff0000a6");
+                            return false; // stop loop
+                        } else {
+                            validateEmailValue(email, "Invalid institution contact email", errors, $(".email-input").eq(i));
+                        }
+                    });
+                }
 
-               // ❌ If errors exist → stop
-               if (errors.length > 0) {
-                   alert(errors.join("\n"));
-                   return;
-               }
+                // ❌ If errors exist → stop
+                if (errors.length > 0) {
+                    alert(errors.join("\n"));
+                    return;
+                }
 
-               // ✅ If all valid → move to next step
-               currentStep.hide();
-               nextStep.show();
-               $("html, body").animate({ scrollTop: 550 }, "fast");
-           });
+                // ✅ If all valid → move to next step
+                currentStep.hide();
+                nextStep.show();
+                $("html, body").animate({ scrollTop: 550 }, "fast");
+            });
 
-           // ---------------- Previous Button ----------------
-           $(".prev-step").click(function () {
-               var currentStep = $(this).closest(".step");
-               var prevStep = currentStep.prev(".step");
+            // ---------------- Previous Button ----------------
+            $(".prev-step").click(function () {
+                var currentStep = $(this).closest(".step");
+                var prevStep = currentStep.prev(".step");
 
-               currentStep.hide();
-               prevStep.show();
+                currentStep.hide();
+                prevStep.show();
 
-               $("html, body").animate({ scrollTop: 550 }, "fast");
-           });
-       });
+                $("html, body").animate({ scrollTop: 550 }, "fast");
+            });
+        });
+    </script>
+      <script src="assets/js/select2.min.js"></script>
+
+    <script>
+        $(document).on('ready page:load', function () {
+            $('.select2').select2();
+            $('.search_dropdown .select2-container:eq(1)').hide();
+        });
     </script>
 
+    <script src="assets/country_code/js/intlTelInput.js"></script>
+
+    <script>
+        var input = document.querySelector("#phone");
+        var output = document.querySelector("#output");
+
+        var iti = window.intlTelInput(input, {
+            nationalMode: true,
+            separateDialCode: true,
+            preferredCountries: ['au'],
+            utilsScript: "assets/country_code/js/utils.js",
+        });
+
+        var handleChange = function () {
+            var text = (iti.isValidNumber()) ? "" : "Please enter a valid number";
+            var textNode = document.createTextNode(text);
+            output.innerHTML = "";
+            output.appendChild(textNode);
+            $("#<%= hd_contact_no_code.ClientID%>").val(iti.selectedCountryData.dialCode);
+            $("#<%= hd_contact_no.ClientID%>").val($("#phone").val());
+        };
+
+        input.addEventListener('countrychange', handleChange);
+        input.addEventListener('change', handleChange);
+        input.addEventListener('keyup', handleChange);
+    </script>
+
+    <script>
+        function only_number(key) {
+            var charCode = (key.which) ? key.which : key.keyCode;
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+    </script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             let NameWrapper = document.getElementById("NameWrapper");
@@ -1008,6 +1142,6 @@
         });
         });
     </script>
-
+   
 
 </asp:Content>
