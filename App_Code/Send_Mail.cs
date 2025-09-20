@@ -33,7 +33,11 @@ public class Send_Mail
             mail.From = new MailAddress("noreply@nortwest.edu.au");
             // mail.Bcc.Add("krupali@nortwest.edu.au");
             //mail.Bcc.Add("hardikvaghasiya5566@gmail.com");
-            mail.To.Add(to);
+            
+            foreach (var address in to.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                mail.To.Add(address.Trim());
+            }
 
             mail.Subject = subject;
             mail.Body = mailBody;

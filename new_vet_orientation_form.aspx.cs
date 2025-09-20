@@ -23,7 +23,7 @@ public partial class new_vet_orientation_form : System.Web.UI.Page
         {
             if (!IsPostBack)
             {
-            
+
                 bind_data();
                 ddl_country.Items.Insert(0, new ListItem("Select Country", "0"));
 
@@ -68,7 +68,7 @@ public partial class new_vet_orientation_form : System.Web.UI.Page
             string selected_valuef = selected_value6();
             string selected_valueg = selected_value7();
             string selected_valueh = selected_value8();
-            
+
             string selected_valuei = select_1();  // Assuming this method fetches the selected value from control
             string selected_valuej = select_2();  // Same for this method
             string save_signature = SaveSignature();  // Assuming this method returns the student's signature or achievements
@@ -349,7 +349,7 @@ public partial class new_vet_orientation_form : System.Web.UI.Page
         }
         return selectedValue;
     }
-    
+
 
     public string select_1()
     {
@@ -543,7 +543,17 @@ public partial class new_vet_orientation_form : System.Web.UI.Page
 
                 string subject = "Orientation Form For New VET Student (" + ds.Tables[0].Rows[0]["student_full_name"].ToString() + "-" + ds.Tables[0].Rows[0]["student_id_no"].ToString() + ")";
                 string mail_body = get_email_body(ds.Tables[0].Rows[0]["student_full_name"].ToString(), ds.Tables[0].Rows[0]["student_id_no"].ToString());
-                string result = Send_Mail.SendMail("sso@nortwest.edu.au", subject, mail_body, ach_attachment, "", stu_photo);
+
+                if (ds.Tables[0].Rows[0]["campus"].ToString() == "Adelaide")
+                {
+                    string result = Send_Mail.SendMail("sso@nortwest.edu.au,adminadelaide@nortwest.edu.au", subject, mail_body, ach_attachment, "", stu_photo);
+
+                }
+                else
+                {
+                    string result = Send_Mail.SendMail("sso@nortwest.edu.au", subject, mail_body, ach_attachment, "", stu_photo);
+                }
+
 
                 rpt.Close();
                 rpt.Dispose();
@@ -562,7 +572,7 @@ public partial class new_vet_orientation_form : System.Web.UI.Page
         }
     }
 
-    public string get_email_body(string name,string std_id)
+    public string get_email_body(string name, string std_id)
     {
         try
         {

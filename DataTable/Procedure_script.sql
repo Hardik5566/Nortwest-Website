@@ -151,7 +151,37 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-create PROCEDURE [dbo].[dis_appeal_form_sp](	@from_date datetime,	@to_date datetime)ASBEGIN    SELECT         id,         student_no,		student_last_name,		student_given_name,		student_full_name ,		email ,		country_code ,		contact_no ,		street_address ,		street_address_line_2 ,		city ,		state_region ,		zip ,		country ,		format(create_date,'dd MMM, yyyy') as [date]    FROM tbl_appeal_form	where	status=1	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)	END;
+create PROCEDURE [dbo].[dis_appeal_form_sp]
+(
+	@from_date datetime,
+	@to_date datetime
+)
+AS
+BEGIN
+
+    SELECT 
+        id,
+         student_no,
+		student_last_name,
+		student_given_name,
+		student_full_name ,
+		email ,
+		country_code ,
+		contact_no ,
+		street_address ,
+		street_address_line_2 ,
+		city ,
+		state_region ,
+		zip ,
+		country ,
+		format(create_date,'dd MMM, yyyy') as [date]
+
+    FROM tbl_appeal_form
+	where
+	status=1
+	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)
+	
+END;
 GO
 /****** Object:  StoredProcedure [dbo].[dis_application_for_deferment_form_sp]    Script Date: 01-09-2025 18:47:59 ******/
 SET ANSI_NULLS ON
@@ -159,7 +189,10 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 create proc [dbo].[dis_application_for_deferment_form_sp]
-(	@from_date datetime,	@to_date datetime)
+(
+	@from_date datetime,
+	@to_date datetime
+)
 as 
 begin
 	select
@@ -175,7 +208,10 @@ begin
 		contact_no,
 		format(create_date,'dd-MM-yyyy') as [date]
 		from tbl_application_for_deferment_form
-			where	status=1	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)	
+			where
+	status=1
+	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)
+	
 end
 GO
 /****** Object:  StoredProcedure [dbo].[dis_application_for_reassessment_sp]    Script Date: 01-09-2025 18:47:59 ******/
@@ -183,7 +219,37 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create PROCEDURE [dbo].[dis_application_for_reassessment_sp](	@from_date datetime,	@to_date datetime)ASBEGIN    SELECT         id,         student_no,		student_last_name,		student_given_name,		student_full_name ,		email ,		country_code ,		contact_no ,		street_address ,		street_address_line_2 ,		city ,		state_region ,		zip ,		country ,		format(create_date,'dd MMM, yyyy') as [date]    FROM tbl_application_for_reassessment	where	status=1	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)	END;
+create PROCEDURE [dbo].[dis_application_for_reassessment_sp]
+(
+	@from_date datetime,
+	@to_date datetime
+)
+AS
+BEGIN
+
+    SELECT 
+        id,
+         student_no,
+		student_last_name,
+		student_given_name,
+		student_full_name ,
+		email ,
+		country_code ,
+		contact_no ,
+		street_address ,
+		street_address_line_2 ,
+		city ,
+		state_region ,
+		zip ,
+		country ,
+		format(create_date,'dd MMM, yyyy') as [date]
+
+    FROM tbl_application_for_reassessment
+	where
+	status=1
+	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)
+	
+END;
 GO
 /****** Object:  StoredProcedure [dbo].[dis_calender_sp]    Script Date: 01-09-2025 18:47:59 ******/
 SET ANSI_NULLS ON
@@ -215,21 +281,88 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE PROCEDURE [dbo].[dis_cancelation_form_sp](	@from_date datetime,	@to_date datetime)ASBEGIN    SELECT         id,         student_no,		student_last_name,		student_given_name,		student_full_name ,		email ,		country_code ,		contact_no ,		street_address ,		street_address_line_2 ,		city ,		state_region ,		zip ,		country ,		format(create_date,'dd MMM, yyyy') as [date]    FROM tbl_cancelation_form	where	status=1	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)	END;
+CREATE PROCEDURE [dbo].[dis_cancelation_form_sp]
+(
+	@from_date datetime,
+	@to_date datetime
+)
+AS
+BEGIN
+
+    SELECT 
+        id,
+         student_no,
+		student_last_name,
+		student_given_name,
+		student_full_name ,
+		email ,
+		country_code ,
+		contact_no ,
+		street_address ,
+		street_address_line_2 ,
+		city ,
+		state_region ,
+		zip ,
+		country ,
+		format(create_date,'dd MMM, yyyy') as [date]
+
+    FROM tbl_cancelation_form
+	where
+	status=1
+	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)
+	
+END;
 GO
 /****** Object:  StoredProcedure [dbo].[dis_change_course_form_sp]    Script Date: 01-09-2025 18:47:59 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE PROCEDURE [dbo].[dis_change_course_form_sp](	@from_date datetime,	@to_date datetime)ASBEGIN    SELECT         id,         student_no,		student_last_name,		student_given_name,		student_full_name ,		email ,		country_code ,		contact_no ,		street_address ,		address_line_2 ,		city ,		state_region ,		zip ,		country ,		format(create_date,'dd MMM, yyyy') as [date]    FROM tbl_change_course_forms	where	status=1	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)	END;
+CREATE PROCEDURE [dbo].[dis_change_course_form_sp]
+(
+	@from_date datetime,
+	@to_date datetime
+)
+AS
+BEGIN
+
+    SELECT 
+        id,
+         student_no,
+		student_last_name,
+		student_given_name,
+		student_full_name ,
+		email ,
+		country_code ,
+		contact_no ,
+		street_address ,
+		address_line_2 ,
+		city ,
+		state_region ,
+		zip ,
+		country ,
+		format(create_date,'dd MMM, yyyy') as [date]
+
+    FROM tbl_change_course_forms
+	where
+	status=1
+	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)
+	
+END;
 GO
 /****** Object:  StoredProcedure [dbo].[dis_change_of_campus_form_sp]    Script Date: 01-09-2025 18:47:59 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE PROCEDURE [dbo].[dis_change_of_campus_form_sp](	@from_date datetime,	@to_date datetime)ASBEGIN	 SELECT 
+CREATE PROCEDURE [dbo].[dis_change_of_campus_form_sp]
+(
+	@from_date datetime,
+	@to_date datetime
+)
+AS
+BEGIN
+	 SELECT 
         id,
         std_id,
         passport_no,
@@ -248,14 +381,51 @@ CREATE PROCEDURE [dbo].[dis_change_of_campus_form_sp](	@from_date datetime,	@
         student_signature,
         format(cast( sign_date as date),'dd MMM,yyyy') as sign_date,
         status,
-		format(create_date,'dd MMM, yyyy') as [date]    FROM tbl_change_of_campus_form	where	status=1	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)	END;
+		format(create_date,'dd MMM, yyyy') as [date]
+
+    FROM tbl_change_of_campus_form
+	where
+	status=1
+	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)
+	
+END;
 GO
 /****** Object:  StoredProcedure [dbo].[dis_complaint_and_feedback_form_sp]    Script Date: 01-09-2025 18:47:59 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create PROCEDURE [dbo].[dis_complaint_and_feedback_form_sp](	@from_date datetime,	@to_date datetime)ASBEGIN    SELECT         id,         student_no,		student_last_name,		student_given_name,		student_full_name ,		email ,		country_code ,		contact_no ,		street_address ,		street_address_line_2 ,		city ,		state_region ,		zip ,		country ,		format(create_date,'dd MMM, yyyy') as [date]    FROM tbl_Complaint_and_feedback_form	where	status=1	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)	END;
+create PROCEDURE [dbo].[dis_complaint_and_feedback_form_sp]
+(
+	@from_date datetime,
+	@to_date datetime
+)
+AS
+BEGIN
+
+    SELECT 
+        id,
+         student_no,
+		student_last_name,
+		student_given_name,
+		student_full_name ,
+		email ,
+		country_code ,
+		contact_no ,
+		street_address ,
+		street_address_line_2 ,
+		city ,
+		state_region ,
+		zip ,
+		country ,
+		format(create_date,'dd MMM, yyyy') as [date]
+
+    FROM tbl_Complaint_and_feedback_form
+	where
+	status=1
+	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)
+	
+END;
 GO
 /****** Object:  StoredProcedure [dbo].[dis_country_sp]    Script Date: 01-09-2025 18:47:59 ******/
 SET ANSI_NULLS ON
@@ -389,7 +559,37 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create PROCEDURE [dbo].[dis_credit_transfer_application_sp](	@from_date datetime,	@to_date datetime)ASBEGIN    SELECT         id,         student_no,		student_last_name,		student_given_name,		student_full_name ,		email ,		country_code ,		contact_no ,		street_address ,		street_address_line_2 ,		city ,		state_region ,		zip ,		country ,		format(create_date,'dd MMM, yyyy') as [date]    FROM tbl_credit_transfer_application	where	status=1	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)	END;
+create PROCEDURE [dbo].[dis_credit_transfer_application_sp]
+(
+	@from_date datetime,
+	@to_date datetime
+)
+AS
+BEGIN
+
+    SELECT 
+        id,
+         student_no,
+		student_last_name,
+		student_given_name,
+		student_full_name ,
+		email ,
+		country_code ,
+		contact_no ,
+		street_address ,
+		street_address_line_2 ,
+		city ,
+		state_region ,
+		zip ,
+		country ,
+		format(create_date,'dd MMM, yyyy') as [date]
+
+    FROM tbl_credit_transfer_application
+	where
+	status=1
+	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)
+	
+END;
 GO
 /****** Object:  StoredProcedure [dbo].[dis_cricos_student_withdrawal_form_sp]    Script Date: 01-09-2025 18:47:59 ******/
 SET ANSI_NULLS ON
@@ -397,7 +597,16 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE [dbo].[dis_cricos_student_withdrawal_form_sp]
-(	@from_date datetime,	@to_date datetime)ASBEGIN    SELECT         id,		first_name,
+(
+	@from_date datetime,
+	@to_date datetime
+)
+AS
+BEGIN
+
+    SELECT 
+        id,
+		first_name,
 		last_name,
 		format(withdraw_date,'dd MMM, yyyy') as withdraw_date,
 		student_id,
@@ -405,7 +614,15 @@ CREATE PROCEDURE [dbo].[dis_cricos_student_withdrawal_form_sp]
 		subsequent_course,
 		reason_for_withdrawal,
 		student_signature,
-		format(sign_date,'dd MMM, yyyy') as sign_date,		format(create_date,'dd MMM, yyyy') as [date]    FROM tbl_cricos_student_withdrwal_form	where	status=1	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)	END;
+		format(sign_date,'dd MMM, yyyy') as sign_date,
+		format(create_date,'dd MMM, yyyy') as [date]
+
+    FROM tbl_cricos_student_withdrwal_form
+	where
+	status=1
+	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)
+	
+END;
 GO
 /****** Object:  StoredProcedure [dbo].[dis_ept_form_sp]    Script Date: 01-09-2025 18:47:59 ******/
 SET ANSI_NULLS ON
@@ -413,7 +630,10 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 create proc [dbo].[dis_ept_form_sp]
-(	@from_date datetime,	@to_date datetime)
+(
+	@from_date datetime,
+	@to_date datetime
+)
 as
 begin
 select
@@ -429,7 +649,9 @@ select
       
   from
 	tbl_ept_test_form
-	where	status=1	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)
+	where
+	status=1
+	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)
 end
 GO
 /****** Object:  StoredProcedure [dbo].[dis_gte_form_sp]    Script Date: 01-09-2025 18:47:59 ******/
@@ -439,7 +661,10 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 create proc [dbo].[dis_gte_form_sp]
-(	@from_date datetime,	@to_date datetime)
+(
+	@from_date datetime,
+	@to_date datetime
+)
 as
 begin
 select 
@@ -457,7 +682,10 @@ format(create_date, 'dd-MM-yyyy') as [date]
 from 
 	tbl_gte_form
 
-	where	status=1	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)	
+	where
+	status=1
+	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)
+	
 
 end
 
@@ -611,20 +839,47 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE [dbo].[dis_refund_form_sp]
-(	@from_date datetime,	@to_date datetime)ASBEGIN    SELECT         id,		first_name,
+(
+	@from_date datetime,
+	@to_date datetime
+)
+AS
+BEGIN
+
+    SELECT 
+        id,
+		first_name,
 		last_name,
 		format(birth_date,'dd MMM, yyyy') as birth_date,
 		nationality,
 		country_code,
 		contact_no,
-		email,		format(create_date,'dd MMM, yyyy') as [date]    FROM tbl_refund_form	where	status=1	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)	END;
+		email,
+		format(create_date,'dd MMM, yyyy') as [date]
+
+    FROM tbl_refund_form
+	where
+	status=1
+	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)
+	
+END;
 GO
 /****** Object:  StoredProcedure [dbo].[dis_special_leave_request_form_sp]    Script Date: 01-09-2025 18:47:59 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE PROCEDURE [dbo].[dis_special_leave_request_form_sp](	@from_date datetime,	@to_date datetime)ASBEGIN    SELECT         id,       student_no,
+CREATE PROCEDURE [dbo].[dis_special_leave_request_form_sp]
+(
+	@from_date datetime,
+	@to_date datetime
+)
+AS
+BEGIN
+
+    SELECT 
+        id,
+       student_no,
 	student_last_name,
 	student_given_name,
 	student_full_name ,
@@ -636,14 +891,52 @@ CREATE PROCEDURE [dbo].[dis_special_leave_request_form_sp](	@from_date datetim
 	city ,
 	state_region ,
 	zip ,
-	country ,		format(create_date,'dd MMM, yyyy') as [date]    FROM tbl_special_leave_request_form	where	status=1	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)	END;
+	country ,
+		format(create_date,'dd MMM, yyyy') as [date]
+
+    FROM tbl_special_leave_request_form
+	where
+	status=1
+	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)
+	
+END;
 GO
 /****** Object:  StoredProcedure [dbo].[dis_student_details_form_sp]    Script Date: 01-09-2025 18:47:59 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create PROCEDURE [dbo].[dis_student_details_form_sp](	@from_date datetime,	@to_date datetime)ASBEGIN    SELECT         id,         student_no,		student_last_name,		student_given_name,		student_full_name ,		email ,		country_code ,		contact_no ,		street_address ,		street_address_line_2 ,		city ,		state_region ,		zip ,		country ,		format(create_date,'dd MMM, yyyy') as [date]    FROM tbl_student_details_form	where	status=1	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)	END;
+create PROCEDURE [dbo].[dis_student_details_form_sp]
+(
+	@from_date datetime,
+	@to_date datetime
+)
+AS
+BEGIN
+
+    SELECT 
+        id,
+         student_no,
+		student_last_name,
+		student_given_name,
+		student_full_name ,
+		email ,
+		country_code ,
+		contact_no ,
+		street_address ,
+		street_address_line_2 ,
+		city ,
+		state_region ,
+		zip ,
+		country ,
+		format(create_date,'dd MMM, yyyy') as [date]
+
+    FROM tbl_student_details_form
+	where
+	status=1
+	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)
+	
+END;
 GO
 /****** Object:  StoredProcedure [dbo].[dis_student_request_forms_sp]    Script Date: 01-09-2025 18:47:59 ******/
 SET ANSI_NULLS ON
@@ -651,7 +944,10 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE proc [dbo].[dis_student_request_forms_sp]
-(	@from_date datetime,	@to_date datetime)
+(
+	@from_date datetime,
+	@to_date datetime
+)
 as 
 begin
 	select
@@ -668,7 +964,10 @@ begin
 		
 		format(create_date,'dd-MM-yyyy') as [date]
 		from tbl_student_request_forms
-			where	status=1	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)	
+			where
+	status=1
+	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)
+	
 end
 GO
 /****** Object:  StoredProcedure [dbo].[dis_tbl_agents_sp]    Script Date: 01-09-2025 18:47:59 ******/
@@ -2207,7 +2506,13 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create PROCEDURE [dbo].[sel_change_of_campus_form_sp](	@id int)ASBEGIN	 SELECT 
+create PROCEDURE [dbo].[sel_change_of_campus_form_sp]
+(
+	@id int
+)
+AS
+BEGIN
+	 SELECT 
         id,
         std_id,
         passport_no,
@@ -2226,7 +2531,13 @@ create PROCEDURE [dbo].[sel_change_of_campus_form_sp](	@id int)ASBEGIN	 SE
         student_signature,
         format(cast( sign_date as date),'dd MMM,yyyy') as sign_date,
         status,
-		format(create_date,'dd MMM, yyyy') as [date]    FROM tbl_change_of_campus_form	where	status=1	and id=@idEND
+		format(create_date,'dd MMM, yyyy') as [date]
+
+    FROM tbl_change_of_campus_form
+	where
+	status=1
+	and id=@id
+END
 GO
 /****** Object:  StoredProcedure [dbo].[sel_course_sp]    Script Date: 01-09-2025 18:47:59 ******/
 SET ANSI_NULLS ON
