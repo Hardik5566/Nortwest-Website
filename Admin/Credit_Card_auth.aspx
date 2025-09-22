@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Admin/MasterPage.master" AutoEventWireup="true" CodeFile="Credit_Card_auth.aspx.cs" Inherits="Admin_Credit_Card_auth" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="title" runat="Server">
+    Credit Card Authorisation
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="head" runat="Server">
     <link href="assets/css/Chosen.min.css" rel="stylesheet" />
