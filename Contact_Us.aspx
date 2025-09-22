@@ -8,6 +8,19 @@
         .info h4 {
             font-size: 17px !important;
         }
+
+        .btn-sub {
+            border: none !important;
+            background: #002147 !important;
+            padding: 10px 45px !important;
+            font-family: 'Poppins', sans-serif !important;
+            font-weight: 600 !important;
+            text-transform: uppercase !important;
+            margin-top: 15px !important;
+            color: #ffb606 !important;
+            letter-spacing: 0.6px !important;
+            border-radius: 3px !important;
+        }
     </style>
 
 </asp:Content>
@@ -27,27 +40,37 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <input class="form-control" placeholder="Name" type="text">
+                                        <asp:TextBox ID="txt_name" runat="server" CssClass="form-control" placeholder="Name"></asp:TextBox>
+                                        <%-- <input class="form-control" placeholder="Name" type="text">--%>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <asp:TextBox ID="TextBox2" runat="server" CssClass="form-control" placeholder="Email"></asp:TextBox>
+                                        <asp:TextBox ID="txt_email" runat="server" CssClass="form-control" placeholder="Email"></asp:TextBox>
 
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <%--<input class="form-control" placeholder="Message" type="text">--%>
-                                        <asp:TextBox ID="TextBox1" Rows="5" runat="server" CssClass="form-control" placeholder="Message" TextMode="MultiLine"></asp:TextBox>
+                                        <asp:TextBox ID="txt_msg" Rows="5" runat="server" CssClass="form-control" placeholder="Message" TextMode="MultiLine"></asp:TextBox>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
+                                    <asp:Button
+                                        ID="btnRegister"
+                                        runat="server"
+                                        Text="Register Now"
+                                        OnClick="btnRegister_Click"
+                                        CssClass="btn-sub" />
+                                </div>
+
+                                <%--  <div class="col-md-12">
                                     <button type="submit">
                                         Rigister Now
                                    
                                     </button>
-                                </div>
+                                </div>--%>
                             </div>
                         </div>
                     </div>
