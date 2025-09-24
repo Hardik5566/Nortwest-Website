@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Data;
+using System.Data.SqlClient;
 
 public partial class Contact_Us : System.Web.UI.Page
 {
@@ -14,18 +16,22 @@ public partial class Contact_Us : System.Web.UI.Page
     }
     protected void btnRegister_Click(object sender, EventArgs e)
     {
-        Task.Run(() =>
+        DataSet ds = BAL_Forms.ins_contact_us_form_sp(txt_name.Text, txt_email.Text, txt_msg.Text, "1");
+        if (ds.Tables.Count > 0)
         {
-            Send_Mail.MailWithouAttachment(
-                  "sso@nortwest.edu.au",
-                  "New Enquiry Received By (" + txt_name.Text + ")",
-                  ContactFormMailBody(
-                      txt_name.Text,txt_email.Text,txt_msg.Text
-                  ),
-                  "",
-                  ""
-              );
-        });
+            Task.Run(() =>
+            {
+                Send_Mail.MailWithouAttachment(
+                      "sso@nortwest.edu.au",
+                      "New Enquiry Received By (" + txt_name.Text + ")",
+                      ContactFormMailBody(
+                          txt_name.Text, txt_email.Text, txt_msg.Text
+                      ),
+                      "",
+                      ""
+                  );
+            });
+        }
     }
     public string ContactFormMailBody(string name, string email, string message)
     {

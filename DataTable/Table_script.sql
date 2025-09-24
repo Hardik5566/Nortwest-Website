@@ -1062,4 +1062,19 @@ create table tbl_course_entrty_form
 	delete_by int,
 	delete_date datetime,
 )
- 
+ ----------------------------------------
+----------------------------------------
+----------------------------------------
+create TABLE tbl_contact_us_form(
+	id int IDENTITY(1,1) NOT NULL,
+	name varchar(450),
+	email varchar(350),
+	message nvarchar(max),
+	status bit,
+	create_by int,
+	create_date datetime,
+	cmodify_by int,
+	modify_date datetime,
+	delete_by int,
+	delete_date datetime
+)

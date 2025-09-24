@@ -1209,4 +1209,24 @@ public class BAL_Forms
         cmd.Parameters.Add(param.intparam("@id", id));
         return command.ExtQueryDS(cmd);
     }
+    public static DataSet ins_contact_us_form_sp(string name,string email,string message,string create_by)
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.CommandText = "ins_contact_us_form_sp";
+        parameter param = new parameter();
+        cmd.Parameters.Add(param.stringparam("@name", name));
+        cmd.Parameters.Add(param.stringparam("@email", email));
+        cmd.Parameters.Add(param.stringparam("@message", message));
+        cmd.Parameters.Add(param.intparam("@create_by", create_by));
+        return command.ExtQueryDS(cmd);
+    }
+    public static DataSet dis_contact_us_form_sp(string from_date, string to_date)
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.CommandText = "dis_contact_us_form_sp";
+        parameter param = new parameter();
+        cmd.Parameters.Add(param.datetimeparam("@from_date", from_date));
+        cmd.Parameters.Add(param.datetimeparam("@to_date", to_date));
+        return command.ExtQueryDS(cmd);
+    }
 }

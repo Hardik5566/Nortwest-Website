@@ -2138,3 +2138,58 @@ BEGIN
       AND CAST(create_date AS DATE) 
           BETWEEN CAST(@from_date AS DATE) AND CAST(@to_date AS DATE);
 END
+--------------------------------------------------
+--------------Insert Contact Us-------------------
+--------------------------------------------------
+alter PROCEDURE ins_contact_us_form_sp
+(
+    @name VARCHAR(450),
+    @email VARCHAR(350),
+    @message NVARCHAR(MAX),
+    @create_by INT
+)
+AS
+BEGIN
+    
+    INSERT INTO tbl_contact_us_form
+    VALUES
+    (
+        @name,
+        @email,
+        @message,
+        1,               
+        @create_by,
+        dbo.GetCurrentAUTTime(),
+		null,
+		null,
+		null,
+		null
+    )
+	select 'ok'
+END
+--------------------------------------------------
+--------------Display Contact Us-------------------
+--------------------------------------------------
+alter PROCEDURE dis_contact_us_form_sp
+(
+    @from_date DATETIME,
+    @to_date   DATETIME
+)
+AS
+BEGIN
+	SELECT 
+        id,
+        name,
+        email,
+        message,
+        status,
+        create_by,
+        create_date
+    FROM 
+        tbl_contact_us_form
+    WHERE 
+        status = 1 
+		AND CAST(create_date AS DATE) 
+          BETWEEN CAST(@from_date AS DATE) AND CAST(@to_date AS DATE);
+END
+
