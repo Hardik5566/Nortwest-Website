@@ -2192,4 +2192,3 @@ BEGIN
 		AND CAST(create_date AS DATE) 
           BETWEEN CAST(@from_date AS DATE) AND CAST(@to_date AS DATE);
 END
-

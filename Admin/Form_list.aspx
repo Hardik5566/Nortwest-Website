@@ -298,7 +298,7 @@
                 </div>
             </div>
         </a>
-<%--        <a href="Cricos_student_Withdraw_Form.aspx">
+        <%--        <a href="Cricos_student_Withdraw_Form.aspx">
             <div class="dashboard-card">
                 <div class="card-top">
                     <div class="card-icon"><i class="fas fa-sign-out-alt"></i></div>
@@ -438,7 +438,7 @@
                 </div>
             </div>
         </a>
-           <a href="Agent_application.aspx">
+        <a href="Agent_application.aspx">
             <div class="dashboard-card">
                 <div class="card-top">
                     <div class="card-icon"><i class="fas fa-chalkboard-teacher"></i></div>
@@ -447,6 +447,19 @@
                 <div class="card-bottom">
                     <div class="card-value">
                         <asp:Label ID="lbl_agent_app" runat="server" Text="0"></asp:Label>
+                    </div>
+                </div>
+            </div>
+        </a>
+        <a href="Contact_us.aspx">
+            <div class="dashboard-card">
+                <div class="card-top">
+                    <div class="card-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+                    <div class="card-title">Contact Us Form</div>
+                </div>
+                <div class="card-bottom">
+                    <div class="card-value">
+                        <asp:Label ID="lbl_contact" runat="server" Text="0"></asp:Label>
                     </div>
                 </div>
             </div>
