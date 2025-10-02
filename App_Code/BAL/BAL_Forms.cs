@@ -1209,7 +1209,7 @@ public class BAL_Forms
         cmd.Parameters.Add(param.intparam("@id", id));
         return command.ExtQueryDS(cmd);
     }
-    public static DataSet ins_contact_us_form_sp(string name,string email,string message,string create_by)
+    public static DataSet ins_contact_us_form_sp(string name, string email, string message, string create_by)
     {
         SqlCommand cmd = new SqlCommand();
         cmd.CommandText = "ins_contact_us_form_sp";
@@ -1227,6 +1227,63 @@ public class BAL_Forms
         parameter param = new parameter();
         cmd.Parameters.Add(param.datetimeparam("@from_date", from_date));
         cmd.Parameters.Add(param.datetimeparam("@to_date", to_date));
+        return command.ExtQueryDS(cmd);
+    }
+    public static DataSet print_ack(string test_id)
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.CommandText = "print_ack_sp";
+        parameter param = new parameter();
+        cmd.Parameters.Add(param.intparam("@test_id", test_id));
+        return command.ExtQueryDS(cmd);
+    }
+    public static DataSet ins_lln_test(string stu_full_name, string std_id, string phone, string email, string qualification, string place_of_test, string dob, string nationality, string passport_number, string passport_copy, string date_of_test, string std_sign,
+     string que_1, string ans_1, string que_2, string que_3, string que_4, string que_5, string que_6, string que_7, string que_8, string que_9, string que_10, string que_11, string que_12, string que_13, string que_14, string que_15, string que_16, string que_17, string que_18, string que_19, string que_20, string que_21, string que_22, string que_23, string que_24,
+     string std_declaration, string std_cnf_sign, string sign_date)
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.CommandText = "ins_lln_sp";
+        parameter param = new parameter();
+        cmd.Parameters.Add(param.stringparam("@stu_full_name", stu_full_name));
+        cmd.Parameters.Add(param.stringparam("@std_id", std_id));
+        cmd.Parameters.Add(param.stringparam("@phone", phone));
+        cmd.Parameters.Add(param.stringparam("@email", email));
+        cmd.Parameters.Add(param.stringparam("@qualification", qualification));
+        cmd.Parameters.Add(param.stringparam("@place_of_test", place_of_test));
+        cmd.Parameters.Add(param.datetimeparam("@dob", dob));
+        cmd.Parameters.Add(param.stringparam("@nationality", nationality));
+        cmd.Parameters.Add(param.stringparam("@passport_number", passport_number));
+        cmd.Parameters.Add(param.stringparam("@passport_copy", passport_copy));
+        cmd.Parameters.Add(param.datetimeparam("@date_of_test", date_of_test));
+        cmd.Parameters.Add(param.stringparam("@std_sign", std_sign));
+        cmd.Parameters.Add(param.stringparam("@que_1", que_1));
+        cmd.Parameters.Add(param.stringparam("@ans_1", ans_1));
+        cmd.Parameters.Add(param.stringparam("@que_2", que_2));
+        cmd.Parameters.Add(param.stringparam("@que_3", que_3));
+        cmd.Parameters.Add(param.stringparam("@que_4", que_4));
+        cmd.Parameters.Add(param.stringparam("@que_5", que_5));
+        cmd.Parameters.Add(param.stringparam("@que_6", que_6));
+        cmd.Parameters.Add(param.stringparam("@que_7", que_7));
+        cmd.Parameters.Add(param.stringparam("@que_8", que_8));
+        cmd.Parameters.Add(param.stringparam("@que_9", que_9));
+        cmd.Parameters.Add(param.stringparam("@que_10", que_10));
+        cmd.Parameters.Add(param.stringparam("@que_11", que_11));
+        cmd.Parameters.Add(param.stringparam("@que_12", que_12));
+        cmd.Parameters.Add(param.stringparam("@que_13", que_13));
+        cmd.Parameters.Add(param.stringparam("@que_14", que_14));
+        cmd.Parameters.Add(param.stringparam("@que_15", que_15));
+        cmd.Parameters.Add(param.stringparam("@que_16", que_16));
+        cmd.Parameters.Add(param.stringparam("@que_17", que_17));
+        cmd.Parameters.Add(param.stringparam("@que_18", que_18));
+        cmd.Parameters.Add(param.stringparam("@que_19", que_19));
+        cmd.Parameters.Add(param.stringparam("@que_20", que_20));
+        cmd.Parameters.Add(param.stringparam("@que_21", que_21));
+        cmd.Parameters.Add(param.stringparam("@que_22", que_22));
+        cmd.Parameters.Add(param.stringparam("@que_23", que_23));
+        cmd.Parameters.Add(param.stringparam("@que_24", que_24));
+        cmd.Parameters.Add(param.boolparam("@std_declaration", std_declaration));
+        cmd.Parameters.Add(param.stringparam("@std_cnf_sign", std_cnf_sign));
+        cmd.Parameters.Add(param.datetimeparam("@sign_date", sign_date));
         return command.ExtQueryDS(cmd);
     }
 }

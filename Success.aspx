@@ -47,6 +47,21 @@
             display: inline-block;
             margin: 0 auto;
         }
+
+      .new_card {
+    width: 45%;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+/* Mobile view: width 100% when screen is <= 767px */
+@media (max-width: 767px) {
+    .new_card {
+        width: 100%;
+        margin-top: 20px;   /* optional smaller margin */
+        margin-bottom: 20px; /* optional smaller margin */
+    }
+}
     </style>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="body" runat="Server">
@@ -64,7 +79,7 @@
         </div>
     </div>--%>
     <div>
-        <div class="card" style="width: 45%; margin-top: 50px; margin-bottom: 50px;">
+        <div class="card new_card">
 
             <div class="row">
 
