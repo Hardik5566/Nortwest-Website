@@ -707,6 +707,8 @@ begin
 FROM tbl_course_intake i
 
 WHERE i.status = 1
+
+order by intake_date
 end
 GO
 /****** Object:  StoredProcedure [dbo].[dis_intake_tearmbreak_sp]    Script Date: 01-09-2025 18:47:59 ******/
