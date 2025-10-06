@@ -55,7 +55,7 @@ public partial class Intake_master : System.Web.UI.Page
                 if (ds.Tables[0].Rows.Count > 0)
                 {
                     ShowMessage("Course Intake Updated Successfully", MessageType.Success);
-
+                    btnSaveCourse.Text = "Save";
 
                 }
                 else

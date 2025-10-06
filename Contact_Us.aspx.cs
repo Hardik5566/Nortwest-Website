@@ -12,25 +12,63 @@ public partial class Contact_Us : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (!IsPostBack)
+        {
+            generate_captcha();
+        }
+    }
+    public string generate_captcha()
+    {
+        Random random = new Random();
+        int num1 = random.Next(1, 10);
+        int num2 = random.Next(1, 10);
+        lbl_num1.Text = num1.ToString();
+        lbl_num2.Text = num2.ToString();
 
+        string captchaAnswer = (num1 + num2).ToString();
+        Session["CaptchaAnswer"] = captchaAnswer;
+
+        return captchaAnswer;
+    }
+    public void clear()
+    {
+        txt_name.Text = "";
+        txt_email.Text = "";
+        txt_msg.Text = "";
+        txt_captcha.Text = "";
     }
     protected void btnRegister_Click(object sender, EventArgs e)
     {
-        DataSet ds = BAL_Forms.ins_contact_us_form_sp(txt_name.Text, txt_email.Text, txt_msg.Text, "1");
-        if (ds.Tables.Count > 0)
+        string captchaAnswer = Session["CaptchaAnswer"].ToString();
+
+        if (txt_captcha.Text == captchaAnswer)
         {
-            Task.Run(() =>
             {
-                Send_Mail.MailWithouAttachment(
-                      "sso@nortwest.edu.au",
-                      "New Enquiry Received By (" + txt_name.Text + ")",
-                      ContactFormMailBody(
-                          txt_name.Text, txt_email.Text, txt_msg.Text
-                      ),
-                      "",
-                      ""
-                  );
-            });
+                DataSet ds = BAL_Forms.ins_contact_us_form_sp(txt_name.Text, txt_email.Text, txt_msg.Text, "1");
+                if (ds.Tables.Count > 0)
+                {
+                    Task.Run(() =>
+                    {
+                        Send_Mail.MailWithouAttachment(
+                              "sso@nortwest.edu.au",
+                              "New Enquiry Received By (" + txt_name.Text + ")",
+                              ContactFormMailBody(
+                                  txt_name.Text, txt_email.Text, txt_msg.Text
+                              ),
+                              "",
+                              ""
+                          );
+                    });
+                    clear();
+
+                }
+
+            }
+        }
+        else
+        {
+            string script = "alert('Invalid CAPTCHA. Please try again.');";
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "CaptchaAlert", script, true);
         }
     }
     public string ContactFormMailBody(string name, string email, string message)

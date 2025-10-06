@@ -71,7 +71,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="item">
+                                         <%--   <div class="item">
 
                                                 <div class="info">
                                                     <div class="author">
@@ -83,7 +83,7 @@
                                                    
                                                     </p>
                                                 </div>
-                                            </div>
+                                            </div>--%>
 
                                             <div class="item">
 
@@ -98,7 +98,7 @@
                                                     </p>
                                                 </div>
                                             </div>
-                                            <div class="item">
+                                          <%--  <div class="item">
 
                                                 <div class="info">
                                                     <div class="author">
@@ -110,7 +110,7 @@
                                                    
                                                     </p>
                                                 </div>
-                                            </div>
+                                            </div>--%>
                                         </div>
                                     </div>
                                 </div>
@@ -385,7 +385,7 @@
 
                                                     </div>
                                                     <p>
-                                                        On a student visa, you cannot work until you have commenced your course in Australia. Once your course has commenced you are permitted to work a maximum of 40 hours per fortnight when your course is in session, and unlimited hours when your course is not in session.
+                                                        On a student visa, you cannot work until you have commenced your course in Australia. Once your course has commenced you are permitted to work a maximum of 48 hours per fortnight when your course is in session, and unlimited hours when your course is not in session.
                                                    
                                                     </p>
                                                 </div>
@@ -413,7 +413,7 @@
 
                                                     </div>
                                                     <p>
-                                                        Once your course has commenced you are permitted to work a maximum of 40 hours per fortnight when your course is in session, and unlimited hours when your course is not in session.
+                                                        Once your course has commenced you are permitted to work a maximum of 48 hours per fortnight when your course is in session, and unlimited hours when your course is not in session.
                                                    
                                                     </p>
                                                 </div>

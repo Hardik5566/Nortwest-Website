@@ -21,6 +21,28 @@
             letter-spacing: 0.6px !important;
             border-radius: 3px !important;
         }
+
+
+        .captcha {
+            color: #1a4183;
+            background: white;
+            padding: 0px 20px 0px 20px;
+            font-size: 2pc;
+            background-image: url(https://www.sourcecodester.com/sites/default/files/captcha-bg.jpg);
+            opacity: 1.5;
+            font-family: cursive;
+            font-style: oblique;
+            font-variant-numeric: oldstyle-nums;
+        }
+
+            .captcha label {
+                color: #1a4183 !important;
+                font-size: 2pc;
+                opacity: 1.5;
+                font-family: cursive;
+                font-style: oblique;
+                font-variant-numeric: oldstyle-nums;
+            }
     </style>
 
 </asp:Content>
@@ -54,6 +76,22 @@
                                     <div class="form-group">
                                         <%--<input class="form-control" placeholder="Message" type="text">--%>
                                         <asp:TextBox ID="txt_msg" Rows="5" runat="server" CssClass="form-control" placeholder="Message" TextMode="MultiLine"></asp:TextBox>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <!-- Simple Math CAPTCHA -->
+                                    <div class="mb-20 ">
+                                        <span class="captcha">
+
+                                            <asp:Label runat="server" ID="lbl_num1" style="text-decoration:line-through"></asp:Label>
+
+                                            + 
+
+                                         <asp:Label runat="server" ID="lbl_num2" style="text-decoration:line-through"></asp:Label>
+                                        </span>
+                                        &nbsp;&nbsp;
+
+                                                <asp:TextBox runat="server" ID="txt_captcha" placeholder="Enter the answer" />
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -225,5 +263,68 @@
     </div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="jqury" runat="Server">
+    <!-- Include jQuery at the top of your page -->
+
+    <!-- Place this script just before </form> or </body> -->
+    <script>
+        $(document).ready(function () {
+
+            // Get controls
+            var btn = $("#<%= btnRegister.ClientID %>");
+            var txtName = $("#<%= txt_name.ClientID %>");
+            var txtEmail = $("#<%= txt_email.ClientID %>");
+            var txtMsg = $("#<%= txt_msg.ClientID %>");
+
+            // If any control is missing, stop
+            if (!btn.length || !txtName.length || !txtEmail.length || !txtMsg.length) return;
+
+            btn.click(function (event) {
+                var errors = "";
+
+                var name = txtName.val().trim();
+                var email = txtEmail.val().trim();
+                var message = txtMsg.val().trim();
+
+                if (name === "") {
+                    errors += "Please enter Name\n";
+                    txtName.css("border-color", "red");
+                } else {
+                    txtName.css("border-color", "");
+                }
+
+                if (email === "") {
+                    errors += "Please enter Email\n";
+                    txtEmail.css("border-color", "red");
+                } else {
+                    var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                    if (!emailRegex.test(email)) {
+                        errors += "Please enter a valid Email\n";
+                        txtEmail.css("border-color", "red");
+                    } else {
+                        txtEmail.css("border-color", "");
+                    }
+                }
+
+                if (message === "") {
+                    errors += "Please enter Message\n";
+                    txtMsg.css("border-color", "red");
+                } else {
+                    txtMsg.css("border-color", "");
+                }
+
+                // If there are errors, stop postback
+                if (errors !== "") {
+                    alert(errors);
+                    event.preventDefault(); // Prevent server-side click
+                    return false;
+                }
+
+                // If no errors, server-side btnRegister_Click runs
+            });
+
+        });
+    </script>
+
+
 </asp:Content>
 
