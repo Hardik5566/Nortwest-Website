@@ -260,7 +260,7 @@ public class Send_Mail
             MailMessage mail = new MailMessage();
             mail.From = new MailAddress("noreply@nortwest.edu.au");
 
-            mail.Bcc.Add("vaghasiyaprit799@gmail.com");
+            //mail.Bcc.Add("vaghasiyaprit799@gmail.com");
 
             //mail.Bcc.Add("hardikvaghasiya5566@gmail.com");
 
