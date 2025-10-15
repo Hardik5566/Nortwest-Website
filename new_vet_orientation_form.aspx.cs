@@ -81,7 +81,10 @@ public partial class new_vet_orientation_form : System.Web.UI.Page
             string file_name = "";
             if (upd_photo.HasFile)
             {
-                file_name = upd_photo.FileName.ToString();
+                string fileExt = Path.GetExtension(upd_photo.FileName);
+
+                // Create unique file name using timestamp
+                file_name = "IMG_" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + fileExt;
                 string save_path = Server.MapPath("~/assets/img/document/");
                 upd_photo.SaveAs(save_path + file_name);
             }
@@ -546,12 +549,12 @@ public partial class new_vet_orientation_form : System.Web.UI.Page
 
                 if (ds.Tables[0].Rows[0]["campus"].ToString() == "Adelaide")
                 {
-                    string result = Send_Mail.SendMail("sso@nortwest.edu.au,adminadelaide@nortwest.edu.au", subject, mail_body, ach_attachment, "", stu_photo);
+                    string result = Send_Mail.SendMail_new_vet("sso@nortwest.edu.au", "orientation@nortwest.edu.au,adminadelaide@nortwest.edu.au,", subject, mail_body, ach_attachment, "", stu_photo);
 
                 }
                 else
                 {
-                    string result = Send_Mail.SendMail("sso@nortwest.edu.au", subject, mail_body, ach_attachment, "", stu_photo);
+                    string result = Send_Mail.SendMail_new_vet("sso@nortwest.edu.au", "orientation@nortwest.edu.au,", subject, mail_body, ach_attachment, "", stu_photo);
                 }
 
 

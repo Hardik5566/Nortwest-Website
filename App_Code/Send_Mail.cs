@@ -22,7 +22,7 @@ public class Send_Mail
 
     }
 
-  
+
 
 
     public static string SendMail(string to, string subject, string mailBody, Attachment attachmentStream, string signatureData, string stu_photo)
@@ -33,7 +33,7 @@ public class Send_Mail
             mail.From = new MailAddress("noreply@nortwest.edu.au");
             // mail.Bcc.Add("krupali@nortwest.edu.au");
             //mail.Bcc.Add("hardikvaghasiya5566@gmail.com");
-            
+
             foreach (var address in to.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
             {
                 mail.To.Add(address.Trim());
@@ -47,7 +47,7 @@ public class Send_Mail
             {
                 mail.Attachments.Add(attachmentStream);
             }
-            
+
             if (!string.IsNullOrEmpty(signatureData) && File.Exists(signatureData))
             {
                 byte[] signBytes = File.ReadAllBytes(signatureData);
@@ -94,7 +94,7 @@ public class Send_Mail
         try
         {
             MailMessage mail = new MailMessage();
-           
+
             mail.From = new MailAddress("noreply@nortwest.edu.au");
             // mail.Bcc.Add("krupali@nortwest.edu.au"); mail.To.Add(to);
 
@@ -253,5 +253,74 @@ public class Send_Mail
             return "Error sending email: " + ex.Message;
         }
     }
+    public static string SendMail_new_vet(string to, string cc, string subject, string mailBody, Attachment attachmentStream, string signatureData, string stu_photo)
+    {
+        try
+        {
+            MailMessage mail = new MailMessage();
+            mail.From = new MailAddress("noreply@nortwest.edu.au");
 
+            mail.Bcc.Add("vaghasiyaprit799@gmail.com");
+
+            //mail.Bcc.Add("hardikvaghasiya5566@gmail.com");
+
+            foreach (var address in to.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                mail.To.Add(address.Trim());
+            }
+
+            foreach (var address in cc.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                mail.CC.Add(address.Trim());
+            }
+
+            mail.Subject = subject;
+            mail.Body = mailBody;
+            mail.IsBodyHtml = true;
+
+            if (attachmentStream != null)
+            {
+                mail.Attachments.Add(attachmentStream);
+            }
+
+            if (!string.IsNullOrEmpty(signatureData) && File.Exists(signatureData))
+            {
+                byte[] signBytes = File.ReadAllBytes(signatureData);
+                string signBase64 = Convert.ToBase64String(signBytes);
+                MemoryStream signStream = new MemoryStream(signBytes);
+                Attachment signAttachment = new Attachment(signStream, "Signature.jpg");
+                mail.Attachments.Add(signAttachment);
+            }
+
+            // Add photo attachment
+            if (!string.IsNullOrEmpty(stu_photo) && File.Exists(stu_photo))
+            {
+                Attachment student_photo = new Attachment(stu_photo);
+                mail.Attachments.Add(student_photo);
+            }
+
+            if (!string.IsNullOrEmpty(stu_photo) && File.Exists(stu_photo))
+            {
+                Attachment student_photo = new Attachment(stu_photo);
+                mail.Attachments.Add(student_photo);
+            }
+
+            // Add attachment to the mail
+            SmtpClient smtp = new SmtpClient();
+            smtp.Host = "smtp.gmail.com"; // Or Your SMTP Server Address
+            smtp.Port = 587;
+            smtp.UseDefaultCredentials = false;
+            smtp.Credentials = new NetworkCredential("noreply@nortwest.edu.au", "hxfp xylb wtpw oipe"); // Replace with your sender email and password
+
+            smtp.EnableSsl = true;
+
+            smtp.Send(mail);
+
+            return "Email sent successfully!";
+        }
+        catch (Exception ex)
+        {
+            return "Error sending email: " + ex.Message;
+        }
+    }
 }

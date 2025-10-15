@@ -19,6 +19,7 @@ public partial class EPT_Test : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+       
         if (Request.HttpMethod == "POST" && Request.Files.Count > 0)
         {
 
@@ -83,7 +84,7 @@ public partial class EPT_Test : System.Web.UI.Page
             if (ds.Tables.Count > 0)
             {
 
-                ds.Tables[0].Rows[0]["stu_signature"] = Server.MapPath("assets/img/sign/") + ds.Tables[0].Rows[0]["stu_signature"];
+                ds.Tables[0].Rows[0]["stu_signature"] = Server.MapPath("/assets/img/sign/") + ds.Tables[0].Rows[0]["stu_signature"];
                 ds.Tables[0].Rows[0]["true_ans"] = Server.MapPath("/assets/img/") + ds.Tables[0].Rows[0]["true_ans"].ToString();
                 ds.Tables[0].Rows[0]["false_ans"] = Server.MapPath("/assets/img/") + ds.Tables[0].Rows[0]["false_ans"].ToString();
 
@@ -98,7 +99,7 @@ public partial class EPT_Test : System.Web.UI.Page
                     ds.Tables[0].Rows[0]["recorded_audio"] = server_url + "Audio/" + ds.Tables[0].Rows[0]["recorded_audio"].ToString();
                 }
 
-                rpt.Load(Server.MapPath("RPT/RPT_EPT_form_Main.rpt"));
+                rpt.Load(Server.MapPath("~/RPT/RPT_EPT_form_Main.rpt"));
                 if (!ds.Tables[0].Columns.Contains("score"))
                 {
                     ds.Tables[0].Columns.Add("score", typeof(string));  // Add column if missing
@@ -120,6 +121,10 @@ public partial class EPT_Test : System.Web.UI.Page
                 string subject = "English Test (" + ds.Tables[0].Rows[0]["f_name"].ToString() + "-" + ds.Tables[0].Rows[0]["std_id_number"].ToString() + ")";
                 string mail_body = get_email_body(ds.Tables[1].Rows[0]["score"].ToString());
                 string result = Send_Mail.SendMail("english@nortwest.edu.au", subject, mail_body, ach_attachment, "", "");
+                if (result == "Email sent successfully!")
+                {
+                    ScriptManager.RegisterStartupScript(this, GetType(), "alertMessage", "alert('Email sent successfully!');", true);
+                }
 
                 rpt.Close();
                 rpt.Dispose();
