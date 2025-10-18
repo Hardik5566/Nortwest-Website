@@ -39,7 +39,7 @@
                         Thank you for your interest in Northwest College. To apply for our courses, kindly download the application pdf form by 
                         <a href="assets/image/Form/NW_App form_Aug25.pdf" download style="color: #007bff; text-decoration: none;">clicking here</a>
                         and attach the below documents and send us an email to 
-                        <a href="mailto:applynow@northwest.edu.au" style="color: #007bff; text-decoration: none;">applynow@northwest.edu.au</a>
+                        <a href="mailto:applynow@nortwest.edu.au" style="color: #007bff; text-decoration: none;">applynow@nortwest.edu.au</a>
                     </p>
 
                     <p style="font-size: 14px; line-height: 1.6; color: #333;">
