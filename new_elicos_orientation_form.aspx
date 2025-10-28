@@ -78,6 +78,7 @@
                     <div class="col-md-6">
                         <label class="lbl_title">Campus</label>
                         <asp:DropDownList ID="ddl_campus" CssClass="form-control" runat="server">
+                            <asp:ListItem Value="">Select</asp:ListItem>
                             <asp:ListItem Value="Adelaide">Adelaide</asp:ListItem>
                             <asp:ListItem Value="Sydney">Sydney</asp:ListItem>
                             <asp:ListItem Value="Melbourne">Melbourne</asp:ListItem>
@@ -86,12 +87,12 @@
 
 
 
-                  <div class="col-md-6">
-    <label class="lbl_title">Photo To Issue Student ID Card</label>
-    <asp:FileUpload ID="upd_id_card" CssClass="form-control" runat="server" 
-        accept=".jpg,.jpeg,.png,.gif" />
-    <span id="photoError" class="text-danger" style="display:none;">Please upload a valid image file</span>
-</div>
+                    <div class="col-md-6">
+                        <label class="lbl_title">Photo To Issue Student ID Card</label>
+                        <asp:FileUpload ID="upd_id_card" CssClass="form-control" runat="server"
+                            accept=".jpg,.jpeg,.png,.gif" />
+                        <span id="photoError" class="text-danger" style="display: none;">Please upload a valid image file</span>
+                    </div>
                     <div class="col-md-6">
                         <label class="lbl_title">Email id</label>
                         <asp:TextBox ID="txt_email" CssClass="form-control" runat="server"></asp:TextBox>
@@ -457,24 +458,24 @@
         // Optional: Validate file type on form submit
         $("#<%= btn_submit.ClientID %>").click(function (event) {
             var fileUpload = $("#<%= upd_id_card.ClientID %>")[0];
-        if (fileUpload.files.length > 0) {
-            var file = fileUpload.files[0];
-            var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
-            if (!allowedExtensions.exec(file.name)) {
+            if (fileUpload.files.length > 0) {
+                var file = fileUpload.files[0];
+                var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+                if (!allowedExtensions.exec(file.name)) {
+                    $("#photoError").show();
+                    fileUpload.value = ''; // reset file input
+                    event.preventDefault();
+                    return false;
+                } else {
+                    $("#photoError").hide();
+                }
+            } else {
                 $("#photoError").show();
-                fileUpload.value = ''; // reset file input
                 event.preventDefault();
                 return false;
-            } else {
-                $("#photoError").hide();
             }
-        } else {
-            $("#photoError").show();
-            event.preventDefault();
-            return false;
-        }
-    });
-</script>
+        });
+    </script>
     <script>
         var input = document.querySelector("#phone");
         var output = document.querySelector("#output");
@@ -530,10 +531,12 @@
         // Form validation function
         function validateForm() {
             var isValid = true;
+            var messages = [];
 
             // Validate Full Name
             if ($("#<%= txt_f_name.ClientID %>").val().trim() == "") {
                 $("#<%= txt_f_name.ClientID %>").css("border-color", "red");
+                messages.push("Please enter your full name.");
                 isValid = false;
             } else {
                 $("#<%= txt_f_name.ClientID %>").css("border-color", "");
@@ -542,90 +545,106 @@
             // Validate Campus
             if ($("#<%= ddl_campus.ClientID %>").prop("selectedIndex") == 0) {
                 $("#<%= ddl_campus.ClientID %>").next(".nice-select").css("border-color", "red");
+                messages.push("Please select a campus.");
                 isValid = false;
             } else {
-                $("#<%= ddl_campus.ClientID %>").next(".nice-select").css("border-color", "");
+                $("#<%= ddl_campus.ClientID %>").next(".nice-select").css("border-color", "");
             }
-
-
 
             // Validate Email
             var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
             if (!emailRegex.test($("#<%= txt_email.ClientID %>").val())) {
-                $("#<%= txt_email.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_email.ClientID %>").css("border-color", "");
-            }
+              $("#<%= txt_email.ClientID %>").css("border-color", "red");
+              messages.push("Please enter a valid email address.");
+              isValid = false;
+          } else {
+              $("#<%= txt_email.ClientID %>").css("border-color", "");
+          }
 
             // Validate Student ID Number
-            if ($("#<%= txt_student_id.ClientID %>").val().trim() == "") {
+          if ($("#<%= txt_student_id.ClientID %>").val().trim() == "") {
                 $("#<%= txt_student_id.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_student_id.ClientID %>").css("border-color", "");
-            }
-
-            // Validate Photo
-            if ($("#<%= upd_id_card.ClientID %>").val() == "") {
-                $("#<%= upd_id_card.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= upd_id_card.ClientID %>").css("border-color", "");
-            }
-
-            if ($("#<%=txt_aus_address.ClientID %>").val().trim() == "") {
-                $("#<%= txt_aus_address.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_aus_address.ClientID %>").css("border-color", "");
-            }
-
-            if ($("#<%= txt_over_address.ClientID %>").val().trim() == "") {
-                $("#<%= txt_over_address.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_over_address.ClientID %>").css("border-color", "");
-            }
-            if ($("#<%= txt_name.ClientID %>").val().trim() == "") {
-                $("#<%= txt_name.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_name.ClientID %>").css("border-color", "");
-            }
-            var canvas = document.getElementById("signatureCanvas");
-            var blank = document.createElement("canvas");
-            blank.width = canvas.width;
-            blank.height = canvas.height;
-            if (canvas.toDataURL() === blank.toDataURL()) {
-                alert("Please provide your signature.");
-                isValid = false;
-            }
-
-            if ($("#<%= hd_contact_no_code.ClientID%>").val() == "") {
-                $("#phone").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#phone").css("border-color", "");
-            }
-
-            
-
-            if ($(".ch_explanation input[type='checkbox']:not(:checked)").length > 0) {
-                $(".lbl_explanation_error.txt_error").show(); // Use the proper selector
-                isValid = false;
-            } else {
-                $(".lbl_explanation_error.txt_error").hide(); // Properly hide the error
-
-            }
-
-            
-
-            
-            return isValid;
+            messages.push("Please enter your student ID number.");
+            isValid = false;
+        } else {
+            $("#<%= txt_student_id.ClientID %>").css("border-color", "");
         }
 
+            // Validate Photo
+        if ($("#<%= upd_id_card.ClientID %>").val() == "") {
+                $("#<%= upd_id_card.ClientID %>").css("border-color", "red");
+            messages.push("Please upload your photo.");
+            isValid = false;
+        } else {
+            $("#<%= upd_id_card.ClientID %>").css("border-color", "");
+        }
+
+            // Validate Australian Address
+        if ($("#<%=txt_aus_address.ClientID %>").val().trim() == "") {
+                $("#<%= txt_aus_address.ClientID %>").css("border-color", "red");
+            messages.push("Please enter your Australian address.");
+            isValid = false;
+        } else {
+            $("#<%= txt_aus_address.ClientID %>").css("border-color", "");
+        }
+
+            // Validate Overseas Address
+        if ($("#<%= txt_over_address.ClientID %>").val().trim() == "") {
+                $("#<%= txt_over_address.ClientID %>").css("border-color", "red");
+            messages.push("Please enter your overseas address.");
+            isValid = false;
+        } else {
+            $("#<%= txt_over_address.ClientID %>").css("border-color", "");
+        }
+        
+            // Validate Name
+        if ($("#<%= txt_name.ClientID %>").val().trim() == "") {
+                $("#<%= txt_name.ClientID %>").css("border-color", "red");
+            messages.push("Please enter your name.");
+            isValid = false;
+        } else {
+            $("#<%= txt_name.ClientID %>").css("border-color", "");
+        }
+
+            // Validate Signature
+      
+
+            // Validate Contact Number
+        if ($("#<%= hd_contact_no_code.ClientID%>").val() == "") {
+                $("#phone").css("border-color", "red");
+                messages.push("Please enter your contact phone number.");
+                isValid = false;
+            } else {
+                $("#phone").css("border-color", "");
+            }
+
+            // Validate Explanation Checkboxes
+            if ($(".ch_explanation input[type='checkbox']:not(:checked)").length > 0) {
+                $(".lbl_explanation_error.txt_error").show();
+                messages.push("Please check all required explanations.");
+                isValid = false;
+            } else {
+                $(".lbl_explanation_error.txt_error").hide();
+            }
+            var canvas = document.getElementById("signatureCanvas");
+            if (canvas) {
+                var blank = document.createElement("canvas");
+                blank.width = canvas.width;
+                blank.height = canvas.height;
+                if (canvas.toDataURL() === blank.toDataURL()) {
+                    messages.push("Please provide your signature.");
+                    isValid = false;
+                }
+            }
+            // Display all messages in a single alert if the form is invalid
+            if (!isValid) {
+                alert(messages.join("\n"));
+            }
+
+            return isValid;
+        }
     </script>
+
     <script>
         $(document).on('ready page:load', function () {
             // Reapply your jQuery code here
