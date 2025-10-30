@@ -213,7 +213,7 @@ public partial class EPT_Test : System.Web.UI.Page
         <table>
             <tbody><tr style='
     border-bottom: 1px solid white;'>
-    <th colspan='1' style='text-align: left;'><img class='logo' src='https://website.nortwest.edu.au/assets/img/logo_nwc_transp@1x.png' alt='Nortwest Logo' style='text-align:left;width:170px;background: white;border-radius: 4px;padding: 3px;'></th>
+    <th colspan='1' style='text-align: left;'><img class='logo' src='https://nortwest.edu.au/assets/img/logo_nwc_transp@1x.png' alt='Nortwest Logo' style='text-align:left;width:170px;background: white;border-radius: 4px;padding: 3px;'></th>
         <th colspan='3' style='font-size:25px;'>English Test Result</th>
 </tr>
 </tbody>
