@@ -382,30 +382,30 @@
                     <label class="lbl_title">The Code outlines a number of standards for agents to follow in an effort to maintain high professional standards in the marketing and delivery of education services and which safeguard the interests and welfare of our students. There are two main areas of the Agent Code of Conduct. These are:</label>
 
                     <ul style="padding-left: 20px">
-                        <li style="list-style: circle">Northwest College’s responsibilities</li>
+                        <li style="list-style: circle">Nortwest College’s responsibilities</li>
                         <li style="list-style: circle">Education Agent responsibilities</li>
                     </ul>
 
                 </div>
                 <div class="form-container">
-                    <h4>Northwest College Responsibilities</h4>
+                    <h4>Nortwest College Responsibilities</h4>
                     <ol>
-                        <li>Northwest College fosters and maintains a learning environment that is conducive to the success of all students.</li>
-                        <li>Northwest College has demonstrated a strong capacity to deliver the nominated course(s), provide modern and up to date facilities and use appropriate, valid, sufficient and current teaching and assessment methods and materials.</li>
-                        <li>Northwest College undertakes to market all education and training products with absolute integrity, accuracy and professionalism.</li>
-                        <li>In the provision of information, Northwest College will make no false or misleading comparisons with any other provider or course.</li>
-                        <li>Northwest College strives to provide accurate, relevant and up to date information to education agents and students prior to course application and enrolment procedures.</li>
-                        <li>Northwest College undertakes to provide all enrolled students with:
+                        <li>Nortwest College fosters and maintains a learning environment that is conducive to the success of all students.</li>
+                        <li>Nortwest College has demonstrated a strong capacity to deliver the nominated course(s), provide modern and up to date facilities and use appropriate, valid, sufficient and current teaching and assessment methods and materials.</li>
+                        <li>Nortwest College undertakes to market all education and training products with absolute integrity, accuracy and professionalism.</li>
+                        <li>In the provision of information, Nortwest College will make no false or misleading comparisons with any other provider or course.</li>
+                        <li>Nortwest College strives to provide accurate, relevant and up to date information to education agents and students prior to course application and enrolment procedures.</li>
+                        <li>Nortwest College undertakes to provide all enrolled students with:
                 <ol type="I">
                     <li>Orientation/Induction</li>
                     <li>Student Handbook</li>
                     <li>All necessary course materials</li>
                 </ol>
                         </li>
-                        <li>Northwest College follows a firm practice in the recruiting, monitoring and termination of education agents domestically and internationally to ensure honest and professional representation of Northwest College with the highest integrity.</li>
-                        <li>Education Agents will be actively monitored for performance and quality and those not meeting Northwest College’s standard will be removed from the register.</li>
-                        <li>Northwest College will publish a list of all approved education agents on their website.</li>
-                        <li>Northwest College will list all approved agents on Provider Registration and International Student Management System (PRISMS).</li>
+                        <li>Nortwest College follows a firm practice in the recruiting, monitoring and termination of education agents domestically and internationally to ensure honest and professional representation of Nortwest College with the highest integrity.</li>
+                        <li>Education Agents will be actively monitored for performance and quality and those not meeting Nortwest College’s standard will be removed from the register.</li>
+                        <li>Nortwest College will publish a list of all approved education agents on their website.</li>
+                        <li>Nortwest College will list all approved agents on Provider Registration and International Student Management System (PRISMS).</li>
                     </ol>
                 </div>
 
