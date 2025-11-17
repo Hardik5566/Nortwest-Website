@@ -91,45 +91,45 @@ public partial class new_vet_orientation_form : System.Web.UI.Page
 
             // Now calling the stored procedure with the parameters
             DataSet ds = BAL_Forms.ins_new_vet_orientation_form_sp(
-                txt_f_name.Text,                           // studentfullname
-                ddl_campus.SelectedValue.ToString(),       // campus
-                txt_email.Text,                            // email
-                ddl_qulification.SelectedValue.ToString(), // qualification
-                contactNoCode,                             // countrycode
-                contactNo,                                 // contactno
-                txt_id_no.Text,                            // studentidno
-                file_name,                                 // photo
-                txt_aus_line_1.Text,                       // ausline1
-                txt_aus_line_2.Text,                       // ausline2
-                txt_aus_city.Text,                         // auscit
-                ddl_state.SelectedValue.ToString(),       // ausstate
-                txt_aus_post_code.Text,                   // auspostcode
-                txt_over_line1.Text,                       // overaddline1
-                txt_over_line2.Text,                       // overaddline2
-                txt_over_city.Text,                        // overcit
-                ddl_country.SelectedValue.ToString(),     // overcountry
-                txt_over_post.Text,                       // postcode
-                txt_usi_no.Text,                           // usino
-                selected_valuea,                           // lateassignment
-                selected_valueb,                           // studentissue
-                selected_valuec,                           // seriousinjury
-                selected_valued,                           // studentvisa
-                selected_valuee,                           // changecontacttime
-                selected_valuef,                           // specialleave
-                selected_valueg,                           // academicmisconduct
-                selected_valueh,                           // emergencyno
-                selected_valuei,                           // studentdeclaration
+                txt_f_name.Text,                          
+                ddl_campus.SelectedValue.ToString(),      
+                txt_email.Text,                           
+                ddl_qulification.SelectedValue.ToString(),
+                contactNoCode,                            
+                contactNo,                                
+                txt_id_no.Text,                           
+                file_name,                                
+                txt_aus_line_1.Text,                      
+                txt_aus_line_2.Text,                      
+                txt_aus_city.Text,                        
+                ddl_state.SelectedValue.ToString(),       
+                txt_aus_post_code.Text,                   
+                txt_over_line1.Text,                      
+                txt_over_line2.Text,                      
+                txt_over_city.Text,                       
+                ddl_country.SelectedValue.ToString(),     
+                txt_over_post.Text,                       
+                txt_usi_no.Text,                          
+                selected_valuea,                          
+                selected_valueb,                          
+                selected_valuec,                          
+                selected_valued,                          
+                selected_valuee,                          
+                selected_valuef,                          
+                selected_valueg,                          
+                selected_valueh,                          
+                selected_valuei,                          
                 selected_valuej,
                 "True",// achievements
-                save_signature,                            // studentsignature
-                "1"                                        // createby (assuming 1 is the current user id)
+                save_signature,                           
+                "1"                                       
             );
             ClearControls(this);
 
 
             if (ds.Tables.Count > 0)
             {
-                Task.Run(() => send_mail(ds));
+                send_mail(ds);
                 Response.Redirect("Success.aspx");
             }
 

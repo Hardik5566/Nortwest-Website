@@ -151,8 +151,10 @@
                                 <asp:LinkButton CommandName="btn_pdf" CommandArgument='<%# Eval("id") %>' runat="server" CssClass="text-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Form" aria-label="Views">
                                         <i class="bi bi-file-earmark-pdf"></i>
                                 </asp:LinkButton>
+                                <asp:LinkButton CommandName="btn_mail" CommandArgument='<%# Eval("id") %>' runat="server" CssClass="text-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Send Mail" data-bs-original-title="Form" aria-label="Views">
+<i class="bi bi-envelope text-warning"></i>                                </asp:LinkButton>
 
-<%--                                <asp:LinkButton CommandName="btn_delete" CommandArgument='<%# Eval("id") %>' runat="server" CssClass="text-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Delete" aria-label="Views" OnClientClick="return confirm('Are you sure delete this form ?');">
+                                <%--                                <asp:LinkButton CommandName="btn_delete" CommandArgument='<%# Eval("id") %>' runat="server" CssClass="text-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Delete" aria-label="Views" OnClientClick="return confirm('Are you sure delete this form ?');">
                                         <i class="bi bi-trash-fill"></i>
                                 </asp:LinkButton>--%>
                             </div>
@@ -215,6 +217,5 @@
             document.body.innerHTML = originalContents;
         }
     </script>--%>
-
 </asp:Content>
 

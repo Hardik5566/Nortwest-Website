@@ -74,7 +74,7 @@
                             </div>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li>
+                            <%-- <li>
                                 <a class="dropdown-item" href="pages-user-profile.html">
                                     <div class="d-flex align-items-center">
                                         <div class=""><i class="bi bi-person-fill"></i></div>
@@ -90,7 +90,7 @@
                                         <div class="ms-3"><span>Chnage Password</span></div>
                                     </div>
                                 </a>
-                            </li>
+                            </li>--%>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
@@ -129,7 +129,7 @@
 
 
                     <li class="menu-label">Forms</li>
-                    <li>
+                <%--    <li>
                         <a href="javascript:;" class="has-arrow">
                             <div class="parent-icon">
                                 <i class="bi bi-grid-fill"></i>
@@ -149,9 +149,9 @@
                             </li>
                         </ul>
 
-                    </li>
+                    </li>--%>
 
-                     <li>
+                    <li>
                         <a href="Form_list.aspx">
                             <div class="parent-icon">
                                 <i class="bi bi-file-text"></i>
@@ -160,7 +160,7 @@
                         </a>
                     </li>
 
-                   <%-- <li>
+                    <%-- <li>
                         <a href="javascript:;" class="has-arrow">
                             <div class="parent-icon">
                                 <i class="bi bi-grid-fill"></i>

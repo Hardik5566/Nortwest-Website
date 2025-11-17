@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
 
 
-    <title>VASUTA :: Login</title>
+    <title>Nortwest :: Login</title>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -35,7 +35,7 @@
                                 <div class="col-lg-6" style="margin-top: 0px !important">
                                     <div class="card-body p-4 p-sm-5">
                                         <div style="text-align: center">
-                                            <img src="image/logo_bill.jpg" style="width: 30%; height: auto; margin-bottom: 30px;" />
+                                            <img src="../assets/img/nortwest.jpg" style="width: 40%; height: auto; margin-bottom: 30px;" />
                                         </div>
                                         <h5 class="card-title text-center">Sign In</h5>
                                         <%--<p class="card-text mb-5">See your growth and get consulting support!</p>--%>
@@ -57,12 +57,7 @@
 
                                                     </div>
                                                 </div>
-                                                <div class="col-6">
-                                                    <div class="form-check form-switch">
-                                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked="">
-                                                        <label class="form-check-label" for="flexSwitchCheckChecked">Remember Me</label>
-                                                    </div>
-                                                </div>
+                                             
                                                 <div class="col-6 text-end">
                                                     <%--<a href="authentication-forgot-password.html">Forgot Password ?</a>--%>
                                                 </div>

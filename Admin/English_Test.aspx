@@ -100,14 +100,14 @@
                         </ItemTemplate>
                     </asp:TemplateField>
 
-                     <asp:TemplateField HeaderText="Student ID">
+                    <asp:TemplateField HeaderText="Student ID">
                         <ItemTemplate>
                             <label>
                                 <%# Eval("std_id_number") %>
                             </label>
                         </ItemTemplate>
                     </asp:TemplateField>
-                   
+
                     <asp:TemplateField HeaderText="Student Name">
                         <ItemTemplate>
                             <label>
@@ -137,8 +137,8 @@
                             </label>
                         </ItemTemplate>
                     </asp:TemplateField>
-                    
-                     
+
+
                     <asp:TemplateField HeaderText="Date">
                         <ItemTemplate>
                             <label>
@@ -154,9 +154,11 @@
                                         <i class="bi bi-file-earmark-pdf"></i>
                                 </asp:LinkButton>
 
-<%--                                <asp:LinkButton CommandName="btn_delete" CommandArgument='<%# Eval("id") %>' runat="server" CssClass="text-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Delete" aria-label="Views" OnClientClick="return confirm('Are you sure delete this form ?');">
-                                        <i class="bi bi-trash-fill"></i>
-                                </asp:LinkButton>--%>
+                                <asp:LinkButton CommandName="btn_send_mail" CommandArgument='<%# Eval("ept_form_id") %>' runat="server" CssClass="text-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Send Mail" aria-label="Views">
+<i class="bi bi-envelope text-warning"></i>       
+
+                                </asp:LinkButton>
+
                             </div>
                         </ItemTemplate>
                     </asp:TemplateField>
@@ -217,6 +219,5 @@
             document.body.innerHTML = originalContents;
         }
     </script>--%>
-
 </asp:Content>
 

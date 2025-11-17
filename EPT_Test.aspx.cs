@@ -64,9 +64,9 @@ public partial class EPT_Test : System.Web.UI.Page
             txt_gabi_boss.Text, txt_fiona.Text, txt_fiona_second.Text, rb_fiona_mobile.SelectedValue.ToString(), txt_happened_to_fiona.Text, hdn_audio_file.Value, "1");
         if (ds.Tables[0].Rows.Count > 0)
         {
-            Task.Run(() => send_mail(ds));
-            //send_mail(ds);
-            //send_mail(ds);
+            //Task.Run(() => send_mail(ds));
+            send_mail(ds);
+          
             Response.Redirect("EPT_Success.aspx?id=" + ds.Tables[0].Rows[0]["ept_form_id"].ToString());
         }
     }
@@ -125,6 +125,11 @@ public partial class EPT_Test : System.Web.UI.Page
                 {
                     ScriptManager.RegisterStartupScript(this, GetType(), "alertMessage", "alert('Email sent successfully!');", true);
                 }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(this, GetType(), "alertMessage", "alert('Email not sent successfully!');", true);
+                }
+
 
                 rpt.Close();
                 rpt.Dispose();

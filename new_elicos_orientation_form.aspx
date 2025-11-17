@@ -77,7 +77,7 @@
 
                     <div class="col-md-6">
                         <label class="lbl_title">Campus</label>
-                        <asp:DropDownList ID="ddl_campus" CssClass="form-control" runat="server">
+                        <asp:DropDownList ID="ddl_campus" CssClass="form-control no-nice" runat="server">
                             <asp:ListItem Value="">Select</asp:ListItem>
                             <asp:ListItem Value="Adelaide">Adelaide</asp:ListItem>
                             <asp:ListItem Value="Sydney">Sydney</asp:ListItem>
@@ -544,34 +544,35 @@
 
             // Validate Campus
             if ($("#<%= ddl_campus.ClientID %>").prop("selectedIndex") == 0) {
-                $("#<%= ddl_campus.ClientID %>").next(".nice-select").css("border-color", "red");
-                messages.push("Please select a campus.");
-                isValid = false;
-            } else {
-                $("#<%= ddl_campus.ClientID %>").next(".nice-select").css("border-color", "");
+                $("#<%= ddl_campus.ClientID %>").css("border-color", "red");
+          messages.push("Please select a campus.");
+          isValid = false;
+      } else {
+          $("#<%= ddl_campus.ClientID %>").next(".nice-select").css("border-color", "");
             }
 
+
             // Validate Email
-            var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-            if (!emailRegex.test($("#<%= txt_email.ClientID %>").val())) {
-              $("#<%= txt_email.ClientID %>").css("border-color", "red");
-              messages.push("Please enter a valid email address.");
-              isValid = false;
-          } else {
-              $("#<%= txt_email.ClientID %>").css("border-color", "");
-          }
+      var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      if (!emailRegex.test($("#<%= txt_email.ClientID %>").val())) {
+                $("#<%= txt_email.ClientID %>").css("border-color", "red");
+                messages.push("Please enter a valid email address.");
+                isValid = false;
+            } else {
+                $("#<%= txt_email.ClientID %>").css("border-color", "");
+            }
 
             // Validate Student ID Number
-          if ($("#<%= txt_student_id.ClientID %>").val().trim() == "") {
+            if ($("#<%= txt_student_id.ClientID %>").val().trim() == "") {
                 $("#<%= txt_student_id.ClientID %>").css("border-color", "red");
-            messages.push("Please enter your student ID number.");
-            isValid = false;
-        } else {
-            $("#<%= txt_student_id.ClientID %>").css("border-color", "");
-        }
+              messages.push("Please enter your student ID number.");
+              isValid = false;
+          } else {
+              $("#<%= txt_student_id.ClientID %>").css("border-color", "");
+          }
 
             // Validate Photo
-        if ($("#<%= upd_id_card.ClientID %>").val() == "") {
+          if ($("#<%= upd_id_card.ClientID %>").val() == "") {
                 $("#<%= upd_id_card.ClientID %>").css("border-color", "red");
             messages.push("Please upload your photo.");
             isValid = false;
@@ -645,13 +646,26 @@
         }
     </script>
 
-    <script>
+    <%--    <script>
         $(document).on('ready page:load', function () {
             // Reapply your jQuery code here
             $('.select2').select2();
             $('.search_dropdown .select2-container:eq(1)').hide();
         });
+        $('select').not('.no-nice').niceSelect();
 
+    </script>--%>
+    <script>
+        $(function () {
+            // remove all nice-select wrappers and show native select
+            $('.nice-select').remove();
+            $('select').show().css({ display: 'block', visibility: 'visible', opacity: 1 });
+            // stop plugin re-init
+            $.fn.niceSelect = function(){ return this; };
+        });
     </script>
+
+
+
 </asp:Content>
 
