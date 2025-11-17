@@ -365,7 +365,7 @@
 
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label class="lbl_title">You must notify Northwest in case of a change in your contact information within:</label>
+                            <label class="lbl_title">You must notify Nortwest in case of a change in your contact information within:</label>
                             <div class="row">
                                 <div class="col-md-6">
                                     <label class="radio-inline">

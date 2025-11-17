@@ -284,7 +284,7 @@
                     <div class="col-md-12">
                         <asp:CheckBoxList ID="ch_reason" CssClass="checkbox-inline" runat="server">
                             <asp:ListItem Text="Initial Visa refused prior to course commencement (with Department of Home Affairs Refusal Letter)/Full refund less Administration Fee" />
-                            <asp:ListItem Text="Northwest College is unable to provide the course for which the original enrolment and payment has been made/Full refund" />
+                            <asp:ListItem Text="Nortwest College is unable to provide the course for which the original enrolment and payment has been made/Full refund" />
                             <asp:ListItem Text="Withdrawal prior to agreed start date: Notify the Institute more than 60 days prior to the course commencement date or within cooling off period/Full refund less Administration Fee" />
                             <asp:ListItem Text="Withdrawal prior to agreed start date: Notify the Institute less than 60 days and greater than 28 days prior to the course commencement date/Only course material and/or equipment fee is refundable" />
                             <asp:ListItem Text="Withdrawal prior to agreed start date: Notify the Institute less than 28 days prior to the course commencement date/No refund" />

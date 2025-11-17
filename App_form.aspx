@@ -36,7 +36,7 @@
                 <div style="border: 1px solid #ddd; border-radius: 4px; padding: 20px;">
 
                     <p style="font-size: 14px; line-height: 1.6; color: #333;">
-                        Thank you for your interest in Northwest College. To apply for our courses, kindly download the application pdf form by 
+                        Thank you for your interest in Nortwest College. To apply for our courses, kindly download the application pdf form by 
                         <a href="assets/image/Form/NW_App form_Aug25.pdf" download style="color: #007bff; text-decoration: none;">clicking here</a>
                         and attach the below documents and send us an email to 
                         <a href="mailto:applynow@nortwest.edu.au" style="color: #007bff; text-decoration: none;">applynow@nortwest.edu.au</a>
