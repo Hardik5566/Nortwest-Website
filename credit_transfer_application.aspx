@@ -609,4 +609,13 @@
             }
         }
     </script>
+       <script>
+           $(function () {
+               // remove all nice-select wrappers and show native select
+               $('.nice-select').remove();
+               $('select').show().css({ display: 'block', visibility: 'visible', opacity: 1 });
+               // stop plugin re-init
+               $.fn.niceSelect = function(){ return this; };
+           });
+</script>
 </asp:Content>
