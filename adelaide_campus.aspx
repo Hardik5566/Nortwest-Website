@@ -115,7 +115,7 @@
                 <div class="features">
                     <div class="equal-height col-md-3 col-sm-6">
                         <div class="item mariner">
-                            <a href="#">
+                            <a href="javascript:void(0)">
                                 <div class="icon">
                                     <img src="assets/img/desktop.png" />
                                 </div>

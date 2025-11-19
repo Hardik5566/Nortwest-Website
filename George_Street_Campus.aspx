@@ -183,7 +183,7 @@
                     </div>
                     <div class="equal-height col-md-3 col-sm-6">
                         <div class="item mariner">
-                            <a href="#">
+                            <a href="javascript:void(0)">
                                 <div class="icon">
                                     <img src="assets/img/printer.png" />
                                 </div>
@@ -219,7 +219,7 @@
                     </div>
                     <div class="equal-height col-md-3 col-sm-6">
                         <div class="item mariner">
-                            <a href="#">
+                            <a href="javascript:void(0)">
                                 <div class="icon">
                                     <img src="assets/img/fridge.png" />
                                 </div>
