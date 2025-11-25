@@ -152,7 +152,7 @@
                                     <li><a href="Vet_Orientation.aspx">New Student Orientation</a></li>
                                     <li><a href="academic_enrolment_calenda.aspx">ACADEMIC CALENDAR</a></li>
                                     <%--  <li><a href="downloads.aspx">Downloads</a></li>--%>
-                                    <li><a href="assets/prefix_file/NW-Brochure-copy_compressed-3-1.pdf" download="NW-Brochure.pdf">Brochure</a></li>
+<%--                                    <li><a href="assets/prefix_file/NW-Brochure-copy_compressed-3-1.pdf" download="NW-Brochure.pdf">Brochure</a></li>--%>
                                     <li><a href="https://accounts.google.com/v3/signin/identifier?continue=https%3A%2F%2Fmail.google.com%2Fmail%2F&ifkv=AXH0vVsC3NbLruWRPGrDMDXehhjhDfmqZAD10GenQPYkwt6jn3GdJFLpBNgSt8V3MhKBK_xq2bqkow&rip=1&sacu=1&service=mail&flowName=GlifWebSignIn&flowEntry=ServiceLogin&dsh=S-516335491%3A1744184120347082" target="_blank">Login Gmail</a></li>
                                     <li><a href="http://appv2.nortwest.edu.au/web/" target="_blank">Login LMS</a></li>
 
@@ -389,9 +389,7 @@
                                     <li>
                                         <a href="academic_enrolment_calenda.aspx"><i class="ti-angle-right"></i>Calendar</a>
                                     </li>
-                                    <li>
-                                        <a href="Agent_List.aspx"><i class="ti-angle-right"></i>Agent Application</a>
-                                    </li>
+                                  
                                 </ul>
                             </div>
                         </div>
@@ -410,9 +408,12 @@
                                     <li>
                                         <a href="Policy.aspx"><i class="ti-angle-right"></i>Policies & Procedures</a>
                                     </li>
-                                    <li>
-                                        <a href="assets/img/NW-Brochure-copy_compressed-3-1.pdf"><i class="ti-angle-right"></i>Brochure</a>
+                                      <li>
+                                        <a href="Agent_List.aspx"><i class="ti-angle-right"></i>Agent Application</a>
                                     </li>
+                                   <%-- <li>
+                                        <a href="assets/img/NW-Brochure-copy_compressed-3-1.pdf"><i class="ti-angle-right"></i>Brochure</a>
+                                    </li>--%>
                                     <%--  <li>
                                         <a href="#"><i class="ti-angle-right"></i>Documentation</a>
                                     </li>

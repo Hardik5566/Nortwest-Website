@@ -375,7 +375,7 @@
                     <!-- Single Item -->
                     <div class="col-md-4 col-sm-6 equal-height">
                         <div class="item emerald">
-                            <a href="assets/img/document/Nortwest-Brochure.pdf">
+                            <a href="#">
                                 <div class="item-box">
                                     <div class="icon">
                                         <i class="ti-file"></i>
