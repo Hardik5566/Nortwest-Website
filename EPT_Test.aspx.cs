@@ -17,9 +17,11 @@ using System.Web.UI.WebControls;
 
 public partial class EPT_Test : System.Web.UI.Page
 {
+    ReportDocument rpt = new ReportDocument();
+
     protected void Page_Load(object sender, EventArgs e)
     {
-       
+               
         if (Request.HttpMethod == "POST" && Request.Files.Count > 0)
         {
 
@@ -45,6 +47,13 @@ public partial class EPT_Test : System.Web.UI.Page
         }
 
     }
+
+    protected void Page_Unload(object sender, EventArgs e)
+    {
+        rpt.Close();
+        rpt.Dispose();
+    }
+
     protected void btn_submit_Click(object sender, EventArgs e)
     {
         string save_signature = SaveSignature();
@@ -77,7 +86,7 @@ public partial class EPT_Test : System.Web.UI.Page
 
         string server_url = ConfigurationManager.ConnectionStrings["server_url"].ToString();
 
-        ReportDocument rpt = new ReportDocument();
+       
         try
         {
 
