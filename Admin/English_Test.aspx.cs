@@ -78,7 +78,15 @@ public partial class English_Test : System.Web.UI.Page
                     ds.Tables[0].Rows[0]["false_ans"] = Server.MapPath("~/assets/img/") + ds.Tables[0].Rows[0]["false_ans"].ToString();
 
 
-                    ds.Tables[0].Rows[0]["recorded_audio"] = server_url + "Audio/" + ds.Tables[0].Rows[0]["recorded_audio"].ToString();
+                    if (ds.Tables[0].Rows[0]["recorded_audio"] == DBNull.Value ||
+                                          string.IsNullOrWhiteSpace(ds.Tables[0].Rows[0]["recorded_audio"].ToString()))
+                    {
+                        ds.Tables[0].Rows[0]["recorded_audio"] = ""; // keep it blank, so Crystal shows "No Audio"
+                    }
+                    else
+                    {
+                        ds.Tables[0].Rows[0]["recorded_audio"] = server_url + "Audio/" + ds.Tables[0].Rows[0]["recorded_audio"].ToString();
+                    }
 
                     rpt.Load(Server.MapPath("~/RPT/RPT_EPT_form_main.rpt"));
                     rpt.Database.Tables["dt_ept_form"].SetDataSource(ds.Tables[0]);
