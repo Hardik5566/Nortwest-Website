@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/FormMaster.master" AutoEventWireup="true" CodeFile="EPT_Test.aspx.cs" Inherits="EPT_Test" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/FormMaster.master" AutoEventWireup="true" CodeFile="EPT_Test_old.aspx.cs" Inherits="EPT_Test_old" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="title" runat="Server">
     English Test
@@ -6,7 +6,6 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="head" runat="Server">
     <link href="assets/css/select2.min.css" rel="stylesheet" />
     <link href="assets/country_code/css/intlTelInput.min.css" rel="stylesheet" />
-<%--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">--%>
 
     <style>
         .step .form-container {
@@ -92,13 +91,21 @@
             margin-bottom: 10px;
         }
 
-       
-
-        .d-flex {
-            display: flex;
+        .captcha {
+            color: #1a4183;
+            background: white;
+            padding: 0px 20px 0px 20px;
+            font-size: 2pc;
+            background-image: url(https://www.sourcecodester.com/sites/default/files/captcha-bg.jpg);
+            opacity: 1.5;
+            font-family: cursive;
+            font-style: oblique;
+            font-variant-numeric: oldstyle-nums;
+        }
+        .d-flex{
+            display:flex;
         }
     </style>
-  
     <script src="https://cdn.WebRTC-Experiment.com/MediaStreamRecorder.js"></script>
     <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
 </asp:Content>
@@ -147,7 +154,7 @@
                     <div class="row">
                         <div class="col-md-4">
                             <label class="lbl_title">First Name</label>
-                            <asp:TextBox runat="server" ID="txt_first_name" CssClass="form-control" />
+                            <asp:TextBox runat="server" ID="txt_f_name" CssClass="form-control" />
                         </div>
                         <div class="col-md-4">
                             <label class="lbl_title">Last Name</label>
@@ -299,34 +306,32 @@
                             <canvas id="signatureCanvas"></canvas>
                         </div>
                         <div class="clearfix"></div>
+                        <div class="col-md-12" style="margin-top:18px">
+                            <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
+                                <ContentTemplate>
+                                    <div class="col-lg-12 mb-3">
+                                        <!-- Simple Math CAPTCHA -->
+                                        <div class="d-flex gap-2" style="align-items: center !important;">
+                                            <!-- Captcha numbers with plus sign -->
+                                            <span class="captcha d-flex align-items-center gap-1" style="padding: 15px;">
+                                                <asp:Label runat="server" ID="lbl_num1" Style="text-decoration: line-through;"></asp:Label>
+                                                <span>+</span>
+                                                <asp:Label runat="server" ID="lbl_num2" Style="text-decoration: line-through;"></asp:Label>
 
-                        <!-- CAPTCHA Section -->
-                        <div class="col-md-4">
-                            <div class="form-group" style="margin-top: 20px;">
-                                <div style="display: flex; align-items: center; gap: 10px;">
+                                            </span>
 
-                                    <!-- Captcha Input -->
-                                    <asp:TextBox runat="server" ID="txtCaptcha"
-                                        CssClass="form-control"
-                                        placeholder="Enter code"
-                                        Style="width: 150px;" />
+                                            <!-- Captcha input box -->
+                                            <asp:TextBox runat="server" ID="txt_captcha"
+                                                class="form-control cs_fs_14 cs_rounded_5 border-0 bg-gray" style="margin-left:15px"
+                                                placeholder="Enter the answer" />
+                                        </div>
+                                        <%--   <asp:LinkButton ID="btn_refresh" OnClick="btn_refresh_Click" runat="server" Text="Refresh"><i class="fa fa-refresh"></i></asp:LinkButton>--%>
+                                    </div>
 
-                                    <!-- Hidden Captcha -->
-                                    <asp:HiddenField ID="hdnCaptcha" runat="server" />
+                                </ContentTemplate>
 
-                                    <!-- Captcha Image -->
-                                    <canvas id="captchaCanvas" width="90" height="35"
-                                        style="border: 1px solid #ccc; background: #f9f9f9;"></canvas>
-
-                                    <!-- Refresh -->
-                                    <span onclick="refreshCaptcha()" style="cursor: pointer;">
-                                        <i class="fas fa-redo-alt"></i>
-                                    </span>
-
-                                </div>
-                            </div>
+                            </asp:UpdatePanel>
                         </div>
-
 
                     </div>
                     <div class="btn_step">
@@ -1035,8 +1040,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
     <script src="assets/js/select2.min.js"></script>
-    <!-- Add FontAwesome for refresh icon -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 
     <script>
         let signaturePad = null;
@@ -1045,7 +1048,6 @@
         let userCleared = false;
         let pendingSave = false;
         let countdown = null;
-        let captchaText = '';
 
         function debounce(fn, wait) {
             let t;
@@ -1153,12 +1155,18 @@
         }, 50);
         }
 
+
+
+
+
         /* Export with white background */
+        /* Export PNG without cropping (safe on mobile) */
         function exportSignatureAsPngWithWhiteBg() {
             return new Promise((resolve) => {
                 if (!signaturePad || signaturePad.isEmpty()) return resolve("");
 
             const origCanvas = document.getElementById("signatureCanvas");
+
             const ratio = Math.max(window.devicePixelRatio || 1, 1);
 
             const tmp = document.createElement("canvas");
@@ -1210,107 +1218,7 @@
         });
         }
 
-        /* CAPTCHA Functions */
-      
-
-        /* CAPTCHA Functions (IMAGE BASED) */
-        /* MATH CAPTCHA (ADD / SUBTRACT) */
-        function generateCaptcha() {
-            let num1 = Math.floor(Math.random() * 9) + 1;   // 1–9
-            let num2 = Math.floor(Math.random() * 9) + 1;   // 1–9
-            let operator = Math.random() > 0.5 ? '+' : '-';
-
-            // avoid negative result
-            if (operator === '-' && num2 > num1) {
-                let tmp = num1;
-                num1 = num2;
-                num2 = tmp;
-            }
-
-            let question = num1 + ' ' + operator + ' ' + num2;
-            let answer = operator === '+' ? (num1 + num2) : (num1 - num2);
-
-            // store answer
-            $('#<%= hdnCaptcha.ClientID %>').val(answer.toString());
-
-            drawCaptchaImage(question);
-        }
-
-        function drawCaptchaImage(text) {
-            const canvas = document.getElementById('captchaCanvas');
-            if (!canvas) return;
-
-            const ctx = canvas.getContext('2d');
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            // background
-            ctx.fillStyle = '#f9f9f9';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            // text
-            ctx.font = '20px Arial';
-            ctx.fillStyle = '#333';
-            ctx.setTransform(1, -0.1, 0.1, 1, 0, 0);
-            ctx.fillText(text + ' = ?', 10, 25);
-            ctx.setTransform(1, 0, 0, 1, 0, 0);
-
-            // noise
-            for (let i = 0; i < 3; i++) {
-                ctx.strokeStyle = '#aaa';
-                ctx.beginPath();
-                ctx.moveTo(Math.random() * canvas.width, Math.random() * canvas.height);
-                ctx.lineTo(Math.random() * canvas.width, Math.random() * canvas.height);
-                ctx.stroke();
-            }
-        }
-
-        function refreshCaptcha() {
-            generateCaptcha();
-            $('#<%= txtCaptcha.ClientID %>').val('');
-            $('#<%= txtCaptcha.ClientID %>').css('border', '1px solid #ccc');
-        }
-
-        function validateCaptcha() {
-            const userInput = $('#<%= txtCaptcha.ClientID %>').val().trim();
-            const correctAnswer = $('#<%= hdnCaptcha.ClientID %>').val();
-
-            if (userInput === '') {
-                $('#<%= txtCaptcha.ClientID %>').css('border', '1px solid red');
-                return { isValid: false, message: 'CAPTCHA answer is required' };
-            }
-
-            if (userInput !== correctAnswer) {
-                $('#<%= txtCaptcha.ClientID %>').css('border', '1px solid red');
-                refreshCaptcha();
-                return { isValid: false, message: 'Incorrect CAPTCHA answer' };
-            }
-
-            $('#<%= txtCaptcha.ClientID %>').css('border', '1px solid #ccc');
-            return { isValid: true, message: '' };
-        }
-
-
-        function validateCaptcha() {
-            const userInput = $('#<%= txtCaptcha.ClientID %>').val().trim();
-            const correctCaptcha = $('#<%= hdnCaptcha.ClientID %>').val();
-
-            if (userInput === '') {
-                $('#<%= txtCaptcha.ClientID %>').css('border', '1px solid red');
-                return { isValid: false, message: 'CAPTCHA code is required' };
-            }
-
-            if (userInput !== correctCaptcha) {
-                $('#<%= txtCaptcha.ClientID %>').css('border', '1px solid red');
-                refreshCaptcha();
-                return { isValid: false, message: 'Invalid CAPTCHA code. Please try again.' };
-            }
-
-            $('#<%= txtCaptcha.ClientID %>').css('border', '1px solid #ccc');
-            return { isValid: true, message: '' };
-        }
-
-
-        /* Validation */
+        /* Validation (unchanged) */
         function validateStep1() {
             let errors = [];
 
@@ -1324,174 +1232,136 @@
                 }
             }
 
-            markError("#<%= txt_first_name.ClientID %>", "First Name is required");
-            markError("#<%= txt_l_name.ClientID %>", "Last Name is required");
-            markError("#<%= txt_sd_id.ClientID %>", "Student ID is required");
-            markError("#<%= txt_dob.ClientID %>", "Date of Birth is required");
-            markError("#<%= txt_passport.ClientID %>", "Passport Number is required");
+            markError("#<%= txt_f_name.ClientID %>", "First Name is required");
+        markError("#<%= txt_l_name.ClientID %>", "Last Name is required");
+        markError("#<%= txt_sd_id.ClientID %>", "Student ID is required");
+        markError("#<%= txt_dob.ClientID %>", "Date of Birth is required");
+        markError("#<%= txt_passport.ClientID %>", "Passport Number is required");
 
-            let email = $("#<%= txt_email.ClientID %>").val()?.trim() || "";
+        let email = $("#<%= txt_email.ClientID %>").val()?.trim() || "";
 
-            if (email === "") {
-                errors.push("Email is required");
-                $("#<%= txt_email.ClientID %>").css("border", "1px solid red");
-            } else {
-                $("#<%= txt_email.ClientID %>").css("border", "1px solid #ccc");
-            }
-
-            if ($("#<%= ddl_nationality.ClientID %>").val() === "" || $("#<%= ddl_nationality.ClientID %>").val() == null) {
-                errors.push("Nationality is required");
-                $("#select2-<%= ddl_nationality.ClientID %>-container").css("border", "1px solid red");
-            } else {
-                $("#select2-<%= ddl_nationality.ClientID %>-container").css("border", "1px solid #ccc");
-            }
-
-            let studentId = $("#<%= txt_sd_id.ClientID %>").val()?.trim() || "";
-            let idRegex = /^(13|14|NW)[A-Za-z0-9]{6}$/;
-            if (studentId && !idRegex.test(studentId)) {
-                errors.push("Student ID must start with 13, 14, or NW and be 8 characters long.");
-                $("#<%= txt_sd_id.ClientID %>").css("border", "1px solid red");
-            }
-
-            if (!signaturePad || signaturePad.isEmpty()) {
-                if (!lastNonEmptyDataUrl) {
-                    errors.push("Signature is required");
-                    $("#signatureCanvas").css("border", "1px solid red");
-                } else {
-                    $("#signatureCanvas").css("border", "1px solid #ccc");
-                    safeSetHidden(lastNonEmptyDataUrl);
-                }
-            } else {
-                $("#signatureCanvas").css("border", "1px solid #ccc");
-                saveToHidden().catch(()=>{});
-            }
-
-            // CAPTCHA Validation - ADD THIS
-            const captchaValidation = validateCaptcha();
-            if (!captchaValidation.isValid) {
-                errors.push(captchaValidation.message);
-            }
-
-            if (errors.length > 0) {
-                alert("Please fix the following errors:\n\n- " + errors.join("\n- "));
-                return false;
-            }
-            return true;
+        if (email === "") {
+            errors.push("Email is required");
+            $("#<%= txt_email.ClientID %>").css("border", "1px solid red");
+        } else {
+            $("#<%= txt_email.ClientID %>").css("border", "1px solid #ccc");
         }
 
-        /* Step navigation + Timer */
-        function stepNav(cur, dir) {
-            const next = dir === 'next' ? cur.next(".step") : cur.prev(".step");
-            cur.hide();
-            next.show();
-            $("html,body").scrollTop(0);
+        if ($("#<%= ddl_nationality.ClientID %>").val() === "" || $("#<%= ddl_nationality.ClientID %>").val() == null) {
+            errors.push("Nationality is required");
+            $("#select2-<%= ddl_nationality.ClientID %>-container").css("border", "1px solid red");
+    } else {
+        $("#select2-<%= ddl_nationality.ClientID %>-container").css("border", "1px solid #ccc");
+    }
 
-            if (next.hasClass("step-2") && !countdown) {
-                $("#timer-container").show();
-                startTimer();
-            }
+    let studentId = $("#<%= txt_sd_id.ClientID %>").val()?.trim() || "";
+        let idRegex = /^(13|14|NW)[A-Za-z0-9]{6}$/;
+        if (studentId && !idRegex.test(studentId)) {
+            errors.push("Student ID must start with 13, 14, or NW and be 8 characters long.");
+            $("#<%= txt_sd_id.ClientID %>").css("border", "1px solid red");
+    }
 
-            if (next.hasClass("step-2")) {
-                const signatureData = $('#<%= hdnSignature.ClientID %>').val();
-                if (signatureData) $("#signaturePreview").attr("src", signatureData).show();
-                else $("#signaturePreview").hide();
-            }
-
-            if (next.hasClass("step-1")) {
-                setTimeout(() => {
-                    initPad();
-                const current = $('#<%= hdnSignature.ClientID %>').val();
-                if (current) lastNonEmptyDataUrl = current;
-                saveToHidden().catch(()=>{});
-            }, 100);
+    if (!signaturePad || signaturePad.isEmpty()) {
+        if (!lastNonEmptyDataUrl) {
+            errors.push("Signature is required");
+            $("#signatureCanvas").css("border", "1px solid red");
+        } else {
+            $("#signatureCanvas").css("border", "1px solid #ccc");
+            safeSetHidden(lastNonEmptyDataUrl);
         }
-        }
+    } else {
+        $("#signatureCanvas").css("border", "1px solid #ccc");
+        saveToHidden().catch(()=>{});
+    }
 
-        function startTimer() {
-            let duration = 45 * 60;
-            const display = document.getElementById("timer");
+    if (errors.length > 0) {
+        alert("Please fix the following errors:\n\n- " + errors.join("\n- "));
+        return false;
+    }
+    return true;
+}
 
-            countdown = setInterval(() => {
-                let minutes = Math.floor(duration / 60);
-            let seconds = duration % 60;
-            seconds = seconds < 10 ? "0" + seconds : seconds;
-            if (display) display.textContent = `${minutes}:${seconds}`;
+/* Step navigation + Timer (unchanged from yours) */
+function stepNav(cur, dir) {
+    const next = dir === 'next' ? cur.next(".step") : cur.prev(".step");
+    cur.hide();
+    next.show();
+    $("html,body").scrollTop(0);
 
-            if (duration <= 0) {
-                clearInterval(countdown);
-                alert("Time is up! Your data will be submitted automatically.");
-                autoSubmitForm();
-            }
-            duration--;
-        }, 1000);
-        }
+    if (next.hasClass("step-2") && !countdown) {
+        $("#timer-container").show();
+        startTimer();
+    }
 
-        function autoSubmitForm() {
-            saveToHidden(userCleared).then(() => {
-                __doPostBack('<%= btn_submit.ClientID %>', '');
-        });
-        }
+    if (next.hasClass("step-2")) {
+        const signatureData = $('#<%= hdnSignature.ClientID %>').val();
+        if (signatureData) $("#signaturePreview").attr("src", signatureData).show();
+        else $("#signaturePreview").hide();
+    }
 
-        /* Init on page ready */
-        $(function() {
-            // Initialize CAPTCHA
-            generateCaptcha();
-            
-            // Refresh CAPTCHA button click
-            $('#refreshCaptcha').off('click').on('click', function(e) {
-                e.preventDefault();
-                refreshCaptcha();
-            });
-            
-            // Clear CAPTCHA error on user typing
-            $('#<%= txtCaptcha.ClientID %>').on('input', function() {
-                $(this).css('border', '1px solid #ccc');
-            });
-
-            // Initialize other components
-            try { 
-                $('#<%= ddl_nationality.ClientID %>').select2({ 
-                    width: '100%',
-                    placeholder: "Select Nationality"
-                }); 
-            } catch(e) {}
-            
+    if (next.hasClass("step-1")) {
+        setTimeout(() => {
             initPad();
+        const current = $('#<%= hdnSignature.ClientID %>').val();
+        if (current) lastNonEmptyDataUrl = current;
+        saveToHidden().catch(()=>{});
+    }, 100);
+}
+}
 
-            // Next step button handler
-            $(".next-step").off("click").on("click", function(e) {
-                e.preventDefault();
-                const currentStep = $(this).closest(".step");
-                
-                if (currentStep.hasClass("step-1")) {
-                    // Validate Step 1 including CAPTCHA
-                    if (validateStep1()) {
-                        saveToHidden().then(() => stepNav(currentStep, "next"));
-                    }
-                } else {
-                    // For other steps (no CAPTCHA validation needed)
-                    stepNav(currentStep, "next");
-                }
-            });
+function startTimer() {
+    let duration = 45 * 60;
+    const display = document.getElementById("timer");
 
-            // Previous step button handler
-            $(".prev-step").off("click").on("click", function(e) {
-                e.preventDefault();
-                saveToHidden().then(() => stepNav($(this).closest(".step"), "prev"));
-            });
-        });
+    countdown = setInterval(() => {
+        let minutes = Math.floor(duration / 60);
+    let seconds = duration % 60;
+    seconds = seconds < 10 ? "0" + seconds : seconds;
+    if (display) display.textContent = `${minutes}:${seconds}`;
+
+    if (duration <= 0) {
+        clearInterval(countdown);
+        alert("Time is up! Your data will be submitted automatically.");
+        autoSubmitForm();
+    }
+    duration--;
+}, 1000);
+}
+
+function autoSubmitForm() {
+    saveToHidden(userCleared).then(() => {
+        __doPostBack('<%= btn_submit.ClientID %>', '');
+});
+}
+
+/* Init on page ready */
+$(function() {
+    try { $('#<%= ddl_nationality.ClientID %>').select2({ width: '100%' }); } catch(e) {}
+    initPad();
+
+    $(".next-step").off("click").on("click", function(e) {
+        e.preventDefault();
+        if (validateStep1()) {
+            saveToHidden().then(() => stepNav($(this).closest(".step"), "next"));
+        }
+    });
+
+    $(".prev-step").off("click").on("click", function(e) {
+        e.preventDefault();
+        saveToHidden().then(() => stepNav($(this).closest(".step"), "prev"));
+    });
+});
     </script>
 
     <script>
-        // Audio recording code (unchanged)
         var mediaRecorder;
         var audiosContainer = document.getElementById('audios-container');
         var messageContainer = document.getElementById('message-container');
-        var isRecording = false;
+        var isRecording = false; // ✅ track recording state
 
         document.querySelector('#start-recording').onclick = function () {
             this.disabled = true;
-            isRecording = true;
+            isRecording = true; // ✅ recording started
             captureUserMedia({ audio: true }, onMediaSuccess, onMediaError);
         };
 
@@ -1499,7 +1369,7 @@
             this.disabled = true;
             mediaRecorder.stop();
             mediaRecorder.stream.getTracks().forEach(track => track.stop());
-            isRecording = false;
+            isRecording = false; // ✅ recording stopped
 
             document.querySelector('#start-recording').disabled = false;
             document.querySelector('#retry-recording').disabled = false;
@@ -1510,60 +1380,61 @@
                 mediaRecorder.stop();
                 mediaRecorder.stream.getTracks().forEach(track => track.stop());
             }
-            isRecording = false;
+            isRecording = false; // ✅ reset state
 
+            // Reset UI
             audiosContainer.innerHTML = '';
             messageContainer.innerHTML = '';
             document.getElementById('<%= hdn_audio_file.ClientID %>').value = '';
 
-            document.querySelector('#start-recording').disabled = false;
-            document.querySelector('#stop-recording').disabled = true;
-            this.disabled = true;
-        };
+           document.querySelector('#start-recording').disabled = false;
+           document.querySelector('#stop-recording').disabled = true;
+           this.disabled = true;
+       };
 
-        function captureUserMedia(mediaConstraints, successCallback, errorCallback) {
-            navigator.mediaDevices.getUserMedia(mediaConstraints).then(successCallback).catch(errorCallback);
-        }
+       function captureUserMedia(mediaConstraints, successCallback, errorCallback) {
+           navigator.mediaDevices.getUserMedia(mediaConstraints).then(successCallback).catch(errorCallback);
+       }
 
-        function onMediaSuccess(stream) {
-            var audio = document.createElement('audio');
-            audio.controls = true;
-            audio.muted = true;
-            audio.srcObject = stream;
-            audio.play();
+       function onMediaSuccess(stream) {
+           var audio = document.createElement('audio');
+           audio.controls = true;
+           audio.muted = true;
+           audio.srcObject = stream;
+           audio.play();
 
-            audiosContainer.appendChild(audio);
-            audiosContainer.appendChild(document.createElement('hr'));
+           audiosContainer.appendChild(audio);
+           audiosContainer.appendChild(document.createElement('hr'));
 
-            mediaRecorder = new MediaStreamRecorder(stream);
-            mediaRecorder.stream = stream;
+           mediaRecorder = new MediaStreamRecorder(stream);
+           mediaRecorder.stream = stream;
 
-            mediaRecorder.mimeType = 'audio/mp3';
-            mediaRecorder.audioBitsPerSecond = 128000;
+           mediaRecorder.mimeType = 'audio/mp3';
+           mediaRecorder.audioBitsPerSecond = 128000;
 
-            mediaRecorder.ondataavailable = function (blob) {
-                audiosContainer.innerHTML = '';
+           mediaRecorder.ondataavailable = function (blob) {
+               audiosContainer.innerHTML = '';
 
-                var audioElement = document.createElement('audio');
-                audioElement.controls = true;
-                audioElement.src = URL.createObjectURL(blob);
-                audiosContainer.appendChild(audioElement);
+               var audioElement = document.createElement('audio');
+               audioElement.controls = true;
+               audioElement.src = URL.createObjectURL(blob);
+               audiosContainer.appendChild(audioElement);
 
-                var uniqueFileName = generateUniqueFileName() + '.mp3';
-                document.getElementById('<%= hdn_audio_file.ClientID %>').value = uniqueFileName;
+               var uniqueFileName = generateUniqueFileName() + '.mp3';
+               document.getElementById('<%= hdn_audio_file.ClientID %>').value = uniqueFileName;
 
-                var formData = new FormData();
-                formData.append('audio', blob, uniqueFileName);
-                formData.append('hdn_audio_file', uniqueFileName);
+            var formData = new FormData();
+            formData.append('audio', blob, uniqueFileName);
+            formData.append('hdn_audio_file', uniqueFileName);
 
-                fetch('EPT_Test.aspx', {
-                    method: 'POST',
-                    body: formData
-                })
+            fetch('EPT_Test.aspx', {
+                method: 'POST',
+                body: formData
+            })
                 .then(response => {
                     if (!response.ok) throw new Error('Network response was not ok');
-                return response.text();
-            })
+            return response.text();
+        })
                 .then(result => {
                     var fileName = document.getElementById('<%= hdn_audio_file.ClientID %>').value;
                 displayMessage(fileName + ' saved successfully!', 'green');
@@ -1599,7 +1470,7 @@
                 document.querySelector('#start-recording').disabled = false;
             };
 
-            // ASP.NET Button Check
+            // ✅ ASP.NET Button Check
             document.getElementById('<%= btn_submit.ClientID %>').addEventListener('click', function (e) {
                 if (isRecording) {
                     e.preventDefault();
@@ -1607,43 +1478,19 @@
                     return false;
                 }
 
+    
+
                 console.log("Audio ready, proceeding with submit...");
             });
     </script>
-    <script>
-        // Disable right click
-        document.addEventListener('contextmenu', function (e) {
-            e.preventDefault();
-        });
-
-        // Disable key combinations
-        document.addEventListener('keydown', function (e) {
-
-            // F12
-            if (e.keyCode === 123) {
-                e.preventDefault();
-                return false;
-            }
-
-            // Ctrl + Shift + I / J / C
-            if (e.ctrlKey && e.shiftKey && 
-                (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) {
-                e.preventDefault();
-                return false;
-            }
-
-            // Ctrl + U (view source)
-            if (e.ctrlKey && e.keyCode === 85) {
-                e.preventDefault();
-                return false;
-            }
-        });
-</script>
 
 
     <script>
         window.useThisGithubPath = 'streamproc/MediaStreamRecorder';
     </script>
     <script src="https://cdn.webrtc-experiment.com/commits.js" async></script>
+
+
+
 
 </asp:Content>

@@ -15,7 +15,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class EPT_Test : System.Web.UI.Page
+public partial class EPT_Test_old : System.Web.UI.Page
 {
     ReportDocument rpt = new ReportDocument();
 
@@ -45,10 +45,25 @@ public partial class EPT_Test : System.Web.UI.Page
                 //Response.Write("No file uploaded.");
             }
         }
-       
+        if(!IsPostBack)
+        {
+            generate_captcha();
+        }
 
     }
+    public string generate_captcha()
+    {
+        Random random = new Random();
+        int num1 = random.Next(1, 10);
+        int num2 = random.Next(1, 10);
+        lbl_num1.Text = num1.ToString();
+        lbl_num2.Text = num2.ToString();
 
+        string captchaAnswer = (num1 + num2).ToString();
+        Session["CaptchaAnswer"] = captchaAnswer;
+
+        return captchaAnswer;
+    }
     protected void Page_Unload(object sender, EventArgs e)
     {
         rpt.Close();
@@ -57,10 +72,8 @@ public partial class EPT_Test : System.Web.UI.Page
 
     protected void btn_submit_Click(object sender, EventArgs e)
     {
-    
-
         string save_signature = SaveSignature();
-        DataSet ds = BAL_Forms.ins_ept_test_form(txt_first_name.Text, txt_l_name.Text, txt_email.Text, txt_sd_id.Text, ddl_nationality.SelectedValue, txt_dob.Text,
+        DataSet ds = BAL_Forms.ins_ept_test_form(txt_f_name.Text, txt_l_name.Text, txt_email.Text, txt_sd_id.Text, ddl_nationality.SelectedValue, txt_dob.Text,
             txt_passport.Text, save_signature, rb_1_france.SelectedValue.ToString(), rb_2_old.SelectedValue.ToString(), rb_3_where.SelectedValue.ToString(),
             rb_4_windows.SelectedValue.ToString(), rb_5_man_over.SelectedValue.ToString(), rb_6_how_many_student.SelectedValue.ToString(), rb_7_name_peter.SelectedValue.ToString(),
             rb_8_artist.SelectedValue.ToString(), rb_9_20_desks.SelectedValue.ToString(), rb_10_romantic_films.SelectedValue.ToString(), rb_11_right_now.SelectedValue.ToString(),
