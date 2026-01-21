@@ -75,7 +75,7 @@ public class Send_Mail
             smtp.Host = "smtp.gmail.com"; // Or Your SMTP Server Address
             smtp.Port = 587;
             smtp.UseDefaultCredentials = false;
-            smtp.Credentials = new NetworkCredential("noreply@nortwest.edu.au", "hxfp xylb wtpw oipe"); // Replace with your sender email and password
+            smtp.Credentials = new NetworkCredential("noreply@nortwest.edu.au", "gcds skbq gxdb nlil"); // Replace with your sender email and password
 
             smtp.EnableSsl = true;
 
@@ -125,7 +125,7 @@ public class Send_Mail
             smtp.Host = "smtp.gmail.com"; // Or Your SMTP Server Address
             smtp.Port = 587;
             smtp.UseDefaultCredentials = false;
-            smtp.Credentials = new NetworkCredential("noreply@nortwest.edu.au", "hxfp xylb wtpw oipe"); // Replace with your sender email and password
+            smtp.Credentials = new NetworkCredential("noreply@nortwest.edu.au", "gcds skbq gxdb nlil"); // Replace with your sender email and password
 
             smtp.EnableSsl = true;
 
@@ -174,7 +174,7 @@ public class Send_Mail
             smtp.Host = "smtp.gmail.com"; // Or Your SMTP Server Address
             smtp.Port = 587;
             smtp.UseDefaultCredentials = false;
-            smtp.Credentials = new NetworkCredential("noreply@nortwest.edu.au", "hxfp xylb wtpw oipe"); // Replace with your sender email and password
+            smtp.Credentials = new NetworkCredential("noreply@nortwest.edu.au", "gcds skbq gxdb nlil"); // Replace with your sender email and password
 
             smtp.EnableSsl = true;
 
@@ -240,7 +240,7 @@ public class Send_Mail
             smtp.Host = "smtp.gmail.com"; // Or Your SMTP Server Address
             smtp.Port = 587;
             smtp.UseDefaultCredentials = false;
-            smtp.Credentials = new NetworkCredential("noreply@nortwest.edu.au", "hxfp xylb wtpw oipe"); // Replace with your sender email and password
+            smtp.Credentials = new NetworkCredential("noreply@nortwest.edu.au", "gcds skbq gxdb nlil"); // Replace with your sender email and password
 
             smtp.EnableSsl = true;
 
@@ -310,7 +310,7 @@ public class Send_Mail
             smtp.Host = "smtp.gmail.com"; // Or Your SMTP Server Address
             smtp.Port = 587;
             smtp.UseDefaultCredentials = false;
-            smtp.Credentials = new NetworkCredential("noreply@nortwest.edu.au", "hxfp xylb wtpw oipe"); // Replace with your sender email and password
+            smtp.Credentials = new NetworkCredential("noreply@nortwest.edu.au", "gcds skbq gxdb nlil"); // Replace with your sender email and password
 
             smtp.EnableSsl = true;
 
