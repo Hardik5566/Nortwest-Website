@@ -18,7 +18,10 @@ public partial class LLN_Test : System.Web.UI.Page
         //string script = "$('#modal_lln_test').modal('show');";
         //ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", script, true);
 
-
+        if (!IsPostBack)
+        {
+            Response.Redirect("https://nortwest.llnexam.com/");
+        }
 
 
 

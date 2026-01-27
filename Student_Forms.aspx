@@ -75,7 +75,7 @@
                                                 <li><a href="refund_form.aspx">Refund Form</a></li>
                                                 <li><a href="GTE_Form.aspx">GTE Form</a></li>
                                                 <li><a href="EPT_Test.aspx">English Test (EPT)</a></li>
-                                                <li><a href="LLN_Test.aspx">LLN Test</a></li>
+                                                <li><a href="https://nortwest.llnexam.com/">LLN Test</a></li>
                                                 <li><a href="new_elicos_orientation_form.aspx">Student Orientation Form Elicos</a></li>
                                                 <li><a href="new_vet_orientation_form.aspx">Student Orientation Form Vet</a></li>
                                                 <li><a href="qualification_issuance _form.aspx">Qualification Issuance Form</a></li>
