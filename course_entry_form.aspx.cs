@@ -352,7 +352,7 @@ public partial class course_entry_form : System.Web.UI.Page
                 //string body = sb.ToString();
                 //div_body.Visible = false;
 
-                string result = Send_Mail.SendGTEMail("sso@nortwest.edu.au", subject, get_email_body(name), ach_attachment, signatureData, ack_cv, ack_transcript, "");
+                string result = Send_Mail.send_course_entry("sso@nortwest.edu.au", subject, get_email_body(name), ach_attachment, signatureData, ack_cv, ack_transcript, "");
 
                 rpt.Close();
                 rpt.Dispose();
