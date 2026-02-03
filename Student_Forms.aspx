@@ -79,6 +79,7 @@
                                                 <li><a href="new_elicos_orientation_form.aspx">Student Orientation Form Elicos</a></li>
                                                 <li><a href="new_vet_orientation_form.aspx">Student Orientation Form Vet</a></li>
                                                 <li><a href="qualification_issuance _form.aspx">Qualification Issuance Form</a></li>
+                                                 <li><a href="https://nortwest.llnexam.com/" target="_blank">LLN Exam</a></li>
                                             </ul>
                                         </div>
                                     </div>

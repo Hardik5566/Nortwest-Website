@@ -37,7 +37,7 @@
 
                     <p style="font-size: 14px; line-height: 1.6; color: #333;">
                         Thank you for your interest in Nortwest College. To apply for our courses, kindly download the application pdf form by 
-                        <a href="assets/image/Form/NW_App form_Aug25.pdf" download style="color: #007bff; text-decoration: none;">clicking here</a>
+                        <a href="assets/image/Form/Nortwest International Student Application Form_V3.4_140126.pdf" download style="color: #007bff; text-decoration: none;">clicking here</a>
                         and attach the below documents and send us an email to 
                         <a href="mailto:applynow@nortwest.edu.au" style="color: #007bff; text-decoration: none;">applynow@nortwest.edu.au</a>
                     </p>
@@ -49,7 +49,7 @@
                     <ol style="font-size: 14px; line-height: 1.8; color: #333; padding-left: 20px;">
                         <li>Passport</li>
                         <li>Filled and signed application form 
-                            <a href="assets/image/Form/NW_App form_Aug25.pdf" download style="color: #007bff; text-decoration: none;">(Click here to Download)</a>
+                            <a href="assets/image/Form/Nortwest International Student Application Form_V3.4_140126.pdf" download style="color: #007bff; text-decoration: none;">(Click here to Download)</a>
                         </li>
                         <li>Offshore/Onshore Academic documents</li>
                         <li>Valid VISA/Vevo document if onshore</li>
@@ -61,7 +61,7 @@
                         <strong>NOTE:</strong> Passport, Application form, Academic documents are mandatory to process an offer
                     </p>
 
-                    <a href="assets/image/Form/NW_App form_Aug25.pdf" download class="btn" style="background-color: #3672ff; color: white; font-size: 14px; font-weight: 300; padding: 8px 16px; border-radius: 4px;">
+                    <a href="assets/image/Form/Nortwest International Student Application Form_V3.4_140126.pdf" download class="btn" style="background-color: #3672ff; color: white; font-size: 14px; font-weight: 300; padding: 8px 16px; border-radius: 4px;">
                         <i class="fas fa-download"></i> &nbsp Application Form
                     </a>
 
