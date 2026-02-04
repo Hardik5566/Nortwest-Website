@@ -57,7 +57,7 @@ public partial class EPT_Test : System.Web.UI.Page
 
     protected void btn_submit_Click(object sender, EventArgs e)
     {
-    
+
 
         string save_signature = SaveSignature();
         DataSet ds = BAL_Forms.ins_ept_test_form(txt_first_name.Text, txt_l_name.Text, txt_email.Text, txt_sd_id.Text, ddl_nationality.SelectedValue, txt_dob.Text,
@@ -74,11 +74,13 @@ public partial class EPT_Test : System.Web.UI.Page
             rb_about_article.SelectedValue.ToString(), rb_advantage_eng_learning.SelectedValue.ToString(), rb_advantage_stay_country.SelectedValue.ToString(), rb_time_money_resourse.SelectedValue.ToString(),
             rb_max_opportunity_for_english.SelectedValue.ToString(), txt_advantage.Text, txt_learn_english.Text, txt_choose_to_study.Text, txt_write_summary.Text, txt_gabi.Text, rb_fiona_actress.SelectedValue.ToString(),
             txt_gabi_boss.Text, txt_fiona.Text, txt_fiona_second.Text, rb_fiona_mobile.SelectedValue.ToString(), txt_happened_to_fiona.Text, hdn_audio_file.Value, "1");
+
+
         if (ds.Tables[0].Rows.Count > 0)
         {
             //Task.Run(() => send_mail(ds));
             send_mail(ds);
-          
+
             Response.Redirect("EPT_Success.aspx?id=" + ds.Tables[0].Rows[0]["ept_form_id"].ToString());
         }
     }

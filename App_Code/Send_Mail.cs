@@ -25,7 +25,7 @@ public class Send_Mail
 
 
 
-    public static string SendMail(string to, string subject, string mailBody, Attachment attachmentStream, string signatureData, string stu_photo)
+    public static string SendMail(string to, string subject, string mailBody, Attachment attachmentStream, string signatureData, string stu_photo,string cc = "")
     {
         try
         {
@@ -37,6 +37,11 @@ public class Send_Mail
             foreach (var address in to.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
             {
                 mail.To.Add(address.Trim());
+            }
+
+            foreach (var address in cc.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                mail.CC.Add(address.Trim());
             }
 
             mail.Subject = subject;

@@ -6,7 +6,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="head" runat="Server">
     <link href="assets/css/select2.min.css" rel="stylesheet" />
     <link href="assets/country_code/css/intlTelInput.min.css" rel="stylesheet" />
-<%--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">--%>
+    <%--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">--%>
 
     <style>
         .step .form-container {
@@ -92,13 +92,30 @@
             margin-bottom: 10px;
         }
 
-       
+
 
         .d-flex {
             display: flex;
         }
+
+        .ins h4 {
+            margin-bottom: 4px;
+        }
+
+        .ins_ul {
+            list-style-type: disc;
+            margin-bottom: 20px;
+        }
+
+            .ins_ul li {
+                margin-left: 25px;
+            }
+
+            .error{
+                    border: 1px solid red;
+            }
     </style>
-  
+
     <script src="https://cdn.WebRTC-Experiment.com/MediaStreamRecorder.js"></script>
     <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
 </asp:Content>
@@ -136,10 +153,34 @@
 
             <!-- Step 1 -->
             <div class="step step-1">
-                <div class="form-container">
+                <div class="form-container ins">
                     <h4>Student Instructions</h4>
-                    <p class="instruction">This Placement Test has been designed to help us in identifying your language skills and to determine whether the level of language you possess, is appropriate to the intended VET qualification. This test will also determine if you meet the foundation skills required within each unit of competency contained with the intended qualification and the level of language complexity. The test will be timed to 45 minutes.</p>
-                    <p class="instruction">Welcome to the Nortwest’s formal English test. Please fill out the below required information. Please contact admissions@nortwest.edu.au if you need help or have questions. Thank you and good luck!</p>
+                    <p class="instruction">This Placement Test has been designed to help us in identifying your language skills and to determine whether the level of language you possess, is appropriate to the intended VET qualification. This test will also determine if you meet the foundation skills required within each unit of competency contained with the intended qualification and the level of language complexity.</p>
+                    <p class="instruction">Welcome to Nortwest College's English Placement Test. Please fill out the below required information. Please contact applynow@nortwest.edu.au if you need help or have questions. Thank you and good luck!</p>
+                    <h4>Master Rules & Regulations </h4>
+                    <ul class="ins_ul">
+                        <li>Test must be completed in one sitting</li>
+                        <li>Stable internet connection required</li>
+                        <li>Tab switching may cause auto-submission</li>
+                        <li>⏱ The total test duration is 45 minutes and is strictly timed</li>
+                    </ul>
+
+                    <h4>Student Identification</h4>
+                    <ul class="ins_ul">
+                        <li>Enter Student ID if available</li>
+                        <li>If not available, enter: NW000001</li>
+                    </ul>
+
+                    <h4>System Rules</h4>
+                    <ul class="ins_ul">
+                        <li>Microphone permission mandatory</li>
+                        <li>Updated browser required</li>
+                    </ul>
+
+                    <label class="consent">
+                        <input type="checkbox" id="ch_step_1" />
+                        I confirm that I have read and understood all rules and instructions
+                    </label>
                 </div>
 
                 <div class="form-container">
@@ -338,11 +379,24 @@
             <!-- Step 2 -->
             <div class="step step-2">
 
+                <div class="form-container ins">
+                    <h4>PART I GRAMMAR AND VOCABULARY</h4>
+                    <ul class="ins_ul">
+                        <li>Total questions: 40</li>
+                        <li>Questions 1-40 carries 0.5 mark</li>
+                        <li>Total marks: 20</li>
+                    </ul>
+
+                    <label class="consent">
+                        <input type="checkbox" id="ch_step_2" />
+                        I confirm that I have read and understood all rules and instructions
+                    </label>
+                </div>
 
                 <div class="form-container">
-                    <h4>PART I GRAMMAR AND VOCABULARY</h4>
+                    
 
-                    <p>Questions 1-40 carries 0.5 mark</p>
+                    <p></p>
 
                     <div class="row">
                         <div class="col-md-12">
@@ -820,11 +874,24 @@
 
             <!-- Step 3 -->
             <div class="step step-3">
+                <div class="form-container ins">
+                     <h4>PART II READING AND WRITING</h4>
+                    <ul class="ins_ul">
+                        <li>Number of tasks: 2 </li>
+                        <li>Questions 41-45 is worth 1 mark each. </li>
+                        <li>Questions 46-48 is worth 2 mark each.</li>
+                        <li>Question 49 is worth 4 marks</li>
+                    </ul>
+
+                    <label class="consent">
+                        <input type="checkbox" id="ch_step_3" />
+                        I confirm that I have read and understood all rules and instructions
+                    </label>
+                </div>
                 <div class="form-container">
-                    <h4>PART II READING AND WRITING</h4>
+                   
                     <h5 style="border-bottom: 1px solid lightgray; padding-bottom: 13px;">Read the text below and choose the correct answer. For each question, mark the correct letter A, B or C on your answer sheet</h5>
 
-                    <h6 style="margin-top: 30px; margin-bottom: 10px">Questions 41-45 is worth 1 mark each.</h6>
                     <h4>Learning English</h4>
                     <p>Today, millions of people want to learn or improve their English, but it is difficult to find the best method. Is it better to study in Australia, Britain or America or to study in your own country? The advantages of going to English speaking countries seem obvious. Firstly, you will be able to listen to the language the entire time you are in those countries. You will be surrounded by English wherever you go. Another advantage is that you have to speak in English if you are with other people who speak English. In Italy, it is always possible, in the class, to speak Italian if you want to but learning is slower</p>
                     <p>On the other hand, there are some advantages to staying at home to study. You don’t have to make big changes to your life. Additionally, it is also a lot cheaper than actually going to Britain but it is never possible to achieve the results derived from living in the UK. If you have a good teacher in your homeland, I think you can learn in a more concentrated way, rather than living in Britain without going to a school.</p>
@@ -896,7 +963,7 @@
 
                 <div class="form-container">
                     <h5>Think about learning English in your country.</h5>
-                    <h5>Answer the questions below in your own words. Questions 46-48 is worth 2 mark each, Question 49 is worth 4 marks</h5>
+                    <h5>Answer the questions below in your own words.</h5>
 
                     <div class="row">
                         <div class="col-md-12">
@@ -925,6 +992,30 @@
             </div>
 
             <div class="step step-4">
+                <div class="form-container ins">
+                    <h4>ORAL SKILLS & SPEAKING TASK</h4>
+                    <ul class="ins_ul">
+                        <li>Total tasks: 2 </li>
+                        <li>Questions 50-55 is worth 1 mark each</li>
+                        <li>
+                            Question 56 is worth 4 marks
+                        </li>
+                    </ul>
+
+                    <h4>Speaking-Specific Rules:</h4>
+                    <ul class="ins_ul">
+                        <li>Microphone access mandatory  </li>
+                        <li>Quiet environment recommended </li>
+                        <li>Fixed recording time per response </li>
+                    </ul>
+
+                   
+
+                    <label class="consent">
+                        <input type="checkbox" id="ch_step_4" />
+                        I confirm that I have read and understood all rules and instructions
+                    </label>
+                </div>
                 <div class="form-container">
                     <h4 style="border-bottom: 1px solid lightgray; padding-bottom: 13px;">PART III ORAL SKILLS</h4>
 
@@ -932,7 +1023,6 @@
                     <audio controls="controls">
                         <source src="assets/image/Oral-test-audio-F2F-II_Interm_CD3-13-1.mp3" type="audio/mp3" />
                     </audio>
-                    <h6 style="margin-top: 30px; margin-bottom: 10px">Questions 50-55 is worth 1 mark each, Question 56 is worth 4 marks</h6>
                     <div class="row">
                         <div class="col-md-12">
                             <label class="lbl_title">50. Who is Gabi?</label>
@@ -1027,6 +1117,22 @@
             </div>
         </div>
     </div>
+
+    <div id="tabWarning" style="
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    background:#ffdddd;
+    color:#900;
+    padding:10px;
+    text-align:center;
+    font-weight:bold;
+    z-index:9999;">
+    ⚠ Do not switch tabs. This action is monitored.
+</div>
+
     <%--    </div>
     </div>--%>
 </asp:Content>
@@ -1372,6 +1478,8 @@
                 errors.push(captchaValidation.message);
             }
 
+             
+
             if (errors.length > 0) {
                 alert("Please fix the following errors:\n\n- " + errors.join("\n- "));
                 return false;
@@ -1638,7 +1746,26 @@
                 return false;
             }
         });
-</script>
+    </script>
+
+
+  <%--<script type="text/javascript">
+    document.addEventListener("visibilitychange", function () {
+        // This checks if the tab is actually hidden (switched or minimized)
+        if (document.visibilityState === 'hidden') {
+            console.log("Tab switched detected. Submitting...");
+            
+            // Trigger the hidden button
+            var btn = document.getElementById('<%= btn_submit.ClientID %>');
+            if (btn) {
+                btn.click();
+            }
+        }
+    });
+</script>--%>
+
+
+
 
 
     <script>
