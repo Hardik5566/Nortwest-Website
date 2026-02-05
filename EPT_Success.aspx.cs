@@ -164,12 +164,13 @@ public partial class EPT_Success : System.Web.UI.Page
         txtStudentName.Text = "";
 
         ScriptManager.RegisterStartupScript(
-    this,
-    GetType(),
-    "successAlert",
-    "$('#raiseRequestModal').modal('hide'); alert('Your request has been submitted successfully.');",
-    true
-);
+     this,
+     this.GetType(),
+     "successAlert",
+     "setTimeout(function(){ $('#raiseRequestModal').modal('hide'); alert('Your request has been submitted successfully.'); }, 100);",
+     true
+ );
+
 
     }
 
