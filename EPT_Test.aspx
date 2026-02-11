@@ -1749,20 +1749,29 @@
     </script>
 
 
-  <%--<script type="text/javascript">
-    document.addEventListener("visibilitychange", function () {
-        // This checks if the tab is actually hidden (switched or minimized)
-        if (document.visibilityState === 'hidden') {
-            console.log("Tab switched detected. Submitting...");
+  <script type="text/javascript">
+      document.addEventListener("visibilitychange", function () {
+          // 1. Check if the tab is hidden
+          if (document.visibilityState === 'hidden') {
             
-            // Trigger the hidden button
-            var btn = document.getElementById('<%= btn_submit.ClientID %>');
-            if (btn) {
-                btn.click();
+              // 2. Check if the user is NOT in Step 1
+              // We check if the element with class 'step-1' is currently hidden (display: none)
+              var isStep1Visible = $('.step-1').is(':visible');
+
+              if (!isStep1Visible) {
+                  console.log("Tab switch detected during exam. Submitting...");
+                
+                  var btn = document.getElementById('<%= btn_submit.ClientID %>');
+                if (btn) {
+                    // Only trigger if we aren't in the info-gathering stage
+                    btn.click();
+                }
+            } else {
+                console.log("Tab switch ignored because user is still in Step 1.");
             }
         }
     });
-</script>--%>
+</script>
 
 
 

@@ -64,12 +64,158 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800" rel="stylesheet" />
 
+    <style>
+        /* CHAT ICON */
+#chatIcon {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 55px;
+    height: 55px;
+    background: #c62828;
+    color: #fff;
+    font-size: 26px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    z-index: 99999;
+}
+
+/* CHAT WINDOW */
+#chatWidget {
+    position: fixed;
+    bottom: 85px;
+    right: 20px;
+    width: 340px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 6px 25px rgba(0,0,0,0.25);
+    font-family: Segoe UI, Arial, sans-serif;
+    overflow: hidden;
+    z-index: 99999;
+}
+
+#chatHeader {
+    background: #c62828;
+    color: #fff;
+    padding: 12px;
+    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#chatBody {
+    height: 280px;
+    padding: 10px;
+    overflow-y: auto;
+    background: #f6f7f9;
+}
+
+.botMsg, .userMsg {
+    margin-bottom: 10px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    font-size: 13px;
+    max-width: 85%;
+}
+
+.botMsg {
+    background: #fff;
+    border: 1px solid #ddd;
+}
+
+.userMsg {
+    background: #c62828;
+    color: #fff;
+    margin-left: auto;
+    text-align: right;
+}
+
+#chatFooter {
+    display: flex;
+    border-top: 1px solid #ddd;
+}
+
+#chatInput {
+    flex: 1;
+    border: none;
+    padding: 10px;
+    outline: none;
+}
+
+#chatFooter button {
+    background: #c62828;
+    color: #fff;
+    border: none;
+    padding: 0 15px;
+    cursor: pointer;
+}
+
+/* Clickable chat options (NO button, NO postback) */
+.chat-option {
+    background: #ffffff;
+    border: 1px solid #ddd;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: background 0.2s, border 0.2s;
+}
+
+.chat-option:hover {
+    background: #fbe9e7;
+    border-color: #c62828;
+}
+
+/* Offer letter link style */
+.chat-link {
+    display: inline-block;
+    padding: 8px 12px;
+    background: #c62828;
+    color: #fff !important;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.chat-link:hover {
+    background: #b71c1c;
+}
+
+
+    </style>
 
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
 <body>
     <form id="form1" runat="server">
+
+        <!-- CHAT ICON -->
+<div id="chatIcon" onclick="openChat()">
+    💬
+</div>
+
+        <!-- CHAT WINDOW -->
+<div id="chatWidget" style="display:none;">
+    <div id="chatHeader">
+        <span>Live Support</span>
+        <span style="cursor:pointer;" onclick="closeChat()">✖</span>
+    </div>
+
+    <div id="chatBody"></div>
+
+    <div id="chatFooter">
+        <input type="text" id="chatInput" placeholder="Type a number or message..." />
+        <button type="button" onclick="sendChat()">Send</button>
+    </div>
+</div>
+
 
         <!-- Preloader Start -->
         <div class="se-pre-con"></div>
@@ -630,6 +776,129 @@
         <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WBD2B9DK"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <!-- End Google Tag Manager (noscript) -->
+
+<script>
+    var chatStep = "";
+    var offerData = {};
+
+    function openChat() {
+        $('#chatWidget').fadeIn();
+        $('#chatIcon').hide();
+
+        if ($('#chatBody').html().trim() === '') {
+            showMainMenu();
+        }
+    }
+
+    function closeChat() {
+        $('#chatWidget').fadeOut();
+        $('#chatIcon').show();
+    }
+
+    function addBotMessage(msg) {
+        $('#chatBody').append("<div class='botMsg'>" + msg + "</div>");
+        $('#chatBody').scrollTop($('#chatBody')[0].scrollHeight);
+    }
+
+    function addUserMessage(msg) {
+        $('#chatBody').append("<div class='userMsg'>" + msg + "</div>");
+        $('#chatBody').scrollTop($('#chatBody')[0].scrollHeight);
+    }
+
+    /* ---------------- MAIN MENU ---------------- */
+    function showMainMenu() {
+        chatStep = "";
+        offerData = {};
+
+        addBotMessage(
+        "<div class='chat-option' onclick='startViewOffer()'>📄 View Offer Letter</div>" +
+        "<div class='chat-option' onclick='startCOE()'>📘 Download COE</div>" +
+        "<div class='chat-option' onclick='startOfficerChat()'>💬 Chat with Officer</div>"
+    );
+    }
+
+    /* ---------------- START OFFER LETTER FLOW ---------------- */
+    function startViewOffer() {
+        chatStep = "student_id";
+        offerData = {};
+        addBotMessage("🔐 Please enter your <b>Student ID</b>:");
+    }
+
+    function startOfficerChat() {
+        chatStep = "";
+        addBotMessage("🔴 Connecting you to a support officer...");
+    }
+
+    /* ---------------- HANDLE USER INPUT ---------------- */
+    function sendChat() {
+        var msg = $('#chatInput').val();
+        if (!msg) return;
+
+        addUserMessage(msg);
+        $('#chatInput').val('');
+
+        switch (chatStep) {
+
+            case "student_id":
+                offerData.student_id = msg;
+                chatStep = "passport";
+                addBotMessage("Please enter your <b>Passport Number</b>:");
+                break;
+
+            case "passport":
+                offerData.passport = msg;
+                chatStep = "dob";
+                addBotMessage("Please enter your <b>Date of Birth</b> (dd/MM/yyyy):");
+                break;
+
+            case "dob":
+                // simple DOB format validation
+                var dobRegex = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[012])\/\d{4}$/;
+                if (!dobRegex.test(msg)) {
+                    addBotMessage("❌ Invalid date format. Please use <b>dd/MM/yyyy</b>.");
+                    return;
+                }
+
+                offerData.dob = msg;
+                chatStep = "";
+                validateOfferLetter();
+                break;
+
+            default:
+                addBotMessage("❌ Please select an option from the menu.");
+                break;
+        }
+    }
+
+    /* ---------------- BACKEND VALIDATION ---------------- */
+    function validateOfferLetter() {
+        addBotMessage("🔎 Verifying your details, please wait...");
+
+        $.ajax({
+            type: "POST",
+            url: "ChatService.aspx/ValidateOfferLetter",
+            data: JSON.stringify({ data: offerData }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (res) {
+                if (res.d && res.d.success) {
+                    addBotMessage(
+                        "✅ Verification successful.<br><br>" +
+                        "<a href='" + res.d.link + "' target='_blank' class='chat-link'>📄 View Your Offer Letter</a>"
+                    );
+                } else {
+                    addBotMessage("❌ Verification failed. Please check your details or contact support.");
+                }
+            },
+            error: function () {
+                addBotMessage("⚠️ Server error. Please try again later.");
+            }
+        });
+    }
+</script>
+
+
+
     </form>
 </body>
 </html>

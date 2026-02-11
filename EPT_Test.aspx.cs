@@ -58,7 +58,6 @@ public partial class EPT_Test : System.Web.UI.Page
     protected void btn_submit_Click(object sender, EventArgs e)
     {
 
-
         string save_signature = SaveSignature();
         DataSet ds = BAL_Forms.ins_ept_test_form(txt_first_name.Text, txt_l_name.Text, txt_email.Text, txt_sd_id.Text, ddl_nationality.SelectedValue, txt_dob.Text,
             txt_passport.Text, save_signature, rb_1_france.SelectedValue.ToString(), rb_2_old.SelectedValue.ToString(), rb_3_where.SelectedValue.ToString(),
