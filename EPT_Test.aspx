@@ -111,9 +111,9 @@
                 margin-left: 25px;
             }
 
-            .error{
-                    border: 1px solid red;
-            }
+        .error {
+            border: 1px solid red;
+        }
     </style>
 
     <script src="https://cdn.WebRTC-Experiment.com/MediaStreamRecorder.js"></script>
@@ -204,7 +204,7 @@
                         </div>
                         <div class="col-md-4">
                             <label class="lbl_title">Nationality</label>
-                            <asp:DropDownList ID="ddl_nationality" runat="server" data-live-search="true" CssClass="form-control" aria-required="true" aria-invalid="false">
+                            <asp:DropDownList ID="ddl_nationality" runat="server" onchange="toggleNationality();" data-live-search="true" CssClass="form-control" aria-required="true" aria-invalid="false">
                                 <asp:ListItem Text="Nationality" Value="" />
 
                                 <asp:ListItem Text="Afghan" Value="Afghan" />
@@ -322,6 +322,7 @@
                                 <asp:ListItem Text="Welsh" Value="Welsh" />
                                 <asp:ListItem Text="Zambian" Value="Zambian" />
                                 <asp:ListItem Text="Zimbabwean" Value="Zimbabwean" />
+                                <asp:ListItem Text="Other" Value="Other" />
                             </asp:DropDownList>
                         </div>
                         <div class="col-md-4">
@@ -331,6 +332,10 @@
                         <div class="col-md-4">
                             <label class="lbl_title">Passport No</label>
                             <asp:TextBox runat="server" ID="txt_passport" CssClass="form-control" />
+                        </div>
+                        <div class="col-md-4" id="divOtherNationality" style="display: none;">
+                            <label class="lbl_title">Other Nationality</label>
+                            <asp:TextBox runat="server" ID="txt_other_nationality" CssClass="form-control" />
                         </div>
                         <div class="clearfix"></div>
                         <div class="col-md-6 signature-wrap">
@@ -394,7 +399,7 @@
                 </div>
 
                 <div class="form-container">
-                    
+
 
                     <p></p>
 
@@ -875,7 +880,7 @@
             <!-- Step 3 -->
             <div class="step step-3">
                 <div class="form-container ins">
-                     <h4>PART II READING AND WRITING</h4>
+                    <h4>PART II READING AND WRITING</h4>
                     <ul class="ins_ul">
                         <li>Number of tasks: 2 </li>
                         <li>Questions 41-45 is worth 1 mark each. </li>
@@ -889,7 +894,7 @@
                     </label>
                 </div>
                 <div class="form-container">
-                   
+
                     <h5 style="border-bottom: 1px solid lightgray; padding-bottom: 13px;">Read the text below and choose the correct answer. For each question, mark the correct letter A, B or C on your answer sheet</h5>
 
                     <h4>Learning English</h4>
@@ -997,8 +1002,7 @@
                     <ul class="ins_ul">
                         <li>Total tasks: 2 </li>
                         <li>Questions 50-55 is worth 1 mark each</li>
-                        <li>
-                            Question 56 is worth 4 marks
+                        <li>Question 56 is worth 4 marks
                         </li>
                     </ul>
 
@@ -1009,7 +1013,7 @@
                         <li>Fixed recording time per response </li>
                     </ul>
 
-                   
+
 
                     <label class="consent">
                         <input type="checkbox" id="ch_step_4" />
@@ -1111,27 +1115,16 @@
 
                     <div class="btn_step">
                         <button type="button" class="btn btn-secondary prev-step">Previous</button>
-                        <asp:Button Text="Submit" ID="btn_submit" OnClientClick="saveSignature(); return true;" OnClick="btn_submit_Click" CssClass="btn btn-success" runat="server" />
+                        <asp:Button Text="Submit" ID="btn_submit" OnClientClick="return validateStep4();" OnClick="btn_submit_Click" CssClass="btn btn-success" runat="server" />
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div id="tabWarning" style="
-    display:none;
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    background:#ffdddd;
-    color:#900;
-    padding:10px;
-    text-align:center;
-    font-weight:bold;
-    z-index:9999;">
-    ⚠ Do not switch tabs. This action is monitored.
-</div>
+    <div id="tabWarning" style="display: none; position: fixed; top: 0; left: 0; width: 100%; background: #ffdddd; color: #900; padding: 10px; text-align: center; font-weight: bold; z-index: 9999;">
+        ⚠ Do not switch tabs. This action is monitored.
+    </div>
 
     <%--    </div>
     </div>--%>
@@ -1143,7 +1136,23 @@
     <script src="assets/js/select2.min.js"></script>
     <!-- Add FontAwesome for refresh icon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <script>
+        function toggleNationality() {
+            var ddl = document.getElementById('<%= ddl_nationality.ClientID %>');
+             var divOther = document.getElementById('divOtherNationality');
 
+             if (ddl.value === "Other") {
+                 divOther.style.display = "block";
+             } else {
+                 divOther.style.display = "none";
+             }
+         }
+
+         // Run on page load (for edit mode / postback)
+         document.addEventListener("DOMContentLoaded", function () {
+             toggleNationality();
+         });
+    </script>
     <script>
         let signaturePad = null;
         let lastNonEmptyDataUrl = "";
@@ -1414,6 +1423,54 @@
             $('#<%= txtCaptcha.ClientID %>').css('border', '1px solid #ccc');
             return { isValid: true, message: '' };
         }
+        function validateStep2() {
+            let errors = [];
+
+            if (!$("#ch_step_2").is(":checked")) {
+                errors.push("You must confirm that you have read and understood Step-2 rules");
+            } else {
+                $("#err_step_2").text("");
+            }
+
+            if (errors.length > 0) {
+                alert("Please fix the following errors:\n\n- " + errors.join("\n- "));
+                return false;
+            }
+
+            return true;
+        }
+        function validateStep3() {
+            let errors = [];
+
+            if (!$("#ch_step_3").is(":checked")) {
+                errors.push("You must confirm that you have read and understood Step-3 rules")
+            } else {
+                $("#err_step_3").text("");
+            }
+
+            if (errors.length > 0) {
+                alert("Please fix the following errors:\n\n- " + errors.join("\n- "));
+                return false;
+            }
+
+            return true;
+        }
+        function validateStep4() {
+            let errors = [];
+
+            if (!$("#ch_step_4").is(":checked")) {
+                errors.push("You must confirm that you have read and understood Step-4 rules")
+            } else {
+                $("#err_step_4").text("");
+            }
+
+            if (errors.length > 0) {
+                alert("Please fix the following errors:\n\n- " + errors.join("\n- "));
+                return false;
+            }
+
+            return true;
+        }
 
 
         /* Validation */
@@ -1428,6 +1485,12 @@
                 } else {
                     el.css("border", "1px solid #ccc");
                 }
+            }
+            if (!$("#ch_step_1").is(":checked")) {
+                errors.push("You must confirm that you have read and understood Step-1 rules");
+              
+            } else {
+                $("#err_step_1").text("");
             }
 
             markError("#<%= txt_first_name.ClientID %>", "First Name is required");
@@ -1445,14 +1508,30 @@
                 $("#<%= txt_email.ClientID %>").css("border", "1px solid #ccc");
             }
 
-            if ($("#<%= ddl_nationality.ClientID %>").val() === "" || $("#<%= ddl_nationality.ClientID %>").val() == null) {
+            let nationality = $("#<%= ddl_nationality.ClientID %>").val();
+            let otherNationality = $("#<%= txt_other_nationality.ClientID %>").val()?.trim() || "";
+
+            if (nationality === "") {
                 errors.push("Nationality is required");
-                $("#select2-<%= ddl_nationality.ClientID %>-container").css("border", "1px solid red");
-            } else {
-                $("#select2-<%= ddl_nationality.ClientID %>-container").css("border", "1px solid #ccc");
+                $("#<%= ddl_nationality.ClientID %>").css("border", "1px solid red");
+            }
+            else if (nationality === "Other") {
+
+                if (otherNationality === "") {
+                    errors.push("Please enter nationality");
+                    $("#<%= txt_other_nationality.ClientID %>").css("border", "1px solid red");
+                } else {
+                    $("#<%= txt_other_nationality.ClientID %>").css("border", "1px solid #ccc");
+                    nationality = otherNationality;
+                }
+
+                $("#<%= ddl_nationality.ClientID %>").css("border", "1px solid #ccc");
+            }
+            else {
+                $("#<%= ddl_nationality.ClientID %>").css("border", "1px solid #ccc");
             }
 
-            let studentId = $("#<%= txt_sd_id.ClientID %>").val()?.trim() || "";
+        let studentId = $("#<%= txt_sd_id.ClientID %>").val()?.trim() || "";
             let idRegex = /^(13|14|NW)[A-Za-z0-9]{6}$/;
             if (studentId && !idRegex.test(studentId)) {
                 errors.push("Student ID must start with 13, 14, or NW and be 8 characters long.");
@@ -1543,44 +1622,66 @@
         /* Init on page ready */
         $(function() {
             // Initialize CAPTCHA
-            generateCaptcha();
-            
-            // Refresh CAPTCHA button click
-            $('#refreshCaptcha').off('click').on('click', function(e) {
-                e.preventDefault();
-                refreshCaptcha();
-            });
-            
-            // Clear CAPTCHA error on user typing
-            $('#<%= txtCaptcha.ClientID %>').on('input', function() {
-                $(this).css('border', '1px solid #ccc');
-            });
+            $(function () {
 
-            // Initialize other components
-            try { 
-                $('#<%= ddl_nationality.ClientID %>').select2({ 
-                    width: '100%',
-                    placeholder: "Select Nationality"
-                }); 
-            } catch(e) {}
-            
-            initPad();
+                /* ---------------- CAPTCHA ---------------- */
+                generateCaptcha();
 
-            // Next step button handler
-            $(".next-step").off("click").on("click", function(e) {
-                e.preventDefault();
-                const currentStep = $(this).closest(".step");
-                
-                if (currentStep.hasClass("step-1")) {
-                    // Validate Step 1 including CAPTCHA
-                    if (validateStep1()) {
-                        saveToHidden().then(() => stepNav(currentStep, "next"));
+                $('#refreshCaptcha').off('click').on('click', function (e) {
+                    e.preventDefault();
+                    refreshCaptcha();
+                });
+
+                $('#<%= txtCaptcha.ClientID %>').on('input', function () {
+                    $(this).css('border', '1px solid #ccc');
+                });
+
+                /* ---------------- DROPDOWN ---------------- */
+                try {
+                    $('#<%= ddl_nationality.ClientID %>').select2({
+                        width: '100%',
+                        placeholder: "Select Nationality"
+                    });
+                } catch (e) { }
+
+                /* ---------------- SIGNATURE ---------------- */
+                initPad();
+
+                /* ---------------- NEXT STEP HANDLER ---------------- */
+                $(".next-step").off("click").on("click", function (e) {
+                    e.preventDefault();
+
+                    let $currentStep = $(this).closest(".step");
+
+                    /* -------- STEP 1 -------- */
+                    if ($currentStep.hasClass("step-1")) {
+
+                        if (validateStep1()) {
+                            saveToHidden().then(function () {
+                                stepNav($currentStep, "next");
+                            });
+                        }
                     }
-                } else {
-                    // For other steps (no CAPTCHA validation needed)
-                    stepNav(currentStep, "next");
-                }
+
+                        /* -------- STEP 2 -------- */
+                    else if ($currentStep.hasClass("step-2")) {
+
+                        if (validateStep2()) {
+                            stepNav($currentStep, "next");
+                        }
+                    }
+
+                        /* -------- STEP 3 -------- */
+                    else if ($currentStep.hasClass("step-3")) {
+
+                        if (validateStep3()) {
+                            stepNav($currentStep, "next");
+                        }
+                    }
+                });
+
             });
+
 
             // Previous step button handler
             $(".prev-step").off("click").on("click", function(e) {
@@ -1749,29 +1850,29 @@
     </script>
 
 
-  <script type="text/javascript">
-      document.addEventListener("visibilitychange", function () {
-          // 1. Check if the tab is hidden
-          if (document.visibilityState === 'hidden') {
+    <script type="text/javascript">
+        document.addEventListener("visibilitychange", function () {
+            // 1. Check if the tab is hidden
+            if (document.visibilityState === 'hidden') {
             
-              // 2. Check if the user is NOT in Step 1
-              // We check if the element with class 'step-1' is currently hidden (display: none)
-              var isStep1Visible = $('.step-1').is(':visible');
+                // 2. Check if the user is NOT in Step 1
+                // We check if the element with class 'step-1' is currently hidden (display: none)
+                var isStep1Visible = $('.step-1').is(':visible');
 
-              if (!isStep1Visible) {
-                  console.log("Tab switch detected during exam. Submitting...");
+                if (!isStep1Visible) {
+                    console.log("Tab switch detected during exam. Submitting...");
                 
-                  var btn = document.getElementById('<%= btn_submit.ClientID %>');
-                if (btn) {
-                    // Only trigger if we aren't in the info-gathering stage
-                    btn.click();
-                }
-            } else {
-                console.log("Tab switch ignored because user is still in Step 1.");
-            }
-        }
-    });
-</script>
+                    var btn = document.getElementById('<%= btn_submit.ClientID %>');
+                  if (btn) {
+                      // Only trigger if we aren't in the info-gathering stage
+                      btn.click();
+                  }
+              } else {
+                  console.log("Tab switch ignored because user is still in Step 1.");
+              }
+          }
+      });
+    </script>
 
 
 
