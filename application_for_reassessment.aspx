@@ -135,11 +135,6 @@
     <script src="assets/js/select2.min.js"></script>
     <script src="assets/country_code/js/intlTelInput.js"></script>
 
-  <div class="col-md-12">
-    <label class="lbl_title">Address Line 2</label>
-    <asp:TextBox ID="TextBox1" CssClass="form-control" Rows="3" TextMode="MultiLine" runat="server"></asp:TextBox>
-</div>
-
 <script>
     $(document).ready(function () {
         $('.select2').select2();
