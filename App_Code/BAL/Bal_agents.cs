@@ -24,10 +24,14 @@ public class Bal_agents
         cmd.Parameters.Add(param.intparam("@create_by", create_by));
         return command.ExtQueryDS(cmd);
     }
+
     public static DataSet dis_tbl_agents()
     {
         SqlCommand cmd = new SqlCommand();
         cmd.CommandText = "dis_tbl_agents_sp";
         return command.ExtQueryDS(cmd);
     }
+
+
+
 }

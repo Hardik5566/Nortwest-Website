@@ -105,7 +105,8 @@ to initiate, plan, execute and evaluate their own work and/or the work of others
                             <p>
                                 There is no pre-requisites or specific entry requirement for this qualification. This
 course is available to all international students and Nortwest Pty Ltd. requires that
-students are able to provide evidence that they:
+students are able to provide evidence that they:
+
                             </p>
 
                             <ul class="cr_list">
