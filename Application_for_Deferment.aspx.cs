@@ -9,47 +9,108 @@ using System.Web.UI.WebControls;
 using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
+using System.Web.Services;
+using System.Drawing.Imaging;
 
 
 public partial class Application_for_Deferment : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+    }
+    [WebMethod(EnableSession = true)]
+    public static string GetCaptchaImage()
+    {
+        Random rand = new Random();
+        int num1 = rand.Next(1, 20);
+        int num2 = rand.Next(1, 10);
+        bool isAddition = rand.Next(0, 2) == 0;
+        string operatorStr = isAddition ? "+" : "-";
 
+        if (!isAddition && num1 < num2)
+        {
+            int temp = num1;
+            num1 = num2;
+            num2 = temp;
+        }
+
+        int result = isAddition ? (num1 + num2) : (num1 - num2);
+
+        // Securely store the correct answer
+        HttpContext.Current.Session["CaptchaResult"] = result.ToString();
+
+        // Using String.Format instead of $ interpolation
+        string captchaText = String.Format("{0} {1} {2} = ?", num1, operatorStr, num2);
+
+        using (Bitmap bitmap = new Bitmap(150, 50))
+        {
+            using (Graphics g = Graphics.FromImage(bitmap))
+            {
+                g.Clear(Color.FromArgb(249, 249, 249));
+
+                // Add random noise lines to defeat simple bots
+                Pen pen = new Pen(Color.FromArgb(204, 204, 204));
+                for (int i = 0; i < 6; i++)
+                {
+                    g.DrawLine(pen, rand.Next(0, 150), rand.Next(0, 50), rand.Next(0, 150), rand.Next(0, 50));
+                }
+
+                using (Font font = new Font("Arial", 16, FontStyle.Bold))
+                {
+                    g.DrawString(captchaText, font, Brushes.Black, new PointF(10, 12));
+                }
+            }
+
+            using (MemoryStream ms = new MemoryStream())
+            {
+                bitmap.Save(ms, ImageFormat.Png);
+                byte[] imageBytes = ms.ToArray();
+                return "data:image/png;base64," + Convert.ToBase64String(imageBytes);
+            }
+        }
     }
 
     protected void btn_submit_Click(object sender, EventArgs e)
     {
-
         try
         {
+            string sessionCaptcha = Session["CaptchaResult"] != null ? Session["CaptchaResult"].ToString() : "";
+            string userCaptcha = txt_captcha_input.Text.Trim();
+
+            if (string.IsNullOrEmpty(userCaptcha) || userCaptcha != sessionCaptcha)
+            {
+                // Clear input and alert the user via Javascript
+                txt_captcha_input.Text = "";
+                ScriptManager.RegisterStartupScript(this, GetType(), "CaptchaError", "alert('Invalid Captcha Result. Please try again.'); generateCaptcha();", true);
+                return;
+            }
+
+            // Clean out the session to prevent double submission exploits
+            Session.Remove("CaptchaResult");
             string save_signature = SaveSignature();
             DataSet ds = BAL_Forms.ins_application_for_deferment_form(txt_student_name.Text, txt_std_id.Text, txt_dob.Text, txt_reason.Text, txt_course_name.Text, txt_course_start.Text, txt_course_end.Text, txt_def_start.Text, txt_def_end.Text, save_signature, txt_sign_date.Text, "1");
             if (ds.Tables.Count > 0)
             {
                 string signaturePath = Server.MapPath("~/assets/img/sign/") + ds.Tables[0].Rows[0]["student_signature"].ToString();
-                Task.Run(() =>
-                {
-                    Send_Mail.MailWithouAttachment(
-                         "sso@nortwest.edu.au",
-                         "New Application for Deferment / Suspension Form (" + ds.Tables[0].Rows[0]["student_name"].ToString() + ")",
-                         mailbody(
-                             ds.Tables[0].Rows[0]["student_name"].ToString(),
-                             ds.Tables[0].Rows[0]["student_id"].ToString(),
-                             ds.Tables[0].Rows[0]["birth_date"].ToString(),
-                             ds.Tables[0].Rows[0]["reason"].ToString(),
-                             ds.Tables[0].Rows[0]["course"].ToString(),
-                             ds.Tables[0].Rows[0]["course_start"].ToString(),
-                             ds.Tables[0].Rows[0]["course_end"].ToString(),
-                             ds.Tables[0].Rows[0]["deferment_start"].ToString(),
-                             ds.Tables[0].Rows[0]["deferment_end"].ToString(),
-                             ds.Tables[0].Rows[0]["sign_date"].ToString()
-                         ),
-                         "",
-                        signaturePath
-                     );
 
-                });
+                Send_Mail.MailWithouAttachment(
+                     "sso@nortwest.edu.au",
+                     "New Application for Deferment / Suspension Form (" + ds.Tables[0].Rows[0]["student_name"].ToString() + ")",
+                     mailbody(
+                         ds.Tables[0].Rows[0]["student_name"].ToString(),
+                         ds.Tables[0].Rows[0]["student_id"].ToString(),
+                         ds.Tables[0].Rows[0]["birth_date"].ToString(),
+                         ds.Tables[0].Rows[0]["reason"].ToString(),
+                         ds.Tables[0].Rows[0]["course"].ToString(),
+                         ds.Tables[0].Rows[0]["course_start"].ToString(),
+                         ds.Tables[0].Rows[0]["course_end"].ToString(),
+                         ds.Tables[0].Rows[0]["deferment_start"].ToString(),
+                         ds.Tables[0].Rows[0]["deferment_end"].ToString(),
+                         ds.Tables[0].Rows[0]["sign_date"].ToString()
+                     ),
+                     "",
+                    signaturePath
+                 );
                 Response.Redirect("Success.aspx");
             }
 
@@ -138,7 +199,7 @@ public partial class Application_for_Deferment : System.Web.UI.Page
         string html = @"
 <div style='width: 100%; background-color: #f0f0f0; padding: 50px 0px'>
     <div style='width: 100%; text-align: center; margin-bottom: 15px'>
-        <img src='https://website.nortwest.edu.au/assets/img/logo_nwc_transp@1x.png' width='160px' />
+        <img src='https://nortwest.edu.au/assets/img/logo_nwc_transp@1x.png' width='160px' />
         <h2 style='text-align: center'>Application for Deferment Form</h2>
     </div>
 

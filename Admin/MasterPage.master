@@ -62,7 +62,7 @@
                     <div class="dropdown dropdown-user-setting">
                         <a class="dropdown-toggle dropdown-toggle-nocaret" href="#" data-bs-toggle="dropdown">
                             <div class="user-setting d-flex align-items-center gap-3">
-                                <asp:Image ID="img_profile_master" class="user-img" runat="server" onerror="this.onerror=null;this.src='image/user_default.png';" />
+                                <asp:Image ID="img_profile_master" class="user-img" runat="server" onerror="this.onerror=null;this.src='../image/user_default.png';" />
                                 <div class="d-none d-sm-block">
                                     <p class="user-name mb-0">
                                         <asp:Label ID="lbl_name_master" runat="server" Text=""></asp:Label>
@@ -129,7 +129,7 @@
 
 
                     <li class="menu-label">Forms</li>
-                <%--    <li>
+                    <%--    <li>
                         <a href="javascript:;" class="has-arrow">
                             <div class="parent-icon">
                                 <i class="bi bi-grid-fill"></i>
@@ -241,7 +241,36 @@
                 </div>
             </div>
         </div>
+        <script type="text/javascript">
+            // 1. Block Right-Click
+            document.addEventListener('contextmenu', function (e) {
+                e.preventDefault();
+            }, false);
 
+            // 2. Block Keyboard Shortcuts
+            document.addEventListener('keydown', function (e) {
+                // Block Ctrl+U (View Source)
+                if (e.ctrlKey && (e.keyCode === 85 || e.key === 'u')) {
+                    e.preventDefault();
+                    return false;
+                }
+
+                // Block Ctrl+Shift+I, Ctrl+Shift+J, or F12 (Developer Tools)
+                if (
+                    e.keyCode === 123 || // F12
+                    (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.key === 'I')) || // Ctrl+Shift+I
+                    (e.ctrlKey && e.shiftKey && (e.keyCode === 74 || e.key === 'J'))    // Ctrl+Shift+J
+                ) {
+                    e.preventDefault();
+                    return false;
+                }
+
+                if (e.ctrlKey && (e.keyCode === 83 || e.key === 's')) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+        </script>
         <!-- Bootstrap bundle JS -->
         <script src="assets/js/bootstrap.bundle.min.js"></script>
 

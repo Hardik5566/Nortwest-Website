@@ -47,19 +47,33 @@
         input {
             min-height: 0px !important;
         }
-        /*.selection{
-            display:none !important;
-        }*/
-
-        /*.form-control .radio-inline input {
-            min-height: 13px !important;
-        }*/
+        
         .addRowBtn, .removeRowBtn {
             background: none;
             border: none;
         }
+
+        /* CAPTCHA Styles */
+        .captcha-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        #imgCaptcha {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+        .refresh-captcha {
+            cursor: pointer;
+            color: #007bff;
+            font-size: 18px;
+        }
     </style>
+    <link href="assets/css/select2.min.css" rel="stylesheet" />
+    <link href="assets/country_code/css/intlTelInput.min.css" rel="stylesheet" />
 </asp:Content>
+
 <asp:Content ID="Content3" ContentPlaceHolderID="body" runat="Server">
     <div class="breadcrumb-area shadow dark bg-fixed text-center text-light" style="background-image: url(assets/img/courses_banner.png);">
         <div class="container">
@@ -84,11 +98,6 @@
                 </div>
             </div>
 
-            <%--            <div class="form-container">
-                <div>
-                    <h4>Immigration History & Student Profile </h4>
-                </div>
-            </div>--%>
             <div class="form-container">
                 <div>
                     <h4>Visa Detail</h4>
@@ -127,8 +136,6 @@
                     </div>
                 </div>
             </div>
-            <!-- Hidden fields to collect Visa data -->
-
 
             <div class="form-container">
                 <div>
@@ -162,8 +169,8 @@
                                 </div>
                                 <div class="col-md-1">
                                     <br />
-                                    <button type="button" style="border: none; background: none">
-                                        <img src="assets/img/plus.png" class="addJobBtn" width="25px" />
+                                    <button type="button" style="border: none; background: none" class="addJobBtn">
+                                        <img src="assets/img/plus.png" width="25px" />
                                     </button>
 
                                 </div>
@@ -175,7 +182,6 @@
                                 <label class="lbl_title">Are you currently employed?</label>
                             </div>
 
-                            <!-- Yes / No checkboxes in one line -->
                             <div class="col-md-12">
                                 <asp:RadioButtonList ID="rblEmployed" runat="server" RepeatDirection="Horizontal" CssClass="form-inline">
                                     <asp:ListItem Text="Yes" Value="Yes"></asp:ListItem>
@@ -183,7 +189,6 @@
                                 </asp:RadioButtonList>
                             </div>
 
-                            <!-- Textbox shown if "No" -->
                             <div class="col-md-12 mt-2">
                                 <asp:TextBox ID="txt_employed_reason" CssClass="form-control"
                                     Placeholder="If no, please explain..." runat="server"></asp:TextBox>
@@ -194,8 +199,6 @@
 
             </div>
 
-
-
             <div class="form-container">
                 <div>
                     <h4>Education Detail</h4>
@@ -205,7 +208,6 @@
                         <label class="lbl_title">What is your highest education qualification?</label>
                     </div>
 
-                    <!-- Highschool -->
                     <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-12">
@@ -244,25 +246,21 @@
                     <div class="col-md-12">
                         <div id="courseWrapper">
                             <div class="row course-row mb-3">
-                                <!-- Education Qualification -->
                                 <div class="col-md-4">
                                     <label class="lbl_title">Education Qualification</label>
                                     <input type="text" class="form-control course-input" />
                                 </div>
 
-                                <!-- Level of Study -->
                                 <div class="col-md-4">
                                     <label class="lbl_title">Level of Study</label>
                                     <input type="text" class="form-control year-input" />
                                 </div>
 
-                                <!-- Year of Completion -->
                                 <div class="col-md-2">
                                     <label class="lbl_title">Year</label>
                                     <input type="text" class="form-control institution-input" />
                                 </div>
 
-                                <!-- Actions -->
                                 <div class="col-md-2" style="display: flex; align-items: center; gap: 6px; margin-top: 22px;">
                                     <button type="button" class="btn-icon addRowBtn" style="background: none; border: none;">
                                         <img src="assets/img/plus.png" alt="Add" width="25" />
@@ -275,7 +273,6 @@
                             </div>
                         </div>
 
-                        <!-- Hidden fields -->
                         <asp:HiddenField ID="hdnCompletion" runat="server" />
                         <asp:HiddenField ID="hdnQualification" runat="server" />
                         <asp:HiddenField ID="hdnStudy" runat="server" />
@@ -328,8 +325,6 @@
                     </span>
                 </div>
 
-
-                <!-- Experience related to courses -->
                 <div class="form-group mt-3">
                     <label class="lbl_title">
                         Do you have any experience in any area related to the courses you would like to enroll in?
@@ -342,8 +337,6 @@
                     <asp:TextBox ID="txtExperience" CssClass="form-control" TextMode="MultiLine" Rows="3" runat="server"></asp:TextBox>
                 </div>
 
-
-                <!-- Gaps in study -->
                 <div class="form-group mt-3">
                     <label class="lbl_title">
                         Do you have any gaps in your study? If yes, how long is the gap between your previous study and your intended study and explain the reason for the gap?
@@ -358,13 +351,11 @@
 
             </div>
 
-            <%--  --%>
             <div class="form-container">
                 <div>
                     <h4>Career Plan & Ties to Home Country</h4>
                 </div>
                 <div class="row">
-                    <!-- Question 1 -->
                     <div class="col-md-12">
                         <div class="form-group">
                             <label>Can you explain why you have chosen to study in Australia instead of pursuing similar courses available in your home country?</label>
@@ -372,7 +363,6 @@
                         </div>
                     </div>
 
-                    <!-- Question 2 -->
                     <div class="col-md-12">
                         <div class="form-group">
                             <label>What are your long-term career and personal goals, and how does studying in Australia help you achieve them?</label>
@@ -380,7 +370,6 @@
                         </div>
                     </div>
 
-                    <!-- Question 3 -->
                     <div class="col-md-12">
                         <div class="form-group">
                             <label>Could you describe your family, social, and community ties in your home country?</label>
@@ -388,7 +377,6 @@
                         </div>
                     </div>
 
-                    <!-- Question 4 -->
                     <div class="col-md-12">
                         <div class="form-group">
                             <label>Do you have any family ties in Australia?</label>
@@ -396,7 +384,6 @@
                         </div>
                     </div>
 
-                    <!-- Question 5 -->
                     <div class="col-md-12">
                         <div class="form-group">
                             <label>After completing your studies, do you plan to stay in Australia, return to your home country, or move to another country?</label>
@@ -404,7 +391,6 @@
                         </div>
                     </div>
 
-                    <!-- Question 6 -->
                     <div class="col-md-12">
                         <div class="form-group">
                             <label>Would you like to convey any other relevant information that you believe is important for your enrollment?</label>
@@ -413,8 +399,8 @@
                     </div>
                 </div>
 
-
             </div>
+            
             <div class="form-container">
                 <div>
                     <h4>STUDENT SIGNATURE</h4>
@@ -434,36 +420,42 @@
                         <li>By completing and signing this application, I am giving written consent to Nortwest Pty. Ltd. to share this information with authorized third parties to independently verify the information supplied by me in this application or wherever as required by law.</li>
                         <li>I understand that I and/or my parents and/or financial sponsor/institution may be contacted as part of the risk assessment.</li>
                     </ul>
-                    <div class="col-md-6">
+                    
+                    <div class="col-md-6 mt-3">
                         <label class="lbl_title">Student Name</label>
                         <asp:TextBox ID="txt_s_name" CssClass="form-control" runat="server"></asp:TextBox>
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-6 mt-3">
                         <label class="lbl_title">Date</label>
                         <asp:TextBox ID="txt_sign_date" CssClass="form-control" TextMode="Date" runat="server"></asp:TextBox>
                     </div>
 
-
-                    <div class="col-md-6">
-
+                    <div class="col-md-6 mt-3">
                         <div>
-                            <img id="clearBtn" style="width: 22px; float: right; margin-bottom: 8px;" src="assets/img/eraser.png" />
+                            <img id="clearBtn" style="width: 22px; float: right; margin-bottom: 8px; cursor:pointer;" src="assets/img/eraser.png" />
                         </div>
-
                         <asp:HiddenField ID="hdnSignature" runat="server" />
-
                         <canvas id="signatureCanvas" style="border: 1px solid rgb(223 223 223); width: 100%; height: 250px; touch-action: none; background-color: white;"></canvas>
-
-
                     </div>
-
-
                 </div>
             </div>
 
+            <div class="form-container">
+                 <div class="row">
+                    <div class="col-md-4">
+                        <label class="lbl_title">Enter Captcha Code</label>
+                        <div class="captcha-box">
+                            <img id="imgCaptcha" width="150" height="50" alt="Security Captcha" />
+                            <i class="fas fa-sync-alt refresh-captcha" onclick="generateCaptcha()" title="Refresh Captcha"></i>
+                        </div>
+                        <asp:TextBox ID="txt_captcha_input" runat="server" CssClass="form-control" style="margin-top:10px;" placeholder="Captcha Code" onkeypress="return only_number(event)"></asp:TextBox>
+                    </div>
+                </div>
+            </div>
+            
             <div>
-                <asp:Button ID="btn_submit" runat="server" OnClientClick="return validateForm() && saveSignature();" OnClick="btn_submit_Click" Text="SUBMIT" CssClass="btn btn-success" />
+                <asp:Button ID="btn_submit" runat="server" OnClientClick="return handleFinalSubmit();" OnClick="btn_submit_Click" Text="SUBMIT" CssClass="btn btn-success" />
             </div>
         </div>
     </div>
@@ -476,459 +468,356 @@
     <asp:HiddenField ID="hdnJobStart" runat="server" />
     <asp:HiddenField ID="hdnJobEnd" runat="server" />
     <asp:HiddenField ID="hdnJobCurrent" runat="server" />
-    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
-    <script>
-        const canvas = document.getElementById('signatureCanvas');
-        const signaturePad = new SignaturePad(canvas);
-
-        // Resize canvas for high-DPI displays
-        function resizeCanvas() {
-            const ratio = Math.max(window.devicePixelRatio || 1, 1);
-            canvas.width = canvas.offsetWidth * ratio;
-            canvas.height = canvas.offsetHeight * ratio;
-            canvas.getContext("2d").scale(ratio, ratio);
-            signaturePad.clear();
-        }
-        window.addEventListener("resize", resizeCanvas);
-        resizeCanvas();
-
-        // Clear button
-        document.getElementById('clearBtn').addEventListener('click', () => {
-            signaturePad.clear();
-        });
-
-        function saveSignature() {
-            var canvas = document.getElementById("signatureCanvas");
-            var signatureData = canvas.toDataURL("image/png"); // Get signature as Base64
-            document.getElementById("<%= hdnSignature.ClientID %>").value = signatureData; // Set value in hidden field
-        }
-
-        // <%--Save button
-        document.getElementById('saveBtn').addEventListener('click', () => {
-            if (!signaturePad.isEmpty()) {
-                const signatureData = signaturePad.toDataURL('image/png');
-        document.getElementById('<%= hdnSignature.ClientID %>').value = signatureData;
-        document.getElementById('<%= btnPostBack.ClientID %>').click(); // Trigger postback
-        } else {
-            alert("Please provide a signature.");
-        }
-        });--%>
-    </script>
 </asp:Content>
+
 <asp:Content ID="Content4" ContentPlaceHolderID="jqury" runat="Server">
-
+    <script src="assets/js/select2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
+    
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            let jobWrapper = document.getElementById("jobWrapper");
+        document.addEventListener('contextmenu', e => e.preventDefault());
 
-            jobWrapper.addEventListener("click", function (event) {
-                if (event.target && event.target.classList.contains("addJobBtn")) {
-                    let newRow = document.createElement("div");
-                    newRow.classList.add("row", "mb-3");
+        document.onkeydown = e =>
+            e.keyCode == 123 || // F12
+            (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74)) || // Ctrl+Shift+I/J
+            (e.ctrlKey && (e.keyCode == 85 || e.keyCode == 83)) // Ctrl+U / Ctrl+S
+            ? false : true;
 
-                    newRow.innerHTML = `
-                        <div class="col-md-3">
-                            <label>Title</label>
-                            <input type="text" class="form-control job-title" />
-                        </div>
-                        <div class="col-md-3">
-                            <label>Salary</label>
-                            <input type="text" class="form-control job-salary" />
-                        </div>
-                        <div class="col-md-2">
-                            <label>Start Date</label>
-                            <input type="date" class="form-control job-start" />
-                        </div>
-                        <div class="col-md-2">
-                            <label>End Date</label>
-                            <input type="date" class="form-control job-end" />
-                        </div>
-                        <div class="col-md-1 checkbox-inline">
-                            <br />
-                            <input type="checkbox" class="job-current" /> Current
-                        </div>
-                        <div class="col-md-1">
-                            <br />
-                            <button type="button" style="border:none;background:none">
-                                <img src="assets/img/plus.png" class="addJobBtn" width="25px" />
-                            </button>
-                            <button type="button" style="border:none;background:none">
-                                <img src="assets/img/minus-button.png" class="removeJobBtn" width="22px" />
-                            </button>
-                        </div>
-                    `;
-                    jobWrapper.appendChild(newRow);
-                }
-
-                if (event.target && event.target.classList.contains("removeJobBtn")) {
-                    let row = event.target.closest(".row");
-                    if (jobWrapper.children.length > 1) {
-                        row.remove();
-                    }
-                }
-            });
-
-            // Example: Collect all job data on submit
-            document.getElementById("<%= btn_submit.ClientID %>").addEventListener("click", function () {
-                let titles = [], salaries = [], starts = [], ends = [], currents = [];
-                document.querySelectorAll(".job-title").forEach(el => titles.push(el.value.trim()));
-                document.querySelectorAll(".job-salary").forEach(el => salaries.push(el.value.trim()));
-                document.querySelectorAll(".job-start").forEach(el => starts.push(el.value));
-                document.querySelectorAll(".job-end").forEach(el => ends.push(el.value));
-                document.querySelectorAll(".job-current").forEach(el => currents.push(el.checked ? "Yes" : "No"));
-
-                document.getElementById("<%= hdnJobTitle.ClientID %>").value = titles.join("|");
-                document.getElementById("<%= hdnJobSalary.ClientID %>").value = salaries.join("|");
-                document.getElementById("<%= hdnJobStart.ClientID %>").value = starts.join("|");
-                document.getElementById("<%= hdnJobEnd.ClientID %>").value = ends.join("|");
-                document.getElementById("<%= hdnJobCurrent.ClientID %>").value = currents.join("|");
-            });
-        });
+        setInterval(() => {
+            if (window.outerWidth - innerWidth > 160 || window.outerHeight - innerHeight > 160)
+                document.body.innerHTML = "<h2 style='text-align:center;margin-top:20%'>Inspect is disabled</h2>";
+        }, 1000);
     </script>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const visaWrapper = document.getElementById("visaWrapper");
+        var signaturePad;
 
-            // Add or remove visa rows
-            visaWrapper.addEventListener("click", function(event) {
-                if(event.target.closest(".addVisaBtn")) {
-                    const newRow = document.createElement("div");
-                    newRow.classList.add("row", "mb-3");
-                    newRow.innerHTML = `
-                        <div class="col-md-4">
-                            <label>Visa Type</label>
-                            <input type="text" class="form-control visa-type" />
-                        </div>
-                        <div class="col-md-4">
-                            <label>Valid From</label>
-                            <input type="date" class="form-control visa-from" />
-                        </div>
-                        <div class="col-md-2">
-                            <label>Expiry Date</label>
-                            <input type="date" class="form-control visa-expiry" />
-                        </div>
-                        <div class="col-md-2 mt-2">
+        // --- Fetch Captcha from Server using AJAX ---
+        function generateCaptcha() {
+            $.ajax({
+                type: "POST",
+                url: "GST_form.aspx/GetCaptchaImage",
+                data: '{}',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                cache: false,
+                success: function (response) {
+                    $('#imgCaptcha').attr('src', response.d);
+                    $("#<%= txt_captcha_input.ClientID %>").val("");
+                },
+                error: function (xhr, status, error) {
+                    console.error("Failed to load captcha: " + error);
+                }
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            // Initialize Captcha
+            generateCaptcha();
+
+            // Signature Pad Setup
+            const canvas = document.getElementById('signatureCanvas');
+            signaturePad = new SignaturePad(canvas);
+
+            function resizeCanvas() {
+                const ratio = Math.max(window.devicePixelRatio || 1, 1);
+                canvas.width = canvas.offsetWidth * ratio;
+                canvas.height = canvas.offsetHeight * ratio;
+                canvas.getContext("2d").scale(ratio, ratio);
+                signaturePad.clear();
+            }
+            window.addEventListener("resize", resizeCanvas);
+            resizeCanvas();
+
+            document.getElementById('clearBtn').addEventListener('click', () => {
+                signaturePad.clear();
+            $("#<%= hdnSignature.ClientID %>").val("");
+        });
+
+        // --- Dynamic Rows Logics ---
+        let jobWrapper = document.getElementById("jobWrapper");
+        jobWrapper.addEventListener("click", function (event) {
+            if (event.target && event.target.closest(".addJobBtn")) {
+                let newRow = document.createElement("div");
+                newRow.classList.add("row", "mb-3");
+                newRow.innerHTML = `
+                    <div class="col-md-3">
+                        <label>Title</label>
+                        <input type="text" class="form-control job-title" />
+                    </div>
+                    <div class="col-md-3">
+                        <label>Salary</label>
+                        <input type="text" class="form-control job-salary" />
+                    </div>
+                    <div class="col-md-2">
+                        <label>Start Date</label>
+                        <input type="date" class="form-control job-start" />
+                    </div>
+                    <div class="col-md-2">
+                        <label>End Date</label>
+                        <input type="date" class="form-control job-end" />
+                    </div>
+                    <div class="col-md-1 checkbox-inline">
                         <br />
-                            <button type="button" class="addVisaBtn" style="border:none;background:none;">
-                                <img src="assets/img/plus.png" width="25px" />
-                            </button>
-                            <button type="button" class="removeVisaBtn" style="border:none;background:none;">
-                                <img src="assets/img/minus-button.png" width="22px" />
-                            </button>
-                        </div>
-                    `;
-                    visaWrapper.appendChild(newRow);
+                        <input type="checkbox" class="job-current" /> Current
+                    </div>
+                    <div class="col-md-1">
+                        <br />
+                        <button type="button" class="addJobBtn" style="border:none;background:none">
+                            <img src="assets/img/plus.png" width="25px" />
+                        </button>
+                        <button type="button" class="removeJobBtn" style="border:none;background:none">
+                            <img src="assets/img/minus-button.png" width="22px" />
+                        </button>
+                    </div>
+                `;
+                jobWrapper.appendChild(newRow);
+            }
+
+            if (event.target && event.target.closest(".removeJobBtn")) {
+                let row = event.target.closest(".row");
+                if (jobWrapper.children.length > 1) {
+                    row.remove();
                 }
-
-                if(event.target.closest(".removeVisaBtn")) {
-                    const row = event.target.closest(".row");
-                    if(visaWrapper.children.length > 1) {
-                        row.remove();
-                    }
-                }
-            });
-
-            // Collect visa data on submit
-            document.getElementById("<%= btn_submit.ClientID %>").addEventListener("click", function() {
-                let types = [], froms = [], expirys = [];
-                document.querySelectorAll(".visa-type").forEach(el => types.push(el.value.trim()));
-                document.querySelectorAll(".visa-from").forEach(el => froms.push(el.value));
-                document.querySelectorAll(".visa-expiry").forEach(el => expirys.push(el.value));
-
-                document.getElementById("<%= hdnVisaType.ClientID %>").value = types.join("|");
-                document.getElementById("<%= hdnVisaFrom.ClientID %>").value = froms.join("|");
-                document.getElementById("<%= hdnVisaExpiry.ClientID %>").value = expirys.join("|");
-            });
-        });
-    </script>
-
-    <%--<script>
-        // Trigger validation on submit button click
-        $("#<%= btn_submit.ClientID %>").click(function (event) {
-            if (!validateForm()) {
-                event.preventDefault(); // Stop form submission
-                return false;
             }
         });
+
+        let courseWrapper = document.getElementById("courseWrapper");
+        courseWrapper.addEventListener("click", function (event) {
+            if (event.target.closest(".addRowBtn")) {
+                let newRow = document.createElement("div");
+                newRow.classList.add("row", "course-row", "mb-3");
+                newRow.innerHTML = `
+                    <div class="col-md-4">
+                        <label class="lbl_title">Education Qualification</label>
+                        <input type="text" class="form-control course-input" />
+                    </div>
+                    <div class="col-md-4">
+                        <label class="lbl_title">Level of Study</label>
+                        <input type="text" class="form-control year-input" />
+                    </div>
+                    <div class="col-md-2">
+                        <label class="lbl_title">Year</label>
+                        <input type="text" class="form-control institution-input" />
+                    </div>
+                    <div class="col-md-2" style="display: flex; align-items: center; gap: 6px; margin-top: 22px;">
+                        <button type="button" class="btn-icon addRowBtn" style="background: none; border: none;">
+                            <img src="assets/img/plus.png" alt="Add" width="25" />
+                        </button>
+                        <button type="button" class="btn-icon removeRowBtn" style="background: none; border: none;">
+                            <img src="assets/img/minus-button.png" alt="Remove" width="22" />
+                        </button>
+                    </div>
+                `;
+                courseWrapper.appendChild(newRow);
+            }
+
+            if (event.target.closest(".removeRowBtn")) {
+                let row = event.target.closest(".course-row");
+                if (courseWrapper.children.length > 1) { row.remove(); }
+            }
+        });
+
+        const visaWrapper = document.getElementById("visaWrapper");
+        visaWrapper.addEventListener("click", function (event) {
+            if (event.target.closest(".addVisaBtn")) {
+                const newRow = document.createElement("div");
+                newRow.classList.add("row", "mb-3");
+                newRow.innerHTML = `
+                    <div class="col-md-4">
+                        <label>Visa Type</label>
+                        <input type="text" class="form-control visa-type" />
+                    </div>
+                    <div class="col-md-4">
+                        <label>Valid From</label>
+                        <input type="date" class="form-control visa-from" />
+                    </div>
+                    <div class="col-md-2">
+                        <label>Expiry Date</label>
+                        <input type="date" class="form-control visa-expiry" />
+                    </div>
+                    <div class="col-md-2 mt-2">
+                    <br />
+                        <button type="button" class="addVisaBtn" style="border:none;background:none;">
+                            <img src="assets/img/plus.png" width="25px" />
+                        </button>
+                        <button type="button" class="removeVisaBtn" style="border:none;background:none;">
+                            <img src="assets/img/minus-button.png" width="22px" />
+                        </button>
+                    </div>
+                `;
+                visaWrapper.appendChild(newRow);
+            }
+            if (event.target.closest(".removeVisaBtn")) {
+                const row = event.target.closest(".row");
+                if (visaWrapper.children.length > 1) { row.remove(); }
+            }
+        });
+        });
+
+        function handleFinalSubmit() {
+            if (!validateForm()) {
+                return false; 
+            }
+
+            var btn = document.getElementById("<%= btn_submit.ClientID %>");
+            setTimeout(function () {
+                btn.style.display = 'none';
+                if (!document.getElementById('submitting_placeholder')) {
+                    btn.insertAdjacentHTML('afterend', '<span id="submitting_placeholder" class="btn btn-success" style="cursor: not-allowed; opacity: 0.7;">Submitting...</span>');
+                }
+            }, 10);
+            
+            return true; 
+        }
 
         function validateForm() {
-            var isValid = true;
-
-            // Helper to validate empty fields
-            function validateInput(id) {
-                if ($("#" + id).val().trim() === "") {
-                    $("#" + id).css("border-color", "red");
-                    isValid = false;
-                } else {
-                    $("#" + id).css("border-color", "");
+            // Helper function for sequential validation 
+            function validateFieldSeq(elem, message) {
+                if (elem && (!elem.value || !elem.value.trim())) {
+                    elem.style.borderColor = "red";
+                    alert(message); 
+                    elem.focus();   
+                    return false;   
+                } else if (elem) {
+                    elem.style.borderColor = "";
                 }
+                return true;
             }
 
-            /* =============== VISA SECTION ================== */
-            validateInput("<%= txt_visa1_type.ClientID %>");
-            validateInput("<%= txt_visa1_from.ClientID %>");
-            validateInput("<%= txt_visa1_expiry.ClientID %>");
-
-
-            /* =============== EMPLOYMENT SECTION ================== */
-            // If "No" is checked, reason must be filled
-          
-            // Validate Job 1
-            validateInput("<%= txt_job1_title.ClientID %>");
-            validateInput("<%= txt_job1_salary.ClientID %>");
-            validateInput("<%= txt_job1_start.ClientID %>");
-            // End date not required if "Current Job" is checked
-            if (!$("#<%= chk_job1_current.ClientID %>").is(":checked")) {
-                validateInput("<%= txt_job1_end.ClientID %>");
-            }
-
-            // Validate Job 2
-            validateInput("<%= txt_job2_title.ClientID %>");
-            validateInput("<%= txt_job2_salary.ClientID %>");
-            validateInput("<%= txt_job2_start.ClientID %>");
-            if (!$("#<%= chk_job2_current.ClientID %>").is(":checked")) {
-                validateInput("<%= txt_job2_end.ClientID %>");
-            }
-
-            // Validate Job 3
-            validateInput("<%= txt_job3_title.ClientID %>");
-            validateInput("<%= txt_job3_salary.ClientID %>");
-            validateInput("<%= txt_job3_start.ClientID %>");
-            if (!$("#<%= chk_job3_current.ClientID %>").is(":checked")) {
-                validateInput("<%= txt_job3_end.ClientID %>");
-            }
-
-            /* =============== EDUCATION SECTION ================== */
-            $("#courseWrapper .course-row").each(function () {
-                var qualification = $(this).find(".course-input").val().trim();
-                var study = $(this).find(".year-input").val().trim();
-                var year = $(this).find(".institution-input").val().trim();
-
-                if (qualification === "" || study === "" || year === "") {
-                    $(this).find("input").css("border-color", "red");
-                    isValid = false;
-                } else {
-                    $(this).find("input").css("border-color", "");
-                }
-            });
-
-            /* =============== CAREER PLAN QUESTIONS ================== */
-            validateInput("<%= txtReasonAustralia.ClientID %>");
-            validateInput("<%= txtCareerGoals.ClientID %>");
-            validateInput("<%= txtHomeCountryTies.ClientID %>");
-            validateInput("<%= txtAustraliaFamilyTies.ClientID %>");
-            validateInput("<%= txtFuturePlans.ClientID %>");
-            validateInput("<%= txtOtherInfo.ClientID %>");
-
-            /* =============== STUDENT SIGNATURE ================== */
-            validateInput("<%= txt_s_name.ClientID %>");
-            validateInput("<%= txt_sign_date.ClientID %>");
-
-            // Signature canvas check
-            var canvas = document.getElementById("signatureCanvas");
-            var blank = document.createElement("canvas");
-            blank.width = canvas.width;
-            blank.height = canvas.height;
-
-            if (canvas.toDataURL() === blank.toDataURL()) {
-                alert("Please provide your signature before submitting.");
-                isValid = false;
-            }
-
-            return isValid;
-        }
-    </script>--%>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            let courseWrapper = document.getElementById("courseWrapper");
-
-            courseWrapper.addEventListener("click", function (event) {
-                // Add row
-                if (event.target.closest(".addRowBtn")) {
-                    let newRow = document.createElement("div");
-                    newRow.classList.add("row", "course-row", "mb-3");
-
-                    newRow.innerHTML = `
-                        <div class="col-md-4">
-                            <label class="lbl_title">Education Qualification</label>
-                            <input type="text" class="form-control course-input" />
-                        </div>
-
-                        <div class="col-md-4">
-                            <label class="lbl_title">Level of Study</label>
-                            <input type="text" class="form-control year-input" />
-                        </div>
-
-                        <div class="col-md-2">
-                            <label class="lbl_title">Year</label>
-                            <input type="text" class="form-control institution-input" />
-                        </div>
-
-                        <div class="col-md-2" style="display: flex; align-items: center; gap: 6px; margin-top: 22px;">
-                            <button type="button" class="btn-icon addRowBtn" style="background: none; border: none;">
-                                <img src="assets/img/plus.png" alt="Add" width="25" />
-                            </button>
-
-                            <button type="button" class="btn-icon removeRowBtn" style="background: none; border: none;">
-                                <img src="assets/img/minus-button.png" alt="Remove" width="22" />
-                            </button>
-                        </div>
-                    `;
-
-                    courseWrapper.appendChild(newRow);
-
-                    // Show remove button for all except first
-                    let removeBtns = courseWrapper.querySelectorAll(".removeRowBtn");
-                    removeBtns.forEach(btn => btn.style.display = "inline-block");
-                    removeBtns[0].style.display = "none"; // first row cannot be removed
-                }
-
-                // Remove row
-                if (event.target.closest(".removeRowBtn")) {
-                    let row = event.target.closest(".course-row");
-                    if (courseWrapper.children.length > 1) {
-                        row.remove();
-                    }
-                }
-            });
-
-            // Collect all data on submit
-            document.getElementById("<%= btn_submit.ClientID %>").addEventListener("click", function () {
-                let completions = [], qualifications = [], studies = [];
-                document.querySelectorAll(".course-input").forEach(el => qualifications.push(el.value.trim()));
-                document.querySelectorAll(".year-input").forEach(el => studies.push(el.value.trim()));
-                document.querySelectorAll(".institution-input").forEach(el => completions.push(el.value.trim()));
-
-                document.getElementById("<%= hdnQualification.ClientID %>").value = qualifications.join("|");
-        document.getElementById("<%= hdnStudy.ClientID %>").value = studies.join("|");
-                document.getElementById("<%= hdnCompletion.ClientID %>").value = completions.join("|");
-            });
+            // Reset borders
+            document.querySelectorAll("input, textarea").forEach(input => {
+                input.style.borderColor = "";
         });
-    </script>
-<script>
-    function validateForm() {
-        let isValid = true;
-        let errorMessages = [];
 
-        // Helper
-        function validateField(elem, message) {
-            if (elem && (!elem.value || !elem.value.trim())) {
-                elem.style.borderColor = "red";
-                errorMessages.push(message);
-                return false;
-            } else if (elem) {
-                elem.style.borderColor = "";
+        // Update signature hidden field
+        if (!signaturePad.isEmpty()) {
+            document.getElementById("<%= hdnSignature.ClientID %>").value = signaturePad.toDataURL("image/png");
+            } else {
+                document.getElementById("<%= hdnSignature.ClientID %>").value = "";
             }
-            return true;
+
+            // Populate Hidden Fields for dynamic rows
+            let titles = [], salaries = [], starts = [], ends = [], currents = [];
+            document.querySelectorAll(".job-title").forEach(el => titles.push(el.value.trim()));
+            document.querySelectorAll(".job-salary").forEach(el => salaries.push(el.value.trim()));
+            document.querySelectorAll(".job-start").forEach(el => starts.push(el.value));
+            document.querySelectorAll(".job-end").forEach(el => ends.push(el.value));
+            document.querySelectorAll(".job-current").forEach(el => currents.push(el.checked ? "Yes" : "No"));
+            document.getElementById("<%= hdnJobTitle.ClientID %>").value = titles.join("|");
+            document.getElementById("<%= hdnJobSalary.ClientID %>").value = salaries.join("|");
+        document.getElementById("<%= hdnJobStart.ClientID %>").value = starts.join("|");
+        document.getElementById("<%= hdnJobEnd.ClientID %>").value = ends.join("|");
+        document.getElementById("<%= hdnJobCurrent.ClientID %>").value = currents.join("|");
+
+        let vTypes = [], vFroms = [], vExpirys = [];
+        document.querySelectorAll(".visa-type").forEach(el => vTypes.push(el.value.trim()));
+        document.querySelectorAll(".visa-from").forEach(el => vFroms.push(el.value));
+        document.querySelectorAll(".visa-expiry").forEach(el => vExpirys.push(el.value));
+        document.getElementById("<%= hdnVisaType.ClientID %>").value = vTypes.join("|");
+            document.getElementById("<%= hdnVisaFrom.ClientID %>").value = vFroms.join("|");
+        document.getElementById("<%= hdnVisaExpiry.ClientID %>").value = vExpirys.join("|");
+
+        let completions = [], qualifications = [], studies = [];
+        document.querySelectorAll(".course-input").forEach(el => qualifications.push(el.value.trim()));
+        document.querySelectorAll(".year-input").forEach(el => studies.push(el.value.trim()));
+        document.querySelectorAll(".institution-input").forEach(el => completions.push(el.value.trim()));
+        document.getElementById("<%= hdnQualification.ClientID %>").value = qualifications.join("|");
+            document.getElementById("<%= hdnStudy.ClientID %>").value = studies.join("|");
+        document.getElementById("<%= hdnCompletion.ClientID %>").value = completions.join("|");
+
+        // --- Sequential Validation Processing ---
+            
+        // Visa dynamic validation
+        let visaRows = document.querySelectorAll("#visaWrapper .row");
+        for (let i = 0; i < visaRows.length; i++) {
+            let row = visaRows[i];
+            let type = row.querySelector(".visa-type");
+            let from = row.querySelector(".visa-from");
+            let expiry = row.querySelector(".visa-expiry");
+            if (!validateFieldSeq(type, `Visa type is required for entry ${i + 1}`)) return false;
+        if (!validateFieldSeq(from, `Valid from date is required for entry ${i + 1}`)) return false;
+        if (!validateFieldSeq(expiry, `Expiry date is required for entry ${i + 1}`)) return false;
         }
 
-        // Reset borders
-        document.querySelectorAll("input, textarea").forEach(input => {
-            input.style.borderColor = "";
-    });
+        // Job dynamic validation
+        let jobRows = document.querySelectorAll("#jobWrapper .row");
+        for (let i = 0; i < jobRows.length; i++) {
+            let row = jobRows[i];
+            let title = row.querySelector(".job-title");
+            let salary = row.querySelector(".job-salary");
+            let start = row.querySelector(".job-start");
+            let end = row.querySelector(".job-end");
+            let current = row.querySelector(".job-current");
 
-    // 1. Visa details
-    document.querySelectorAll("#visaWrapper .row").forEach((row, index) => {
-        const type = row.querySelector(".visa-type");
-    const from = row.querySelector(".visa-from");
-    const expiry = row.querySelector(".visa-expiry");
-    if (!validateField(type, `Visa type is required for entry ${index + 1}`)) isValid = false;
-    if (!validateField(from, `Valid from date is required for entry ${index + 1}`)) isValid = false;
-    if (!validateField(expiry, `Expiry date is required for entry ${index + 1}`)) isValid = false;
-    });
-
-    // 2. Job details
-    document.querySelectorAll("#jobWrapper .row").forEach((row, index) => {
-        const title = row.querySelector(".job-title");
-    const salary = row.querySelector(".job-salary");
-    const start = row.querySelector(".job-start");
-    const end = row.querySelector(".job-end");
-    const current = row.querySelector(".job-current");
-    if (!validateField(title, `Job title is required for entry ${index + 1}`)) isValid = false;
-    if (!validateField(salary, `Salary is required for entry ${index + 1}`)) isValid = false;
-    if (!validateField(start, `Start date is required for entry ${index + 1}`)) isValid = false;
-    if ((!current || !current.checked) && end && !end.value) {
-        end.style.borderColor = "red";
-        errorMessages.push(`End date is required for job entry ${index + 1}`);
-    isValid = false;
-    }
-    });
-
-    // 3. Education details
-    document.querySelectorAll("#courseWrapper .course-row").forEach((row, index) => {
-        const qual = row.querySelector(".course-input");
-    const study = row.querySelector(".year-input");
-    const year = row.querySelector(".institution-input");
-    if (!validateField(qual, `Education qualification is required for entry ${index + 1}`)) isValid = false;
-    if (!validateField(study, `Level of study is required for entry ${index + 1}`)) isValid = false;
-    if (!validateField(year, `Year is required for entry ${index + 1}`)) isValid = false;
-    });
-
-    // 4. Extra education textboxes (Highschool + University)
-    const highschoolYear = document.getElementById("<%= txt_highschool_year.ClientID %>");
-        const universityYear = document.getElementById("<%= txt_university_year.ClientID %>");
-    if (!validateField(highschoolYear, "Highschool completion year is required")) isValid = false;
-    if (!validateField(universityYear, "University completion year is required")) isValid = false;
-
-    // 5. Funding - total funds
-    const funds = document.getElementById("<%= txtFunds.ClientID %>");
-    if (!validateField(funds, "Please specify your total access to funds")) isValid = false;
-
-    // 6. Experience & Study Gap textareas
-    const experience = document.getElementById("<%= txtExperience.ClientID %>");
-    const gap = document.getElementById("<%= txtGap.ClientID %>");
-    if (!validateField(experience, "Please provide details about your experience")) isValid = false;
-    if (!validateField(gap, "Please provide details about your study gap")) isValid = false;
-
-    // 7. Career Plan textareas
-    const careerFields = [
-        {id: "txtReasonAustralia", message: "Please explain why you chose to study in Australia"},
-        {id: "txtCareerGoals", message: "Please describe your career goals"},
-        {id: "txtHomeCountryTies", message: "Please describe your ties to your home country"},
-        {id: "txtAustraliaFamilyTies", message: "Please describe any family ties in Australia"},
-        {id: "txtFuturePlans", message: "Please describe your future plans after studies"},
-        {id: "txtOtherInfo", message: "Please provide any other relevant information"}
-    ];
-    careerFields.forEach(field => {
-        const el = document.getElementById(field.id);
-    if (!validateField(el, field.message)) isValid = false;
-    });
-
-    // 8. Student Signature section
-    const studentName = document.getElementById("<%= txt_s_name.ClientID %>");
-        const signDate = document.getElementById("<%= txt_sign_date.ClientID %>");
-    if (!validateField(studentName, "Student name is required")) isValid = false;
-    if (!validateField(signDate, "Signature date is required")) isValid = false;
-
-    // 9. Signature pad
-    const canvas = document.getElementById("signatureCanvas");
-    if (canvas && typeof signaturePad !== "undefined" && signaturePad.isEmpty()) {
-        errorMessages.push("Please provide your signature before submitting");
-        isValid = false;
-    }
-
-    // Show errors
-    if (!isValid && errorMessages.length > 0) {
-        alert("Please fix the following errors:\n\n- " + errorMessages.join("\n- "));
-    }
-
-    return isValid;
-    }
-
-    // Attach on form submit
-    document.addEventListener("DOMContentLoaded", function() {
-        const form = document.querySelector("form");
-        if (form) {
-            form.addEventListener("submit", function(e) {
-                if (!validateForm()) {
-                    e.preventDefault();
-                }
-            });
+            if (!validateFieldSeq(title, `Job title is required for entry ${i + 1}`)) return false;
+        if (!validateFieldSeq(salary, `Salary is required for entry ${i + 1}`)) return false;
+        if (!validateFieldSeq(start, `Start date is required for entry ${i + 1}`)) return false;
+        if ((!current || !current.checked) && end && !end.value) {
+            end.style.borderColor = "red";
+            alert(`End date is required for job entry ${i + 1}`);
+        end.focus();
+        return false;
         }
-    });
-</script>
+        }
 
-   
+        // Course dynamic validation
+        let courseRows = document.querySelectorAll("#courseWrapper .course-row");
+        for (let i = 0; i < courseRows.length; i++) {
+            let row = courseRows[i];
+            let qual = row.querySelector(".course-input");
+            let study = row.querySelector(".year-input");
+            let year = row.querySelector(".institution-input");
+            if (!validateFieldSeq(qual, `Education qualification is required for entry ${i + 1}`)) return false;
+        if (!validateFieldSeq(study, `Level of study is required for entry ${i + 1}`)) return false;
+        if (!validateFieldSeq(year, `Year is required for entry ${i + 1}`)) return false;
+        }
+
+            const highschoolYear = document.getElementById("<%= txt_highschool_year.ClientID %>");
+                const universityYear = document.getElementById("<%= txt_university_year.ClientID %>");
+        if (!validateFieldSeq(highschoolYear, "Highschool completion year is required")) return false;
+        if (!validateFieldSeq(universityYear, "University completion year is required")) return false;
+
+        const funds = document.getElementById("<%= txtFunds.ClientID %>");
+            if (!validateFieldSeq(funds, "Please specify your total access to funds")) return false;
+
+            const experience = document.getElementById("<%= txtExperience.ClientID %>");
+            const gap = document.getElementById("<%= txtGap.ClientID %>");
+        if (!validateFieldSeq(experience, "Please provide details about your experience")) return false;
+        if (!validateFieldSeq(gap, "Please provide details about your study gap")) return false;
+
+        const careerFields = [
+            { id: "<%= txtReasonAustralia.ClientID %>", message: "Please explain why you chose to study in Australia" },
+                { id: "<%= txtCareerGoals.ClientID %>", message: "Please describe your career goals" },
+                { id: "<%= txtHomeCountryTies.ClientID %>", message: "Please describe your ties to your home country" },
+                { id: "<%= txtAustraliaFamilyTies.ClientID %>", message: "Please describe any family ties in Australia" },
+                { id: "<%= txtFuturePlans.ClientID %>", message: "Please describe your future plans after studies" },
+                { id: "<%= txtOtherInfo.ClientID %>", message: "Please provide any other relevant information" }
+            ];
+
+            for (let j = 0; j < careerFields.length; j++) {
+                const el = document.getElementById(careerFields[j].id);
+                if (!validateFieldSeq(el, careerFields[j].message)) return false;
+            }
+
+            const studentName = document.getElementById("<%= txt_s_name.ClientID %>");
+            const signDate = document.getElementById("<%= txt_sign_date.ClientID %>");
+        if (!validateFieldSeq(studentName, "Student name is required")) return false;
+        if (!validateFieldSeq(signDate, "Signature date is required")) return false;
+
+        // Signature Pad Validation
+        const canvasEl = document.getElementById("signatureCanvas");
+        if (canvasEl && typeof signaturePad !== "undefined" && signaturePad.isEmpty()) {
+            alert("Please provide your signature before submitting");
+            canvasEl.focus();
+            return false;
+        }
+
+        // Math CAPTCHA empty check
+        const captchaInput = document.getElementById("<%= txt_captcha_input.ClientID %>");
+            if (!validateFieldSeq(captchaInput, "Please enter the security captcha code")) return false;
+
+            return true; 
+            }
+    </script>
 </asp:Content>
-

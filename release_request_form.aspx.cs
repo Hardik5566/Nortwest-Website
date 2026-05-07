@@ -9,6 +9,8 @@ using System.Data.SqlClient;
 using System.Threading.Tasks;
 using System.IO;
 using System.Drawing;
+using System.Drawing.Imaging;
+using System.Web.Services;
 
 public partial class release_request_form : System.Web.UI.Page
 {
@@ -16,45 +18,107 @@ public partial class release_request_form : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
+            Session["InitSession"] = "Started";
             bind_data();
             ddl_country.Items.Insert(0, new ListItem("Select Country", "0"));
         }
 
     }
+    [WebMethod(EnableSession = true)]
+    public static string GetCaptchaImage()
+    {
+        Random rand = new Random();
+        int num1 = rand.Next(1, 20);
+        int num2 = rand.Next(1, 10);
+        bool isAddition = rand.Next(0, 2) == 0;
+        string operatorStr = isAddition ? "+" : "-";
+
+        if (!isAddition && num1 < num2)
+        {
+            int temp = num1;
+            num1 = num2;
+            num2 = temp;
+        }
+
+        int result = isAddition ? (num1 + num2) : (num1 - num2);
+
+        // Securely store the correct answer
+        HttpContext.Current.Session["CaptchaResult"] = result.ToString();
+
+        // Using String.Format instead of $ interpolation
+        string captchaText = String.Format("{0} {1} {2} = ?", num1, operatorStr, num2);
+
+        using (Bitmap bitmap = new Bitmap(150, 50))
+        {
+            using (Graphics g = Graphics.FromImage(bitmap))
+            {
+                g.Clear(Color.FromArgb(249, 249, 249));
+
+                // Add random noise lines
+                Pen pen = new Pen(Color.FromArgb(204, 204, 204));
+                for (int i = 0; i < 6; i++)
+                {
+                    g.DrawLine(pen, rand.Next(0, 150), rand.Next(0, 50), rand.Next(0, 150), rand.Next(0, 50));
+                }
+
+                using (Font font = new Font("Arial", 16, FontStyle.Bold))
+                {
+                    g.DrawString(captchaText, font, Brushes.Black, new PointF(10, 12));
+                }
+            }
+
+            using (MemoryStream ms = new MemoryStream())
+            {
+                bitmap.Save(ms, ImageFormat.Png);
+                byte[] imageBytes = ms.ToArray();
+                return "data:image/png;base64," + Convert.ToBase64String(imageBytes);
+            }
+        }
+    }
     protected void btn_submit_Click(object sender, EventArgs e)
     {
         try
         {
+            string sessionCaptcha = Session["CaptchaResult"] != null ? Session["CaptchaResult"].ToString() : "";
+            string userCaptcha = txt_captcha_input.Text.Trim();
+
+            if (string.IsNullOrEmpty(userCaptcha) || userCaptcha != sessionCaptcha)
+            {
+                // Clear input and alert the user
+                txt_captcha_input.Text = "";
+                ScriptManager.RegisterStartupScript(this, GetType(), "CaptchaError", "alert('Invalid Captcha Result. Please try again.');", true);
+                return;
+            }
+
+            // Clean out the session to prevent double submission exploits
+            Session.Remove("CaptchaResult");
             string save_signature = SaveSignature();
             DataSet ds = BAL_Forms.ins_release_request_form(txt_student_name.Text, txt_s_id.Text, ddl_country.SelectedValue.ToString(), txt_passport_no.Text, txt_dob.Text, txt_course_enroll.Text, txt_intake.Text, txt_address.Text, txt_email.Text, hd_contact_no_code.Value, hd_contact_no.Value, txt_reason_release.Text, save_signature, txt_sign_date.Text, "1");
             if (ds.Tables[0].Rows.Count > 0)
             {
                 string signaturePath = Server.MapPath("~/assets/img/sign/") + ds.Tables[0].Rows[0]["student_signature"].ToString();
-                Task.Run(() =>
-           {
-               Send_Mail.MailWithouAttachment(
-                     "sso@nortwest.edu.au",
-                     "Release Request Form (" + ds.Tables[0].Rows[0]["student_name"].ToString() + ")",
-                     mailbody(
-                         ds.Tables[0].Rows[0]["student_name"].ToString(),
-                         ds.Tables[0].Rows[0]["std_id"].ToString(),
-                         ds.Tables[0].Rows[0]["country"].ToString(),
-                         ds.Tables[0].Rows[0]["passport_no"].ToString(),
-                         ds.Tables[0].Rows[0]["dob"].ToString(),
-                         ds.Tables[0].Rows[0]["course_enrolled"].ToString(),
-                         ds.Tables[0].Rows[0]["intake"].ToString(),
-                         ds.Tables[0].Rows[0]["address"].ToString(),
-                         ds.Tables[0].Rows[0]["email"].ToString(),
-                         ds.Tables[0].Rows[0]["country_code"].ToString(),
-                         ds.Tables[0].Rows[0]["contact_no"].ToString(),
-                         ds.Tables[0].Rows[0]["reason_for_release"].ToString(),
-                         ds.Tables[0].Rows[0]["student_signature"].ToString(),
-                         ds.Tables[0].Rows[0]["sign_date"].ToString()
-                     ),
-                     "",
-                     signaturePath
-                 );
-           });
+                Send_Mail.MailWithouAttachment(
+                       "sso@nortwest.edu.au",
+                       "Release Request Form (" + ds.Tables[0].Rows[0]["student_name"].ToString() + ")",
+                       mailbody(
+                           ds.Tables[0].Rows[0]["student_name"].ToString(),
+                           ds.Tables[0].Rows[0]["std_id"].ToString(),
+                           ds.Tables[0].Rows[0]["country"].ToString(),
+                           ds.Tables[0].Rows[0]["passport_no"].ToString(),
+                           ds.Tables[0].Rows[0]["dob"].ToString(),
+                           ds.Tables[0].Rows[0]["course_enrolled"].ToString(),
+                           ds.Tables[0].Rows[0]["intake"].ToString(),
+                           ds.Tables[0].Rows[0]["address"].ToString(),
+                           ds.Tables[0].Rows[0]["email"].ToString(),
+                           ds.Tables[0].Rows[0]["country_code"].ToString(),
+                           ds.Tables[0].Rows[0]["contact_no"].ToString(),
+                           ds.Tables[0].Rows[0]["reason_for_release"].ToString(),
+                           ds.Tables[0].Rows[0]["student_signature"].ToString(),
+                           ds.Tables[0].Rows[0]["sign_date"].ToString()
+                       ),
+                       "",
+                       signaturePath
+                   );
                 Response.Redirect("Success.aspx");
             }
         }
@@ -152,7 +216,7 @@ public partial class release_request_form : System.Web.UI.Page
 <div style='width:100%; background-color:#f0f0f0; padding:40px 0; font-family: Arial, Helvetica, sans-serif;'>
     <!-- Header -->
     <div style='text-align:center; margin-bottom:25px;'>
-        <img src='https://website.nortwest.edu.au/assets/img/logo_nwc_transp@1x.png' width='160' style='margin-bottom:10px; display:block; margin-left:auto; margin-right:auto;' />
+        <img src='https://nortwest.edu.au/assets/img/logo_nwc_transp@1x.png' width='160' style='margin-bottom:10px; display:block; margin-left:auto; margin-right:auto;' />
         <h2 style='margin:0; font-size:20px; font-weight:bold; color:#222;'>Release Request Form</h2>
     </div>
 

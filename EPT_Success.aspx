@@ -123,9 +123,9 @@
                         <a href="Ept_test.aspx" class="btn btn-sm btn-success">Reappear Test</a>
 
 
-                        <button type="button" style="padding: 5px 11px; min-height: auto" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#raiseRequestModal">
+                     <%--   <button type="button" style="padding: 5px 11px; min-height: auto" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#raiseRequestModal">
                             Raise a Request
-                        </button>
+                        </button>--%>
 
                     </div>
                 </div>

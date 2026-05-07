@@ -35,6 +35,23 @@
         .ch_agree {
             font-weight: bold !important;
         }
+
+        /* Math Captcha Styling */
+        .captcha-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        #imgCaptcha {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+        .refresh-captcha {
+            cursor: pointer;
+            color: #007bff;
+            font-size: 18px;
+        }
     </style>
     <link href="assets/country_code/css/intlTelInput.min.css" rel="stylesheet" />
 
@@ -85,8 +102,6 @@
                         </asp:DropDownList>
                     </div>
 
-
-
                     <div class="col-md-6">
                         <label class="lbl_title">Photo To Issue Student ID Card</label>
                         <asp:FileUpload ID="upd_id_card" CssClass="form-control" runat="server"
@@ -101,7 +116,7 @@
                         <label class="lbl_title">Student Contact Number</label>
                         <div class="input-group contact_no">
                             <input id="phone" onkeypress="return only_number(event)" style="width: 100%; padding: 6px 47px !important" name="phone" class="form-control" type="tel" />
-                            <p id="output"></p>
+                            <p id="output" style="font-size:12px; margin-top:5px;"></p>
                             <asp:HiddenField ID="hd_contact_no_code" Value="" runat="server" />
                             <asp:HiddenField ID="hd_contact_no" Value="" runat="server" />
                         </div>
@@ -144,9 +159,6 @@
                             <asp:RadioButton ID="RadioButton4" runat="server" Text="000" GroupName="test1" />
                         </label>
                     </div>
-
-
-
 
                     <div class="col-md-12">
                         <label class="lbl_title">WHO SHOULD YOU CONTACT IN CASE YOU HAVE PROBLEMS WITH YOUR STUDIES, ATTENDANCE OR OTHER STUDENT-RELATED ISSUES?</label>
@@ -228,8 +240,6 @@
                         </label>
                     </div>
 
-
-
                     <div class="col-md-12">
                         <label class="lbl_title">WHEN DO YOU COMPLETE A TEST TO SEE YOUR PROGRESS?</label>
                     </div>
@@ -266,7 +276,7 @@
                     <div class="col-md-12">
                         <label class="lbl_title">
                             I understand that the information provided by me to Nortwest Pty Ltd t/a City Institute, Sydney & Adelaide College
-                        Campus may be made available to the Commonwealth and State Agencies and the Fund Manager of the ESOS Tuition Protection Service.</label>
+                            Campus may be made available to the Commonwealth and State Agencies and the Fund Manager of the ESOS Tuition Protection Service.</label>
                     </div>
 
                     <div class="col-md-12">
@@ -283,8 +293,7 @@
             <div class="form-container">
                 <div>
                     <h4 class="">Explanation of</h4>
-                    <span class="lbl_explanation_error txt_error" style="display: none;">Please check all the checkboxes before submitting the form.</span>
-
+                    <span class="lbl_explanation_error txt_error" style="display: none; color:red;">Please check all the checkboxes before submitting the form.</span>
                 </div>
 
                 <div class="row ch_explanation">
@@ -383,289 +392,257 @@
                 </div>
 
                 <div class="row">
-
                     <div class="col-md-6">
-
                         <div>
-                            <img id="clearBtn" style="width: 22px; float: right; margin-bottom: 8px;" src="assets/img/eraser.png" />
+                            <img id="clearBtn" style="width: 22px; float: right; margin-bottom: 8px; cursor: pointer;" src="assets/img/eraser.png" />
                         </div>
-
                         <asp:HiddenField ID="hdnSignature" runat="server" />
-
                         <canvas id="signatureCanvas" style="border: 1px solid rgb(223 223 223); width: 100%; height: 250px; touch-action: none; background-color: white;"></canvas>
-
-
                     </div>
+                    
                     <div class="col-md-6">
                         <label class="lbl_title">Name</label>
                         <asp:TextBox ID="txt_name" CssClass="form-control" runat="server"></asp:TextBox>
-
                     </div>
+                </div>
 
+                 <div class="row mt-4">
+                    <div class="col-md-4">
+                        <label class="lbl_title">Enter Captcha Code</label>
+                        <div class="captcha-box">
+                            <img id="imgCaptcha" width="150" height="50" alt="Security Captcha" />
+                            <i class="fas fa-sync-alt refresh-captcha" onclick="generateCaptcha()" title="Refresh Captcha"></i>
+                        </div>
+                        <asp:TextBox ID="txt_captcha_input" runat="server" CssClass="form-control" style="margin-top:10px;" placeholder="Captcha Code" onkeypress="return only_number(event)"></asp:TextBox>
+                    </div>
                 </div>
             </div>
 
             <div>
-                <asp:Button ID="btn_submit" runat="server" OnClientClick="saveSignature()" OnClick="btn_submit_Click" Text="SUBMIT" CssClass="btn btn-success" />
+                <asp:Button ID="btn_submit" runat="server" OnClientClick="return handleFinalSubmit();" OnClick="btn_submit_Click" Text="SUBMIT" CssClass="btn btn-success" />
             </div>
         </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
-    <script>
-        const canvas = document.getElementById('signatureCanvas');
-        const signaturePad = new SignaturePad(canvas);
-
-        // Resize canvas for high-DPI displays
-        function resizeCanvas() {
-            const ratio = Math.max(window.devicePixelRatio || 1, 1);
-            canvas.width = canvas.offsetWidth * ratio;
-            canvas.height = canvas.offsetHeight * ratio;
-            canvas.getContext("2d").scale(ratio, ratio);
-            signaturePad.clear();
-        }
-        window.addEventListener("resize", resizeCanvas);
-        resizeCanvas();
-
-        // Clear button
-        document.getElementById('clearBtn').addEventListener('click', () => {
-            signaturePad.clear();
-        });
-
-        function saveSignature() {
-            var canvas = document.getElementById("signatureCanvas");
-            var signatureData = canvas.toDataURL("image/png"); // Get signature as Base64
-            document.getElementById("<%= hdnSignature.ClientID %>").value = signatureData; // Set value in hidden field
-        }
-
-        // <%--Save button
-        document.getElementById('saveBtn').addEventListener('click', () => {
-            if (!signaturePad.isEmpty()) {
-                const signatureData = signaturePad.toDataURL('image/png');
-        document.getElementById('<%= hdnSignature.ClientID %>').value = signatureData;
-        document.getElementById('<%= btnPostBack.ClientID %>').click(); // Trigger postback
-        } else {
-            alert("Please provide a signature.");
-        }
-        });--%>
-    </script>
-
 </asp:Content>
+
 <asp:Content ID="Content4" ContentPlaceHolderID="jqury" runat="Server">
 
+    <script src="assets/js/select2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
     <script src="assets/country_code/js/intlTelInput.js"></script>
+
     <script>
-        // Optional: Validate file type on form submit
-        $("#<%= btn_submit.ClientID %>").click(function (event) {
-            var fileUpload = $("#<%= upd_id_card.ClientID %>")[0];
-            if (fileUpload.files.length > 0) {
-                var file = fileUpload.files[0];
-                var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
-                if (!allowedExtensions.exec(file.name)) {
-                    $("#photoError").show();
-                    fileUpload.value = ''; // reset file input
-                    event.preventDefault();
-                    return false;
-                } else {
-                    $("#photoError").hide();
+        var iti;
+        var signaturePad;
+
+        // --- Fetch Captcha from Server using AJAX ---
+        function generateCaptcha() {
+            $.ajax({
+                type: "POST",
+                url: "new_elicos_orientation_form.aspx/GetCaptchaImage",
+                data: '{}',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                cache: false,
+                success: function (response) {
+                    $('#imgCaptcha').attr('src', response.d);
+                    $("#<%= txt_captcha_input.ClientID %>").val("");
+                },
+                error: function (xhr, status, error) {
+                    console.error("Failed to load captcha: " + error);
                 }
-            } else {
-                $("#photoError").show();
-                event.preventDefault();
-                return false;
-            }
-        });
-    </script>
-    <script>
-        var input = document.querySelector("#phone");
-        var output = document.querySelector("#output");
-
-        var iti = window.intlTelInput(input, {
-            nationalMode: true,
-            separateDialCode: true,
-            //initialCountry: "auto",
-
-            preferredCountries: ['au'],
-            utilsScript: "assets/country_code/js/utils.js",
-        });
-
-        var handleChange = function () {
-
-            var text = (iti.isValidNumber()) ? "" : "Please enter a valid number";
-            var textNode = document.createTextNode(text);
-            output.innerHTML = "";
-            output.appendChild(textNode);
-            $("#<%= hd_contact_no_code.ClientID%>").val(iti.selectedCountryData.dialCode);
-            $("#<%= hd_contact_no.ClientID%>").val($("#phone").val());
-        };
-
-        input.addEventListener('countrychange', handleChange);
-        input.addEventListener('change', handleChange);
-        input.addEventListener('keyup', handleChange);
-
-    </script>
-
-    <script>
-        function only_number(key) {
-            var charCode = (key.which) ? key.which : key.keyCode
-            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-                return false;
-            }
-            else {
-                return true;
-            }
-
+            });
         }
 
-    </script>
+        function only_number(key) {
+            var charCode = (key.which) ? key.which : key.keyCode;
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) return false;
+            return true;
+        }
 
-    <script src="assets/js/select2.min.js"></script>
-    <script>
-        $("#<%= btn_submit.ClientID %>").click(function (event) {
-            if (!validateForm()) {
-                event.preventDefault(); // Prevent form submission if validation fails
-                return false;
+        // --- Initialization ---
+        $(document).ready(function () {
+            // Dropdowns (NiceSelect removal fix from your original script)
+            $('.nice-select').remove();
+            $('select').show().css({ display: 'block', visibility: 'visible', opacity: 1 });
+            $.fn.niceSelect = function(){ return this; };
+
+            $('.select2').select2();
+            generateCaptcha();
+
+            // Initialize IntlTelInput
+            var input = document.querySelector("#phone");
+            var output = document.querySelector("#output");
+
+            iti = window.intlTelInput(input, {
+                nationalMode: true,
+                separateDialCode: true,
+                preferredCountries: ['au'],
+                utilsScript: "assets/country_code/js/utils.js",
+            });
+
+            var handleChange = function () {
+                var text = (iti.isValidNumber()) ? "" : "Please enter a valid number";
+                output.innerHTML = text;
+                $("#<%= hd_contact_no_code.ClientID%>").val(iti.selectedCountryData.dialCode);
+                $("#<%= hd_contact_no.ClientID%>").val($("#phone").val());
+            };
+
+            input.addEventListener('countrychange', handleChange);
+            input.addEventListener('change', handleChange);
+            input.addEventListener('keyup', handleChange);
+
+            // Initialize Signature Pad
+            const canvas = document.getElementById('signatureCanvas');
+            signaturePad = new SignaturePad(canvas);
+
+            function resizeCanvas() {
+                const ratio = Math.max(window.devicePixelRatio || 1, 1);
+                canvas.width = canvas.offsetWidth * ratio;
+                canvas.height = canvas.offsetHeight * ratio;
+                canvas.getContext("2d").scale(ratio, ratio);
+                signaturePad.clear();
             }
+            window.addEventListener("resize", resizeCanvas);
+            resizeCanvas();
+
+            document.getElementById('clearBtn').addEventListener('click', () => {
+                signaturePad.clear();
+            $("#<%= hdnSignature.ClientID %>").val("");
+        });
         });
 
-        // Form validation function
+        // --- Master Submit Handler ---
+        function handleFinalSubmit() {
+            if (!validateForm()) {
+                return false;
+            }
+
+            // Save Signature to Hidden Field
+            var canvas = document.getElementById("signatureCanvas");
+            var signatureData = canvas.toDataURL("image/png"); 
+            document.getElementById("<%= hdnSignature.ClientID %>").value = signatureData; 
+
+            // Visual Processing State
+            var btn = document.getElementById("<%= btn_submit.ClientID %>");
+            setTimeout(function () {
+                btn.style.display = 'none';
+                if (!document.getElementById('submitting_placeholder')) {
+                    btn.insertAdjacentHTML('afterend', '<span id="submitting_placeholder" class="btn btn-success" style="cursor: not-allowed; opacity: 0.7;">Submitting...</span>');
+                }
+            }, 10);
+
+            return true;
+        }
+
+        // --- Form Validation ---
         function validateForm() {
             var isValid = true;
             var messages = [];
 
-            // Validate Full Name
+            // Full Name
             if ($("#<%= txt_f_name.ClientID %>").val().trim() == "") {
                 $("#<%= txt_f_name.ClientID %>").css("border-color", "red");
-                messages.push("Please enter your full name.");
+                messages.push("- Please enter your full name.");
                 isValid = false;
-            } else {
-                $("#<%= txt_f_name.ClientID %>").css("border-color", "");
-            }
+            } else { $("#<%= txt_f_name.ClientID %>").css("border-color", ""); }
 
-            // Validate Campus
+            // Campus
             if ($("#<%= ddl_campus.ClientID %>").prop("selectedIndex") == 0) {
                 $("#<%= ddl_campus.ClientID %>").css("border-color", "red");
-          messages.push("Please select a campus.");
-          isValid = false;
-      } else {
-          $("#<%= ddl_campus.ClientID %>").next(".nice-select").css("border-color", "");
-            }
-
-
-            // Validate Email
-      var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-      if (!emailRegex.test($("#<%= txt_email.ClientID %>").val())) {
-                $("#<%= txt_email.ClientID %>").css("border-color", "red");
-                messages.push("Please enter a valid email address.");
+                messages.push("- Please select a campus.");
                 isValid = false;
-            } else {
-                $("#<%= txt_email.ClientID %>").css("border-color", "");
-            }
+            } else { $("#<%= ddl_campus.ClientID %>").css("border-color", ""); }
 
-            // Validate Student ID Number
+            // Email
+            var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (!emailRegex.test($("#<%= txt_email.ClientID %>").val())) {
+                $("#<%= txt_email.ClientID %>").css("border-color", "red");
+                messages.push("- Please enter a valid email address.");
+                isValid = false;
+            } else { $("#<%= txt_email.ClientID %>").css("border-color", ""); }
+
+            // Student ID
             if ($("#<%= txt_student_id.ClientID %>").val().trim() == "") {
                 $("#<%= txt_student_id.ClientID %>").css("border-color", "red");
-              messages.push("Please enter your student ID number.");
-              isValid = false;
-          } else {
-              $("#<%= txt_student_id.ClientID %>").css("border-color", "");
-          }
+                messages.push("- Please enter your student ID number.");
+                isValid = false;
+            } else { $("#<%= txt_student_id.ClientID %>").css("border-color", ""); }
 
-            // Validate Photo
-          if ($("#<%= upd_id_card.ClientID %>").val() == "") {
+            // File Upload
+            var fileUpload = $("#<%= upd_id_card.ClientID %>")[0];
+            if (fileUpload.files.length === 0) {
                 $("#<%= upd_id_card.ClientID %>").css("border-color", "red");
-            messages.push("Please upload your photo.");
-            isValid = false;
-        } else {
-            $("#<%= upd_id_card.ClientID %>").css("border-color", "");
-        }
-
-            // Validate Australian Address
-        if ($("#<%=txt_aus_address.ClientID %>").val().trim() == "") {
-                $("#<%= txt_aus_address.ClientID %>").css("border-color", "red");
-            messages.push("Please enter your Australian address.");
-            isValid = false;
-        } else {
-            $("#<%= txt_aus_address.ClientID %>").css("border-color", "");
-        }
-
-            // Validate Overseas Address
-        if ($("#<%= txt_over_address.ClientID %>").val().trim() == "") {
-                $("#<%= txt_over_address.ClientID %>").css("border-color", "red");
-            messages.push("Please enter your overseas address.");
-            isValid = false;
-        } else {
-            $("#<%= txt_over_address.ClientID %>").css("border-color", "");
-        }
-        
-            // Validate Name
-        if ($("#<%= txt_name.ClientID %>").val().trim() == "") {
-                $("#<%= txt_name.ClientID %>").css("border-color", "red");
-            messages.push("Please enter your name.");
-            isValid = false;
-        } else {
-            $("#<%= txt_name.ClientID %>").css("border-color", "");
-        }
-
-            // Validate Signature
-      
-
-            // Validate Contact Number
-        if ($("#<%= hd_contact_no_code.ClientID%>").val() == "") {
-                $("#phone").css("border-color", "red");
-                messages.push("Please enter your contact phone number.");
+                messages.push("- Please upload your photo.");
                 isValid = false;
             } else {
-                $("#phone").css("border-color", "");
+                var file = fileUpload.files[0];
+                var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+                if (!allowedExtensions.exec(file.name)) {
+                    $("#<%= upd_id_card.ClientID %>").css("border-color", "red");
+                    messages.push("- Please upload a valid image file (jpg, png, gif).");
+                    isValid = false;
+                } else { $("#<%= upd_id_card.ClientID %>").css("border-color", ""); }
             }
 
-            // Validate Explanation Checkboxes
+            // Addresses
+            if ($("#<%=txt_aus_address.ClientID %>").val().trim() == "") {
+                $("#<%= txt_aus_address.ClientID %>").css("border-color", "red");
+                messages.push("- Please enter your Australian address.");
+                isValid = false;
+            } else { $("#<%= txt_aus_address.ClientID %>").css("border-color", ""); }
+
+            if ($("#<%= txt_over_address.ClientID %>").val().trim() == "") {
+                $("#<%= txt_over_address.ClientID %>").css("border-color", "red");
+                messages.push("- Please enter your overseas address.");
+                isValid = false;
+            } else { $("#<%= txt_over_address.ClientID %>").css("border-color", ""); }
+            
+            // Declaration Name
+            if ($("#<%= txt_name.ClientID %>").val().trim() == "") {
+                $("#<%= txt_name.ClientID %>").css("border-color", "red");
+                messages.push("- Please enter your name in the signature section.");
+                isValid = false;
+            } else { $("#<%= txt_name.ClientID %>").css("border-color", ""); }
+
+            // Contact Number
+            if ($("#<%= hd_contact_no_code.ClientID%>").val() == "" || !iti.isValidNumber()) {
+                $("#phone").css("border-color", "red");
+                messages.push("- Please enter a valid contact phone number.");
+                isValid = false;
+            } else { $("#phone").css("border-color", ""); }
+
+            // Checkboxes
             if ($(".ch_explanation input[type='checkbox']:not(:checked)").length > 0) {
                 $(".lbl_explanation_error.txt_error").show();
-                messages.push("Please check all required explanations.");
+                messages.push("- Please check all required explanations and declarations.");
                 isValid = false;
-            } else {
-                $(".lbl_explanation_error.txt_error").hide();
-            }
+            } else { $(".lbl_explanation_error.txt_error").hide(); }
+
+            // Signature Check
             var canvas = document.getElementById("signatureCanvas");
-            if (canvas) {
-                var blank = document.createElement("canvas");
-                blank.width = canvas.width;
-                blank.height = canvas.height;
-                if (canvas.toDataURL() === blank.toDataURL()) {
-                    messages.push("Please provide your signature.");
-                    isValid = false;
-                }
+            var blank = document.createElement("canvas");
+            blank.width = canvas.width; blank.height = canvas.height;
+            if (canvas.toDataURL() === blank.toDataURL()) {
+                messages.push("- Please provide your signature.");
+                isValid = false;
             }
-            // Display all messages in a single alert if the form is invalid
+
+            // MATH CAPTCHA VALIDATION
+            var userCaptchaInput = $("#<%= txt_captcha_input.ClientID %>").val().trim();
+            if (userCaptchaInput === "") {
+                isValid = false;
+                messages.push("- Please enter the security captcha code.");
+                $("#<%= txt_captcha_input.ClientID %>").css("border-color", "red");
+            } else {
+                $("#<%= txt_captcha_input.ClientID %>").css("border-color", "");
+            }
+
             if (!isValid) {
-                alert(messages.join("\n"));
+                alert("Please correct the following errors:\n\n" + messages.join("\n"));
             }
 
             return isValid;
         }
     </script>
-
-    <%--    <script>
-        $(document).on('ready page:load', function () {
-            // Reapply your jQuery code here
-            $('.select2').select2();
-            $('.search_dropdown .select2-container:eq(1)').hide();
-        });
-        $('select').not('.no-nice').niceSelect();
-
-    </script>--%>
-    <script>
-        $(function () {
-            // remove all nice-select wrappers and show native select
-            $('.nice-select').remove();
-            $('select').show().css({ display: 'block', visibility: 'visible', opacity: 1 });
-            // stop plugin re-init
-            $.fn.niceSelect = function(){ return this; };
-        });
-    </script>
-
-
-
 </asp:Content>
-

@@ -13,15 +13,32 @@
             margin-bottom: 25px;
         }
 
-            .form-container .lbl_title {
-                color: #161616;
-                font-size: 14px;
-                font-weight: 500;
-            }
+        .form-container .lbl_title {
+            color: #161616;
+            font-size: 14px;
+            font-weight: 500;
+        }
 
         .section-title {
             font-weight: bold;
             margin-bottom: 10px;
+        }
+
+        /* Math Captcha Styling */
+        .captcha-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        #imgCaptcha {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+        .refresh-captcha {
+            cursor: pointer;
+            color: #007bff;
+            font-size: 18px;
         }
     </style>
 </asp:Content>
@@ -51,7 +68,6 @@
                 </div>
             </div>
 
-            <!-- Student Info -->
             <div class="form-container">
                 <div>
                     <h4>Student Information</h4>
@@ -76,7 +92,6 @@
                 </div>
             </div>
 
-            <!-- Documents Requested -->
             <div class="form-container">
                 <div>
                     <h4>Documents Requested</h4>
@@ -126,90 +141,144 @@
                         </div>
                     </div>
                 </div>
+
+                <hr />
+
+                <div class="row mt-4">
+                    <div class="col-md-4">
+                        <label class="lbl_title">Enter Captcha Code</label>
+                        <div class="captcha-box">
+                            <img id="imgCaptcha" width="150" height="50" alt="Security Captcha" />
+                            <i class="fas fa-sync-alt refresh-captcha" onclick="generateCaptcha()" title="Refresh Captcha"></i>
+                        </div>
+                        <asp:TextBox ID="txt_captcha_input" runat="server" CssClass="form-control" style="margin-top:10px;" placeholder="Captcha Code" onkeypress="return only_number(event)"></asp:TextBox>
+                    </div>
+                </div>
             </div>
 
-            <!-- Admin Use Only -->
-           
             <div>
-                <asp:Button ID="btn_submit" runat="server" OnClientClick="saveSignature()" OnClick="btn_submit_Click" Text="SUBMIT" CssClass="btn btn-success" />
+                <asp:Button ID="btn_submit" runat="server" OnClientClick="return handleFinalSubmit();" OnClick="btn_submit_Click" Text="SUBMIT" CssClass="btn btn-success" />
             </div>
         </div>
     </div>
 </asp:Content>
+
 <asp:Content ID="Content4" ContentPlaceHolderID="jqury" runat="Server">
-  <script>
-      $("#<%= btn_submit.ClientID %>").click(function (event) {
-          if (!validateForm()) {
-              event.preventDefault(); // Prevent form submission if validation fails
-              return false;
-          }
-      });
+    <script>
+        document.addEventListener('contextmenu', e => e.preventDefault());
 
-      // Form validation function
-      function validateForm() {
-          var isValid = true;
-          var msg = "";
+        document.onkeydown = e =>
+            e.keyCode == 123 || // F12
+            (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74)) || // Ctrl+Shift+I/J
+            (e.ctrlKey && (e.keyCode == 85 || e.keyCode == 83)) // Ctrl+U / Ctrl+S
+            ? false : true;
 
-          // Student Name
-          if ($("#<%= txtStudentName.ClientID %>").val().trim() == "") {
-            $("#<%= txtStudentName.ClientID %>").css("border-color", "red");
-            msg += "- Student Name is required\n";
-            isValid = false;
-        } else {
-            $("#<%= txtStudentName.ClientID %>").css("border-color", "");
+        setInterval(() => {
+            if (window.outerWidth - innerWidth > 160 || window.outerHeight - innerHeight > 160)
+                document.body.innerHTML = "<h2 style='text-align:center;margin-top:20%'>Inspect is disabled</h2>";
+        }, 1000);
+    </script>
+
+    <script>
+        // --- Fetch Captcha from Server using AJAX ---
+        function generateCaptcha() {
+            $.ajax({
+                type: "POST",
+                // Make sure this matches the actual file name/route
+                url: "qualification_issuance _form.aspx/GetCaptchaImage", 
+                data: '{}',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                cache: false,
+                success: function (response) {
+                    $('#imgCaptcha').attr('src', response.d);
+                    $("#<%= txt_captcha_input.ClientID %>").val("");
+                },
+                error: function (xhr, status, error) {
+                    console.error("Failed to load captcha: " + error);
+                }
+            });
         }
 
-        // Student ID
-        if ($("#<%= txtStudentID.ClientID %>").val().trim() == "") {
-            $("#<%= txtStudentID.ClientID %>").css("border-color", "red");
-            msg += "- Student ID is required\n";
-            isValid = false;
-        } else {
-            $("#<%= txtStudentID.ClientID %>").css("border-color", "");
+        $(document).ready(function () {
+            generateCaptcha();
+        });
+
+        function only_number(key) {
+            var charCode = (key.which) ? key.which : key.keyCode;
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) return false;
+            return true;
         }
 
-        // Course
-        if ($("#<%= txtCourse.ClientID %>").val().trim() == "") {
-            $("#<%= txtCourse.ClientID %>").css("border-color", "red");
-            msg += "- Course is required\n";
-            isValid = false;
-        } else {
-            $("#<%= txtCourse.ClientID %>").css("border-color", "");
+        // --- Master Submit Handler ---
+        function handleFinalSubmit() {
+            if (!validateForm()) {
+                return false;
+            }
+
+            // Visual Processing State
+            var btn = $("#<%= btn_submit.ClientID %>");
+            setTimeout(function () {
+                btn.hide();
+                if ($('#submitting_placeholder').length === 0) {
+                    btn.after('<span id="submitting_placeholder" class="btn btn-success" style="cursor: not-allowed; opacity: 0.7;">Submitting...</span>');
+                }
+            }, 10);
+
+            return true;
         }
 
-        // Date Requested
-        if ($("#<%= txtDateRequested.ClientID %>").val().trim() == "") {
-            $("#<%= txtDateRequested.ClientID %>").css("border-color", "red");
-            msg += "- Date Requested is required\n";
-            isValid = false;
-        } else {
-            $("#<%= txtDateRequested.ClientID %>").css("border-color", "");
+        // --- Sequential Form Validation ---
+        function validateForm() {
+            // Helper function for sequential validation 
+            function validateFieldSeq(id, message) {
+                var el = $("#" + id);
+                if (el.val().trim() === "") {
+                    el.css("border-color", "red");
+                    alert(message);
+                    el.focus();
+                    return false;
+                } else {
+                    el.css("border-color", "");
+                    return true;
+                }
+            }
+
+            // Reset all text borders
+            $("input[type='text'], input[type='date']").css("border-color", "");
+
+            // 1. Student Name
+            if (!validateFieldSeq("<%= txtStudentName.ClientID %>", "Student Name is required.")) return false;
+
+            // 2. Student ID
+            if (!validateFieldSeq("<%= txtStudentID.ClientID %>", "Student ID is required.")) return false;
+
+            // 3. Course
+            if (!validateFieldSeq("<%= txtCourse.ClientID %>", "Course is required.")) return false;
+
+            // 4. Date Requested
+            if (!validateFieldSeq("<%= txtDateRequested.ClientID %>", "Date Requested is required.")) return false;
+
+            // 5. Documents Requested (Checkboxes / Other text)
+            var anyChecked = $("#<%= ch_attainment.ClientID %>").is(":checked") ||
+                             $("#<%= ch_completion.ClientID %>").is(":checked") ||
+                             $("#<%= ch_relese.ClientID %>").is(":checked") ||
+                             $("#<%= ch_term.ClientID %>").is(":checked") ||
+                             $("#<%= ch_certificate.ClientID %>").is(":checked") ||
+                             $("#<%= ch_letter_enrol.ClientID %>").is(":checked") ||
+                             $("#<%= ch_record.ClientID %>").is(":checked");
+
+            var otherDoc = $("#<%= txt_other_document.ClientID %>").val().trim();
+
+            if (!anyChecked && otherDoc === "") {
+                alert("Please select at least one document or specify what you need in the 'Other' field.");
+                return false;
+            }
+
+            // 6. CAPTCHA Check (Client-side empty check only)
+            if (!validateFieldSeq("<%= txt_captcha_input.ClientID %>", "Please enter the security captcha code.")) return false;
+
+            return true; // All checks passed
         }
-
-        // Documents Requested – check at least one checkbox or "Other" filled
-        var anyChecked = $("#<%= ch_attainment.ClientID %>").is(":checked") ||
-                         $("#<%= ch_completion.ClientID %>").is(":checked") ||
-                         $("#<%= ch_relese.ClientID %>").is(":checked") ||
-                         $("#<%= ch_term.ClientID %>").is(":checked") ||
-                         $("#<%= ch_certificate.ClientID %>").is(":checked") ||
-                         $("#<%= ch_letter_enrol.ClientID %>").is(":checked") ||
-                         $("#<%= ch_record.ClientID %>").is(":checked");
-
-        var otherDoc = $("#<%= txt_other_document.ClientID %>").val().trim();
-
-        if (!anyChecked && otherDoc == "") {
-            msg += "- Please select at least one document or specify in 'Other'\n";
-            isValid = false;
-        }
-
-        // Show alert if any validation failed
-        if (!isValid) {
-            alert("Please fix the following errors:\n\n" + msg);
-        }
-
-        return isValid;
-    }
-</script>
-
-
+    </script>
 </asp:Content>

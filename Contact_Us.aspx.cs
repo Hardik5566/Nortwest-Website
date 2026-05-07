@@ -76,7 +76,7 @@ public partial class Contact_Us : System.Web.UI.Page
         string html = @"
 <div style='width:100%; background-color:#f0f0f0; padding:50px 0;'>
     <div style='width:100%; text-align:center; margin-bottom:15px;'>
-        <img src='https://website.nortwest.edu.au/assets/img/logo_nwc_transp@1x.png' width='160' />
+        <img src='https://nortwest.edu.au/assets/img/logo_nwc_transp@1x.png' width='160' />
         <h2 style='text-align:center; margin:10px 0; font-size:22px; color:#000;'>Contact Form Submission</h2>
     </div>
 

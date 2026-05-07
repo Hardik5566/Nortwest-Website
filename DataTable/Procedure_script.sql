@@ -1,6 +1,6 @@
 USE [nortwest_website]
 GO
-/****** Object:  StoredProcedure [dbo].[del_course_intake_termbreak_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[del_course_intake_termbreak_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -23,7 +23,7 @@ BEGIN
     SELECT 'ok'
 END
 GO
-/****** Object:  StoredProcedure [dbo].[del_course_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[del_course_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -46,7 +46,7 @@ BEGIN
 	select 'ok'
 END
 GO
-/****** Object:  StoredProcedure [dbo].[del_intake_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[del_intake_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -66,7 +66,7 @@ begin
 	select 'ok'
 end
 GO
-/****** Object:  StoredProcedure [dbo].[del_policies_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[del_policies_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -89,7 +89,7 @@ begin
 	select 'ok'
 end
 GO
-/****** Object:  StoredProcedure [dbo].[del_public_holidays_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[del_public_holidays_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -111,16 +111,45 @@ BEGIN
 		select 'ok'
 END
 GO
-/****** Object:  StoredProcedure [dbo].[dis_all_form_count_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[dis_agent_application_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-alter proc [dbo].[dis_all_form_count_sp]
+CREATE PROCEDURE [dbo].[dis_agent_application_sp]
+(
+    @from_date DATETIME,
+    @to_date   DATETIME
+)
+AS
+BEGIN
+   SELECT 
+        agent_form_id,
+        register_buissness_name,
+        trading_name,
+        abn,
+        proprietor_directors_name,
+        full_name,
+		register_buissness_name,
+		trading_name,
+        signature,
+        create_date
+    FROM tbl_agent_app_form
+    WHERE status = 1
+      AND CAST(create_date AS DATE) 
+          BETWEEN CAST(@from_date AS DATE) AND CAST(@to_date AS DATE);
+END
+GO
+/****** Object:  StoredProcedure [dbo].[dis_all_form_count_sp]    Script Date: 22-04-2026 10:13:16 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE proc [dbo].[dis_all_form_count_sp]
 as
 begin
     SELECT 
-        (SELECT COUNT(id) FROM tbl_student_request_forms) AS total_student_request,
+        (SELECT COUNT(id) FROM tbl_student_request_forms where status=1) AS total_student_request,
         (SELECT COUNT(id) FROM tbl_application_for_deferment_form) AS total_deferment,
         (SELECT COUNT(id) FROM tbl_change_course_forms) AS total_change_course,
         (SELECT COUNT(id) FROM tbl_cancelation_form) AS total_cancellation,
@@ -129,130 +158,65 @@ begin
         (SELECT COUNT(id) FROM tbl_student_details_form) AS total_student_detail,
         (SELECT COUNT(id) FROM tbl_credit_transfer_application) AS total_credit_transfer,
         (SELECT COUNT(id) FROM tbl_application_for_reassessment) AS total_app_for_reassessment,
-        (SELECT COUNT(id) FROM tbl_application_for_reassessment) AS total_appeal_form,
+        (SELECT COUNT(id) FROM tbl_appeal_form) AS total_appeal_form,
         (SELECT COUNT(id) FROM tbl_complaint_and_feedback_form) AS total_complaint,
         (SELECT COUNT(id) FROM tbl_change_of_campus_form) AS total_campus_change,
         (SELECT COUNT(id) FROM tbl_cricos_student_withdrwal_form) AS total_student_withdraw,
         (SELECT COUNT(id) FROM tbl_refund_form) AS total_refund,
         (SELECT COUNT(id) FROM tbl_gte_form) AS total_GTE,
-        (SELECT COUNT(ept_form_id) FROM tbl_ept_test_form) AS total_ept,
+        (SELECT COUNT(ept_form_id) FROM tbl_ept_test_form where status=1) AS total_ept,
         (SELECT COUNT(id) FROM tbl_new_elicos_orientation_form) AS total_elicos,
         (SELECT COUNT(id) FROM tbl_new_vet_orientation_form) AS total_vet,
 		(SELECT COUNT(id) FROM tbl_release_request_form) AS total_relese_req,
 		(SELECT COUNT(id) FROM tbl_qualification_issuance_form) AS total_qualification_issuance,
 		(SELECT COUNT(FormID) FROM tbl_gst_form) AS total_gst,
 		(SELECT COUNT(stu_id) FROM tbl_course_entrty_form) AS total_course_entry,
-		(SELECT COUNT(agent_form_id) FROM tbl_agent_app_form) AS total_agent_form,
+		(SELECT COUNT(agent_form_id) FROM tbl_agent_app_form where status=1) AS total_agent_form,
 		(SELECT COUNT(id) FROM tbl_contact_us_form) AS total_contact_form
 end
 GO
-/****** Object:  StoredProcedure [dbo].[dis_appeal_form_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[dis_appeal_form_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-create PROCEDURE [dbo].[dis_appeal_form_sp]
-(
-	@from_date datetime,
-	@to_date datetime
-)
-AS
-BEGIN
-
-    SELECT 
-        id,
-         student_no,
-		student_last_name,
-		student_given_name,
-		student_full_name ,
-		email ,
-		country_code ,
-		contact_no ,
-		street_address ,
-		street_address_line_2 ,
-		city ,
-		state_region ,
-		zip ,
-		country ,
-		format(create_date,'dd MMM, yyyy') as [date]
-
-    FROM tbl_appeal_form
-	where
-	status=1
-	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)
-	
-END;
+create PROCEDURE [dbo].[dis_appeal_form_sp](	@from_date datetime,	@to_date datetime)ASBEGIN    SELECT         id,         student_no,		student_last_name,		student_given_name,		student_full_name ,		email ,		country_code ,		contact_no ,		street_address ,		street_address_line_2 ,		city ,		state_region ,		zip ,		country ,		format(create_date,'dd MMM, yyyy') as [date]    FROM tbl_appeal_form	where	status=1	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)	END;
 GO
-/****** Object:  StoredProcedure [dbo].[dis_application_for_deferment_form_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[dis_application_for_deferment_form_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create proc [dbo].[dis_application_for_deferment_form_sp]
-(
-	@from_date datetime,
-	@to_date datetime
-)
+CREATE proc [dbo].[dis_application_for_deferment_form_sp]
+(	@from_date datetime,	@to_date datetime)
 as 
 begin
-	select
+	select 
 		id,
 		student_name,
 		student_id,
-		format(deferment_date,'dd-MM-yyyy') as deferment_date,
+		format(cast(birth_date as date),'dd-MM-yyyy') as birth_date,
+		reason,
 		course,
-		email,
-		phone_code,
-		phone_no,
-		contact_code,
-		contact_no,
-		format(create_date,'dd-MM-yyyy') as [date]
-		from tbl_application_for_deferment_form
-			where
-	status=1
-	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)
-	
-end
+		format(cast(course_start as date),'dd-MM-yyyy') as course_start,
+		format(cast(course_end as date),'dd-MM-yyyy') as course_end,
+		format(cast(deferment_start as date),'dd-MM-yyyy') as deferment_start,
+		format(cast(deferment_end as date),'dd-MM-yyyy') as deferment_end,
+		student_signature,
+		format(cast(sign_date as date),'dd-MM-yyyy') as sign_date
+		from
+			tbl_application_for_deferment_form
+			where	status=1	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)end
 GO
-/****** Object:  StoredProcedure [dbo].[dis_application_for_reassessment_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[dis_application_for_reassessment_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create PROCEDURE [dbo].[dis_application_for_reassessment_sp]
-(
-	@from_date datetime,
-	@to_date datetime
-)
-AS
-BEGIN
-
-    SELECT 
-        id,
-         student_no,
-		student_last_name,
-		student_given_name,
-		student_full_name ,
-		email ,
-		country_code ,
-		contact_no ,
-		street_address ,
-		street_address_line_2 ,
-		city ,
-		state_region ,
-		zip ,
-		country ,
-		format(create_date,'dd MMM, yyyy') as [date]
-
-    FROM tbl_application_for_reassessment
-	where
-	status=1
-	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)
-	
-END;
+create PROCEDURE [dbo].[dis_application_for_reassessment_sp](	@from_date datetime,	@to_date datetime)ASBEGIN    SELECT         id,         student_no,		student_last_name,		student_given_name,		student_full_name ,		email ,		country_code ,		contact_no ,		street_address ,		street_address_line_2 ,		city ,		state_region ,		zip ,		country ,		format(create_date,'dd MMM, yyyy') as [date]    FROM tbl_application_for_reassessment	where	status=1	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)	END;
 GO
-/****** Object:  StoredProcedure [dbo].[dis_calender_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[dis_calender_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -277,93 +241,55 @@ begin
 		t.status=1
 end
 GO
-/****** Object:  StoredProcedure [dbo].[dis_cancelation_form_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[dis_cancelation_form_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE PROCEDURE [dbo].[dis_cancelation_form_sp]
-(
-	@from_date datetime,
-	@to_date datetime
-)
-AS
-BEGIN
-
-    SELECT 
-        id,
-         student_no,
-		student_last_name,
-		student_given_name,
-		student_full_name ,
-		email ,
-		country_code ,
-		contact_no ,
-		street_address ,
-		street_address_line_2 ,
-		city ,
-		state_region ,
-		zip ,
-		country ,
-		format(create_date,'dd MMM, yyyy') as [date]
-
-    FROM tbl_cancelation_form
-	where
-	status=1
-	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)
-	
-END;
+CREATE PROCEDURE [dbo].[dis_cancelation_form_sp](	@from_date datetime,	@to_date datetime)ASBEGIN    SELECT         id,         student_no,		student_last_name,		student_given_name,		student_full_name ,		email ,		country_code ,		contact_no ,		street_address ,		street_address_line_2 ,		city ,		state_region ,		zip ,		country ,		format(create_date,'dd MMM, yyyy') as [date]    FROM tbl_cancelation_form	where	status=1	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)	END;
 GO
-/****** Object:  StoredProcedure [dbo].[dis_change_course_form_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[dis_change_course_form_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE [dbo].[dis_change_course_form_sp]
 (
-	@from_date datetime,
-	@to_date datetime
+    @from_date DATETIME,
+    @to_date DATETIME
 )
 AS
 BEGIN
-
     SELECT 
         id,
-         student_no,
-		student_last_name,
-		student_given_name,
-		student_full_name ,
-		email ,
-		country_code ,
-		contact_no ,
-		street_address ,
-		address_line_2 ,
-		city ,
-		state_region ,
-		zip ,
-		country ,
-		format(create_date,'dd MMM, yyyy') as [date]
-
-    FROM tbl_change_course_forms
-	where
-	status=1
-	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)
-	
+        student_name,
+        std_id,
+        country,
+        passport_no,
+        dob,
+        course_enrolled,
+        intake,
+        address,
+        email,
+        country_code,
+        contact_no,
+        change_course,
+        reason_change_course,
+        student_signature,
+         FORMAT(cast(sign_date as date), 'dd MMM, yyyy') AS sign_date,
+        FORMAT(create_date, 'dd MMM, yyyy') AS [date]
+    FROM dbo.tbl_change_course_forms
+    WHERE 
+        status = 1
+        AND CAST(create_date AS DATE) BETWEEN CAST(@from_date AS DATE) AND CAST(@to_date AS DATE)
 END;
 GO
-/****** Object:  StoredProcedure [dbo].[dis_change_of_campus_form_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[dis_change_of_campus_form_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE PROCEDURE [dbo].[dis_change_of_campus_form_sp]
-(
-	@from_date datetime,
-	@to_date datetime
-)
-AS
-BEGIN
-	 SELECT 
+CREATE PROCEDURE [dbo].[dis_change_of_campus_form_sp](	@from_date datetime,	@to_date datetime)ASBEGIN	 SELECT 
         id,
         std_id,
         passport_no,
@@ -382,53 +308,44 @@ BEGIN
         student_signature,
         format(cast( sign_date as date),'dd MMM,yyyy') as sign_date,
         status,
-		format(create_date,'dd MMM, yyyy') as [date]
-
-    FROM tbl_change_of_campus_form
-	where
-	status=1
-	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)
-	
-END;
+		format(create_date,'dd MMM, yyyy') as [date]    FROM tbl_change_of_campus_form	where	status=1	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)	END;
 GO
-/****** Object:  StoredProcedure [dbo].[dis_complaint_and_feedback_form_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[dis_complaint_and_feedback_form_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create PROCEDURE [dbo].[dis_complaint_and_feedback_form_sp]
+create PROCEDURE [dbo].[dis_complaint_and_feedback_form_sp](	@from_date datetime,	@to_date datetime)ASBEGIN    SELECT         id,         student_no,		student_last_name,		student_given_name,		student_full_name ,		email ,		country_code ,		contact_no ,		street_address ,		street_address_line_2 ,		city ,		state_region ,		zip ,		country ,		format(create_date,'dd MMM, yyyy') as [date]    FROM tbl_Complaint_and_feedback_form	where	status=1	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)	END;
+GO
+/****** Object:  StoredProcedure [dbo].[dis_contact_us_form_sp]    Script Date: 22-04-2026 10:13:16 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[dis_contact_us_form_sp]
 (
-	@from_date datetime,
-	@to_date datetime
+    @from_date DATETIME,
+    @to_date   DATETIME
 )
 AS
 BEGIN
-
-    SELECT 
+	SELECT 
         id,
-         student_no,
-		student_last_name,
-		student_given_name,
-		student_full_name ,
-		email ,
-		country_code ,
-		contact_no ,
-		street_address ,
-		street_address_line_2 ,
-		city ,
-		state_region ,
-		zip ,
-		country ,
-		format(create_date,'dd MMM, yyyy') as [date]
-
-    FROM tbl_Complaint_and_feedback_form
-	where
-	status=1
-	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)
-	
-END;
+        name,
+        email,
+        message,
+        status,
+        create_by,
+        create_date
+    FROM 
+        tbl_contact_us_form
+    WHERE 
+        status = 1 
+		AND CAST(create_date AS DATE) 
+          BETWEEN CAST(@from_date AS DATE) AND CAST(@to_date AS DATE);
+END
 GO
-/****** Object:  StoredProcedure [dbo].[dis_country_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[dis_country_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -447,7 +364,7 @@ begin
 		status=1
 end
 GO
-/****** Object:  StoredProcedure [dbo].[dis_course_admin_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[dis_course_admin_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -473,7 +390,84 @@ BEGIN
 		status = 1
 END
 GO
-/****** Object:  StoredProcedure [dbo].[dis_course_source_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[dis_course_entry_form_sp]    Script Date: 22-04-2026 10:13:16 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE proc [dbo].[dis_course_entry_form_sp]
+(
+    @from_date DATETIME,
+    @to_date DATETIME
+)
+as
+begin
+(
+	select 
+		stu_id,
+		 name,
+		 dob,
+		 phone,
+		 email,
+		 std_id,
+		 interested_course,
+		 hope_from_course,
+		 career_goal,
+		 past_course,
+		 course_experience,
+		 learning_style,
+		 sel_learning_style,
+		 learning_material,
+		 learning_material_other,
+		 support_for_course,
+		 other_support,
+		 currently_working,
+		 workspace,
+		 updated_cv,
+		 worked_in_industry,
+		 role,
+		 applying_rpl,
+		 other_information,
+		 completed_course,
+		 transcripts,
+		 regular_access,
+		 solution_and_strategy,
+		 approx_computer_use,
+		 digital_literacy,
+		 discuss_solution,
+		 score,
+		 login_pc,
+		 send_email,
+		 navigate_website,
+		 create_folder,
+		 find_information,
+		 attach_document,
+		 save_emails,
+		 login_on_system,
+		 use_social_media,
+		 candidate_suitable,
+		 additional_information,
+		 details,
+		 additional_support,
+		 contain_online_component,
+		 comments,
+		 suitable_for_enrolment,
+		 staff_name,
+		 position,
+		 signature,	
+		 format(signature_date , 'dd MMM, yyyy') as signature_date,
+		format (create_date ,'dd MMM, yyyy') as create_date
+	from 
+		tbl_course_entrty_form
+	where
+		 CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)
+	
+)
+order by 
+		stu_id desc
+end
+GO
+/****** Object:  StoredProcedure [dbo].[dis_course_source_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -490,7 +484,7 @@ BEGIN
 	status = 1;
 END
 GO
-/****** Object:  StoredProcedure [dbo].[dis_course_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[dis_course_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -518,7 +512,7 @@ BEGIN
       AND (@programme IS NULL OR programme = @programme)
 END
 GO
-/****** Object:  StoredProcedure [dbo].[dis_credit_card_auth_form_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[dis_credit_card_auth_form_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -555,59 +549,41 @@ BEGIN
 	
 END;
 GO
-/****** Object:  StoredProcedure [dbo].[dis_credit_transfer_application_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[dis_credit_transfer_application_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create PROCEDURE [dbo].[dis_credit_transfer_application_sp]
-(
-	@from_date datetime,
-	@to_date datetime
-)
-AS
-BEGIN
-
-    SELECT 
-        id,
-         student_no,
-		student_last_name,
-		student_given_name,
-		student_full_name ,
-		email ,
-		country_code ,
-		contact_no ,
-		street_address ,
-		street_address_line_2 ,
-		city ,
-		state_region ,
-		zip ,
-		country ,
-		format(create_date,'dd MMM, yyyy') as [date]
-
-    FROM tbl_credit_transfer_application
-	where
-	status=1
-	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)
-	
-END;
+CREATE PROCEDURE [dbo].[dis_credit_transfer_application_sp](	@from_date datetime,	@to_date datetime)ASBEGINselect		id,		student_last_name,
+        title,
+        student_given_name,
+        format(cast(birth_date as date),'dd MMM, yyyy') as birth_date,
+        street_address,
+        postcode,
+        state_region,
+        email,
+        country_code,
+        contact_no,
+        student_id,
+        course_code,
+        course_title,
+        format(cast(application_date as date),'dd MMM, yyyy') as application_date,
+        unit_codes,
+        unit_titles,
+        evidence_supplied,
+        ct_granted,
+        student_signature,
+        format(cast(sign_date as date),'dd MMM, yyyy') as sign_date,
+        student_full_name,
+        status    FROM tbl_credit_transfer_application	where	status=1	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)	END;
 GO
-/****** Object:  StoredProcedure [dbo].[dis_cricos_student_withdrawal_form_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[dis_cricos_student_withdrawal_form_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE [dbo].[dis_cricos_student_withdrawal_form_sp]
-(
-	@from_date datetime,
-	@to_date datetime
-)
-AS
-BEGIN
-
-    SELECT 
-        id,
-		first_name,
+(	@from_date datetime,	@to_date datetime)ASBEGIN    SELECT         id,		first_name,
 		last_name,
 		format(withdraw_date,'dd MMM, yyyy') as withdraw_date,
 		student_id,
@@ -615,26 +591,15 @@ BEGIN
 		subsequent_course,
 		reason_for_withdrawal,
 		student_signature,
-		format(sign_date,'dd MMM, yyyy') as sign_date,
-		format(create_date,'dd MMM, yyyy') as [date]
-
-    FROM tbl_cricos_student_withdrwal_form
-	where
-	status=1
-	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)
-	
-END;
+		format(sign_date,'dd MMM, yyyy') as sign_date,		format(create_date,'dd MMM, yyyy') as [date]    FROM tbl_cricos_student_withdrwal_form	where	status=1	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)	END;
 GO
-/****** Object:  StoredProcedure [dbo].[dis_ept_form_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[dis_ept_form_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 create proc [dbo].[dis_ept_form_sp]
-(
-	@from_date datetime,
-	@to_date datetime
-)
+(	@from_date datetime,	@to_date datetime)
 as
 begin
 select
@@ -650,22 +615,62 @@ select
       
   from
 	tbl_ept_test_form
-	where
-	status=1
-	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)
+	where	status=1	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)
 end
 GO
-/****** Object:  StoredProcedure [dbo].[dis_gte_form_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[dis_gst_form_sp]    Script Date: 22-04-2026 10:13:16 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+create proc [dbo].[dis_gst_form_sp]
+(
+    @from_date DATETIME,
+    @to_date DATETIME
+)
+as
+begin
+		select		
+				FormID,
+				has_employee,
+				currently_employed,
+				complete_high_school,
+				highschool,
+				complete_university_school,
+				university,
+				plan_to_fund,
+				total_access_fund,
+				financial_evidance,
+				has_course_exp,
+				course_experience,
+				has_study_gap,
+				study_gap,
+				reason_for_australia,
+				career_goals_australia,
+				home_country_ties,
+				australia_family_ties,
+				post_study_plan,
+				other_relevant_info,
+				student_name,
+				format(sign_date ,'dd MMM, yyyy') as sign_date,
+				signature_img,
+				status,
+				create_date
+
+		from
+			tbl_gst_form
+		where status = 1 
+			AND CAST(create_date AS DATE) BETWEEN CAST(@from_date AS DATE) AND CAST(@to_date AS DATE)
+end
+GO
+/****** Object:  StoredProcedure [dbo].[dis_gte_form_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 
 create proc [dbo].[dis_gte_form_sp]
-(
-	@from_date datetime,
-	@to_date datetime
-)
+(	@from_date datetime,	@to_date datetime)
 as
 begin
 select 
@@ -683,16 +688,13 @@ format(create_date, 'dd-MM-yyyy') as [date]
 from 
 	tbl_gte_form
 
-	where
-	status=1
-	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)
-	
+	where	status=1	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)	
 
 end
 
 
 GO
-/****** Object:  StoredProcedure [dbo].[dis_intake_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[dis_intake_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -707,11 +709,10 @@ begin
 FROM tbl_course_intake i
 
 WHERE i.status = 1
-
 order by intake_date
 end
 GO
-/****** Object:  StoredProcedure [dbo].[dis_intake_tearmbreak_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[dis_intake_tearmbreak_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -741,7 +742,7 @@ begin
 		t.intake_id=@intake_id
 end
 GO
-/****** Object:  StoredProcedure [dbo].[dis_new_elicos_orientation_form_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[dis_new_elicos_orientation_form_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -770,7 +771,7 @@ where
 	
 end
 GO
-/****** Object:  StoredProcedure [dbo].[dis_new_vet_orientation_form_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[dis_new_vet_orientation_form_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -796,9 +797,10 @@ from
 where
 	status=1
 	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)
+order by id desc
 end
 GO
-/****** Object:  StoredProcedure [dbo].[dis_policies_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[dis_policies_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -817,7 +819,7 @@ begin
 		status = 1
 end
 GO
-/****** Object:  StoredProcedure [dbo].[dis_public_holidays_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[dis_public_holidays_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -836,53 +838,88 @@ BEGIN
     ORDER BY holiday_date 
 END
 GO
-/****** Object:  StoredProcedure [dbo].[dis_refund_form_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[dis_qualification_issuance_form_sp]    Script Date: 22-04-2026 10:13:16 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[dis_qualification_issuance_form_sp]
+(
+    @from_date DATETIME,
+    @to_date DATETIME
+)
+AS
+BEGIN
+		SELECT 
+			id,
+			student_name,
+			std_id,
+			course,
+			format(cast(date_request as date),'dd MMM, yyyy' )as date_request,
+			documents,
+			FORMAT(create_date, 'dd MMM, yyyy') AS create_date
+		FROM 
+			dbo.tbl_qualification_issuance_form
+		WHERE 
+			status = 1
+			AND CAST(create_date AS DATE) BETWEEN CAST(@from_date AS DATE) AND CAST(@to_date AS DATE)
+END
+GO
+/****** Object:  StoredProcedure [dbo].[dis_refund_form_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE [dbo].[dis_refund_form_sp]
-(
-	@from_date datetime,
-	@to_date datetime
-)
-AS
-BEGIN
-
-    SELECT 
-        id,
-		first_name,
+(	@from_date datetime,	@to_date datetime)ASBEGIN    SELECT         id,		first_name,
 		last_name,
 		format(birth_date,'dd MMM, yyyy') as birth_date,
 		nationality,
 		country_code,
 		contact_no,
-		email,
-		format(create_date,'dd MMM, yyyy') as [date]
-
-    FROM tbl_refund_form
-	where
-	status=1
-	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)
-	
-END;
+		email,		format(create_date,'dd MMM, yyyy') as [date]    FROM tbl_refund_form	where	status=1	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)	END;
 GO
-/****** Object:  StoredProcedure [dbo].[dis_special_leave_request_form_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[dis_release_request_form_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE PROCEDURE [dbo].[dis_special_leave_request_form_sp]
+CREATE PROCEDURE [dbo].[dis_release_request_form_sp]
 (
-	@from_date datetime,
-	@to_date datetime
+    @from_date DATETIME,
+    @to_date DATETIME
 )
 AS
 BEGIN
-
     SELECT 
         id,
-       student_no,
+        student_name,
+        std_id,
+        country,
+        passport_no,
+        dob,
+        course_enrolled,
+        intake,
+        address,
+        email,
+        country_code,
+        contact_no,
+        reason_for_release,
+        student_signature,
+        FORMAT(cast(sign_date as date), 'dd MMM, yyyy') AS sign_date,
+        FORMAT(create_date, 'dd MMM, yyyy') AS [date]
+    FROM dbo.tbl_release_request_form
+    WHERE 
+        status = 1
+        AND CAST(create_date AS DATE) BETWEEN CAST(@from_date AS DATE) AND CAST(@to_date AS DATE)
+END;
+GO
+/****** Object:  StoredProcedure [dbo].[dis_special_leave_request_form_sp]    Script Date: 22-04-2026 10:13:16 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[dis_special_leave_request_form_sp](	@from_date datetime,	@to_date datetime)ASBEGIN    SELECT         id,       student_no,
 	student_last_name,
 	student_given_name,
 	student_full_name ,
@@ -894,63 +931,22 @@ BEGIN
 	city ,
 	state_region ,
 	zip ,
-	country ,
-		format(create_date,'dd MMM, yyyy') as [date]
-
-    FROM tbl_special_leave_request_form
-	where
-	status=1
-	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)
-	
-END;
+	country ,		format(create_date,'dd MMM, yyyy') as [date]    FROM tbl_special_leave_request_form	where	status=1	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)	END;
 GO
-/****** Object:  StoredProcedure [dbo].[dis_student_details_form_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[dis_student_details_form_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create PROCEDURE [dbo].[dis_student_details_form_sp]
-(
-	@from_date datetime,
-	@to_date datetime
-)
-AS
-BEGIN
-
-    SELECT 
-        id,
-         student_no,
-		student_last_name,
-		student_given_name,
-		student_full_name ,
-		email ,
-		country_code ,
-		contact_no ,
-		street_address ,
-		street_address_line_2 ,
-		city ,
-		state_region ,
-		zip ,
-		country ,
-		format(create_date,'dd MMM, yyyy') as [date]
-
-    FROM tbl_student_details_form
-	where
-	status=1
-	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)
-	
-END;
+create PROCEDURE [dbo].[dis_student_details_form_sp](	@from_date datetime,	@to_date datetime)ASBEGIN    SELECT         id,         student_no,		student_last_name,		student_given_name,		student_full_name ,		email ,		country_code ,		contact_no ,		street_address ,		street_address_line_2 ,		city ,		state_region ,		zip ,		country ,		format(create_date,'dd MMM, yyyy') as [date]    FROM tbl_student_details_form	where	status=1	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)	END;
 GO
-/****** Object:  StoredProcedure [dbo].[dis_student_request_forms_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[dis_student_request_forms_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE proc [dbo].[dis_student_request_forms_sp]
-(
-	@from_date datetime,
-	@to_date datetime
-)
+(	@from_date datetime,	@to_date datetime)
 as 
 begin
 	select
@@ -967,13 +963,10 @@ begin
 		
 		format(create_date,'dd-MM-yyyy') as [date]
 		from tbl_student_request_forms
-			where
-	status=1
-	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)
-	
+			where	status=1	and CAST(create_date AS date) between CAST(@from_date AS date) and CAST(@to_date AS date)	
 end
 GO
-/****** Object:  StoredProcedure [dbo].[dis_tbl_agents_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[dis_tbl_agents_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -993,7 +986,7 @@ BEGIN
 		status = 1
 END
 GO
-/****** Object:  StoredProcedure [dbo].[ins_academic_history_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[ins_academic_history_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1031,12 +1024,103 @@ begin
 
 end;
 GO
-/****** Object:  StoredProcedure [dbo].[ins_appeal_form_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[ins_agent_app_form_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create PROCEDURE [dbo].[ins_appeal_form_sp]
+alter PROCEDURE [dbo].[ins_agent_app_form_sp]
+(
+    @register_buissness_name VARCHAR(450),
+    @trading_name VARCHAR(350),
+    @abn VARCHAR(450),
+    @proprietor_directors_name VARCHAR(350),
+    @year_established VARCHAR(30),
+    @website VARCHAR(450),
+    @email VARCHAR(550),
+    @phone VARCHAR(15),
+    @country_code VARCHAR(10),
+	@contact varchar(15),
+    @address VARCHAR(MAX),
+    @postal_address VARCHAR(MAX),
+    @employed_agents_names VARCHAR(MAX),
+    @services_international_student VARCHAR(80),
+    @staff_count VARCHAR(50),
+    @staff_name VARCHAR(MAX),
+    @service VARCHAR(MAX),
+    @fee VARCHAR(MAX),
+    @agent_association_details VARCHAR(MAX),
+    @referral_origin_countries VARCHAR(MAX),
+    @staff_update_plan VARCHAR(MAX),
+    @partner_institution_details VARCHAR(MAX),
+    @contact_person_name_number VARCHAR(MAX),
+    @contact_person_email VARCHAR(MAX),
+    @full_name VARCHAR(450),
+    @position VARCHAR(450),
+    @signature VARCHAR(MAX),
+    @signature_date datetime null,
+    @create_by INT
+)
+AS
+BEGIN
+IF (@full_name <> 'ncMUFCMU')
+begin
+    INSERT INTO tbl_agent_app_form
+    VALUES
+    (
+        @register_buissness_name,
+        @trading_name,
+        @abn,
+        @proprietor_directors_name,
+        @year_established,
+        @website,
+        @email,
+        @phone,
+        @country_code,
+		@contact,
+        @address,
+        @postal_address,
+        @employed_agents_names,
+        @services_international_student,
+        @staff_count,
+        @staff_name,
+        @service,
+        @fee,
+        @agent_association_details,
+        @referral_origin_countries,
+        @staff_update_plan,
+        @partner_institution_details,
+        @contact_person_name_number,
+        @contact_person_email,
+        @full_name,
+        @position,
+        @signature,
+        @signature_date,
+        1,
+        @create_by,
+        dbo.getcurrentauttime(),
+		null,
+		null,
+		null,
+		null
+    )
+	declare @id int = @@identity
+	exec sel_agent_app_form_sp @id
+	exec sel_employed_agents_sp @id
+	exec sel_staff_name_sp @id
+	exec sel_service_fee_sp @id
+	exec sel_staff_update_plan_sp @id
+	exec sel_agents_association_sp @id
+	exec sel_institutes_detail_sp @id
+end
+END
+GO
+/****** Object:  StoredProcedure [dbo].[ins_appeal_form_sp]    Script Date: 22-04-2026 10:13:16 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+alter PROCEDURE [dbo].[ins_appeal_form_sp]
 (
     @student_no VARCHAR(250),
     @student_last_name VARCHAR(250),
@@ -1055,6 +1139,8 @@ create PROCEDURE [dbo].[ins_appeal_form_sp]
 )
 AS
 BEGIN
+if(@email<>'testing@example.com')
+begin
     INSERT INTO tbl_appeal_form 
     
     VALUES 
@@ -1081,90 +1167,78 @@ BEGIN
 		null
     )
 	select 'ok'
+	end
 END
 GO
-/****** Object:  StoredProcedure [dbo].[ins_application_for_deferment_form_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[ins_application_for_deferment_form_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE [dbo].[ins_application_for_deferment_form_sp]
 (
-	@student_name varchar(250),
-	@student_id varchar(150),
-	@deferment_date datetime,
-	@course varchar(250),
-	@reason varchar(max),
-	@enrolment_until varchar(max),
-	@address_while_on_leave varchar(max),
-	@email varchar(150),
-	@phone_code varchar(10),
-	@phone_no varchar(20),
-	@contact_code varchar(10),
-	@contact_no varchar(20),
-	@student_signature varchar(max),
-	@sign_date datetime,
-    @create_by INT
-)
+	 @student_name       VARCHAR(450),
+    @student_id         VARCHAR(150),
+    @birth_date         VARCHAR(30),
+    @reason             VARCHAR(MAX),
+    @course             VARCHAR(250),
+    @course_start       VARCHAR(30),
+    @course_end         VARCHAR(30),
+    @deferment_start    VARCHAR(30),
+    @deferment_end      VARCHAR(30),
+    @student_signature  VARCHAR(MAX),
+    @sign_date          DATETIME,
+    @create_by          INT
+	)
 AS
 BEGIN
-    INSERT INTO tbl_application_for_deferment_form 
-	VALUES 
+    INSERT INTO [dbo].[tbl_application_for_deferment_form]
+	VALUES
     (
-        @student_name, 
-        @student_id, 
-        @deferment_date, 
-        @course, 
-        @reason, 
-        @enrolment_until, 
-        @address_while_on_leave, 
-        @email,
-		@phone_code,
-		@phone_no,
-		@contact_code,
-		@contact_no,
-		@student_signature,
-		@sign_date,
-        1, -- Assuming active status by default
-        @create_by, 
-        dbo.get_india_time(), -- Current timestamp for create_date
-        NULL, -- Modify_by (initially null)
-        NULL, -- Modify_date (initially null)
-        NULL, -- Delete_by (initially null)
-        NULL  -- Delete_date (initially null)
+        @student_name,
+        @student_id,
+        @birth_date,
+        @reason,
+        @course,
+        @course_start,
+        @course_end,
+        @deferment_start,
+        @deferment_end,
+        @student_signature,
+        @sign_date,
+        1,
+        @create_by,
+        dbo.GetCurrentAUTTime(),
+		null,
+		null,
+		null,
+		null
     )
-
-    
-
 	declare @id int = scope_identity()
-
-
 	select 
+		id,
 		student_name,
 		student_id,
-		format(deferment_date,'dd-MM-yyyy') as deferment_date,
-		course,
+		format(cast(birth_date as date),'dd-MM-yyyy') as birth_date,
 		reason,
-		enrolment_until,
-		address_while_on_leave,
-		email,
-		phone_code,
-		phone_no,
-		contact_code,
-		contact_no,
+		course,
+		format(cast(course_start as date),'dd-MM-yyyy') as course_start,
+		format(cast(course_end as date),'dd-MM-yyyy') as course_end,
+		format(cast(deferment_start as date),'dd-MM-yyyy') as deferment_start,
+		format(cast(deferment_end as date),'dd-MM-yyyy') as deferment_end,
 		student_signature,
-		format(sign_date,'dd-MM-yyyy') as sign_date
+		format(cast(sign_date as date),'dd-MM-yyyy') as sign_date
 		from
 			tbl_application_for_deferment_form
-		where id = @id
+		where id = @id and status=1
 END 
 GO
-/****** Object:  StoredProcedure [dbo].[ins_application_for_reassessment_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[ins_application_for_reassessment_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create PROCEDURE [dbo].[ins_application_for_reassessment_sp]
+alter PROCEDURE [dbo].[ins_application_for_reassessment_sp]
 (
     @student_no VARCHAR(250),
     @student_last_name VARCHAR(250),
@@ -1183,6 +1257,8 @@ create PROCEDURE [dbo].[ins_application_for_reassessment_sp]
 )
 AS
 BEGIN
+if(@email<>'testing@example.com')
+begin
     INSERT INTO tbl_application_for_reassessment 
     
     VALUES 
@@ -1209,14 +1285,15 @@ BEGIN
 		null
     )
 	select 'ok'
+	end
 END
 GO
-/****** Object:  StoredProcedure [dbo].[ins_cancelation_form_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[ins_cancelation_form_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create PROCEDURE [dbo].[ins_cancelation_form_sp]
+alter PROCEDURE [dbo].[ins_cancelation_form_sp]
 (
     @student_no VARCHAR(250),
     @student_last_name VARCHAR(250),
@@ -1235,6 +1312,8 @@ create PROCEDURE [dbo].[ins_cancelation_form_sp]
 )
 AS
 BEGIN
+if(@student_no<>'1')
+begin
     INSERT INTO tbl_cancelation_form 
     
     VALUES 
@@ -1261,61 +1340,66 @@ BEGIN
 		null
     )
 	select 'ok'
+end
 END
 GO
-/****** Object:  StoredProcedure [dbo].[ins_change_course_form_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[ins_change_course_form_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE PROCEDURE [dbo].[ins_change_course_form_sp]
+alter PROCEDURE [dbo].[ins_change_course_form_sp]
 (
-    @student_no VARCHAR(100),
-    @student_last_name VARCHAR(100),
-    @student_given_name VARCHAR(100),
-    @student_full_name VARCHAR(350),
-    @email VARCHAR(150),
+	@student_name varchar(450),
+	@std_id varchar(150),
+	@country varchar(70),
+	@passport_no varchar(350),
+	@dob varchar(30),
+	@course_enrolled varchar(350),
+	@intake varchar(30),
+	@address varchar(max),
+	@email varchar(150),
 	@country_code varchar(10),
-    @contact_no VARCHAR(20),
-    @street_address VARCHAR(MAX),
-    @address_line_2 VARCHAR(MAX),
-    @city VARCHAR(50),
-    @state_region VARCHAR(100),
-    @zip VARCHAR(50),
-    @country VARCHAR(70),
-    @create_by INT
+	@contact_no varchar(20),
+	@change_course varchar(350),
+	@reason_change_course varchar(max),
+	@student_signature varchar(max),
+	@sign_date varchar(30),
+	@create_by int
 )
 AS
 BEGIN
-    INSERT INTO tbl_change_course_forms
-    VALUES
-    (
-        @student_no,
-        @student_last_name,
-        @student_given_name,
-        @student_full_name,
-        @email,
+	INSERT INTO dbo.tbl_change_course_forms
+	VALUES
+	(
+		@student_name,
+		@std_id,
+		@country,
+		@passport_no,
+		@dob,
+		@course_enrolled,
+		@intake,
+		@address,
+		@email,
 		@country_code,
-        @contact_no,
-        @street_address,
-        @address_line_2,
-        @city,
-        @state_region,
-        @zip,
-        @country,
-        1,
-        @create_by,
-        dbo.get_india_time(),  -- assuming get_india_time() is a function to return the current India time
-        NULL,                   -- cmodify_by
-        NULL,                   -- modify_date
-        NULL,                   -- delete_by
-        NULL                    -- delete_date
-    )
-    
-    SELECT 'ok'  -- Confirmation message
+		@contact_no,
+		@change_course,
+		@reason_change_course,
+		@student_signature,
+		@sign_date,
+		1,
+		@create_by,
+		dbo.GetCurrentAUTTime(),
+		null,
+		null,
+		null,
+		null
+	)
+	declare @id int = @@identity
+	exec sel_change_course_forms_sp @id
 END
 GO
-/****** Object:  StoredProcedure [dbo].[ins_change_of_campus_form_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[ins_change_of_campus_form_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1373,7 +1457,7 @@ BEGIN
 	exec [dbo].[sel_change_of_campus_form_sp] @id
 END
 GO
-/****** Object:  StoredProcedure [dbo].[ins_complaint_and_feedback_form_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[ins_complaint_and_feedback_form_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1425,7 +1509,175 @@ BEGIN
 	select 'ok'
 END
 GO
-/****** Object:  StoredProcedure [dbo].[ins_course_intake_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[ins_contact_us_form_sp]    Script Date: 22-04-2026 10:13:16 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[ins_contact_us_form_sp]
+(
+    @name VARCHAR(450),
+    @email VARCHAR(350),
+    @message NVARCHAR(MAX),
+    @create_by INT
+)
+AS
+BEGIN
+    
+    INSERT INTO tbl_contact_us_form
+    VALUES
+    (
+        @name,
+        @email,
+        @message,
+        1,               
+        @create_by,
+        dbo.GetCurrentAUTTime(),
+		null,
+		null,
+		null,
+		null
+    )
+	select 'ok'
+END
+GO
+/****** Object:  StoredProcedure [dbo].[ins_course_entry_form_sp]    Script Date: 22-04-2026 10:13:16 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+alter PROCEDURE [dbo].[ins_course_entry_form_sp]
+(
+    @name varchar(200),
+    @dob datetime,
+    @phone varchar(15),
+    @email varchar(50),
+	@std_id varchar(50),
+    @interested_course varchar(max),
+    @hope_from_course varchar(max),
+    @career_goal varchar(max),
+    @past_course varchar(max),
+    @course_experience varchar(max),
+    @learning_style varchar(max),
+    @sel_learning_style varchar(max),
+    @learning_material varchar(max),
+    @learning_material_other varchar(200),
+    @support_for_course varchar(max),
+    @other_support varchar(max),
+    @currently_working bit,
+    @workspace varchar(200),
+    @updated_cv varchar(max),
+    @worked_in_industry bit,
+    @role varchar(100),
+    @applying_rpl bit,
+    @other_information varchar(max),
+    @completed_course bit,
+    @transcripts varchar(max),
+    @regular_access bit,
+    @solution_and_strategy varchar(max),
+    @approx_computer_use varchar(200),
+    @digital_literacy bit,
+    @discuss_solution varchar(max),
+    @score varchar(30),
+    @login_pc varchar(100),
+    @send_email varchar(100),
+    @navigate_website varchar(100),
+    @create_folder varchar(100),
+    @find_information varchar(100),
+    @attach_document varchar(100),
+    @save_emails varchar(100),
+    @login_on_system varchar(100),
+    @use_social_media varchar(100),
+    @candidate_suitable varchar(100),
+    @additional_information bit,
+    @details varchar(max),
+    @additional_support varchar(max),
+    @contain_online_component bit,
+    @comments varchar(max),
+    @suitable_for_enrolment varchar(max),
+    @staff_name varchar(100),
+    @position varchar(100),
+    @signature varchar(max),
+	@signature_date datetime
+   
+)
+AS
+BEGIN
+if(@email<>'testing@example.com')
+begin
+    INSERT INTO tbl_course_entrty_form
+    
+    VALUES
+    (
+        @name,
+        @dob,
+        @phone,
+        @email,
+		@std_id,
+        @interested_course,
+        @hope_from_course,
+        @career_goal,
+        @past_course,
+        @course_experience,
+        @learning_style,
+        @sel_learning_style,
+        @learning_material,
+        @learning_material_other,
+        @support_for_course,
+        @other_support,
+        @currently_working,
+        @workspace,
+        @updated_cv,
+        @worked_in_industry,
+        @role,
+        @applying_rpl,
+        @other_information,
+        @completed_course,
+        @transcripts,
+        @regular_access,
+        @solution_and_strategy,
+        @approx_computer_use,
+        @digital_literacy,
+        @discuss_solution,
+        @score,
+        @login_pc,
+        @send_email,
+        @navigate_website,
+        @create_folder,
+        @find_information,
+        @attach_document,
+        @save_emails,
+        @login_on_system,
+        @use_social_media,
+        @candidate_suitable,
+        @additional_information,
+        @details,
+        @additional_support,
+        @contain_online_component,
+        @comments,
+        @suitable_for_enrolment,
+        @staff_name,
+        @position,
+        @signature,
+		@signature_date,
+        0,
+        dbo.getcurrentauttime(),
+        NULL,
+        NULL,
+        NULL,
+        NULL
+    )
+	
+
+	declare @stu_id int = @@identity
+	--select @stu_id as stu_id
+
+	exec print_course_entry_form_sp @stu_id
+	end
+
+END
+GO
+/****** Object:  StoredProcedure [dbo].[ins_course_intake_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1452,7 +1704,7 @@ BEGIN
 	SELECT 'ok'
 END
 GO
-/****** Object:  StoredProcedure [dbo].[ins_course_intake_termbreak_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[ins_course_intake_termbreak_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1484,7 +1736,7 @@ BEGIN
     SELECT 'ok'
 END
 GO
-/****** Object:  StoredProcedure [dbo].[ins_course_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[ins_course_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1527,12 +1779,12 @@ BEGIN
 	select 'ok'
 END
 GO
-/****** Object:  StoredProcedure [dbo].[ins_credit_card_auth_form_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[ins_credit_card_auth_form_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE PROCEDURE [dbo].[ins_credit_card_auth_form_sp]
+alter PROCEDURE [dbo].[ins_credit_card_auth_form_sp]
     @stu_number VARCHAR(100),
     @stu_l_name VARCHAR(300),
     @stu_given_name VARCHAR(300),
@@ -1549,7 +1801,8 @@ CREATE PROCEDURE [dbo].[ins_credit_card_auth_form_sp]
     @create_by INT
 AS
 BEGIN
-
+if(@stu_full_name <> 'ncMUFCMU')
+begin
     INSERT INTO tbl_credit_card_auth_form 
     
     VALUES 
@@ -1578,61 +1831,78 @@ BEGIN
 
 	declare @id int = @@identity
 	exec sel_credit_card_auth_form_sp @id
+	end
 END
 GO
-/****** Object:  StoredProcedure [dbo].[ins_credit_transfer_application_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[ins_credit_transfer_application_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create PROCEDURE [dbo].[ins_credit_transfer_application_sp]
+alter PROCEDURE [dbo].[ins_credit_transfer_application_sp]
 (
-    @student_no VARCHAR(250),
-    @student_last_name VARCHAR(250),
-    @student_given_name VARCHAR(MAX),
-    @student_full_name VARCHAR(MAX),
-    @email VARCHAR(150),
-    @country_code VARCHAR(10),
-    @contact_no VARCHAR(20),
-    @street_address VARCHAR(MAX),
-    @street_address_line_2 VARCHAR(MAX),
-    @city VARCHAR(50),
-    @state_region VARCHAR(150),
-    @zip VARCHAR(50),
-    @country VARCHAR(50),
-    @create_by INT
+    @student_last_name    VARCHAR(250) = NULL,
+    @title                VARCHAR(50) = NULL,
+    @student_given_name   VARCHAR(MAX) = NULL,
+    @birth_date           VARCHAR(30) = NULL,
+    @street_address       VARCHAR(MAX) = NULL,
+    @postcode             VARCHAR(50) = NULL,
+    @state_region         VARCHAR(150) = NULL,
+    @email                VARCHAR(150) = NULL,
+    @country_code         VARCHAR(10) = NULL,
+    @contact_no           VARCHAR(20) = NULL,
+    @student_id           VARCHAR(150) = NULL,
+    @course_code          VARCHAR(150) = NULL,
+    @course_title         VARCHAR(350) = NULL,
+    @application_date     DATETIME = NULL,
+    @unit_codes           VARCHAR(MAX) = NULL,
+    @unit_titles          VARCHAR(MAX) = NULL,
+    @evidence_supplied    VARCHAR(MAX) = NULL,
+    @ct_granted           VARCHAR(MAX) = NULL,
+    @student_signature    VARCHAR(MAX) = NULL,
+    @sign_date            DATETIME = NULL,
+    @student_full_name    VARCHAR(MAX) = NULL,
+    @create_by            INT = NULL
 )
 AS
 BEGIN
-    INSERT INTO tbl_credit_transfer_application 
-    
-    VALUES 
+    INSERT INTO dbo.tbl_credit_transfer_application
+    VALUES
     (
-        @student_no, 
-        @student_last_name, 
-        @student_given_name, 
-        @student_full_name, 
-        @email, 
-        @country_code, 
-        @contact_no, 
-        @street_address, 
-        @street_address_line_2, 
-        @city, 
-        @state_region, 
-        @zip, 
-        @country, 
-        1, 
-        @create_by, 
-        dbo.get_india_time(),
+        @student_last_name,
+        @title,
+        @student_given_name,
+        @birth_date,
+        @street_address,
+        @postcode,
+        @state_region,
+        @email,
+        @country_code,
+        @contact_no,
+        @student_id,
+        @course_code,
+        @course_title,
+        @application_date,
+        @unit_codes,
+        @unit_titles,
+        @evidence_supplied,
+        @ct_granted,
+        @student_signature,
+        @sign_date,
+        @student_full_name,
+        1,               -- default active status
+        @create_by,
+        dbo.GetCurrentAUTTime(),
 		null,
 		null,
 		null,
 		null
     )
-	select 'ok'
+	declare @id int = @@identity
+	exec sel_credit_transfer_Report_sp @id
 END
 GO
-/****** Object:  StoredProcedure [dbo].[ins_cricos_student_withdrawal_form_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[ins_cricos_student_withdrawal_form_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1643,7 +1913,7 @@ CREATE PROCEDURE [dbo].[ins_cricos_student_withdrawal_form_sp]
     @last_name VARCHAR(100),
     @withdraw_date DATETIME,
     @student_id VARCHAR(100),
-    @current_course VARCHAR(150),
+    @current_course VARCHAR(750),
     @subsequent_course VARCHAR(150),
     @reason_for_withdrawal VARCHAR(250),
     @student_signature VARCHAR(MAX),
@@ -1678,7 +1948,7 @@ BEGIN
     SELECT 'ok'
 END
 GO
-/****** Object:  StoredProcedure [dbo].[ins_ept_test_form_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[ins_ept_test_form_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1752,6 +2022,14 @@ CREATE PROCEDURE [dbo].[ins_ept_test_form_sp]
     @create_by INT   
 AS
 BEGIN
+
+	IF not(LEN(@std_id_number) = 8 AND (@std_id_number LIKE '13%' OR @std_id_number LIKE '14%'OR @std_id_number LIKE 'NW%') ) 
+	BEGIN 
+		print('Invalid Student ID') 
+		return
+	END
+	else
+	begin
     INSERT INTO tbl_ept_test_form 
     VALUES (
         @f_name, @l_name, @email, @std_id_number, @nationality, @date_of_birth, @passport_no, @stu_signature,
@@ -1767,14 +2045,110 @@ BEGIN
 
 	declare @id int = scope_identity()
 	exec sel_ept_form_sp @id
+	end
 END
 GO
-/****** Object:  StoredProcedure [dbo].[ins_gte_form_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[ins_GST_Form]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE PROCEDURE [dbo].[ins_gte_form_sp]
+alter PROCEDURE [dbo].[ins_GST_Form]
+(
+    @visa_type NVARCHAR(MAX),
+    @visa_from_date NVARCHAR(MAX),
+    @visa_expiry_date NVARCHAR(MAX),
+    @job_titles NVARCHAR(MAX),
+    @job_salaries NVARCHAR(MAX),
+    @job_start_date NVARCHAR(MAX),
+    @job_end_date NVARCHAR(MAX),
+    @job_current NVARCHAR(550),
+    @currently_employed VARCHAR(500),
+    @highschool VARCHAR(350),
+    @university VARCHAR(350),
+    @education_qualificaton NVARCHAR(MAX),
+    @level_of_study NVARCHAR(MAX),
+    @study_year NVARCHAR(MAX),
+    @plan_to_fund NVARCHAR(MAX),
+    @total_access_fund VARCHAR(50),
+    @financial_evidance NVARCHAR(MAX),
+    @has_course_exp VARCHAR(10),
+    @course_experience NVARCHAR(MAX),
+    @has_study_gap VARCHAR(10),
+    @study_gap NVARCHAR(MAX),
+    @reason_for_australia NVARCHAR(MAX),
+    @career_goals_australia NVARCHAR(MAX),
+    @home_country_ties NVARCHAR(MAX),
+    @australia_family_ties NVARCHAR(MAX),
+    @post_study_plan NVARCHAR(MAX),
+    @other_relevant_info NVARCHAR(MAX),
+    @student_name NVARCHAR(200),
+    @sign_date DATE,
+    @signature_img NVARCHAR(MAX),
+    @create_by INT,
+	@has_employee varchar(150),
+	@complete_highschool varchar(150),
+	@complete_university varchar(150)
+)
+AS
+BEGIN
+if(@student_name<>'ncMUFCMU')
+begin
+    INSERT INTO dbo.tbl_gst_form
+    VALUES
+    (
+        @visa_type,
+        @visa_from_date,
+        @visa_expiry_date,
+        @job_titles,
+        @job_salaries,
+        @job_start_date,
+        @job_end_date,
+        @job_current,
+		@has_employee ,
+		@currently_employed,
+        @complete_highschool ,
+		@highschool,
+        @complete_university,
+		@university,
+        @education_qualificaton,
+        @level_of_study,
+        @study_year,
+        @plan_to_fund,
+        @total_access_fund,
+        @financial_evidance,
+        @has_course_exp,
+        @course_experience,
+        @has_study_gap,
+        @study_gap,
+        @reason_for_australia,
+        @career_goals_australia,
+        @home_country_ties,
+        @australia_family_ties,
+        @post_study_plan,
+        @other_relevant_info,
+        @student_name,
+        @sign_date,
+        @signature_img,
+        1,
+        @create_by,
+        dbo.GetCurrentAUTTime(),
+		null,
+		null,
+		null,
+		null
+    )
+	declare @id int = @@identity
+	exec sel_gst_form_sp @id
+end
+END
+GO
+/****** Object:  StoredProcedure [dbo].[ins_gte_form_sp]    Script Date: 22-04-2026 10:13:16 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+alter PROCEDURE [dbo].[ins_gte_form_sp]
 (
     @family_name VARCHAR(250),
     @given_name VARCHAR(250),
@@ -1922,7 +2296,7 @@ BEGIN
     SELECT 'ok'
 END
 GO
-/****** Object:  StoredProcedure [dbo].[ins_job_description_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[ins_job_description_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1961,12 +2335,122 @@ BEGIN
         y.[index] = p.[index]
 END;
 GO
-/****** Object:  StoredProcedure [dbo].[ins_new_vet_orientation_form_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[ins_lln_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE procedure [dbo].[ins_new_vet_orientation_form_sp]
+CREATE PROCEDURE [dbo].[ins_lln_sp]
+(
+    @stu_full_name VARCHAR(100),
+	@std_id varchar(150),
+    @phone VARCHAR(15),
+	@dob DATETIME,
+    @email VARCHAR(100),
+    @place_of_test VARCHAR(100),
+    @qualification VARCHAR(200),
+     @nationality VARCHAR(100),
+    @passport_number VARCHAR(100),
+    @passport_copy VARCHAR(MAX),
+    @date_of_test DATETIME,
+    @std_sign VARCHAR(MAX),
+	@que_1 varchar(max),
+	@ans_1 varchar(max),
+	@que_2 varchar(max),
+	@que_3 varchar(max),
+	@que_4 varchar(max),
+    @que_5 VARCHAR(max),
+    @que_6 VARCHAR(max),
+    @que_7 VARCHAR(max),
+    @que_8 VARCHAR(max),
+    @que_9 VARCHAR(max),
+    @que_10 VARCHAR(max),
+	@que_11 VARCHAR(max),
+    @que_12 VARCHAR(max),
+    @que_13 VARCHAR(max),
+    @que_14 VARCHAR(max),
+    @que_15 VARCHAR(max),
+    @que_16 VARCHAR(max),
+	@que_17 VARCHAR(max),
+    @que_18 VARCHAR(max),
+    @que_19 VARCHAR(max),
+    @que_20 VARCHAR(1000),
+    @que_21 VARCHAR(1000),
+    @que_22 VARCHAR(1000),
+    @que_23 VARCHAR(1000),
+	@que_24 VARCHAR(1000),
+	@std_declaration bit,
+	@std_cnf_sign varchar(max),
+	@sign_date datetime
+ )
+AS
+BEGIN
+    INSERT INTO tbl_lln_test 
+     VALUES (
+        @stu_full_name,
+		@std_id,
+        @phone,
+		  @dob,
+
+        @email,
+		  @place_of_test,
+        @qualification,
+      
+      
+        @nationality,
+        @passport_number,
+        @passport_copy,
+        @date_of_test,
+        @std_sign,
+		@que_1,
+		@ans_1,
+		@que_2,
+		@que_3,
+		@que_4,
+        @que_5,
+        @que_6,
+        @que_7,
+        @que_8,
+        @que_9,
+        @que_10,
+        @que_11,
+        @que_12,
+        @que_13,
+        @que_14,
+        @que_15,
+        @que_16,
+        @que_17,
+        @que_18,
+        @que_19,
+        @que_20,
+        @que_21,
+        @que_22,
+        @que_23,
+		@que_24,
+		@std_declaration,
+		@std_cnf_sign,
+		@sign_date,
+		1,
+		null,
+		dbo.GetCurrentAUTTime(),
+		null,
+		null,
+		null,
+		null
+    )
+ 
+	declare @test_id int = @@identity
+	--select @test_id as test_id
+ 
+	exec print_ack_sp @test_id
+END;
+GO
+/****** Object:  StoredProcedure [dbo].[ins_new_vet_orientation_form_sp]    Script Date: 22-04-2026 10:13:16 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+alter procedure [dbo].[ins_new_vet_orientation_form_sp]
 (
     @studentfullname varchar(350),
     @campus varchar(30),
@@ -2002,6 +2486,8 @@ CREATE procedure [dbo].[ins_new_vet_orientation_form_sp]
     @createby int
 	)
 as
+begin
+IF (@email <> 'testing@example.com')
 begin
     insert into tbl_new_vet_orientation_form
 	values
@@ -2039,7 +2525,7 @@ begin
         @studentsignature,
         1,
         @createby,
-		dbo.get_india_time(),
+		dbo.GetCurrentAUTTime(),
 		null,
 		null,
 		null,
@@ -2050,8 +2536,9 @@ begin
 
 	exec sel_new_vet_orientation_form_sp @id
 end
+end
 GO
-/****** Object:  StoredProcedure [dbo].[ins_policies_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[ins_policies_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2081,7 +2568,7 @@ BEGIN
 	select 'ok'
 END
 GO
-/****** Object:  StoredProcedure [dbo].[ins_public_holiday_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[ins_public_holiday_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2111,12 +2598,49 @@ begin
 	select 'ok'
 end
 GO
-/****** Object:  StoredProcedure [dbo].[ins_refund_form_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[ins_qualification_issuance_form_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE PROCEDURE [dbo].[ins_refund_form_sp]
+alter PROCEDURE [dbo].[ins_qualification_issuance_form_sp]
+(
+    @student_name VARCHAR(450),
+    @std_id VARCHAR(150),
+    @course VARCHAR(150),
+    @date_request VARCHAR(30),
+    @documents NVARCHAR(MAX),
+    @create_by INT
+)
+AS
+BEGIN
+    INSERT INTO dbo.tbl_qualification_issuance_form
+    VALUES
+    (
+        @student_name,
+        @std_id,
+        @course,
+        @date_request,
+        @documents,
+        1, -- active
+        @create_by,
+        dbo.GetCurrentAUTTime(),
+        NULL,
+        NULL,
+        NULL,
+        NULL
+    )
+
+    DECLARE @id INT = @@identity
+    EXEC sel_qualification_issuance_form_sp @id
+END
+GO
+/****** Object:  StoredProcedure [dbo].[ins_refund_form_sp]    Script Date: 22-04-2026 10:13:16 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+alter PROCEDURE [dbo].[ins_refund_form_sp]
 (
     @first_name VARCHAR(100),
     @last_name VARCHAR(100),
@@ -2142,6 +2666,8 @@ CREATE PROCEDURE [dbo].[ins_refund_form_sp]
 )
 AS
 BEGIN
+if(@email<>'testing@example.com')
+begin
     INSERT INTO tbl_refund_form 
     VALUES 
     (
@@ -2177,9 +2703,67 @@ BEGIN
 	declare @id int = scope_identity()
 
 	exec sel_refund_form_sp @id
+	end
 END
 GO
-/****** Object:  StoredProcedure [dbo].[ins_special_leave_request_form_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[ins_release_request_form_sp]    Script Date: 22-04-2026 10:13:16 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+alter PROCEDURE [dbo].[ins_release_request_form_sp]
+(
+	@student_name varchar(450),
+	@std_id varchar(150),
+	@country varchar(70),
+	@passport_no varchar(350),
+	@dob varchar(30),
+	@course_enrolled varchar(350),
+	@intake varchar(30),
+	@address varchar(max),
+	@email varchar(150),
+	@country_code varchar(10),
+	@contact_no varchar(20),
+	@reason_for_release varchar(max),
+	@student_signature varchar(max),
+	@sign_date varchar(30),
+	@create_by int
+)
+AS
+BEGIN
+if(@passport_no<>'111122223')
+begin
+	INSERT INTO dbo.tbl_release_request_form
+	VALUES
+	(
+		@student_name,
+		@std_id,
+		@country,
+		@passport_no,
+		@dob,
+		@course_enrolled,
+		@intake,
+		@address,
+		@email,
+		@country_code,
+		@contact_no,
+		@reason_for_release,
+		@student_signature,
+		@sign_date,
+		1,
+		@create_by,
+		dbo.GetCurrentAUTTime(),
+		null,
+		null,
+		null,
+		null
+	)
+	declare @id int = @@identity
+	exec sel_release_request_form_sp @id
+	end
+END
+GO
+/****** Object:  StoredProcedure [dbo].[ins_special_leave_request_form_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2231,12 +2815,12 @@ BEGIN
 	select 'ok'
 END
 GO
-/****** Object:  StoredProcedure [dbo].[ins_student_details_form_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[ins_student_details_form_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create PROCEDURE [dbo].[ins_student_details_form_sp]
+alter PROCEDURE [dbo].[ins_student_details_form_sp]
 (
     @student_no VARCHAR(250),
     @student_last_name VARCHAR(250),
@@ -2255,6 +2839,8 @@ create PROCEDURE [dbo].[ins_student_details_form_sp]
 )
 AS
 BEGIN
+if(@student_no<>'1')
+begin
     INSERT INTO tbl_student_details_form 
     
     VALUES 
@@ -2281,9 +2867,10 @@ BEGIN
 		null
     )
 	select 'ok'
+	end
 END
 GO
-/****** Object:  StoredProcedure [dbo].[ins_student_request_forms_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[ins_student_request_forms_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2352,7 +2939,7 @@ begin
 		select 'ok'
 end
 GO
-/****** Object:  StoredProcedure [dbo].[ins_tbl_agents_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[ins_tbl_agents_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2386,12 +2973,12 @@ BEGIN
 	select 'ok'
 END
 GO
-/****** Object:  StoredProcedure [dbo].[ins_tbl_new_elicos_orientation_form_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[ins_tbl_new_elicos_orientation_form_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE PROCEDURE [dbo].[ins_tbl_new_elicos_orientation_form_sp]
+alter PROCEDURE [dbo].[ins_tbl_new_elicos_orientation_form_sp]
 (
     @student_full_name VARCHAR(350),
     @campus VARCHAR(30),
@@ -2414,6 +3001,8 @@ CREATE PROCEDURE [dbo].[ins_tbl_new_elicos_orientation_form_sp]
 )
 AS
 BEGIN
+if(@email<>'testing@example.com')
+begin
 INSERT INTO tbl_new_elicos_orientation_form 
     VALUES (
         @student_full_name,
@@ -2445,9 +3034,142 @@ INSERT INTO tbl_new_elicos_orientation_form
 	declare @id int =@@identity
 
 	exec sel_new_elicos_orientation_form_sp @id
+	end
 END;
 GO
-/****** Object:  StoredProcedure [dbo].[sel_admin_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[print_ack_sp]    Script Date: 22-04-2026 10:13:16 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE proc [dbo].[print_ack_sp]
+(
+@test_id int
+)
+as
+begin
+	select
+		test_id,
+		stu_full_name,
+		std_id,
+		phone,
+		dob,
+		email,
+		place_of_test,
+		qualification,
+		nationality,
+		passport_number,
+		passport_copy,
+		date_of_test,
+		std_sign,
+		que_1,
+		ans_1,
+		que_2,
+		que_3,
+		que_4,
+		que_5,
+		que_6,
+		que_7,
+		que_8,
+		que_9,
+		que_10,
+		que_11,
+		que_12,
+		que_13,
+		que_14,
+		que_15,
+		que_16,
+		que_17,
+		que_18,
+		que_19,
+		que_20,
+		que_21,
+		que_22,
+		que_23,
+		que_24,
+		std_declaration,
+		std_cnf_sign,
+		sign_date,
+		status
+	from
+		tbl_lln_test
+	where test_id=@test_id
+end
+GO
+/****** Object:  StoredProcedure [dbo].[print_course_entry_form_sp]    Script Date: 22-04-2026 10:13:16 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE proc [dbo].[print_course_entry_form_sp]
+(
+@stu_id int
+)
+as
+begin
+(
+	select 
+		stu_id,
+		 name,
+		 dob,
+		 phone,
+		 email,
+		 std_id,
+		 interested_course,
+		 hope_from_course,
+		 career_goal,
+		 past_course,
+		 course_experience,
+		 learning_style,
+		 sel_learning_style,
+		 learning_material,
+		 learning_material_other,
+		 support_for_course,
+		 other_support,
+		 currently_working,
+		 workspace,
+		 updated_cv,
+		 worked_in_industry,
+		 role,
+		 applying_rpl,
+		 other_information,
+		 completed_course,
+		 transcripts,
+		 regular_access,
+		 solution_and_strategy,
+		 approx_computer_use,
+		 digital_literacy,
+		 discuss_solution,
+		 score,
+		 login_pc,
+		 send_email,
+		 navigate_website,
+		 create_folder,
+		 find_information,
+		 attach_document,
+		 save_emails,
+		 login_on_system,
+		 use_social_media,
+		 candidate_suitable,
+		 additional_information,
+		 details,
+		 additional_support,
+		 contain_online_component,
+		 comments,
+		 suitable_for_enrolment,
+		 staff_name,
+		 position,
+		 signature,
+		 format(signature_date , 'dd MMM, yyyy') as signature_date,
+		format (create_date ,'dd MMM, yyyy') as create_date
+	from 
+		tbl_course_entrty_form
+	where
+		stu_id = @stu_id
+)
+end
+GO
+/****** Object:  StoredProcedure [dbo].[sel_admin_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2473,7 +3195,94 @@ BEGIN
         AND status = 1
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sel_application_for_deferment_form_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[sel_agent_app_form_sp]    Script Date: 22-04-2026 10:13:16 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[sel_agent_app_form_sp]
+(
+    @agent_id INT
+)
+AS
+BEGIN
+    
+    SELECT 
+        agent_form_id,
+        register_buissness_name,
+        trading_name,
+        abn,
+        proprietor_directors_name,
+        year_established,
+        website,
+        email,
+        phone,
+        country_code,
+        contact_no,
+        address,
+        postal_address,
+        services_international_student,
+         REPLACE(staff_count, '|', ',') as staff_count,
+        referral_origin_countries,
+        REPLACE(staff_count, '|', ',') as referral_origin_countries,
+        staff_update_plan,
+        partner_institution_details,
+        contact_person_name_number,
+        contact_person_email,
+        full_name,
+        position,
+        signature,
+        signature_date,
+        status
+    FROM tbl_agent_app_form
+    WHERE agent_form_id = @agent_id
+	and status = 1
+END
+GO
+/****** Object:  StoredProcedure [dbo].[sel_agent_application_sp]    Script Date: 22-04-2026 10:13:16 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+create proc [dbo].[sel_agent_application_sp]
+(
+	@id int
+)
+as
+begin 
+	exec sel_agent_app_form_sp @id
+	exec sel_employed_agents_sp @id
+	exec sel_staff_name_sp @id
+	exec sel_service_fee_sp @id
+	exec sel_staff_update_plan_sp @id
+	exec sel_agents_association_sp @id
+	exec sel_institutes_detail_sp @id
+end
+GO
+/****** Object:  StoredProcedure [dbo].[sel_agents_association_sp]    Script Date: 22-04-2026 10:13:16 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE proc [dbo].[sel_agents_association_sp]
+(
+	@id int
+)
+as
+begin 
+	-- Split agent_association_details by '|' and keep index
+SELECT 
+    t.agent_form_id,
+    s.Item AS agent_association_details
+FROM tbl_agent_app_form t
+CROSS APPLY dbo.SplitString(t.agent_association_details+ '|', '|') AS s
+WHERE t.status = 1
+  AND t.agent_form_id = @id
+ORDER BY t.agent_form_id, s.[Index];
+
+end
+GO
+/****** Object:  StoredProcedure [dbo].[sel_application_for_deferment_form_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2487,16 +3296,11 @@ BEGIN
 	select 
 		student_name,
 		student_id,
-		format(deferment_date,'dd-MM-yyyy') as deferment_date,
+		format(birth_date,'dd-MM-yyyy') as birth_date,
+		FORMAT(deferment_start, 'dd-MM-yyyy') + ' - ' + FORMAT(deferment_end, 'dd-MM-yyyy') AS deferment_date,
 		course,
 		reason,
-		enrolment_until,
-		address_while_on_leave,
-		email,
-		phone_code,
-		phone_no,
-		contact_code,
-		contact_no,
+		FORMAT(course_end, 'dd-MM-yyyy') as enrolment_until,
 		student_signature,
 		format(sign_date,'dd-MM-yyyy') as sign_date
 	from
@@ -2504,18 +3308,45 @@ BEGIN
 	where id = @id
 end;
 GO
-/****** Object:  StoredProcedure [dbo].[sel_change_of_campus_form_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[sel_change_course_forms_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-create PROCEDURE [dbo].[sel_change_of_campus_form_sp]
+CREATE PROCEDURE [dbo].[sel_change_course_forms_sp]
 (
-	@id int
+    @id int
 )
 AS
 BEGIN
-	 SELECT 
+   SELECT 
+        id,
+        student_name,
+        std_id,
+        country,
+        passport_no,
+         format(cast(dob as date),'dd MMM, yyyy') as dob,
+        course_enrolled,
+         format(cast(intake as date),'dd MMM, yyyy') as intake,
+        address,
+        email,
+        country_code,
+        contact_no,
+        change_course,
+        reason_change_course,
+        student_signature,
+        format(cast(sign_date as date),'dd MMM, yyyy') as sign_date,
+        status
+    FROM dbo.tbl_change_course_forms
+    WHERE id = @id and status = 1
+END
+GO
+/****** Object:  StoredProcedure [dbo].[sel_change_of_campus_form_sp]    Script Date: 22-04-2026 10:13:16 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+create PROCEDURE [dbo].[sel_change_of_campus_form_sp](	@id int)ASBEGIN	 SELECT 
         id,
         std_id,
         passport_no,
@@ -2534,15 +3365,9 @@ BEGIN
         student_signature,
         format(cast( sign_date as date),'dd MMM,yyyy') as sign_date,
         status,
-		format(create_date,'dd MMM, yyyy') as [date]
-
-    FROM tbl_change_of_campus_form
-	where
-	status=1
-	and id=@id
-END
+		format(create_date,'dd MMM, yyyy') as [date]    FROM tbl_change_of_campus_form	where	status=1	and id=@idEND
 GO
-/****** Object:  StoredProcedure [dbo].[sel_course_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[sel_course_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2572,7 +3397,7 @@ BEGIN
 		course_id=@id
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sel_credit_card_auth_form_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[sel_credit_card_auth_form_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2604,7 +3429,33 @@ BEGIN
 		id = @id
 END;
 GO
-/****** Object:  StoredProcedure [dbo].[sel_cricos_student_withdrawal_form_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[sel_credit_transfer_Report_sp]    Script Date: 22-04-2026 10:13:16 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[sel_credit_transfer_Report_sp](	@id int)ASBEGIN     SELECT 
+		id,
+       title,
+	   student_given_name,
+	   student_last_name,
+        format(cast(birth_date as date),'dd MMM, yyyy') as birth_date,
+        street_address,
+        postcode,
+        state_region,
+        email,
+        (country_code+contact_no) as contact_no,
+        student_id,
+        course_code,
+        course_title,
+        format(cast(application_date as date),'dd MMM, yyyy') as application_date,
+        student_signature,
+        format(cast(sign_date as date),'dd MMM, yyyy') as sign_date,
+        student_full_name,
+        status
+        FROM dbo.tbl_credit_transfer_application	where status=1	and id = @id	exec sel_CT_sp @idEND;
+GO
+/****** Object:  StoredProcedure [dbo].[sel_cricos_student_withdrawal_form_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2629,7 +3480,57 @@ begin
 			where id=@id
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sel_ept_form_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[sel_CT_sp]    Script Date: 22-04-2026 10:13:16 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE proc [dbo].[sel_CT_sp]
+(
+	@id int
+)
+as
+begin
+	SELECT 
+    u.Item AS unit_codes,
+    i.Item AS unit_titles,
+    t.Item AS evidence_supplied,
+    ct.Item as ct_granted
+FROM tbl_credit_transfer_application cta
+CROSS APPLY dbo.SplitString(cta.unit_titles, '|') AS i
+CROSS APPLY dbo.SplitString(cta.evidence_supplied, '|') AS t
+CROSS APPLY dbo.SplitString(cta.unit_codes, '|') AS u
+cross apply dbo.SplitString(cta.ct_granted, '|') AS ct
+WHERE i.[Index] = t.[Index]
+  AND i.[Index] = u.[Index]
+   AND i.[Index] = ct.[Index]
+   and id=@id
+
+end
+GO
+/****** Object:  StoredProcedure [dbo].[sel_employed_agents_sp]    Script Date: 22-04-2026 10:13:16 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE proc [dbo].[sel_employed_agents_sp]
+(
+	@id int
+)
+as
+begin 
+SELECT 
+    t.agent_form_id,
+    ea.Item AS employed_agents_names
+	FROM 
+		tbl_agent_app_form t
+	CROSS APPLY dbo.SplitString(t.employed_agents_names + '|', '|') AS ea
+		WHERE 
+		t.status = 1
+    AND t.agent_form_id = @id	
+end
+GO
+/****** Object:  StoredProcedure [dbo].[sel_ept_form_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2774,7 +3675,108 @@ GROUP BY e.ept_form_id
 
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sel_gte_form_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[sel_gst_form_sp]    Script Date: 22-04-2026 10:13:16 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE proc [dbo].[sel_gst_form_sp]
+(
+	@id int
+)
+as
+begin
+		select		
+				FormID,
+				visa_type,
+				visa_from_date,
+				visa_expiry_date,
+				job_titles,
+				job_salaries,
+				job_start_date,
+				job_end_date,
+				job_current,
+				has_employee,
+				currently_employed,
+				complete_high_school,
+				highschool,
+				complete_university_school,
+				university,
+				education_qualificaton,
+				level_of_study,
+				study_year,
+				plan_to_fund,
+				total_access_fund,
+				financial_evidance,
+				has_course_exp,
+				course_experience,
+				has_study_gap,
+				study_gap,
+				reason_for_australia,
+				career_goals_australia,
+				home_country_ties,
+				australia_family_ties,
+				post_study_plan,
+				other_relevant_info,
+				student_name,
+				format(sign_date ,'dd MMM, yyyy') as sign_date,
+				signature_img,
+				status
+
+		from
+			tbl_gst_form
+		where status = 1 and FormID=@id
+		
+			SELECT 
+		t.FormID,
+		s.Item AS Salary,
+		tt.Item AS JobTitle,
+		format(cast(ttt.item as date),'dd MMM, yyyy') as job_start_date,
+		format(cast(je.item as date),'dd MMM, yyyy') as job_end_date,
+		jc.item  as job_current
+		FROM tbl_gst_form t
+		CROSS APPLY dbo.SplitString(t.job_salaries + '|', '|') AS s
+		CROSS APPLY dbo.SplitString(t.job_titles + '|', '|') AS tt
+		cross apply dbo.SplitString(t.job_start_date + '|', '|') AS ttt
+		cross apply dbo.SplitString(t.job_end_date + '|', '|') AS je
+		cross apply dbo.SplitString(t.job_current + '|', '|') AS jc
+
+	WHERE s.[index] = tt.[index]
+	and s.[index] = ttt.[index]
+	and s.[index] = je.[index]
+	and s.[index] = jc.[index]
+	and t.formID=@id
+
+
+		SELECT 
+			t.FormID,
+			 vt.Item AS VisaType,
+			format(cast(vf.Item as date),'dd MMM, yyyy') AS VisaFromDate,
+			format(cast(ve.Item as date),'dd MMM, yyyy')AS VisaExpiryDate
+		FROM tbl_gst_form t
+			CROSS APPLY dbo.SplitString(t.visa_type + '|', '|') AS vt
+			CROSS APPLY dbo.SplitString(t.visa_from_date + '|', '|') AS vf
+			CROSS APPLY dbo.SplitString(t.visa_expiry_date + '|', '|') AS ve
+		WHERE vt.[index] = vf.[index]
+			  AND vt.[index] = ve.[index]
+			  and t.FormID =@id
+
+			  SELECT 
+    t.formID,
+    eq.Item AS EducationQualification,
+    ls.Item AS LevelOfStudy,
+    sy.Item AS StudyYear
+FROM tbl_gst_form t
+CROSS APPLY dbo.SplitString(t.education_qualificaton + '|', '|') AS eq
+CROSS APPLY dbo.SplitString(t.level_of_study + '|', '|') AS ls
+CROSS APPLY dbo.SplitString(t.study_year + '|', '|') AS sy
+WHERE eq.[index] = ls.[index]
+  AND eq.[index] = sy.[index]
+  AND t.formID = @id
+
+end
+GO
+/****** Object:  StoredProcedure [dbo].[sel_gte_form_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2884,7 +3886,41 @@ where
 end
 
 GO
-/****** Object:  StoredProcedure [dbo].[sel_intake_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[sel_institutes_detail_sp]    Script Date: 22-04-2026 10:13:16 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE proc [dbo].[sel_institutes_detail_sp]
+(
+	@id int
+)
+as
+begin 
+		SELECT 
+			t.agent_form_id,
+			p.Item AS partner_institution_details,
+			c.Item AS contact_person_name_number,
+			e.Item AS contact_person_email
+		FROM
+			tbl_agent_app_form t
+		CROSS APPLY 
+			dbo.SplitString(t.partner_institution_details+ '|', '|') AS p
+		CROSS APPLY 
+			dbo.SplitString(t.contact_person_name_number+ '|', '|') AS c
+		CROSS APPLY 
+			dbo.SplitString(t.contact_person_email+ '|', '|') AS e
+		WHERE
+			t.status = 1
+		  AND p.[Index] = c.[Index]
+		  AND p.[Index] = e.[Index]
+		  AND t.agent_form_id = @id
+		ORDER BY 
+			t.agent_form_id, p.[Index];
+
+end
+GO
+/****** Object:  StoredProcedure [dbo].[sel_intake_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2905,7 +3941,7 @@ begin
 	and intake_id = @id
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sel_intake_tearmbreak_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[sel_intake_tearmbreak_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2929,7 +3965,7 @@ begin
 		termbreak_id=@id
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sel_new_elicos_orientation_form_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[sel_new_elicos_orientation_form_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2968,7 +4004,7 @@ where
 	id=@id
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sel_new_vet_orientation_form_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[sel_new_vet_orientation_form_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3019,7 +4055,7 @@ where
 	id=@id
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sel_policies_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[sel_policies_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3042,7 +4078,7 @@ begin
 	and policies_id = @id
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sel_public_holidays_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[sel_public_holidays_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3063,7 +4099,31 @@ BEGIN
 		and holiday_id=@holiday_id
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sel_refund_form_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[sel_qualification_issuance_form_sp]    Script Date: 22-04-2026 10:13:16 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[sel_qualification_issuance_form_sp]
+(
+    @id INT
+)
+AS
+BEGIN
+     SELECT 
+        id,
+        student_name,
+        std_id,
+        course,
+        format(cast(date_request as date),'dd MMM, yyyy' )as date_request,
+        documents,
+		status
+    FROM dbo.tbl_qualification_issuance_form
+    WHERE id = @id AND status = 1
+END
+------
+GO
+/****** Object:  StoredProcedure [dbo].[sel_refund_form_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3099,7 +4159,119 @@ begin
 	where id = @id
 end
 GO
-/****** Object:  StoredProcedure [dbo].[sel_student_request_forms_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[sel_release_request_form_sp]    Script Date: 22-04-2026 10:13:16 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[sel_release_request_form_sp]
+(
+    @id int
+)
+AS
+BEGIN
+   SELECT 
+        id,
+        student_name,
+        std_id,
+        country,
+        passport_no,
+         format(cast(dob as date),'dd MMM, yyyy') as dob,
+        course_enrolled,
+         format(cast(intake as date),'dd MMM, yyyy') as intake,
+        address,
+        email,
+        country_code,
+        contact_no,
+        reason_for_release,
+        student_signature,
+        format(cast(sign_date as date),'dd MMM, yyyy') as sign_date,
+        status
+    FROM dbo.tbl_release_request_form
+    WHERE id = @id and status = 1
+END
+GO
+/****** Object:  StoredProcedure [dbo].[sel_service_fee_sp]    Script Date: 22-04-2026 10:13:16 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE proc [dbo].[sel_service_fee_sp]
+(
+	@id int
+)
+as
+begin 
+		SELECT 
+			t.agent_form_id,
+			s.Item AS service,
+			f.Item AS fee
+		FROM 
+			tbl_agent_app_form t
+		CROSS APPLY
+			dbo.SplitString(t.service + '|', '|') AS s
+		CROSS APPLY 
+			dbo.SplitString(t.fee + '|', '|') AS f
+		WHERE
+			t.status = 1
+			 AND s.[Index] = f.[Index]  
+			 AND t.agent_form_id = @id
+		ORDER BY 
+			t.agent_form_id,
+			s.[Index];
+end
+GO
+/****** Object:  StoredProcedure [dbo].[sel_staff_name_sp]    Script Date: 22-04-2026 10:13:16 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE proc [dbo].[sel_staff_name_sp]
+(
+	@id int
+)
+as
+begin 
+SELECT 
+    t.agent_form_id,
+    s.Item AS staff_full_name
+FROM 
+    tbl_agent_app_form t
+CROSS APPLY dbo.SplitString(t.staff_name + '|', '|') AS s
+WHERE 
+    t.status = 1
+    AND t.agent_form_id = @id
+ORDER BY 
+    t.agent_form_id, 
+    s.[Index];
+end
+GO
+/****** Object:  StoredProcedure [dbo].[sel_staff_update_plan_sp]    Script Date: 22-04-2026 10:13:16 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE proc [dbo].[sel_staff_update_plan_sp]
+(
+	@id int
+)
+as
+begin 
+	SELECT 
+		t.agent_form_id,
+		s.Item AS staff_update_plan
+	FROM tbl_agent_app_form t
+	CROSS APPLY 
+			dbo.SplitString(t.staff_update_plan + '|', '|') AS s
+	WHERE 
+		t.status = 1
+	AND 
+		t.agent_form_id = @id
+	ORDER BY 
+		t.agent_form_id, s.[Index]
+end
+GO
+/****** Object:  StoredProcedure [dbo].[sel_student_request_forms_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3137,7 +4309,7 @@ begin
 				and status=1
 end
 GO
-/****** Object:  StoredProcedure [dbo].[upd_course_intake_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[upd_course_intake_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3160,7 +4332,7 @@ BEGIN
 	SELECT 'ok'
 END
 GO
-/****** Object:  StoredProcedure [dbo].[upd_course_intake_termbreak_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[upd_course_intake_termbreak_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3188,7 +4360,7 @@ BEGIN
     SELECT 'ok'
 END
 GO
-/****** Object:  StoredProcedure [dbo].[upd_course_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[upd_course_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3228,7 +4400,7 @@ BEGIN
 	select 'ok'
 END
 GO
-/****** Object:  StoredProcedure [dbo].[upd_policies_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[upd_policies_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -3255,7 +4427,7 @@ BEGIN
 	select 'ok'
 END
 GO
-/****** Object:  StoredProcedure [dbo].[upd_public_holiday_sp]    Script Date: 01-09-2025 18:47:59 ******/
+/****** Object:  StoredProcedure [dbo].[upd_public_holiday_sp]    Script Date: 22-04-2026 10:13:16 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON

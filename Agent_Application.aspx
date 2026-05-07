@@ -49,30 +49,11 @@
         input[type=checkbox] {
             margin: 4px 5px 0px 0px !important;
         }
-
-
-        /*.radio_btn table tbody {
-                display: flex !important;
-            }
-
-                .radio_btn table tbody tr {
-                    margin-right: 10px;
-                }*/
-
-        /*.row {
-            margin-right: 0px !important;
-            margin-left: 0px !important;
-        }*/
-        /*ul li {
-            list-style: disc;
-        }
-
-        ul {
-            margin: 10px 30px !important;
-        }*/
     </style>
     <script src="https://cdn.WebRTC-Experiment.com/MediaStreamRecorder.js"></script>
     <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+    
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </asp:Content>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="body" runat="Server">
@@ -101,7 +82,6 @@
                 </div>
             </div>
 
-            <!-- Step 1 -->
             <div class="step step-1">
 
 
@@ -163,18 +143,6 @@
                             <label class="lbl_title">Postal address (include Postcode and Country)</label>
                             <asp:TextBox runat="server" ID="txt_post_address" TextMode="MultiLine" Rows="3" CssClass="form-control" />
                         </div>
-                        <%-- <div class="clearfix"></div>
-                        <div class="col-md-6">
-                            <label class="lbl_title">Student Signature</label>
-
-
-                            <img id="clearBtn" style="width: 22px; float: right; margin-bottom: 8px;" src="assets/img/eraser.png" />
-
-                            <asp:HiddenField ID="hdnSignature" runat="server" />
-
-                            <canvas id="signatureCanvas" style="border: 1px solid rgb(223 223 223); width: 100%; height: 250px; touch-action: none; background-color: white;"></canvas>
-
-                        </div>--%>
                     </div>
 
                 </div>
@@ -192,7 +160,6 @@
                                 <div>&nbsp;</div>
                                 <button type="button" class="ml-2 " style="border: none; background: none">
                                     <img src="assets/img/plus.png" class="addRowBtn" alt="Alternate Text" width="25px" /></button>
-                                <%--                                    <button type="button" class="ml-2 removeRowBtn" style="border-radius: 50%; max-width: 100%; width: 29px;">-</button>--%>
                             </div>
                         </div>
                     </div>
@@ -204,7 +171,6 @@
 
             </div>
 
-            <!-- Step 2 -->
             <div class="step step-2">
 
 
@@ -213,14 +179,6 @@
                     <div class="row">
                         <div class="col-md-12">
                             <label class="lbl_title">1.Please indicate the services you provide or intend to provide for international students.</label>
-                            <%--<div>
-                                <label class="checklist">
-                                    <asp:CheckBox Text="" runat="server" />Education
-                                </label>
-                                <label class="checklist">
-                                    <asp:CheckBox Text="" runat="server" />Migration
-                                </label>
-                            </div>--%>
                             <asp:CheckBoxList runat="server" ID="intend_provide">
                                 <asp:ListItem Text="Education" />
                                 <asp:ListItem Text="Migration" />
@@ -229,18 +187,6 @@
 
                         <div class="col-md-12">
                             <label class="lbl_title">2. Please indicate the number of entire staff and their full names; including student advisors and counsellors (if any). Attach further pages as required.</label>
-                            <%-- <div>
-                                <label class="checklist">
-                                    <asp:CheckBox Text="" runat="server" />1-2
-                                </label>
-                                <label class="checklist">
-                                    <asp:CheckBox Text="" runat="server" />3-5
-                                </label>
-                                <label class="checklist">
-                                    <asp:CheckBox Text="" runat="server" />more than 5
-                                </label>
-                            </div>--%>
-
                             <asp:CheckBoxList runat="server" ID="number_of_staff">
                                 <asp:ListItem Text="1-2" />
                                 <asp:ListItem Text="3-5" />
@@ -374,7 +320,6 @@
             </div>
 
 
-            <!-- Step 3 -->
             <div class="step step-3">
                 <div class="form-container">
                     <h4>STUDENT RECRUITMENT EDUCATION AGENT CODE OF CONDUCT</h4>
@@ -484,28 +429,23 @@
                         <asp:TextBox ID="txt_sign_date" CssClass="form-control" TextMode="Date" runat="server"></asp:TextBox>
                     </div>
                 </div>
+                
+                <div class="row mt-4 mb-3">
+                    <div class="col-md-12">
+                        <label class="lbl_title">Security Check</label>
+                        <div class="g-recaptcha" data-sitekey="6Lfy8sMsAAAAAJooKWOWs-d5ituL8wy-JuBZ-Yjv"></div>
+                        <span class="text-muted" style="font-size:11px;">Please verify you are human.</span>
+                    </div>
+                </div>
+
                 <div class="btn_step">
                     <button type="button" class="btn btn-secondary prev-step">Previous</button>
-                    <asp:Button Text="Submit" ID="btn_submit" OnClientClick="saveSignature()" OnClick="btn_submit_Click" CssClass="btn btn-success" runat="server" />
+                    <asp:Button Text="Submit" ID="btn_submit" OnClientClick="return saveSignature();" OnClick="btn_submit_Click" CssClass="btn btn-success" runat="server" />
                 </div>
             </div>
 
-              <%--  <div class="form-container">
-                    <h5>Think about learning English in your country.</h5>
-                    <h5>Answer the questions below in your own words. Questions 46-48 is worth 2 mark each, Question 49 is worth 4 marks</h5>
-
-                    <div class="btn_step">
-                        <button type="button" class="btn btn-secondary prev-step">Previous</button>
-                        <button type="button" class="btn btn-primary next-step">Next</button>
-                    </div>
-                </div>--%>
             </div>
-        <%--  --%>
-
-
-
-        <%--  --%>
-      
+        
     </div>
     </div>
 
@@ -521,8 +461,6 @@
     <asp:HiddenField runat="server" ID="hd_number_list" />
     <asp:HiddenField runat="server" ID="hd_email_list" />
 
-
-   
 
 </asp:Content>
 
@@ -575,11 +513,35 @@
             });
         }
 
+        // Updated saveSignature logic with reCAPTCHA and Step 3 validations
         window.saveSignature = function() {
+            var errors = [];
+            
+            // Step 3 basic fields validation
+            if ($("#<%= txt_full_name.ClientID %>").val().trim() === "") errors.push("Full Name is required.");
+            if ($("#<%= txt_position.ClientID %>").val().trim() === "") errors.push("Position is required.");
+            if ($("#<%= txt_sign_date.ClientID %>").val().trim() === "") errors.push("Date is required.");
+
+            // Signature Validation
             if (signaturePad.isEmpty()) {
-                alert("Please provide a signature.");
+                errors.push("Please provide a signature.");
+            }
+
+            // Google reCAPTCHA Validation
+            if (typeof grecaptcha !== 'undefined') {
+                var recaptchaResponse = grecaptcha.getResponse();
+                if (recaptchaResponse.length === 0) {
+                    errors.push("Please complete the security check to verify you are human.");
+                }
+            }
+
+            // Show errors if any
+            if (errors.length > 0) {
+                alert("Please correct the following errors:\n\n- " + errors.join("\n- "));
                 return false;
             }
+
+            // Save Signature
             const hdnSignature = document.getElementById('<%= hdnSignature.ClientID %>');
             if (hdnSignature) {
                 hdnSignature.value = signaturePad.toDataURL();
@@ -587,6 +549,14 @@
                 console.error('HiddenField element not found!');
                 return false;
             }
+            
+            // Hide button and show submitting text
+            var btn = $("#<%= btn_submit.ClientID %>");
+            setTimeout(function () {
+                btn.hide();
+                btn.after('<span class="btn btn-success" style="cursor: not-allowed; opacity: 0.7;">Submitting...</span>');
+            }, 10);
+
             return true;
         };
     });
@@ -632,21 +602,21 @@
                 var errors = [];
 
                 // 🔹 Step 1 Validations
-              if (currentStep.hasClass("step-1")) {
+                if (currentStep.hasClass("step-1")) {
                     validateField("#<%= txt_reg_name.ClientID %>", "Registered Business Name is required", errors);
-                    validateField("#<%= txt_trading_name.ClientID %>", "Trading Name is required", errors);
-                    validateField("#<%= txt_abn.ClientID %>", "ABN is required", errors);
-                    validateField("#<%= txt_director_name.ClientID %>", "Director Name is required", errors);
-                    validateField("#<%= txt_est_year.ClientID %>", "Established Year is required", errors);
-                    validateField("#<%= txt_website.ClientID %>", "Website is required", errors);
-                    validateField("#<%= txt_phone.ClientID %>", "Phone is required", errors);
-                    validateField("#<%= txt_address.ClientID %>", "Address is required", errors);
-                    validateField("#<%= txt_post_address.ClientID %>", "Postal Address is required", errors);
+                  validateField("#<%= txt_trading_name.ClientID %>", "Trading Name is required", errors);
+                  validateField("#<%= txt_abn.ClientID %>", "ABN is required", errors);
+                  validateField("#<%= txt_director_name.ClientID %>", "Director Name is required", errors);
+                  validateField("#<%= txt_est_year.ClientID %>", "Established Year is required", errors);
+                  validateField("#<%= txt_website.ClientID %>", "Website is required", errors);
+                  validateField("#<%= txt_phone.ClientID %>", "Phone is required", errors);
+                  validateField("#<%= txt_address.ClientID %>", "Address is required", errors);
+                  validateField("#<%= txt_post_address.ClientID %>", "Postal Address is required", errors);
 
-                    // Email
-                    var emailField = $("#<%= txt_email.ClientID %>");
-                    validateEmailValue(emailField.val(), "Enter a valid Email", errors, emailField);
-                }
+                  // Email
+                  var emailField = $("#<%= txt_email.ClientID %>");
+                  validateEmailValue(emailField.val(), "Enter a valid Email", errors, emailField);
+              }
 
                 // 🔹 Step 2 Validations (NO checkbox validation)
                 if (currentStep.hasClass("step-2")) {
@@ -784,11 +754,11 @@
                         <div class="col-md-1">
                             <div>&nbsp;</div>
                                     <button type="button" class="ml-2 " style="border:none;background:none">
-                                        <img src="assets/img/plus.png" width="25px" class="addRowBtn" alt="Alternate Text" /></button>    
+                                        <img src="assets/img/plus.png" width="25px" class="addRowBtn" alt="Alternate Text" /></button>   
                                             
 
                                               <button type="button" class="ml-2 " style="border:none;background:none">
-                                        <img src="assets/img/minus-button.png" width="22px" class="removeRowBtn" alt="Alternate Text" /></button>    
+                                        <img src="assets/img/minus-button.png" width="22px" class="removeRowBtn" alt="Alternate Text" /></button>   
 
                         </div>
                     `;

@@ -33,6 +33,20 @@
         .ch_agree label {
             font-weight: bold;
         }
+
+        /* Math Captcha Styling */
+        .captcha-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .refresh-captcha {
+            cursor: pointer;
+            color: #007bff;
+            font-size: 18px;
+            text-decoration: none;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="body" Runat="Server">
@@ -138,10 +152,24 @@
                         </asp:DropDownList>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <label class="lbl_title">Enter Captcha Code</label>
+                        <div class="captcha-box">
+                            <asp:Image ID="imgCaptcha" runat="server" Width="150px" Height="50px" style="border: 1px solid #ddd; border-radius: 4px; background-color: #f9f9f9;" />
+                            
+                            <a href="javascript:void(0);" onclick="refreshCaptchaJs();" class="refresh-captcha">
+                                <i class="fas fa-sync-alt"></i>
+                            </a>
+                        </div>
+                        <asp:TextBox ID="txt_captcha_input" runat="server" CssClass="form-control" style="margin-top:10px;" placeholder="Captcha Code" onkeypress="return only_number(event)"></asp:TextBox>
+                    </div>
+                </div>
             </div>
 
             <div>
-                <asp:Button ID="btn_submit" runat="server" OnClientClick="saveSignature()" OnClick="btn_submit_Click" Text="SUBMIT" CssClass="btn btn-success" />
+                <asp:Button ID="btn_submit" runat="server" OnClick="btn_submit_Click" Text="SUBMIT" CssClass="btn btn-success" />
             </div>
         </div>
     </div>
@@ -163,7 +191,6 @@
             return !(charCode > 31 && (charCode < 48 || charCode > 57));
         }
 
-        // Phone input
         var input = document.querySelector("#phone");
         var output = document.querySelector("#output");
         var iti = window.intlTelInput(input, {
@@ -183,49 +210,123 @@
         input.addEventListener('change', handleChange);
         input.addEventListener('keyup', handleChange);
 
-        // Form validation with alert
+        // Updated Submit Logic to include Button Hiding
         $("#<%= btn_submit.ClientID %>").click(function (event) {
-            var errorMsg = "";
-
-            if ($("#<%= txt_s_number.ClientID %>").val().trim() == "") errorMsg += "Student Number is required.\n";
-            if ($("#<%= txt_s_last_name.ClientID %>").val().trim() == "") errorMsg += "Student Last Name is required.\n";
-            if ($("#<%= txt_s_given_name.ClientID %>").val().trim() == "") errorMsg += "Student Given Names are required.\n";
-            if ($("#<%= txt_s_full_name.ClientID %>").val().trim() == "") errorMsg += "Student Full Name is required.\n";
-
-            var email = $("#<%= txt_email.ClientID %>").val();
-            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) errorMsg += "Valid Email is required.\n";
-
-            if ($("#<%= txt_add.ClientID %>").val().trim() == "") errorMsg += "Street Address is required.\n";
-            if ($("#<%= txt_add_line_2.ClientID %>").val().trim() == "") errorMsg += "Address Line 2 is required.\n";
-            if ($("#<%= txt_city.ClientID %>").val().trim() == "") errorMsg += "City is required.\n";
-            if ($("#<%= txt_state.ClientID %>").val().trim() == "") errorMsg += "State is required.\n";
-            if ($("#<%= txt_zip.ClientID %>").val().trim() == "") errorMsg += "ZIP Code is required.\n";
-            if ($("#<%= ddl_country.ClientID %>").val() == "" || $("#<%= ddl_country.ClientID %>").prop("selectedIndex") == 0) errorMsg += "Country is required.\n";
-
-            if ($("#<%= hd_contact_no_code.ClientID %>").val() == "" || !iti.isValidNumber()) errorMsg += "Valid Contact Number is required.\n";
-
-            if (errorMsg != "") {
-                alert(errorMsg);
-
-                // Highlight invalid fields
-                if ($("#<%= txt_s_number.ClientID %>").val().trim() == "") $("#<%= txt_s_number.ClientID %>").css("border-color", "red"); else $("#<%= txt_s_number.ClientID %>").css("border-color", "");
-                if ($("#<%= txt_s_last_name.ClientID %>").val().trim() == "") $("#<%= txt_s_last_name.ClientID %>").css("border-color", "red"); else $("#<%= txt_s_last_name.ClientID %>").css("border-color", "");
-                if ($("#<%= txt_s_given_name.ClientID %>").val().trim() == "") $("#<%= txt_s_given_name.ClientID %>").css("border-color", "red"); else $("#<%= txt_s_given_name.ClientID %>").css("border-color", "");
-                if ($("#<%= txt_s_full_name.ClientID %>").val().trim() == "") $("#<%= txt_s_full_name.ClientID %>").css("border-color", "red"); else $("#<%= txt_s_full_name.ClientID %>").css("border-color", "");
-                if (!emailRegex.test(email)) $("#<%= txt_email.ClientID %>").css("border-color", "red"); else $("#<%= txt_email.ClientID %>").css("border-color", "");
-                if ($("#<%= txt_add.ClientID %>").val().trim() == "") $("#<%= txt_add.ClientID %>").css("border-color", "red"); else $("#<%= txt_add.ClientID %>").css("border-color", "");
-                if ($("#<%= txt_add_line_2.ClientID %>").val().trim() == "") $("#<%= txt_add_line_2.ClientID %>").css("border-color", "red"); else $("#<%= txt_add_line_2.ClientID %>").css("border-color", "");
-                if ($("#<%= txt_city.ClientID %>").val().trim() == "") $("#<%= txt_city.ClientID %>").css("border-color", "red"); else $("#<%= txt_city.ClientID %>").css("border-color", "");
-                if ($("#<%= txt_state.ClientID %>").val().trim() == "") $("#<%= txt_state.ClientID %>").css("border-color", "red"); else $("#<%= txt_state.ClientID %>").css("border-color", "");
-                if ($("#<%= txt_zip.ClientID %>").val().trim() == "") $("#<%= txt_zip.ClientID %>").css("border-color", "red"); else $("#<%= txt_zip.ClientID %>").css("border-color", "");
-                if ($("#<%= ddl_country.ClientID %>").val() == "" || $("#<%= ddl_country.ClientID %>").prop("selectedIndex") == 0) $("#<%= ddl_country.ClientID %>").next(".select2-container").css("border-color", "red"); else $("#<%= ddl_country.ClientID %>").next(".select2-container").css("border-color", "");
-                if ($("#<%= hd_contact_no_code.ClientID %>").val() == "" || !iti.isValidNumber()) $("#phone").css("border-color", "red"); else $("#phone").css("border-color", "");
-
+            if (!validateForm()) {
                 event.preventDefault();
                 return false;
             }
+
+            // Validation passed: Hide button and show placeholder span
+            var btn = $(this);
+            setTimeout(function () {
+                btn.hide();
+                btn.after('<span class="btn btn-success" style="cursor: not-allowed; opacity: 0.7;">Submitting...</span>');
+            }, 10);
         });
+
+        function validateForm() {
+            var isValid = true;
+            var errorMsg = "";
+
+            if ($("#<%= txt_s_number.ClientID %>").val().trim() == "") {
+                isValid = false; errorMsg += "- Student Number is required.\n";
+                $("#<%= txt_s_number.ClientID %>").css("border-color", "red");
+            } else { $("#<%= txt_s_number.ClientID %>").css("border-color", ""); }
+
+            if ($("#<%= txt_s_last_name.ClientID %>").val().trim() == "") {
+                isValid = false; errorMsg += "- Student Last Name is required.\n";
+                $("#<%= txt_s_last_name.ClientID %>").css("border-color", "red");
+            } else { $("#<%= txt_s_last_name.ClientID %>").css("border-color", ""); }
+
+            if ($("#<%= txt_s_given_name.ClientID %>").val().trim() == "") {
+                isValid = false; errorMsg += "- Student Given Names are required.\n";
+                $("#<%= txt_s_given_name.ClientID %>").css("border-color", "red");
+            } else { $("#<%= txt_s_given_name.ClientID %>").css("border-color", ""); }
+
+            if ($("#<%= txt_s_full_name.ClientID %>").val().trim() == "") {
+                isValid = false; errorMsg += "- Student Full Name is required.\n";
+                $("#<%= txt_s_full_name.ClientID %>").css("border-color", "red");
+            } else { $("#<%= txt_s_full_name.ClientID %>").css("border-color", ""); }
+
+            var email = $("#<%= txt_email.ClientID %>").val();
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                isValid = false; errorMsg += "- Valid Email is required.\n";
+                $("#<%= txt_email.ClientID %>").css("border-color", "red");
+            } else { $("#<%= txt_email.ClientID %>").css("border-color", ""); }
+
+            if ($("#<%= txt_add.ClientID %>").val().trim() == "") {
+                isValid = false; errorMsg += "- Street Address is required.\n";
+                $("#<%= txt_add.ClientID %>").css("border-color", "red");
+            } else { $("#<%= txt_add.ClientID %>").css("border-color", ""); }
+
+            if ($("#<%= txt_add_line_2.ClientID %>").val().trim() == "") {
+                isValid = false; errorMsg += "- Address Line 2 is required.\n";
+                $("#<%= txt_add_line_2.ClientID %>").css("border-color", "red");
+            } else { $("#<%= txt_add_line_2.ClientID %>").css("border-color", ""); }
+
+            if ($("#<%= txt_city.ClientID %>").val().trim() == "") {
+                isValid = false; errorMsg += "- City is required.\n";
+                $("#<%= txt_city.ClientID %>").css("border-color", "red");
+            } else { $("#<%= txt_city.ClientID %>").css("border-color", ""); }
+
+            if ($("#<%= txt_state.ClientID %>").val().trim() == "") {
+                isValid = false; errorMsg += "- State is required.\n";
+                $("#<%= txt_state.ClientID %>").css("border-color", "red");
+            } else { $("#<%= txt_state.ClientID %>").css("border-color", ""); }
+
+            if ($("#<%= txt_zip.ClientID %>").val().trim() == "") {
+                isValid = false; errorMsg += "- ZIP Code is required.\n";
+                $("#<%= txt_zip.ClientID %>").css("border-color", "red");
+            } else { $("#<%= txt_zip.ClientID %>").css("border-color", ""); }
+
+            if ($("#<%= ddl_country.ClientID %>").val() == "" || $("#<%= ddl_country.ClientID %>").prop("selectedIndex") == 0) {
+                isValid = false; errorMsg += "- Country is required.\n";
+                $("#<%= ddl_country.ClientID %>").next(".select2-container").find(".select2-selection").css("border", "1px solid red");
+            } else { $("#<%= ddl_country.ClientID %>").next(".select2-container").find(".select2-selection").css("border", ""); }
+
+            if ($("#<%= hd_contact_no_code.ClientID %>").val() == "" || !iti.isValidNumber()) {
+                isValid = false; errorMsg += "- Valid Contact Number is required.\n";
+                $("#phone").css("border-color", "red");
+            } else { $("#phone").css("border-color", ""); }
+
+            // Updated Captcha validation: Only checks if it's empty on the front-end
+            var userCaptchaInput = $("#<%= txt_captcha_input.ClientID %>").val().trim();
+            if (userCaptchaInput === "") {
+                isValid = false;
+                errorMsg += "- Please enter the security captcha code.\n";
+                $("#<%= txt_captcha_input.ClientID %>").css("border-color", "red");
+            } else {
+                $("#<%= txt_captcha_input.ClientID %>").css("border-color", "");
+            }
+
+            if (!isValid) {
+                alert("Please correct the following errors:\n" + errorMsg);
+            }
+            return isValid;
+        }
+
+        // AJAX function to refresh the Captcha image without a postback
+        function refreshCaptchaJs() {
+            $.ajax({
+                type: "POST",
+                url: "complaint_and_feedback_form.aspx/GetNewCaptcha",
+                data: "{}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    // Update the image source with the Base64 string from the backend
+                    $("#<%= imgCaptcha.ClientID %>").attr("src", response.d);
+
+                    // Clear out the user's input
+                    $("#<%= txt_captcha_input.ClientID %>").val("");
+                    $("#<%= txt_captcha_input.ClientID %>").css("border-color", "");
+                },
+                error: function (error) {
+                    console.log("Error refreshing captcha");
+                }
+            });
+        }
     </script>
 </asp:Content>
-

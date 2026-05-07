@@ -13,6 +13,7 @@ using CrystalDecisions.CrystalReports.Engine;
 using System.Net.Mail;
 using CrystalDecisions.Shared;
 using System.Threading.Tasks;
+using System.Web.Services;
 
 public partial class refund_form : System.Web.UI.Page
 {
@@ -20,11 +21,75 @@ public partial class refund_form : System.Web.UI.Page
     {
 
     }
+    [WebMethod(EnableSession = true)]
+    public static string GetCaptchaImage()
+    {
+        Random rand = new Random();
+        int num1 = rand.Next(1, 20);
+        int num2 = rand.Next(1, 10);
+        bool isAddition = rand.Next(0, 2) == 0;
+        string operatorStr = isAddition ? "+" : "-";
+
+        if (!isAddition && num1 < num2)
+        {
+            int temp = num1;
+            num1 = num2;
+            num2 = temp;
+        }
+
+        int result = isAddition ? (num1 + num2) : (num1 - num2);
+
+        // Securely store the correct answer
+        HttpContext.Current.Session["CaptchaResult"] = result.ToString();
+
+        // Using String.Format instead of $ interpolation
+        string captchaText = String.Format("{0} {1} {2} = ?", num1, operatorStr, num2);
+
+        using (Bitmap bitmap = new Bitmap(150, 50))
+        {
+            using (Graphics g = Graphics.FromImage(bitmap))
+            {
+                g.Clear(Color.FromArgb(249, 249, 249));
+
+                // Add random noise lines to defeat simple bots
+                Pen pen = new Pen(Color.FromArgb(204, 204, 204));
+                for (int i = 0; i < 6; i++)
+                {
+                    g.DrawLine(pen, rand.Next(0, 150), rand.Next(0, 50), rand.Next(0, 150), rand.Next(0, 50));
+                }
+
+                using (Font font = new Font("Arial", 16, FontStyle.Bold))
+                {
+                    g.DrawString(captchaText, font, Brushes.Black, new PointF(10, 12));
+                }
+            }
+
+            using (MemoryStream ms = new MemoryStream())
+            {
+                bitmap.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                byte[] imageBytes = ms.ToArray();
+                return "data:image/png;base64," + Convert.ToBase64String(imageBytes);
+            }
+        }
+    }
     protected void btn_submit_Click(object sender, EventArgs e)
     {
         try
         {
+            string sessionCaptcha = Session["CaptchaResult"] != null ? Session["CaptchaResult"].ToString() : "";
+            string userCaptcha = txt_captcha_input.Text.Trim();
 
+            if (string.IsNullOrEmpty(userCaptcha) || userCaptcha != sessionCaptcha)
+            {
+                // Clear input and alert the user via Javascript
+                txt_captcha_input.Text = "";
+                btn_submit.Text = "SUBMIT";
+                ScriptManager.RegisterStartupScript(this, GetType(), "CaptchaError", "alert('Invalid Captcha Result. Please try again.'); generateCaptcha();", true);
+                return;
+            }
+
+            // Clean out the session to prevent double submission exploits
+            Session.Remove("CaptchaResult");
             string save_signature = SaveSignature();
             string contactNoCode = hd_contact_no_code.Value;  // Hidden field value for contact code
             string contactNo = hd_contact_no.Value;
@@ -48,10 +113,8 @@ public partial class refund_form : System.Web.UI.Page
                 txt_address_account.Text, txt_swift_code.Text, txt_student_name.Text, save_signature, txt_sign_date.Text, "1");
             if (ds.Tables[0].Rows.Count > 0)
             {
-                Task.Run(() =>
-                {
-                    send_mail(ds);
-                });
+
+                send_mail(ds);
                 Response.Redirect("Success.aspx");
             }
 
@@ -60,7 +123,7 @@ public partial class refund_form : System.Web.UI.Page
         {
             throw;
         }
-       
+
     }
     public string SaveSignature()
     {

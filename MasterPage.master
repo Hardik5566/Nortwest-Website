@@ -29,13 +29,13 @@
 
     <!-- Google Tag Manager -->
     <script>(function (w, d, s, l, i) {
-            w[l] = w[l] || []; w[l].push({
-                'gtm.start':
-                    new Date().getTime(), event: 'gtm.js'
-            }); var f = d.getElementsByTagName(s)[0],
-                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
-                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
-        })(window, document, 'script', 'dataLayer', 'GTM-WBD2B9DK');</script>
+    w[l] = w[l] || []; w[l].push({
+        'gtm.start':
+            new Date().getTime(), event: 'gtm.js'
+    }); var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+            'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+})(window, document, 'script', 'dataLayer', 'GTM-WBD2B9DK');</script>
     <!-- End Google Tag Manager -->
 
     <title>
@@ -296,7 +296,7 @@
                                     <li><a href="Vet_Orientation.aspx">New Student Orientation</a></li>
                                     <li><a href="academic_enrolment_calenda.aspx">ACADEMIC CALENDAR</a></li>
 
-<%--                                    <li class="dropdown-submenu">
+                                    <%--                                    <li class="dropdown-submenu">
                                         <a href="#" class="dropdown-toggle">LMS</a>
                                         <ul class="dropdown-menu">
                                             <li><a href="http://appv2.nortwest.edu.au/web" target="_blank">Student Login</a></li>
@@ -311,9 +311,9 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">LMS</a>
                                 <ul class="dropdown-menu">
                                     <li><a target="_blank" href="http://appv2.nortwest.edu.au/web">Student Login</a></li>
-                                    <li><a target="_blank" href="http://appv2.nortwest.edu.au/admin">Faculty Login</a></li>
+                                    <li><a target="_blank" href="http://appv2.nortwest.edu.au/admin">Staff Login</a></li>
 
-                                  
+
                                 </ul>
                             </li>
 
@@ -334,9 +334,9 @@
                             <li>
                                 <a href="Student_Forms.aspx">Students Forms</a>
                             </li>
-                             <li>
-     <a href="App_form.aspx">Apply Now</a>
- </li>
+                            <li>
+                                <a href="App_form.aspx">Apply Now</a>
+                            </li>
                             <%--<li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Login</a>
                                 <ul class="dropdown-menu">
@@ -798,7 +798,11 @@
 
         <asp:ContentPlaceHolder ID="jqury" runat="server">
         </asp:ContentPlaceHolder>
-
+        <script type="text/javascript">
+            document.addEventListener('contextmenu', function (e) {
+                e.preventDefault();
+            }, false);
+        </script>
         <!-- Google Tag Manager (noscript) -->
         <noscript>
             <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WBD2B9DK"
@@ -925,9 +929,37 @@
                 });
             }
         </script>
+        <script type="text/javascript">
+            // 1. Block Right-Click
+            document.addEventListener('contextmenu', function (e) {
+                e.preventDefault();
+            }, false);
 
+            // 2. Block Keyboard Shortcuts
+            document.addEventListener('keydown', function (e) {
+                // Block Ctrl+U (View Source)
+                if (e.ctrlKey && (e.keyCode === 85 || e.key === 'u')) {
+                    e.preventDefault();
+                    return false;
+                }
 
+                // Block Ctrl+Shift+I, Ctrl+Shift+J, or F12 (Developer Tools)
+                if (
+                    e.keyCode === 123 || // F12
+                    (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.key === 'I')) || // Ctrl+Shift+I
+                    (e.ctrlKey && e.shiftKey && (e.keyCode === 74 || e.key === 'J'))    // Ctrl+Shift+J
+                ) {
+                    e.preventDefault();
+                    return false;
+                }
 
+                // Optional: Block Ctrl+C (Copy)
+                if (e.ctrlKey && (e.keyCode === 83 || e.key === 's')) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+        </script>
     </form>
 </body>
 </html>

@@ -10,6 +10,7 @@ using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -31,11 +32,74 @@ public partial class course_entry_form : System.Web.UI.Page
             throw;
         }
     }
+    [WebMethod(EnableSession = true)]
+    public static string GetCaptchaImage()
+    {
+        Random rand = new Random();
+        int num1 = rand.Next(1, 20);
+        int num2 = rand.Next(1, 10);
+        bool isAddition = rand.Next(0, 2) == 0;
+        string operatorStr = isAddition ? "+" : "-";
 
+        if (!isAddition && num1 < num2)
+        {
+            int temp = num1;
+            num1 = num2;
+            num2 = temp;
+        }
+
+        int result = isAddition ? (num1 + num2) : (num1 - num2);
+
+        // Securely store the correct answer
+        HttpContext.Current.Session["CaptchaResult"] = result.ToString();
+
+        // Using String.Format instead of $ interpolation
+        string captchaText = String.Format("{0} {1} {2} = ?", num1, operatorStr, num2);
+
+        using (Bitmap bitmap = new Bitmap(150, 50))
+        {
+            using (Graphics g = Graphics.FromImage(bitmap))
+            {
+                g.Clear(Color.FromArgb(249, 249, 249));
+
+                // Add random noise lines to defeat simple bots
+                Pen pen = new Pen(Color.FromArgb(204, 204, 204));
+                for (int i = 0; i < 6; i++)
+                {
+                    g.DrawLine(pen, rand.Next(0, 150), rand.Next(0, 50), rand.Next(0, 150), rand.Next(0, 50));
+                }
+
+                using (Font font = new Font("Arial", 16, FontStyle.Bold))
+                {
+                    g.DrawString(captchaText, font, Brushes.Black, new PointF(10, 12));
+                }
+            }
+
+            using (MemoryStream ms = new MemoryStream())
+            {
+                bitmap.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                byte[] imageBytes = ms.ToArray();
+                return "data:image/png;base64," + Convert.ToBase64String(imageBytes);
+            }
+        }
+    }
     protected void btn_save_Click(object sender, EventArgs e)
     {
         try
         {
+            string sessionCaptcha = Session["CaptchaResult"] != null ? Session["CaptchaResult"].ToString() : "";
+            string userCaptcha = txt_captcha_input.Text.Trim();
+
+            if (string.IsNullOrEmpty(userCaptcha) || userCaptcha != sessionCaptcha)
+            {
+                // Clear input and alert the user via Javascript
+                txt_captcha_input.Text = "";
+                ScriptManager.RegisterStartupScript(this, GetType(), "CaptchaError", "alert('Invalid Captcha Result. Please try again.'); generateCaptcha();", true);
+                return;
+            }
+
+            // Clean out the session to prevent double submission exploits
+            Session.Remove("CaptchaResult");
             string selectedCourse = "";
 
             foreach (ListItem item in ch_check_course.Items)
@@ -294,7 +358,7 @@ public partial class course_entry_form : System.Web.UI.Page
 
             string sign = SaveSignature();
 
-            DataSet ds = BAL_Forms.ins_interview_form(txt_name.Text, txt_dob.Text, hd_contact_no_code.Value.ToString() + hd_contact_no.Value.ToString(), txt_email.Text,txt_std_id.Text, selectedCourse, txt_hope.Text,
+            DataSet ds = BAL_Forms.ins_interview_form(txt_name.Text, txt_dob.Text, hd_contact_no_code.Value.ToString() + hd_contact_no.Value.ToString(), txt_email.Text, txt_std_id.Text, selectedCourse, txt_hope.Text,
                 txt_career_goal.Text, txt_participated_course.Text, txt_course_related_exep.Text, txt_learning_style.Text, Select_learning_style, select_learning_material, txt_explain.Text,
                 select_support_values, txt_explain_support.Text, rb_working_yes.Checked.ToString(), txt_workplace.Text, doc_updated_cv, rb_worked_industry_yes.Checked.ToString(), txt_outline_role.Text, rb_applied_rpl_yes.Checked.ToString(),
                 txt_other_information.Text, rb_complete_any_course_yes.Checked.ToString(), doc_transcript, rb_regular_access_yes.Checked.ToString(), txt_discuss_solution.Text, selecteditem,
@@ -304,7 +368,7 @@ public partial class course_entry_form : System.Web.UI.Page
 
             if (ds.Tables.Count > 0)
             {
-                Task.Run(() => send_mail(ds));
+                send_mail(ds);
                 //send_mail(ds);
                 Response.Redirect("Success.aspx");
             }

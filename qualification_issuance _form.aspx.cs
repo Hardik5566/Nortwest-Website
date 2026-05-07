@@ -7,6 +7,9 @@ using System.Web.UI.WebControls;
 using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
+using System.Web.Services;
+using System.Drawing;
+using System.IO;
 
 public partial class qualification_issuance__form : System.Web.UI.Page
 {
@@ -14,11 +17,70 @@ public partial class qualification_issuance__form : System.Web.UI.Page
     {
 
     }
+    [WebMethod(EnableSession = true)]
+    public static string GetCaptchaImage()
+    {
+        Random rand = new Random();
+        int num1 = rand.Next(1, 20);
+        int num2 = rand.Next(1, 10);
+        bool isAddition = rand.Next(0, 2) == 0;
+        string operatorStr = isAddition ? "+" : "-";
 
+        // Prevent negative results
+        if (!isAddition && num1 < num2)
+        {
+            int temp = num1;
+            num1 = num2;
+            num2 = temp;
+        }
+
+        int result = isAddition ? (num1 + num2) : (num1 - num2);
+
+        // Securely store the correct answer in the active Session
+        HttpContext.Current.Session["CaptchaResult"] = result.ToString();
+
+        string captchaText = String.Format("{0} {1} {2} = ?", num1, operatorStr, num2);
+
+        using (Bitmap bitmap = new Bitmap(150, 50))
+        {
+            using (Graphics g = Graphics.FromImage(bitmap))
+            {
+                g.Clear(Color.FromArgb(249, 249, 249));
+
+                // Add random noise lines to defeat OCR bots
+                Pen pen = new Pen(Color.FromArgb(204, 204, 204));
+                for (int i = 0; i < 6; i++)
+                {
+                    g.DrawLine(pen, rand.Next(0, 150), rand.Next(0, 50), rand.Next(0, 150), rand.Next(0, 50));
+                }
+
+                using (Font font = new Font("Arial", 16, FontStyle.Bold))
+                {
+                    g.DrawString(captchaText, font, Brushes.Black, new PointF(10, 12));
+                }
+            }
+
+            using (MemoryStream ms = new MemoryStream())
+            {
+                bitmap.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                byte[] imageBytes = ms.ToArray();
+                return "data:image/png;base64," + Convert.ToBase64String(imageBytes);
+            }
+        }
+    }
     protected void btn_submit_Click(object sender, EventArgs e)
     {
         try
         {
+            string sessionCaptcha = Session["CaptchaResult"] != null ? Session["CaptchaResult"].ToString() : "";
+            string userCaptcha = txt_captcha_input.Text.Trim();
+            if (string.IsNullOrEmpty(userCaptcha) || userCaptcha != sessionCaptcha)
+            {
+                txt_captcha_input.Text = "";
+                ScriptManager.RegisterStartupScript(this, GetType(), "CaptchaError", "alert('Invalid Captcha Code. Please try again.'); generateCaptcha();", true);
+                return;
+            }
+            Session.Remove("CaptchaResult");
             string studentName = txtStudentName.Text.Trim();
             string studentId = txtStudentID.Text.Trim();
             string course = txtCourse.Text.Trim();
@@ -55,24 +117,20 @@ public partial class qualification_issuance__form : System.Web.UI.Page
 
             if (ds.Tables[0].Rows.Count > 0)
             {
-                // Run mail async
-                Task.Run(() =>
-                {
-                    Send_Mail.MailWithouAttachment(
-                          "sso@nortwest.edu.au",
-                          "Qualification Issuance Form (" + ds.Tables[0].Rows[0]["student_name"].ToString() + ")",
-                          mailbody_qualification(
-                              ds.Tables[0].Rows[0]["student_name"].ToString(),
-                              ds.Tables[0].Rows[0]["std_id"].ToString(),
-                              ds.Tables[0].Rows[0]["course"].ToString(),
-                              ds.Tables[0].Rows[0]["date_request"].ToString(),
-                              ds.Tables[0].Rows[0]["documents"].ToString()
-                          ),
-                          "",
-                          ""
-                      );
-                });
 
+                Send_Mail.MailWithouAttachment(
+                      "sso@nortwest.edu.au",
+                      "Qualification Issuance Form (" + ds.Tables[0].Rows[0]["student_name"].ToString() + ")",
+                      mailbody_qualification(
+                          ds.Tables[0].Rows[0]["student_name"].ToString(),
+                          ds.Tables[0].Rows[0]["std_id"].ToString(),
+                          ds.Tables[0].Rows[0]["course"].ToString(),
+                          ds.Tables[0].Rows[0]["date_request"].ToString(),
+                          ds.Tables[0].Rows[0]["documents"].ToString()
+                      ),
+                      "",
+                      ""
+                  );
                 Response.Redirect("Success.aspx");
             }
         }
@@ -94,7 +152,7 @@ public partial class qualification_issuance__form : System.Web.UI.Page
 <div style='width:100%; background-color:#f0f0f0; padding:40px 0; font-family: Arial, Helvetica, sans-serif;'>
     <!-- Header -->
     <div style='text-align:center; margin-bottom:25px;'>
-        <img src='https://website.nortwest.edu.au/assets/img/logo_nwc_transp@1x.png' width='160' style='margin-bottom:10px; display:block; margin-left:auto; margin-right:auto;' />
+        <img src='https://nortwest.edu.au/assets/img/logo_nwc_transp@1x.png' width='160' style='margin-bottom:10px; display:block; margin-left:auto; margin-right:auto;' />
         <h2 style='margin:0; font-size:20px; font-weight:bold; color:#222;'>Qualification Issuance Form</h2>
     </div>
 

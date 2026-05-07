@@ -21,7 +21,6 @@
                 font-weight: 500;
             }
 
-
         .nice-select.qualification.open .list {
             max-height: 250px !important;
         }
@@ -32,6 +31,20 @@
 
         .ch_agree label {
             font-weight: bold;
+        }
+
+        /* Math Captcha Styling */
+        .captcha-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .refresh-captcha {
+            cursor: pointer;
+            color: #007bff;
+            font-size: 18px;
+            text-decoration: none;
         }
     </style>
 </asp:Content>
@@ -74,10 +87,6 @@
                         <label class="lbl_title">Passport No</label>
                         <asp:TextBox ID="txt_s_passport_no" CssClass="form-control" runat="server"></asp:TextBox>
                     </div>
-                    <%--<div class="col-md-6">
-                        <label class="lbl_title">Student ‘s Name</label>
-                        <asp:TextBox ID="txt_s_name" CssClass="form-control" runat="server"></asp:TextBox>
-                    </div>--%>
                     <div class="col-md-6">
                         <label class="lbl_title">Student ‘s Name</label>
                         <asp:TextBox ID="txt_s_full_name" CssClass="form-control" runat="server"></asp:TextBox>
@@ -87,12 +96,6 @@
                         <label class="lbl_title">Date of Birth</label>
                         <asp:TextBox ID="txt_birth_date" TextMode="Date" CssClass="form-control" runat="server"></asp:TextBox>
                     </div>
-
-
-
-
-
-
                 </div>
             </div>
             <div class="form-container">
@@ -151,7 +154,6 @@
                         </div>
                     </div>
 
-                    <!-- Change to Campus -->
                     <div class="col-md-6" style="margin-bottom: 10px">
                         <div class="border rounded">
                             <div class="bg-secondary" style="font-weight: 800">
@@ -198,13 +200,12 @@
                     <div class="col-md-6">
 
                         <div>
-                            <img id="clearBtn" style="width: 22px; float: right; margin-bottom: 8px;" src="assets/img/eraser.png" />
+                            <img id="clearBtn" style="width: 22px; float: right; margin-bottom: 8px; cursor:pointer;" src="assets/img/eraser.png" />
                         </div>
 
                         <asp:HiddenField ID="hdnSignature" runat="server" />
 
                         <canvas id="signatureCanvas" style="border: 1px solid rgb(223 223 223); width: 100%; height: 250px; touch-action: none; background-color: white;"></canvas>
-
 
                     </div>
                     <div class="col-md-6">
@@ -214,9 +215,22 @@
                     </div>
 
                 </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label class="lbl_title">Enter Captcha Code</label>
+                        <div class="captcha-box">
+                            <asp:Image ID="imgCaptcha" runat="server" Width="150px" Height="50px" style="border: 1px solid #ddd; border-radius: 4px; background-color: #f9f9f9;" />
+                            
+                            <a href="javascript:void(0);" onclick="refreshCaptchaJs();" class="refresh-captcha">
+                                <i class="fas fa-sync-alt"></i>
+                            </a>
+                        </div>
+                        <asp:TextBox ID="txt_captcha_input" runat="server" CssClass="form-control" style="margin-top:10px;" placeholder="Captcha Code" onkeypress="return only_number(event)"></asp:TextBox>
+                    </div>
+                </div>
             </div>
             <div>
-                <asp:Button ID="btn_submit" runat="server" OnClientClick="saveSignature()" OnClick="btn_submit_Click" Text="SUBMIT" CssClass="btn btn-success" />
+                <asp:Button ID="btn_submit" runat="server" OnClick="btn_submit_Click" Text="SUBMIT" CssClass="btn btn-success" />
             </div>
         </div>
     </div>
@@ -225,7 +239,6 @@
         const canvas = document.getElementById('signatureCanvas');
         const signaturePad = new SignaturePad(canvas);
 
-        // Resize canvas for high-DPI displays
         function resizeCanvas() {
             const ratio = Math.max(window.devicePixelRatio || 1, 1);
             canvas.width = canvas.offsetWidth * ratio;
@@ -236,132 +249,47 @@
         window.addEventListener("resize", resizeCanvas);
         resizeCanvas();
 
-        // Clear button
         document.getElementById('clearBtn').addEventListener('click', () => {
             signaturePad.clear();
         });
 
         function saveSignature() {
             var canvas = document.getElementById("signatureCanvas");
-            var signatureData = canvas.toDataURL("image/png"); // Get signature as Base64
-            document.getElementById("<%= hdnSignature.ClientID %>").value = signatureData; // Set value in hidden field
+            var signatureData = canvas.toDataURL("image/png");
+            document.getElementById("<%= hdnSignature.ClientID %>").value = signatureData;
         }
-
-
-        // <%--Save button
-        document.getElementById('saveBtn').addEventListener('click', () => {
-            if (!signaturePad.isEmpty()) {
-                const signatureData = signaturePad.toDataURL('image/png');
-        document.getElementById('<%= hdnSignature.ClientID %>').value = signatureData;
-        document.getElementById('<%= btnPostBack.ClientID %>').click(); // Trigger postback
-        } else {
-            alert("Please provide a signature.");
-        }
-        });--%>
     </script>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="jqury" runat="Server">
 
     <script src="assets/js/select2.min.js"></script>
-  <script>
-      $("#<%= btn_submit.ClientID %>").click(function (event) {
-          if (!validateForm()) {
-              event.preventDefault(); // Prevent form submission if validation fails
-              return false;
-          }
-      });
-
-      function validateForm() {
-          var isValid = true;
-          var errorMsg = "";
-
-          // Helper function for validating inputs
-          function validateInput(id, fieldName) {
-              var value = $("#" + id).val().trim();
-              if (value === "") {
-                  $("#" + id).css("border-color", "red");
-                  errorMsg += fieldName + " is required.\n";
-                  isValid = false;
-              } else {
-                  $("#" + id).css("border-color", "");
-              }
-          }
-
-          // Validate fields
-          validateInput("<%= txt_s_id.ClientID %>", "Student ID");
-        validateInput("<%= txt_s_passport_no.ClientID %>", "Passport No");
-        validateInput("<%= txt_s_full_name.ClientID %>", "Full Name");
-        validateInput("<%= txt_birth_date.ClientID %>", "Date of Birth");
-        validateInput("<%= txt_email.ClientID %>", "Email");
-
-        // Email format validation
-        var emailVal = $("#<%= txt_email.ClientID %>").val().trim();
-        var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        if (emailVal !== "" && !emailRegex.test(emailVal)) {
-            $("#<%= txt_email.ClientID %>").css("border-color", "red");
-            errorMsg += "Please enter a valid Email.\n";
-            isValid = false;
-        }
-
-        validateInput("<%= txt_add.ClientID %>", "Street Address");
-        validateInput("phone", "Contact Number");
-        validateInput("<%= txt_course_enrolled.ClientID %>", "Course Enrolled");
-        validateInput("<%= txt_intake.ClientID %>", "Intake Date");
-        validateInput("<%= txt_cource_name.ClientID %>", "Course Name");
-        validateInput("<%= txt_reason_campus.ClientID %>", "Reason for Changing Campus");
-
-        // Validate signature canvas
-        var canvas = document.getElementById("signatureCanvas");
-        var blank = document.createElement("canvas");
-        blank.width = canvas.width;
-        blank.height = canvas.height;
-        if (canvas.toDataURL() === blank.toDataURL()) {
-            errorMsg += "Please provide your signature.\n";
-            isValid = false;
-        }
-
-        // Show all errors in a single alert
-        if (!isValid) {
-            alert(errorMsg);
-        }
-
-        return isValid;
-    }
-</script>
-
-    <%--  --%>
-    <script>
-        $(document).on('ready page:load', function () {
-            // Reapply your jQuery code here
-            $('.select2').select2();
-            $('.search_dropdown .select2-container:eq(1)').hide();
-        });
-
-    </script>
-
     <script src="assets/country_code/js/intlTelInput.js"></script>
 
-
-
     <script>
+        $(document).ready(function () {
+            $('.select2').select2();
+        });
+
+        function only_number(key) {
+            var charCode = (key.which) ? key.which : key.keyCode
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                return false;
+            }
+            return true;
+        }
+
         var input = document.querySelector("#phone");
         var output = document.querySelector("#output");
-
         var iti = window.intlTelInput(input, {
             nationalMode: true,
             separateDialCode: true,
-            //initialCountry: "auto",
-
             preferredCountries: ['au'],
             utilsScript: "assets/country_code/js/utils.js",
         });
 
         var handleChange = function () {
-
             var text = (iti.isValidNumber()) ? "" : "Please enter a valid number";
-            var textNode = document.createTextNode(text);
-            output.innerHTML = "";
-            output.appendChild(textNode);
+            output.innerHTML = text;
             $("#<%= hd_contact_no_code.ClientID%>").val(iti.selectedCountryData.dialCode);
             $("#<%= hd_contact_no.ClientID%>").val($("#phone").val());
         };
@@ -370,20 +298,111 @@
         input.addEventListener('change', handleChange);
         input.addEventListener('keyup', handleChange);
 
-    </script>
-
-    <script>
-        function only_number(key) {
-            var charCode = (key.which) ? key.which : key.keyCode
-            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        $("#<%= btn_submit.ClientID %>").click(function (event) {
+            if (!validateForm()) {
+                event.preventDefault();
                 return false;
             }
-            else {
-                return true;
+
+            // Save signature right before postback
+            saveSignature();
+
+            // SUCCESS: Validation Passed
+            // Hide actual button and show placeholder span to prevent multiple clicks
+            var btn = $(this);
+            setTimeout(function () {
+                btn.hide();
+                btn.after('<span class="btn btn-success" style="cursor: not-allowed; opacity: 0.7;">Submitting...</span>');
+            }, 10);
+        });
+
+        function validateForm() {
+            var isValid = true;
+            var errorMsg = "";
+
+            function validateInput(id, fieldName) {
+                var value = $("#" + id).val().trim();
+                if (value === "") {
+                    $("#" + id).css("border-color", "red");
+                    errorMsg += fieldName + " is required.\n";
+                    isValid = false;
+                } else {
+                    $("#" + id).css("border-color", "");
+                }
             }
 
+            validateInput("<%= txt_s_id.ClientID %>", "Student ID");
+            validateInput("<%= txt_s_passport_no.ClientID %>", "Passport No");
+            validateInput("<%= txt_s_full_name.ClientID %>", "Full Name");
+            validateInput("<%= txt_birth_date.ClientID %>", "Date of Birth");
+            validateInput("<%= txt_email.ClientID %>", "Email");
+
+            var emailVal = $("#<%= txt_email.ClientID %>").val().trim();
+            var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (emailVal !== "" && !emailRegex.test(emailVal)) {
+                $("#<%= txt_email.ClientID %>").css("border-color", "red");
+                errorMsg += "Please enter a valid Email.\n";
+                isValid = false;
+            }
+
+            validateInput("<%= txt_add.ClientID %>", "Street Address");
+            if ($("#phone").val().trim() === "" || !iti.isValidNumber()) {
+                $("#phone").css("border-color", "red");
+                errorMsg += "Valid Contact Number is required.\n";
+                isValid = false;
+            } else { $("#phone").css("border-color", ""); }
+
+            validateInput("<%= txt_course_enrolled.ClientID %>", "Course Enrolled");
+            validateInput("<%= txt_intake.ClientID %>", "Intake Date");
+            validateInput("<%= txt_cource_name.ClientID %>", "Course Name");
+            validateInput("<%= txt_reason_campus.ClientID %>", "Reason for Changing Campus");
+
+            // Client side Captcha check (only checks if it's empty, backend checks the math)
+            var userCaptchaInput = $("#<%= txt_captcha_input.ClientID %>").val().trim();
+            if (userCaptchaInput === "") {
+                isValid = false;
+                errorMsg += "Please enter the security captcha code.\n";
+                $("#<%= txt_captcha_input.ClientID %>").css("border-color", "red");
+            } else {
+                $("#<%= txt_captcha_input.ClientID %>").css("border-color", "");
+            }
+
+            var canvas = document.getElementById("signatureCanvas");
+            var blank = document.createElement("canvas");
+            blank.width = canvas.width; blank.height = canvas.height;
+            if (canvas.toDataURL() === blank.toDataURL()) {
+                errorMsg += "Please provide your signature.\n";
+                isValid = false;
+            }
+
+            if (!isValid) { alert(errorMsg); }
+            return isValid;
         }
 
+        function refreshCaptchaJs() {
+            $.ajax({
+                type: "POST",
+                url: "change_of_campus_form.aspx/GetNewCaptcha",
+                data: "{}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    // response.d contains the Base64 image string returned from C#
+                    $("#<%= imgCaptcha.ClientID %>").attr("src", response.d);
+                    
+                    // Clear the input field
+                    $("#<%= txt_captcha_input.ClientID %>").val("");
+                    $("#<%= txt_captcha_input.ClientID %>").css("border-color", "");
+                },
+                error: function (error) {
+                    console.log("Error refreshing captcha");
+                }
+            });
+        }
+
+        $(document).on('ready page:load', function () {
+            $('.select2').select2();
+            $('.search_dropdown .select2-container:eq(1)').hide();
+        });
     </script>
 </asp:Content>
-

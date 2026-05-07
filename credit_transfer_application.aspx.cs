@@ -12,6 +12,7 @@ using System.Drawing;
 using CrystalDecisions.Shared;
 using System.Net.Mail;
 using CrystalDecisions.CrystalReports.Engine;
+using System.Web.Services;
 
 public partial class credit_transfer_application : System.Web.UI.Page
 {
@@ -31,6 +32,57 @@ public partial class credit_transfer_application : System.Web.UI.Page
             throw;
         }
 
+    }
+    [WebMethod(EnableSession = true)]
+    public static string GetCaptchaImage()
+    {
+        Random rand = new Random();
+        int num1 = rand.Next(1, 20);
+        int num2 = rand.Next(1, 10);
+        bool isAddition = rand.Next(0, 2) == 0;
+        string operatorStr = isAddition ? "+" : "-";
+
+        if (!isAddition && num1 < num2)
+        {
+            int temp = num1;
+            num1 = num2;
+            num2 = temp;
+        }
+
+        int result = isAddition ? (num1 + num2) : (num1 - num2);
+
+        // Securely store the correct answer
+        HttpContext.Current.Session["CaptchaResult"] = result.ToString();
+
+        // Using String.Format instead of $ interpolation
+        string captchaText = String.Format("{0} {1} {2} = ?", num1, operatorStr, num2);
+
+        using (Bitmap bitmap = new Bitmap(150, 50))
+        {
+            using (Graphics g = Graphics.FromImage(bitmap))
+            {
+                g.Clear(Color.FromArgb(249, 249, 249));
+
+                // Add random noise lines to defeat simple bots
+                Pen pen = new Pen(Color.FromArgb(204, 204, 204));
+                for (int i = 0; i < 6; i++)
+                {
+                    g.DrawLine(pen, rand.Next(0, 150), rand.Next(0, 50), rand.Next(0, 150), rand.Next(0, 50));
+                }
+
+                using (Font font = new Font("Arial", 16, FontStyle.Bold))
+                {
+                    g.DrawString(captchaText, font, Brushes.Black, new PointF(10, 12));
+                }
+            }
+
+            using (MemoryStream ms = new MemoryStream())
+            {
+                bitmap.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                byte[] imageBytes = ms.ToArray();
+                return "data:image/png;base64," + Convert.ToBase64String(imageBytes);
+            }
+        }
     }
     public void bind_data()
     {
@@ -54,9 +106,19 @@ public partial class credit_transfer_application : System.Web.UI.Page
 
     protected void btn_submit_Click(object sender, EventArgs e)
     {
+        string sessionCaptcha = Session["CaptchaResult"] != null ? Session["CaptchaResult"].ToString() : "";
+        string userCaptcha = txt_captcha_input.Text.Trim();
 
+        if (string.IsNullOrEmpty(userCaptcha) || userCaptcha != sessionCaptcha)
+        {
+            // Clear input and alert the user via Javascript
+            txt_captcha_input.Text = "";
+            ScriptManager.RegisterStartupScript(this, GetType(), "CaptchaError", "alert('Invalid Captcha Result. Please try again.'); generateCaptcha();", true);
+            return;
+        }
 
-        // Collect student details
+        // Clean out the session to prevent double submission exploits
+        Session.Remove("CaptchaResult");
         string lastName = txtLastName.Text.Trim();
         string title = ddlTitle.SelectedValue;
         string givenName = txtGivenName.Text.Trim();
@@ -97,14 +159,14 @@ public partial class credit_transfer_application : System.Web.UI.Page
         if (ds.Tables[0].Rows.Count > 0)
         {
             string signaturePath = Server.MapPath("~/assets/img/sign/") + ds.Tables[0].Rows[0]["student_signature"].ToString();
-            Task.Run(() =>
-            {
-                send_mail(ds.Tables[0].Rows[0]["id"].ToString());
-                //Send_Mail.MailWithouAttachment("himanshumakwana8281@gmail.com", "New Credit Transfer Application (" + txt_s_full_name.Text + ")", mailbody(txt_s_number.Text, txt_s_last_name.Text, txt_s_given_name.Text, txt_s_full_name.Text, txt_email.Text, hd_contact_no_code.Value.ToString() + hd_contact_no.Value.ToString(), txt_add.Text, txt_add_line_2.Text, ddl_country.SelectedValue.ToString(), txt_state.Text, txt_city.Text, txt_zip.Text), "", "");
-            });
+
+            send_mail(ds.Tables[0].Rows[0]["id"].ToString());
+            //Send_Mail.MailWithouAttachment("himanshumakwana8281@gmail.com", "New Credit Transfer Application (" + txt_s_full_name.Text + ")", mailbody(txt_s_number.Text, txt_s_last_name.Text, txt_s_given_name.Text, txt_s_full_name.Text, txt_email.Text, hd_contact_no_code.Value.ToString() + hd_contact_no.Value.ToString(), txt_add.Text, txt_add_line_2.Text, ddl_country.SelectedValue.ToString(), txt_state.Text, txt_city.Text, txt_zip.Text), "", "");
+
             Response.Redirect("Success.aspx");
         }
-    }public void send_mail(string id)
+    }
+    public void send_mail(string id)
     {
         ReportDocument rpt = new ReportDocument();
         try
@@ -130,7 +192,7 @@ public partial class credit_transfer_application : System.Web.UI.Page
 
 
             rpt.Database.Tables["dt_ct_credit_transfer"].SetDataSource(ds.Tables[1]);
-            
+
             // Export to PDF
             string name = "RPT Creadit Transfer Application Form";
             Stream pdfStream = rpt.ExportToStream(ExportFormatType.PortableDocFormat);
@@ -144,9 +206,9 @@ public partial class credit_transfer_application : System.Web.UI.Page
 
             string result = Send_Mail.SendMail("sso@nortwest.edu.au", subject, mail_body, pdfAttachment, "", "");
         }
-        catch (Exception )
+        catch (Exception)
         {
-           
+
             throw; // don't use throw ex (it resets stack trace)
         }
         finally

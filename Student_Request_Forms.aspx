@@ -34,6 +34,23 @@
             overflow: hidden;
             position: relative;
         }
+
+        /* Math Captcha Styling */
+        .captcha-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        #captchaImage {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+        .refresh-captcha {
+            cursor: pointer;
+            color: #007bff;
+            font-size: 18px;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="body" runat="Server">
@@ -69,7 +86,6 @@
                         <label class="lbl_title">Title</label>
                         <asp:DropDownList ID="ddl_title" CssClass="form-control" runat="server">
                             <asp:ListItem Value="">Title</asp:ListItem>
-
                             <asp:ListItem Value="Mr">Mr</asp:ListItem>
                             <asp:ListItem Value="Mrs">Mrs</asp:ListItem>
                             <asp:ListItem Value="Ms">Ms</asp:ListItem>
@@ -260,16 +276,14 @@
                 <div class="row">
 
                     <div class="col-md-6">
-                    
 
                         <div>
-                            <img id="clearBtn" style="width: 22px; float: right; margin-bottom: 8px;" src="assets/img/eraser.png" />
+                            <img id="clearBtn" style="width: 22px; float: right; margin-bottom: 8px; cursor: pointer;" src="assets/img/eraser.png" title="Clear Signature" />
                         </div>
 
                         <asp:HiddenField ID="hdnSignature" runat="server" />
 
                         <canvas id="signatureCanvas" style="border: 1px solid rgb(223 223 223); width: 100%; height: 250px; touch-action: none; background-color: white;"></canvas>
-
 
                     </div>
                     <div class="col-md-6">
@@ -279,13 +293,25 @@
                     </div>
 
                 </div>
+                 <div class="row">
+                    <div class="col-md-4">
+                        <label class="lbl_title">Enter Captcha Code <span style="color:red;">*</span></label>
+                        <div class="captcha-box">
+                            <img id="captchaImage" width="150" height="50" alt="Security Captcha" />
+                            <i class="fas fa-sync-alt refresh-captcha" onclick="generateCaptcha()" title="Refresh Captcha"></i>
+                        </div>
+                        <asp:TextBox ID="txt_captcha_input" runat="server" CssClass="form-control" style="margin-top:10px;" placeholder="Captcha Code" onkeypress="return only_number(event)" autocomplete="off"></asp:TextBox>
+                        <div id="captchaError" style="margin-top: 5px; display: none; color: red;"></div>
+                    </div>
+                </div>
             </div>
 
             <div>
-                <asp:Button ID="btn_submit" runat="server" OnClientClick="saveSignature()" OnClick="btn_submit_Click" Text="SUBMIT" CssClass="btn btn-success" />
+                <asp:Button ID="btn_submit" runat="server" OnClientClick="return onSubmitValidate(this);" OnClick="btn_submit_Click" Text="SUBMIT" CssClass="btn btn-success" />
             </div>
         </div>
     </div>
+    
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
     <script>
         const canvas = document.getElementById('signatureCanvas');
@@ -312,40 +338,44 @@
             var signatureData = canvas.toDataURL("image/png"); // Get signature as Base64
             document.getElementById("<%= hdnSignature.ClientID %>").value = signatureData; // Set value in hidden field
         }
-
-
-        // <%--Save button
-        document.getElementById('saveBtn').addEventListener('click', () => {
-            if (!signaturePad.isEmpty()) {
-                const signatureData = signaturePad.toDataURL('image/png');
-        document.getElementById('<%= hdnSignature.ClientID %>').value = signatureData;
-        document.getElementById('<%= btnPostBack.ClientID %>').click(); // Trigger postback
-        } else {
-            alert("Please provide a signature.");
-        }
-        });--%>
     </script>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="jqury" runat="Server">
+    <script src="assets/js/select2.min.js"></script>
     <script src="assets/country_code/js/intlTelInput.js"></script>
 
-
-
     <script>
+        // AJAX Call to generate captcha dynamically from the backend
+        function generateCaptcha() {
+            $.ajax({
+                type: "POST",
+                url: "Student_Request_Forms.aspx/GetCaptchaImage",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                cache: false, // Prevents browser caching
+                success: function (response) {
+                    $("#captchaImage").attr("src", response.d);
+                    $("#<%= txt_captcha_input.ClientID %>").val("");
+                    $("#captchaError").hide();
+                    $("#<%= txt_captcha_input.ClientID %>").css("border-color", "");
+                },
+                error: function (error) {
+                    console.log("Error generating captcha");
+                }
+            });
+        }
+
         var input = document.querySelector("#phone");
         var output = document.querySelector("#output");
 
         var iti = window.intlTelInput(input, {
             nationalMode: true,
             separateDialCode: true,
-            //initialCountry: "auto",
-
             preferredCountries: ['au'],
             utilsScript: "assets/country_code/js/utils.js",
         });
 
         var handleChange = function () {
-
             var text = (iti.isValidNumber()) ? "" : "Please enter a valid number";
             var textNode = document.createTextNode(text);
             output.innerHTML = "";
@@ -358,223 +388,164 @@
         input.addEventListener('change', handleChange);
         input.addEventListener('keyup', handleChange);
 
-    </script>
-
-    <script>
         function only_number(key) {
             var charCode = (key.which) ? key.which : key.keyCode
-            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-                return false;
-            }
-            else {
-                return true;
-            }
-
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) return false;
+            return true;
         }
 
-    </script>
-
-
-    <script src="assets/js/select2.min.js"></script>
-   <script>
-
-       // MUST declare here or script breaks
-       var firstInvalid = null;
-
-       $("#<%= btn_submit.ClientID %>").click(function (event) {
-        if (!validateForm()) {
-            event.preventDefault();
-            return false;
-        }
-    });
-
-    function validateForm() {
-
-        var isValid = true;
-        var errorMsg = "";
-        firstInvalid = null; // reset every time
-
-        // -------------------------
-        // Title
-        // -------------------------
-        if ($("#<%= ddl_title.ClientID %>").prop("selectedIndex") == 0) {
-            $("#<%= ddl_title.ClientID %>").css("border-color", "red");
-            if (!firstInvalid) firstInvalid = $("#<%= ddl_title.ClientID %>");
-            errorMsg += "Title is required.\n";
-            isValid = false;
-        } else {
-            $("#<%= ddl_title.ClientID %>").css("border-color", "");
-        }
-
-        // First Name
-        if ($("#<%= txt_f_name.ClientID %>").val().trim() == "") {
-            $("#<%= txt_f_name.ClientID %>").css("border-color", "red");
-            errorMsg += "First Name is required.\n";
-            isValid = false;
-        } else {
-            $("#<%= txt_f_name.ClientID %>").css("border-color", "");
-        }
-
-        // Last Name
-        if ($("#<%= txt_l_name.ClientID %>").val().trim() == "") {
-            $("#<%= txt_l_name.ClientID %>").css("border-color", "red");
-            errorMsg += "Last Name is required.\n";
-            isValid = false;
-        } else {
-            $("#<%= txt_l_name.ClientID %>").css("border-color", "");
-        }
-
-        // Gender
-        if ($("#<%= ddl_gender.ClientID %>").prop("selectedIndex") == 0) {
-            $("#<%= ddl_gender.ClientID %>").css("border-color", "red");
-            if (!firstInvalid) firstInvalid = $("#<%= ddl_gender.ClientID %>");
-            errorMsg += "Please select Gender.\n";
-            isValid = false;
-        } else {
-            $("#<%= ddl_gender.ClientID %>").css("border-color", "");
-        }
-
-        // Student ID
-        if ($("#<%= txt_student_id.ClientID %>").val().trim() == "") {
-            $("#<%= txt_student_id.ClientID %>").css("border-color", "red");
-            errorMsg += "Student ID is required.\n";
-            isValid = false;
-        } else {
-            $("#<%= txt_student_id.ClientID %>").css("border-color", "");
-        }
-
-        // Date
-        if ($("#<%= txt_date.ClientID %>").val().trim() == "") {
-            $("#<%= txt_date.ClientID %>").css("border-color", "red");
-            errorMsg += "Date is required.\n";
-            isValid = false;
-        } else {
-            $("#<%= txt_date.ClientID %>").css("border-color", "");
-        }
-
-        // Address Fields
-        var addressFields = [
-            { id: "<%= txt_address.ClientID %>", name: "Address" },
-            { id: "<%= txt_suburb.ClientID %>", name: "Suburb" },
-            { id: "<%= txt_postcode.ClientID %>", name: "Postcode" },
-            { id: "<%= txt_m_address.ClientID %>", name: "Mailing Address" },
-            { id: "<%= txt_m_suburb.ClientID %>", name: "Mailing Suburb" },
-            { id: "<%= txt_m_postcode.ClientID %>", name: "Mailing Postcode" }
-        ];
-
-        addressFields.forEach(function (field) {
-            if ($("#" + field.id).val().trim() == "") {
-                $("#" + field.id).css("border-color", "red");
-                errorMsg += field.name + " is required.\n";
-                isValid = false;
-            } else {
-                $("#" + field.id).css("border-color", "");
-            }
-        });
-
-        // Email
-        var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        if (!emailRegex.test($("#<%= txt_email.ClientID %>").val())) {
-            $("#<%= txt_email.ClientID %>").css("border-color", "red");
-            errorMsg += "Valid Email is required.\n";
-            isValid = false;
-        } else {
-            $("#<%= txt_email.ClientID %>").css("border-color", "");
-        }
-
-        // Details
-        if ($("#<%= txt_detail.ClientID %>").val().trim() == "") {
-            $("#<%= txt_detail.ClientID %>").css("border-color", "red");
-            errorMsg += "Details field is required.\n";
-            isValid = false;
-        } else {
-            $("#<%= txt_detail.ClientID %>").css("border-color", "");
-        }
-
-        // Document Upload
-        if ($("#<%= upd_doc.ClientID %>").val() == "") {
-            $("#<%= upd_doc.ClientID %>").css("border-color", "red");
-            errorMsg += "Please upload a document.\n";
-            isValid = false;
-        } else {
-            $("#<%= upd_doc.ClientID %>").css("border-color", "");
-        }
-
-        // Phone
-        if ($("#<%= hd_contact_no_code.ClientID %>").val() == "") {
-            $("#phone").css("border-color", "red");
-            errorMsg += "Contact number is required.\n";
-            isValid = false;
-        } else {
-            $("#phone").css("border-color", "");
-        }
-
-        // Sign Date
-        if ($("#<%= txt_sign_date.ClientID %>").val().trim() == "") {
-            $("#<%= txt_sign_date.ClientID %>").css("border-color", "red");
-            errorMsg += "Sign Date is required.\n";
-            isValid = false;
-        } else {
-            $("#<%= txt_sign_date.ClientID %>").css("border-color", "");
-        }
-
-        // Radio Buttons
-        if ($("input[type='radio'][name$='tick_one']:checked").length == 0) {
-            $("#radioError").text("Please select at least one option.").css("color", "red");
-            errorMsg += "Please select at least one option.\n";
-            isValid = false;
-        } else {
-            $("#radioError").text("");
-        }
-
-        // Checkbox
-        if ($(".ch_explanation input[type='checkbox']:not(:checked)").length > 0) {
-            $(".lbl_explanation_error.txt_error").show();
-            errorMsg += "Please check all required checkboxes.\n";
-            isValid = false;
-        } else {
-            $(".lbl_explanation_error.txt_error").hide();
-        }
-
-        // Signature Canvas
-        var canvas = document.getElementById("signatureCanvas");
-        var blank = document.createElement("canvas");
-        blank.width = canvas.width;
-        blank.height = canvas.height;
-
-        if (canvas.toDataURL() === blank.toDataURL()) {
-            errorMsg += "Please provide your signature.\n";
-            isValid = false;
-        }
-
-        // Final Alert
-        if (!isValid) {
-            alert(errorMsg);
-            if (firstInvalid) firstInvalid.focus();
-        }
-
-        return isValid;
-    }
-</script>
-
-
-
-    <script>
         $(document).on('ready page:load', function () {
-            // Reapply your jQuery code here
             $('.select2').select2();
             $('.search_dropdown .select2-container:eq(1)').hide();
+            
+            // Initialize CAPTCHA on load
+            generateCaptcha();
         });
 
-    </script>
-     <script>
-         $(function () {
-             // remove all nice-select wrappers and show native select
-             $('.nice-select').remove();
-             $('select').show().css({ display: 'block', visibility: 'visible', opacity: 1 });
-             // stop plugin re-init
-             $.fn.niceSelect = function(){ return this; };
-         });
-</script>
-</asp:Content>
+        // Unified Form validation function that blocks PostBack if invalid
+        function onSubmitValidate(btn) {
+            var isValid = true;
+            var errorMessages = [];
 
+            if ($("#<%= ddl_title.ClientID %>").prop("selectedIndex") == 0) {
+                $("#<%= ddl_title.ClientID %>").css("border-color", "red");
+                errorMessages.push("- Title is required.");
+                isValid = false;
+            } else { $("#<%= ddl_title.ClientID %>").css("border-color", ""); }
+
+            if ($("#<%= txt_f_name.ClientID %>").val().trim() == "") {
+                $("#<%= txt_f_name.ClientID %>").css("border-color", "red");
+                errorMessages.push("- First Name is required.");
+                isValid = false;
+            } else { $("#<%= txt_f_name.ClientID %>").css("border-color", ""); }
+
+            if ($("#<%= txt_l_name.ClientID %>").val().trim() == "") {
+                $("#<%= txt_l_name.ClientID %>").css("border-color", "red");
+                errorMessages.push("- Last Name is required.");
+                isValid = false;
+            } else { $("#<%= txt_l_name.ClientID %>").css("border-color", ""); }
+
+            if ($("#<%= ddl_gender.ClientID %>").prop("selectedIndex") == 0) {
+                $("#<%= ddl_gender.ClientID %>").css("border-color", "red");
+                errorMessages.push("- Gender is required.");
+                isValid = false;
+            } else { $("#<%= ddl_gender.ClientID %>").css("border-color", ""); }
+
+            if ($("#<%= txt_student_id.ClientID %>").val().trim() == "") {
+                $("#<%= txt_student_id.ClientID %>").css("border-color", "red");
+                errorMessages.push("- Student ID is required.");
+                isValid = false;
+            } else { $("#<%= txt_student_id.ClientID %>").css("border-color", ""); }
+
+            if ($("#<%= txt_date.ClientID %>").val().trim() == "") {
+                $("#<%= txt_date.ClientID %>").css("border-color", "red");
+                errorMessages.push("- Date is required.");
+                isValid = false;
+            } else { $("#<%= txt_date.ClientID %>").css("border-color", ""); }
+
+            if ($("#<%= txt_address.ClientID %>").val().trim() == "") {
+                $("#<%= txt_address.ClientID %>").css("border-color", "red");
+                errorMessages.push("- Residential Address is required.");
+                isValid = false;
+            } else { $("#<%= txt_address.ClientID %>").css("border-color", ""); }
+
+            if ($("#<%= txt_suburb.ClientID %>").val().trim() == "") {
+                $("#<%= txt_suburb.ClientID %>").css("border-color", "red");
+                errorMessages.push("- Residential Suburb is required.");
+                isValid = false;
+            } else { $("#<%= txt_suburb.ClientID %>").css("border-color", ""); }
+
+            if ($("#<%= txt_postcode.ClientID %>").val().trim() == "") {
+                $("#<%= txt_postcode.ClientID %>").css("border-color", "red");
+                errorMessages.push("- Residential Postcode is required.");
+                isValid = false;
+            } else { $("#<%= txt_postcode.ClientID %>").css("border-color", ""); }
+
+            if ($("#<%= txt_m_address.ClientID %>").val().trim() == "") {
+                $("#<%= txt_m_address.ClientID %>").css("border-color", "red");
+                errorMessages.push("- Mailing Address is required.");
+                isValid = false;
+            } else { $("#<%= txt_m_address.ClientID %>").css("border-color", ""); }
+
+            if ($("#<%= txt_m_suburb.ClientID %>").val().trim() == "") {
+                $("#<%= txt_m_suburb.ClientID %>").css("border-color", "red");
+                errorMessages.push("- Mailing Suburb is required.");
+                isValid = false;
+            } else { $("#<%= txt_m_suburb.ClientID %>").css("border-color", ""); }
+
+            if ($("#<%= txt_m_postcode.ClientID %>").val().trim() == "") {
+                $("#<%= txt_m_postcode.ClientID %>").css("border-color", "red");
+                errorMessages.push("- Mailing Postcode is required.");
+                isValid = false;
+            } else { $("#<%= txt_m_postcode.ClientID %>").css("border-color", ""); }
+
+            var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (!emailRegex.test($("#<%= txt_email.ClientID %>").val())) {
+                $("#<%= txt_email.ClientID %>").css("border-color", "red");
+                errorMessages.push("- Valid Email is required.");
+                isValid = false;
+            } else { $("#<%= txt_email.ClientID %>").css("border-color", ""); }
+
+            if ($("#phone").val().trim() == "" || !iti.isValidNumber()) {
+                $("#phone").css("border-color", "red");
+                errorMessages.push("- Valid Contact Number is required.");
+                isValid = false;
+            } else { $("#phone").css("border-color", ""); }
+
+            if ($("input[type='radio'][name$='tick_one']:checked").length == 0) {
+                $("#radioError").text("Please select at least one option.").css("color", "red");
+                errorMessages.push("- Please select at least one Request Option.");
+                isValid = false; 
+            } else { $("#radioError").text(""); }
+
+            if ($("#<%= txt_detail.ClientID %>").val().trim() == "") {
+                $("#<%= txt_detail.ClientID %>").css("border-color", "red");
+                errorMessages.push("- Details of Request are required.");
+                isValid = false;
+            } else { $("#<%= txt_detail.ClientID %>").css("border-color", ""); }
+
+            if ($("#<%= upd_doc.ClientID %>").val() == "") {
+                $("#<%= upd_doc.ClientID %>").css("border-color", "red");
+                errorMessages.push("- Uploading a Supporting Document is required.");
+                isValid = false;
+            } else { $("#<%= upd_doc.ClientID %>").css("border-color", ""); }
+
+            if ($("#<%= txt_sign_date.ClientID %>").val().trim() == "") {
+                $("#<%= txt_sign_date.ClientID %>").css("border-color", "red");
+                errorMessages.push("- Signature Date is required.");
+                isValid = false;
+            } else { $("#<%= txt_sign_date.ClientID %>").css("border-color", ""); }
+
+            if (signaturePad.isEmpty()) {
+                errorMessages.push("- Student Signature is required.");
+                isValid = false;
+            }
+
+            // ONLY check if empty client-side. The true mathematical verification is processed in C#.
+            var userCaptchaInput = $("#<%= txt_captcha_input.ClientID %>").val().trim();
+            if (userCaptchaInput === "") {
+                $("#<%= txt_captcha_input.ClientID %>").css("border-color", "red");
+                $("#captchaError").text("Please enter the security captcha code.").show();
+                errorMessages.push("- Security Captcha Code is required.");
+                isValid = false;
+            } else {
+                $("#<%= txt_captcha_input.ClientID %>").css("border-color", "");
+                $("#captchaError").hide();
+            }
+
+            if (!isValid) {
+                alert("Please fix the following errors:\n" + errorMessages.join("\n"));
+                return false; // Blocks postback on failure
+            }
+
+            // Save Signature Data to Hidden Field before postback
+            saveSignature();
+
+            // Provide visual feedback but ALLOW postback to continue
+            btn.value = "Submitting...";
+            btn.style.opacity = "0.7";
+            return true; 
+        }
+
+    </script>
+</asp:Content>

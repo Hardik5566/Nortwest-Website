@@ -10,6 +10,8 @@ using System.IO;
 using System.Drawing;
 using System.Net.Mail;
 using System.Threading.Tasks;
+using System.Web.Services;
+using System.Drawing.Imaging;
 
 public partial class cricos_student_withdrawal_form : System.Web.UI.Page
 {
@@ -17,21 +19,81 @@ public partial class cricos_student_withdrawal_form : System.Web.UI.Page
     {
 
     }
+    [WebMethod(EnableSession = true)]
+    public static string GetCaptchaImage()
+    {
+        Random rand = new Random();
+        int num1 = rand.Next(1, 20);
+        int num2 = rand.Next(1, 10);
+        bool isAddition = rand.Next(0, 2) == 0;
+        string operatorStr = isAddition ? "+" : "-";
+
+        if (!isAddition && num1 < num2)
+        {
+            int temp = num1;
+            num1 = num2;
+            num2 = temp;
+        }
+
+        int result = isAddition ? (num1 + num2) : (num1 - num2);
+
+        // Securely store the correct answer
+        HttpContext.Current.Session["CaptchaResult"] = result.ToString();
+
+        // Using String.Format instead of $ interpolation
+        string captchaText = String.Format("{0} {1} {2} = ?", num1, operatorStr, num2);
+
+        using (Bitmap bitmap = new Bitmap(150, 50))
+        {
+            using (Graphics g = Graphics.FromImage(bitmap))
+            {
+                g.Clear(Color.FromArgb(249, 249, 249));
+
+                // Add random noise lines to defeat simple bots
+                Pen pen = new Pen(Color.FromArgb(204, 204, 204));
+                for (int i = 0; i < 6; i++)
+                {
+                    g.DrawLine(pen, rand.Next(0, 150), rand.Next(0, 50), rand.Next(0, 150), rand.Next(0, 50));
+                }
+
+                using (Font font = new Font("Arial", 16, FontStyle.Bold))
+                {
+                    g.DrawString(captchaText, font, Brushes.Black, new PointF(10, 12));
+                }
+            }
+
+            using (MemoryStream ms = new MemoryStream())
+            {
+                bitmap.Save(ms, ImageFormat.Png);
+                byte[] imageBytes = ms.ToArray();
+                return "data:image/png;base64," + Convert.ToBase64String(imageBytes);
+            }
+        }
+    }
     protected void btn_submit_Click(object sender, EventArgs e)
     {
         try
         {
+            string sessionCaptcha = Session["CaptchaResult"] != null ? Session["CaptchaResult"].ToString() : "";
+            string userCaptcha = txt_captcha_input.Text.Trim();
+
+            if (string.IsNullOrEmpty(userCaptcha) || userCaptcha != sessionCaptcha)
+            {
+                // Clear input and alert the user via Javascript
+                txt_captcha_input.Text = "";
+                ScriptManager.RegisterStartupScript(this, GetType(), "CaptchaError", "alert('Invalid Captcha Result. Please try again.'); generateCaptcha();", true);
+                return;
+            }
+
+            // Clean out the session to prevent double submission exploits
+            Session.Remove("CaptchaResult");
             string save_signature = SaveSignature();
-            DataSet ds = BAL_Forms.ins_cricos_student_withdrawal_form(txt_f_name.Text, txt_l_name.Text, txt_date.Text, txt_student_id.Text, txt_course.Text, txt_subsequent.Text, txt_reason.Text, save_signature, txt_sign_date.Text, "1");
+            DataSet ds = BAL_Forms.ins_cricos_student_withdrawal_form(txt_f_name.Text, txt_l_name.Text, txt_date.Text, txt_student_id.Text, txt_course.Text, "", txt_reason.Text, save_signature, txt_sign_date.Text, "1");
             if (ds.Tables.Count > 0)
             {
                 string full_name = ds.Tables[0].Rows[0]["first_name"].ToString() + " " + ds.Tables[0].Rows[0]["last_name"].ToString();
                 string signaturePath = Server.MapPath("~/assets/img/sign/") + ds.Tables[0].Rows[0]["student_signature"].ToString();
-                Task.Run(() =>
-           {
-
-               Send_Mail.MailWithouAttachment("sso@nortwest.edu.au", "New Cricos Student Withdraw Form (" + full_name + ")", mailbody(ds.Tables[0].Rows[0]["first_name"].ToString(), ds.Tables[0].Rows[0]["last_name"].ToString(), ds.Tables[0].Rows[0]["withdraw_date"].ToString(), ds.Tables[0].Rows[0]["student_id"].ToString(), ds.Tables[0].Rows[0]["current_course"].ToString(), ds.Tables[0].Rows[0]["subsequent_course"].ToString(), ds.Tables[0].Rows[0]["reason_for_withdrawal"].ToString(), ds.Tables[0].Rows[0]["student_signature"].ToString(), ds.Tables[0].Rows[0]["sign_date"].ToString()), "", signaturePath);
-           });
+                Send_Mail.MailWithouAttachment("sso@nortwest.edu.au", "New Cricos Student Withdraw Form (" + full_name + ")", mailbody(ds.Tables[0].Rows[0]["first_name"].ToString(), ds.Tables[0].Rows[0]["last_name"].ToString(), ds.Tables[0].Rows[0]["withdraw_date"].ToString(), ds.Tables[0].Rows[0]["student_id"].ToString(), ds.Tables[0].Rows[0]["current_course"].ToString(), ds.Tables[0].Rows[0]["reason_for_withdrawal"].ToString(), ds.Tables[0].Rows[0]["student_signature"].ToString(), ds.Tables[0].Rows[0]["sign_date"].ToString()), "", signaturePath);
                 Response.Redirect("Success.aspx");
             }
 
@@ -103,12 +165,12 @@ public partial class cricos_student_withdrawal_form : System.Web.UI.Page
         return signName; // Return the saved file name or an empty string
     }
 
-    public string mailbody(string f_name, string l_name, string date, string std_id, string current_course, string sub_course, string withdraw_reason, string signature, string sign_date)
+    public string mailbody(string f_name, string l_name, string date, string std_id, string current_course, string withdraw_reason, string signature, string sign_date)
     {
         string html = @"
 <div style='width: 100%; background-color: #f0f0f0; padding: 50px 0px'>
     <div style='width: 100%; text-align: center; margin-bottom: 15px'>
-        <img src='https://website.nortwest.edu.au/assets/img/logo_nwc_transp@1x.png' width='160px' />
+        <img src='https://nortwest.edu.au/assets/img/logo_nwc_transp@1x.png' width='160px' />
         <h2 style='text-align: center'>CRICOS Student Withdrawal Form</h2>
     </div>
     <div style='margin-left: auto; margin-right: auto; width: 85%; background-color: white; border-top: 3px solid #008a7f; border-bottom: 3px solid #008a7f;'>
@@ -135,7 +197,7 @@ public partial class cricos_student_withdrawal_form : System.Web.UI.Page
             </tr>
 
             <tr style='border-bottom: 1px solid #d7d7d7; text-align: left'>
-                <td style='padding: 10px; color: black;'>Date:</td>
+                <td style='padding: 10px; color: black;'>Date Of Birth:</td>
                 <td>
                     <label>" + date + @"</lable>
                 </td>
@@ -169,13 +231,6 @@ public partial class cricos_student_withdrawal_form : System.Web.UI.Page
                     </td>
                 </tr>
 
-                 <tr style='border-bottom: 1px solid #d7d7d7; text-align: left'>
-                    <td style='padding: 10px;'>
-                        <div style='font-weight:bold;margin-bottom: 5px'>Subsequent Course(s):</div>
-                    <label>" + sub_course + @"</lable>
-
-                    </td>
-                </tr>
                 <tr style='border-bottom: 1px solid #d7d7d7; text-align: left'>
                     <td style='padding: 10px;'>
                         <div style='font-weight:bold;margin-bottom: 5px'>Reason for withdrawal</div>

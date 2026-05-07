@@ -7,6 +7,11 @@ using System.Web.UI.WebControls;
 using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
+using System.Web.Services;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.IO;
+using System.Drawing.Imaging;
 
 public partial class complaint_and_feedback_form : System.Web.UI.Page
 {
@@ -17,7 +22,8 @@ public partial class complaint_and_feedback_form : System.Web.UI.Page
         {
             if (!IsPostBack)
             {
-                
+                imgCaptcha.ImageUrl = GetNewCaptcha();
+
                 bind_data();
                 ddl_country.Items.Insert(0, new ListItem("Select Country", "0"));
             }
@@ -29,6 +35,66 @@ public partial class complaint_and_feedback_form : System.Web.UI.Page
         }
 
     }
+    [WebMethod(EnableSession = true)]
+    public static string GetNewCaptcha()
+    {
+        Random rand = new Random();
+        int num1 = rand.Next(1, 20);
+        int num2 = rand.Next(1, 10);
+        bool isAddition = rand.Next(2) == 0;
+        string operatorStr = isAddition ? "+" : "-";
+
+        // Prevent negative numbers
+        if (!isAddition && num1 < num2)
+        {
+            int temp = num1;
+            num1 = num2;
+            num2 = temp;
+        }
+
+        // Calculate result and save to Session for backend validation
+        int result = isAddition ? (num1 + num2) : (num1 - num2);
+        System.Web.HttpContext.Current.Session["CaptchaAnswer"] = result.ToString();
+
+        // No "$" string interpolation used as requested
+        string captchaText = num1.ToString() + " " + operatorStr + " " + num2.ToString() + " = ?";
+
+        // Generate the Image in memory
+        using (Bitmap bitmap = new Bitmap(150, 50))
+        {
+            using (Graphics g = Graphics.FromImage(bitmap))
+            {
+                g.Clear(Color.FromArgb(249, 249, 249)); // Background color #f9f9f9
+                g.SmoothingMode = SmoothingMode.AntiAlias;
+
+                // Draw Noise lines to make it hard for bots to read
+                Pen noisePen = new Pen(Color.FromArgb(204, 204, 204)); // #ccc
+                for (int i = 0; i < 5; i++)
+                {
+                    g.DrawLine(noisePen, rand.Next(0, 150), rand.Next(0, 50), rand.Next(0, 150), rand.Next(0, 50));
+                }
+
+                // Draw Math Text
+                using (Font font = new Font("Arial", 16, FontStyle.Bold))
+                {
+                    using (SolidBrush brush = new SolidBrush(Color.FromArgb(51, 51, 51))) // #333
+                    {
+                        g.DrawString(captchaText, font, brush, 20, 12);
+                    }
+                }
+
+                // Convert Image to Base64 to return to the AJAX call
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    bitmap.Save(ms, ImageFormat.Png);
+                    byte[] imageBytes = ms.ToArray();
+                    string base64String = Convert.ToBase64String(imageBytes);
+                    return "data:image/png;base64," + base64String;
+                }
+            }
+        }
+    }
+
     public void bind_data()
     {
         try
@@ -49,18 +115,31 @@ public partial class complaint_and_feedback_form : System.Web.UI.Page
     }
     protected void btn_submit_Click(object sender, EventArgs e)
     {
+        if (Session["CaptchaAnswer"] == null || string.IsNullOrEmpty(txt_captcha_input.Text))
+        {
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert('Captcha session expired. Please refresh and try again.');", true);
+            imgCaptcha.ImageUrl = GetNewCaptcha(); // Reset visual captcha
+            return;
+        }
+
+        if (txt_captcha_input.Text.Trim() != Session["CaptchaAnswer"].ToString())
+        {
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert('Invalid Captcha Code. Please try again.');", true);
+            txt_captcha_input.Text = "";
+            imgCaptcha.ImageUrl = GetNewCaptcha(); // Reset visual captcha on failure
+            return;
+        }
+        Session.Remove("CaptchaAnswer");
         string contactNoCode = hd_contact_no_code.Value;  // Hidden field value for contact code
         string contactNo = hd_contact_no.Value;
         DataSet ds = BAL_Forms.ins_complaint_and_feedback_form(txt_s_number.Text, txt_s_last_name.Text, txt_s_given_name.Text, txt_s_full_name.Text, txt_email.Text, contactNoCode, contactNo, txt_add.Text, txt_add_line_2.Text, txt_city.Text, txt_state.Text, txt_zip.Text, ddl_country.SelectedValue.ToString(), "1");
         if (ds.Tables[0].Rows.Count > 0)
         {
-            Task.Run(() =>
-           {
-               Send_Mail.MailWithouAttachment("sso@nortwest.edu.au", "New Complaint And Feedback Form (" + txt_s_full_name.Text + ")", mailbody(txt_s_number.Text, txt_s_last_name.Text, txt_s_given_name.Text, txt_s_full_name.Text, txt_email.Text, hd_contact_no_code.Value.ToString() + hd_contact_no.Value.ToString(), txt_add.Text, txt_add_line_2.Text, ddl_country.SelectedValue.ToString(), txt_state.Text, txt_city.Text, txt_zip.Text), "", "");
-           });
+
+            Send_Mail.MailWithouAttachment("sso@nortwest.edu.au", "New Complaint And Feedback Form (" + txt_s_full_name.Text + ")", mailbody(txt_s_number.Text, txt_s_last_name.Text, txt_s_given_name.Text, txt_s_full_name.Text, txt_email.Text, hd_contact_no_code.Value.ToString() + hd_contact_no.Value.ToString(), txt_add.Text, txt_add_line_2.Text, ddl_country.SelectedValue.ToString(), txt_state.Text, txt_city.Text, txt_zip.Text), "", "");
             Response.Redirect("Success.aspx");
         }
-
+      
 
     }
 
@@ -69,7 +148,7 @@ public partial class complaint_and_feedback_form : System.Web.UI.Page
         string html = @"
 <div style='width: 100%; background-color: #f0f0f0; padding: 50px 0px'>
     <div style='width: 100%; text-align: center; margin-bottom: 15px'>
-        <img src='https://website.nortwest.edu.au/assets/img/logo_nwc_transp@1x.png' width='160px' />
+        <img src='https://nortwest.edu.au/assets/img/logo_nwc_transp@1x.png' width='160px' />
         <h2 style='text-align: center'>Complaint And Feedback Form</h2>
     </div>
     <div style='margin-left: auto; margin-right: auto; width: 85%; background-color: white; border-top: 3px solid #008a7f; border-bottom: 3px solid #008a7f;'>

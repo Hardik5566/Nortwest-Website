@@ -7,7 +7,7 @@
 
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="" />
 
     <meta property="og:title" content="Form - Nortwest College" />
@@ -43,6 +43,12 @@
 
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
+    <style>
+        .grecaptcha-badge {
+            opacity: 0 !important;
+            pointer-events: none !important;
+        }
+    </style>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -57,7 +63,7 @@
             <div class="container">
                 <div class="row">
 
-                  <%--  <div class="col-md-8 address-info text-left">
+                    <%--  <div class="col-md-8 address-info text-left">
                         <div class="info">
                             <ul>
                                 <li class="social">
@@ -97,7 +103,7 @@
 
                     <!-- Start Header Navigation -->
                     <div class="navbar-header">
-                       
+
                         <a class="navbar-brand" href="https://nortwest.edu.au/">
                             <img src="assets/img/logo_nwc_transp@1x.png" style="height: 50px" class="logo" alt="Logo">
                         </a>
@@ -110,7 +116,7 @@
                             <li>
                                 <a href="https://nortwest.edu.au/">&nbsp;</a>
                             </li>
-                            
+
 
                         </ul>
                     </div>
@@ -243,7 +249,7 @@
                                             <i class="fas fa-mobile">&nbsp&nbsp</i>+61 426 254 486
                                         </a>
                                     </p>
-                                     <p style="font-size: 13px">
+                                    <p style="font-size: 13px">
                                         <a href="mailto:sso@nortwest.edu.au">
                                             <i class="fas fa-envelope">&nbsp&nbsp</i>sso@nortwest.edu.au
                                         </a>
@@ -265,7 +271,7 @@
                         </div>
                     </div>
                 </div>
-                
+
             </div>
             <!-- Start Footer Bottom -->
             <div class="footer-bottom">
@@ -408,7 +414,36 @@
                 </div>
             </div>
         </div>
+        <script type="text/javascript">
+            // 1. Block Right-Click
+            document.addEventListener('contextmenu', function (e) {
+                e.preventDefault();
+            }, false);
 
+            // 2. Block Keyboard Shortcuts
+            document.addEventListener('keydown', function (e) {
+                // Block Ctrl+U (View Source)
+                if (e.ctrlKey && (e.keyCode === 85 || e.key === 'u')) {
+                    e.preventDefault();
+                    return false;
+                }
+
+                // Block Ctrl+Shift+I, Ctrl+Shift+J, or F12 (Developer Tools)
+                if (
+                    e.keyCode === 123 || // F12
+                    (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.key === 'I')) || // Ctrl+Shift+I
+                    (e.ctrlKey && e.shiftKey && (e.keyCode === 74 || e.key === 'J'))    // Ctrl+Shift+J
+                ) {
+                    e.preventDefault();
+                    return false;
+                }
+
+                if (e.ctrlKey && (e.keyCode === 83 || e.key === 's')) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+        </script>
         <!-- jQuery Frameworks
     ============================================= -->
         <script src="assets/js/jquery-1.12.4.min.js"></script>

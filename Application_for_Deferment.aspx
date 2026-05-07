@@ -33,6 +33,23 @@
             overflow: hidden;
             position: relative;
         }
+
+        /* Captcha Styling */
+        .captcha-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        #captchaImage {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+        .refresh-captcha {
+            cursor: pointer;
+            color: #007bff;
+            font-size: 18px;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="body" runat="Server">
@@ -59,7 +76,6 @@
                 </div>
             </div>
 
-            <!-- Information Section -->
             <div class="form-container">
                 <div>
                     <h4>INFORMATION TO NOTE</h4>
@@ -75,7 +91,6 @@
                         <li>You must complete the Course Resumption Form upon return to resume classes.</li>
                     </ol>
             </div>
-            <!-- Student Details Section -->
             <div class="form-container">
                 <div>
                     <h4>STUDENT DETAILS</h4>
@@ -143,13 +158,12 @@
                     <div class="col-md-6">
 
                         <div>
-                            <img id="clearBtn" style="width: 22px; float: right; margin-bottom: 8px;" src="assets/img/eraser.png" />
+                            <img id="clearBtn" style="width: 22px; float: right; margin-bottom: 8px; cursor: pointer;" src="assets/img/eraser.png" />
                         </div>
 
                         <asp:HiddenField ID="hdnSignature" runat="server" />
 
                         <canvas id="signatureCanvas" style="border: 1px solid rgb(223 223 223); width: 100%; height: 250px; touch-action: none; background-color: white;"></canvas>
-
 
                     </div>
                     <div class="col-md-6">
@@ -159,18 +173,44 @@
                     </div>
 
                 </div>
+                <div class="row" style="margin-top: 15px;">
+                    <div class="col-md-4">
+                        <label class="lbl_title">Enter Captcha Code</label>
+                        <div class="captcha-box">
+                            <img id="captchaImage" width="150" height="50" alt="Security Captcha" />
+                            <i class="fas fa-sync-alt refresh-captcha" onclick="generateCaptcha()"></i>
+                        </div>
+                        <asp:TextBox ID="txt_captcha_input" runat="server" CssClass="form-control" style="margin-top:10px;" placeholder="Captcha Result" onkeypress="return only_number(event)"></asp:TextBox>
+                    </div>
+                </div>
             </div>
+
+
             <div>
-                <asp:Button ID="btn_submit" runat="server" OnClientClick="saveSignature()" OnClick="btn_submit_Click" Text="SUBMIT" CssClass="btn btn-success" />
+                <asp:Button ID="btn_submit" runat="server" OnClientClick="return onSubmitValidate(this);" OnClick="btn_submit_Click" Text="SUBMIT" CssClass="btn btn-success" />
             </div>
         </div>
     </div>
+  <script>
+      // Anti-Inspect security (Retained as requested)
+      document.addEventListener('contextmenu', e => e.preventDefault());
+
+      document.onkeydown = e =>
+          e.keyCode == 123 || // F12
+          (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74)) || // Ctrl+Shift+I/J
+          (e.ctrlKey && (e.keyCode == 85 || e.keyCode == 83)) // Ctrl+U / Ctrl+S
+          ? false : true;
+
+      setInterval(() => {
+          if (window.outerWidth - innerWidth > 160 || window.outerHeight - innerHeight > 160)
+              document.body.innerHTML = "<h2 style='text-align:center;margin-top:20%'>Inspect is disabled</h2>";
+      }, 1000);
+</script>
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
     <script>
         const canvas = document.getElementById('signatureCanvas');
         const signaturePad = new SignaturePad(canvas);
 
-        // Resize canvas for high-DPI displays
         function resizeCanvas() {
             const ratio = Math.max(window.devicePixelRatio || 1, 1);
             canvas.width = canvas.offsetWidth * ratio;
@@ -181,34 +221,20 @@
         window.addEventListener("resize", resizeCanvas);
         resizeCanvas();
 
-        // Clear button
         document.getElementById('clearBtn').addEventListener('click', () => {
             signaturePad.clear();
         });
 
         function saveSignature() {
             var canvas = document.getElementById("signatureCanvas");
-            var signatureData = canvas.toDataURL("image/png"); // Get signature as Base64
-            document.getElementById("<%= hdnSignature.ClientID %>").value = signatureData; // Set value in hidden field
+            var signatureData = canvas.toDataURL("image/png");
+            document.getElementById("<%= hdnSignature.ClientID %>").value = signatureData;
         }
-
-
-        // <%--Save button
-        document.getElementById('saveBtn').addEventListener('click', () => {
-            if (!signaturePad.isEmpty()) {
-                const signatureData = signaturePad.toDataURL('image/png');
-        document.getElementById('<%= hdnSignature.ClientID %>').value = signatureData;
-        document.getElementById('<%= btnPostBack.ClientID %>').click(); // Trigger postback
-        } else {
-            alert("Please provide a signature.");
-        }
-        });--%>
     </script>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="jqury" runat="Server">
     <script src="assets/country_code/js/intlTelInput.js"></script>
     <script src="assets/js/select2.min.js"></script>
-
 
     <script>
         function only_number(key) {
@@ -219,142 +245,136 @@
             else {
                 return true;
             }
-
         }
 
-    </script>
+        // AJAX Call to generate captcha dynamically from the backend
+        function generateCaptcha() {
+            $.ajax({
+                type: "POST",
+                url: "Application_for_Deferment.aspx/GetCaptchaImage",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                cache: false, // Prevents browser caching
+                success: function (response) {
+                    $("#captchaImage").attr("src", response.d);
+                    $("#<%= txt_captcha_input.ClientID %>").val("");
+                },
+                error: function (error) {
+                    console.log("Error generating captcha");
+                }
+            });
+        }
 
-    <script src="assets/js/select2.min.js"></script>
-    <script>
-        $("#<%= btn_submit.ClientID %>").click(function (event) {
-            if (!validateForm()) {
-                event.preventDefault(); // Prevent form submission if validation fails
-                return false;
-            }
+        $(document).ready(function () {
+            generateCaptcha(); // Load immediately on document ready
         });
 
-        // Form validation function
+        // Unified Submit Handler: Safely checks forms before sending to server
+        function onSubmitValidate(btn) {
+            if (!validateForm()) {
+                return false; // Blocks postback on failure
+            }
+
+            // Save Signature Data to Hidden Field before postback
+            saveSignature();
+
+            // Provide visual feedback but ALLOW postback to continue
+            btn.value = "Submitting...";
+            btn.style.opacity = "0.7";
+            return true; 
+        }
+
         function validateForm() {
             var isValid = true;
             var messages = [];
 
-            // Validate Full Name
             if ($("#<%= txt_student_name.ClientID %>").val().trim() == "") {
-            $("#<%= txt_student_name.ClientID %>").css("border-color", "red");
-            messages.push("Full Name is required.");
-            isValid = false;
-        } else {
-            $("#<%= txt_student_name.ClientID %>").css("border-color", "");
+                $("#<%= txt_student_name.ClientID %>").css("border-color", "red");
+                messages.push("- Full Name is required.");
+                isValid = false;
+            } else { $("#<%= txt_student_name.ClientID %>").css("border-color", ""); }
+
+            if ($("#<%= txt_std_id.ClientID %>").val().trim() == "") {
+                $("#<%= txt_std_id.ClientID %>").css("border-color", "red");
+                messages.push("- Student ID is required.");
+                isValid = false;
+            } else { $("#<%= txt_std_id.ClientID %>").css("border-color", ""); }
+
+            if ($("#<%= txt_dob.ClientID %>").val() == "") {
+                $("#<%= txt_dob.ClientID %>").css("border-color", "red");
+                messages.push("- Date of Birth is required.");
+                isValid = false;
+            } else { $("#<%= txt_dob.ClientID %>").css("border-color", ""); }
+
+            if ($("#<%= txt_reason.ClientID %>").val().trim() == "") {
+                $("#<%= txt_reason.ClientID %>").css("border-color", "red");
+                messages.push("- Reason is required.");
+                isValid = false;
+            } else { $("#<%= txt_reason.ClientID %>").css("border-color", ""); }
+
+            if ($("#<%= txt_course_name.ClientID %>").val().trim() == "") {
+                $("#<%= txt_course_name.ClientID %>").css("border-color", "red");
+                messages.push("- Course Name is required.");
+                isValid = false;
+            } else { $("#<%= txt_course_name.ClientID %>").css("border-color", ""); }
+
+            if ($("#<%= txt_course_start.ClientID %>").val().trim() == "") {
+                $("#<%= txt_course_start.ClientID %>").css("border-color", "red");
+                messages.push("- Course Start Date is required.");
+                isValid = false;
+            } else { $("#<%= txt_course_start.ClientID %>").css("border-color", ""); }
+
+            if ($("#<%= txt_course_end.ClientID %>").val().trim() == "") {
+                $("#<%= txt_course_end.ClientID %>").css("border-color", "red");
+                messages.push("- Course End Date is required.");
+                isValid = false;
+            } else { $("#<%= txt_course_end.ClientID %>").css("border-color", ""); }
+
+            if ($("#<%= txt_def_start.ClientID %>").val().trim() == "") {
+                $("#<%= txt_def_start.ClientID %>").css("border-color", "red");
+                messages.push("- Deferral Start Date is required.");
+                isValid = false;
+            } else { $("#<%= txt_def_start.ClientID %>").css("border-color", ""); }
+
+            if ($("#<%= txt_def_end.ClientID %>").val().trim() == "") {
+                $("#<%= txt_def_end.ClientID %>").css("border-color", "red");
+                messages.push("- Deferral End Date is required.");
+                isValid = false;
+            } else { $("#<%= txt_def_end.ClientID %>").css("border-color", ""); }
+
+            if ($("#<%= txt_sign_date.ClientID %>").val().trim() == "") {
+                $("#<%= txt_sign_date.ClientID %>").css("border-color", "red");
+                messages.push("- Sign Date is required.");
+                isValid = false;
+            } else { $("#<%= txt_sign_date.ClientID %>").css("border-color", ""); }
+
+            if (signaturePad.isEmpty()) {
+                messages.push("- Please provide your signature.");
+                isValid = false;
+            }
+
+            // ONLY check if empty client-side. The true mathematical verification is strictly processed in the C# code.
+            var userCaptchaInput = $("#<%= txt_captcha_input.ClientID %>").val().trim();
+            if (userCaptchaInput === "") {
+                $("#<%= txt_captcha_input.ClientID %>").css("border-color", "red");
+                messages.push("- Please enter the security captcha code.");
+                isValid = false;
+            } else {
+                $("#<%= txt_captcha_input.ClientID %>").css("border-color", "");
+            }
+
+            if (!isValid) {
+                alert("Please correct the following errors:\n" + messages.join("\n"));
+            }
+
+            return isValid;
         }
+    </script>
 
-        // Validate Student ID Number
-        if ($("#<%= txt_std_id.ClientID %>").val().trim() == "") {
-            $("#<%= txt_std_id.ClientID %>").css("border-color", "red");
-            messages.push("Student ID is required.");
-            isValid = false;
-        } else {
-            $("#<%= txt_std_id.ClientID %>").css("border-color", "");
-        }
-
-        // Validate DOB
-        if ($("#<%= txt_dob.ClientID %>").val() == "") {
-            $("#<%= txt_dob.ClientID %>").css("border-color", "red");
-            messages.push("Date of Birth is required.");
-            isValid = false;
-        } else {
-            $("#<%= txt_dob.ClientID %>").css("border-color", "");
-        }
-
-        // Validate Reason
-        if ($("#<%= txt_reason.ClientID %>").val().trim() == "") {
-            $("#<%= txt_reason.ClientID %>").css("border-color", "red");
-            messages.push("Reason is required.");
-            isValid = false;
-        } else {
-            $("#<%= txt_reason.ClientID %>").css("border-color", "");
-        }
-
-        // Validate Course Name
-        if ($("#<%= txt_course_name.ClientID %>").val().trim() == "") {
-            $("#<%= txt_course_name.ClientID %>").css("border-color", "red");
-            messages.push("Course Name is required.");
-            isValid = false;
-        } else {
-            $("#<%= txt_course_name.ClientID %>").css("border-color", "");
-        }
-
-        // Validate Course Start
-        if ($("#<%= txt_course_start.ClientID %>").val().trim() == "") {
-            $("#<%= txt_course_start.ClientID %>").css("border-color", "red");
-            messages.push("Course Start Date is required.");
-            isValid = false;
-        } else {
-            $("#<%= txt_course_start.ClientID %>").css("border-color", "");
-        }
-
-        // Validate Course End
-        if ($("#<%= txt_course_end.ClientID %>").val().trim() == "") {
-            $("#<%= txt_course_end.ClientID %>").css("border-color", "red");
-            messages.push("Course End Date is required.");
-            isValid = false;
-        } else {
-            $("#<%= txt_course_end.ClientID %>").css("border-color", "");
-        }
-
-        // Validate Deferral Start
-        if ($("#<%= txt_def_start.ClientID %>").val().trim() == "") {
-            $("#<%= txt_def_start.ClientID %>").css("border-color", "red");
-            messages.push("Deferral Start Date is required.");
-            isValid = false;
-        } else {
-            $("#<%= txt_def_start.ClientID %>").css("border-color", "");
-        }
-
-        // Validate Deferral End
-        if ($("#<%= txt_def_end.ClientID %>").val().trim() == "") {
-            $("#<%= txt_def_end.ClientID %>").css("border-color", "red");
-            messages.push("Deferral End Date is required.");
-            isValid = false;
-        } else {
-            $("#<%= txt_def_end.ClientID %>").css("border-color", "");
-        }
-
-        // Validate Sign Date
-        if ($("#<%= txt_sign_date.ClientID %>").val().trim() == "") {
-            $("#<%= txt_sign_date.ClientID %>").css("border-color", "red");
-            messages.push("Sign Date is required.");
-            isValid = false;
-        } else {
-            $("#<%= txt_sign_date.ClientID %>").css("border-color", "");
-        }
-
-        // Validate Signature
-        var canvas = document.getElementById("signatureCanvas");
-        var blank = document.createElement("canvas");
-        blank.width = canvas.width;
-        blank.height = canvas.height;
-        if (canvas.toDataURL() === blank.toDataURL()) {
-            messages.push("Please provide your signature.");
-            isValid = false;
-        }
-
-        // Show all messages together
-        if (!isValid && messages.length > 0) {
-            alert(messages.join("\n"));
-        }
-
-        return isValid;
-    }
-</script>
-
-    <%--  --%>
     <script>
         $(document).on('ready page:load', function () {
-            // Reapply your jQuery code here
             $('.select2').select2();
             $('.search_dropdown .select2-container:eq(1)').hide();
         });
-
     </script>
 </asp:Content>
-

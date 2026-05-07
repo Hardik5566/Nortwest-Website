@@ -33,52 +33,63 @@
             font-weight: bold;
         }
 
-        /* ---------- Layout for academic rows: keep labels above inputs, but vertically center actions ---------- */
-        /* Make the course-row a flex container so the actions column can align center to inputs */
+        /* ---------- Layout for academic rows ---------- */
         .course-row {
             display: flex;
-            align-items: center; /* vertically center children (including actions column) */
-            flex-wrap: wrap; /* allow wrap on smaller screens */
+            align-items: center;
+            flex-wrap: wrap;
             margin-bottom: 6px;
         }
 
-            /* ensure our column blocks keep label above input */
             .course-row > .col-md-2,
             .course-row > .col-md-4 {
                 display: flex;
-                flex-direction: column; /* label above input */
+                flex-direction: column;
                 justify-content: flex-start;
             }
 
-        /* Actions column: place buttons horizontally and vertically centered; minus right next to plus */
         .actions-col {
             display: flex;
-            align-items: center; /* vertical center */
+            align-items: center;
             justify-content: flex-end;
-            gap: 2px; /* very small gap so minus sits right next to plus */
+            gap: 2px;
             padding-top: 0;
         }
 
-        /* Icon button appearance (reduced padding so icons are close) */
         .btn-icon {
             border: none;
             background: none;
-            padding: 1px; /* minimal padding so icons sit close */
+            padding: 1px;
             cursor: pointer;
             line-height: 1;
         }
 
             .btn-icon img {
                 display: block;
-                pointer-events: none; /* so click triggers button */
+                pointer-events: none;
             }
 
-        /* Small spacing between consecutive rows on desktop */
         .course-row + .course-row {
             margin-top: 8px;
         }
 
-        /* responsive: ensure columns stack nicely on small screens */
+        /* Captcha Styling */
+        .captcha-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        #captchaImage {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+        .refresh-captcha {
+            cursor: pointer;
+            color: #007bff;
+            font-size: 18px;
+        }
+
         @media (max-width: 767px) {
             .course-row {
                 display: block;
@@ -125,7 +136,6 @@
                 </div>
             </div>
 
-            <!-- Student details -->
             <div class="form-container">
                 <div>
                     <h4>Student details</h4>
@@ -149,14 +159,9 @@
                             <asp:TextBox ID="txtGivenName" CssClass="form-control" runat="server"></asp:TextBox>
                         </div>
                     </div>
-
-                   
-
                 </div>
 
                 <div class="row">
-                 
-                    
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Last Name</label>
@@ -248,13 +253,11 @@
                 </div>
             </div>
 
-            <!-- Academic history (dynamic rows) -->
             <div class="form-container">
                 <div class="row">
                     <div class="col-md-12">
                         <div>
-                            <h4>Credit Transfer Request
-                            </h4>
+                            <h4>Credit Transfer Request</h4>
                         </div>
                         <div id="courseWrapper">
                             <div class="row course-row">
@@ -279,7 +282,6 @@
                                         <img src="assets/img/plus.png" alt="Add" width="25" />
                                     </button>
 
-                                    <!-- hidden on first row, visible on clones -->
                                     <button type="button" class="btn-icon removeRowBtn" title="Remove row" style="display: none;">
                                         <img src="assets/img/minus-button.png" alt="Remove" width="22" />
                                     </button>
@@ -287,7 +289,6 @@
                             </div>
                         </div>
 
-                        <!-- Hidden fields to capture values before submit -->
                         <asp:HiddenField ID="hdnUnitCode" runat="server" />
                         <asp:HiddenField ID="hdnUnitTitle" runat="server" />
                         <asp:HiddenField ID="hdnEvidence" runat="server" />
@@ -322,200 +323,66 @@
                         </li>
                     </ul>
                     <div class="col-md-6">
-
                         <div>
-                            <img id="clearBtn" style="width: 22px; float: right; margin-bottom: 8px;" src="assets/img/eraser.png" />
+                            <img id="clearBtn" style="width: 22px; float: right; margin-bottom: 8px; cursor:pointer;" src="assets/img/eraser.png" />
                         </div>
-
                         <asp:HiddenField ID="hdnSignature" runat="server" />
-
                         <canvas id="signatureCanvas" style="border: 1px solid rgb(223 223 223); width: 100%; height: 250px; touch-action: none; background-color: white;"></canvas>
-
-
                     </div>
                     <div class="col-md-6">
-                        <div class="col-md-12">
+                        <div class="col-md-12" style="padding-left: 0; padding-right: 0;">
                             <label class="lbl_title">Student Name</label>
                             <asp:TextBox ID="txt_s_name" CssClass="form-control" runat="server"></asp:TextBox>
                         </div>
 
-                        <div class="col-md-12">
+                        <div class="col-md-12" style="padding-left: 0; padding-right: 0; margin-top: 15px;">
                             <label class="lbl_title">Date</label>
                             <asp:TextBox ID="txt_sign_date" CssClass="form-control" TextMode="Date" runat="server"></asp:TextBox>
                         </div>
-
                     </div>
-
+                </div>
+                 <div class="row" style="margin-top: 15px;">
+                    <div class="col-md-4">
+                        <label class="lbl_title">Enter Captcha Code</label>
+                        <div class="captcha-box">
+                            <img id="captchaImage" width="150" height="50" alt="Security Captcha" />
+                            <i class="fas fa-sync-alt refresh-captcha" onclick="generateCaptcha()"></i>
+                        </div>
+                        <asp:TextBox ID="txt_captcha_input" runat="server" CssClass="form-control" style="margin-top:10px;" placeholder="Captcha Code" onkeypress="return only_number(event)"></asp:TextBox>
+                    </div>
                 </div>
             </div>
+
             <div>
-                <asp:Button ID="btn_submit" runat="server" OnClientClick="saveSignature()" OnClick="btn_submit_Click" Text="SUBMIT" CssClass="btn btn-success" />
+                <asp:Button ID="btn_submit" runat="server" OnClientClick="return onSubmitValidate(this);" OnClick="btn_submit_Click" Text="SUBMIT" CssClass="btn btn-success" />
             </div>
 
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
-    <script>
-        const canvas = document.getElementById('signatureCanvas');
-        const signaturePad = new SignaturePad(canvas);
-
-        // Resize canvas for high-DPI displays
-        function resizeCanvas() {
-            const ratio = Math.max(window.devicePixelRatio || 1, 1);
-            canvas.width = canvas.offsetWidth * ratio;
-            canvas.height = canvas.offsetHeight * ratio;
-            canvas.getContext("2d").scale(ratio, ratio);
-            signaturePad.clear();
-        }
-        window.addEventListener("resize", resizeCanvas);
-        resizeCanvas();
-
-        // Clear button
-        document.getElementById('clearBtn').addEventListener('click', () => {
-            signaturePad.clear();
-        });
-
-        function saveSignature() {
-            var canvas = document.getElementById("signatureCanvas");
-            var signatureData = canvas.toDataURL("image/png"); // Get signature as Base64
-            document.getElementById("<%= hdnSignature.ClientID %>").value = signatureData; // Set value in hidden field
-        }
-
-        // <%--Save button
-        document.getElementById('saveBtn').addEventListener('click', () => {
-            if (!signaturePad.isEmpty()) {
-                const signatureData = signaturePad.toDataURL('image/png');
-        document.getElementById('<%= hdnSignature.ClientID %>').value = signatureData;
-        document.getElementById('<%= btnPostBack.ClientID %>').click(); // Trigger postback
-        } else {
-            alert("Please provide a signature.");
-        }
-        });--%>
-    </script>
 </asp:Content>
 
 <asp:Content ID="Content4" ContentPlaceHolderID="jqury" runat="Server">
-  <script>
-      // Trigger validation on submit button click
-      $("#<%= btn_submit.ClientID %>").click(function (event) {
-          if (!validateForm()) {
-              event.preventDefault(); // Prevent submission if validation fails
-              return false;
-          }
-      });
+    <script src="assets/js/select2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
+    <script src="assets/country_code/js/intlTelInput.js"></script>
 
-      function validateForm() {
-          var isValid = true;
-          var errorMsg = "";
-
-          // Helper function to validate input
-          function validateInput(id, fieldName) {
-              if ($("#" + id).val().trim() === "") {
-                  $("#" + id).css("border-color", "red");
-                  errorMsg += fieldName + " is required.\n";
-                  isValid = false;
-              } else {
-                  $("#" + id).css("border-color", "");
-              }
-          }
-
-          // Validate Student Details
-          validateInput("<%= txtLastName.ClientID %>", "Last Name");
-        validateInput("<%= txtGivenName.ClientID %>", "Given Name");
-        validateInput("<%= txtDOB.ClientID %>", "Date of Birth");
-        validateInput("<%= txtAddress.ClientID %>", "Address");
-        validateInput("<%= txtPostcode.ClientID %>", "Postcode");
-        validateInput("<%= txtState.ClientID %>", "State");
-        validateInput("<%= txtEmail.ClientID %>", "Email");
-        validateInput("phone", "Contact Number"); // Contact number input
-        validateInput("<%= txtStudentID.ClientID %>", "Student ID");
-        validateInput("<%= txtCourseCode.ClientID %>", "Course Code");
-        validateInput("<%= txtCourseTitle.ClientID %>", "Course Title");
-        validateInput("<%= txtApplicationDate.ClientID %>", "Application Date");
-        validateInput("<%= txt_s_name.ClientID %>", "Student Name");
-        validateInput("<%= txt_sign_date.ClientID %>", "Sign Date");
-
-        // Validate Title Dropdown
-        if ($("#<%= ddlTitle.ClientID %>").prop("selectedIndex") === 0) {
-            $("#<%= ddlTitle.ClientID %>").css("border-color", "red");
-            errorMsg += "Please select a Title.\n";
-            isValid = false;
-        } else {
-            $("#<%= ddlTitle.ClientID %>").css("border-color", "");
-        }
-
-        // Validate Email format
-        var emailVal = $("#<%= txtEmail.ClientID %>").val();
-        var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        if (!emailRegex.test(emailVal)) {
-            $("#<%= txtEmail.ClientID %>").css("border-color", "red");
-            errorMsg += "Please enter a valid Email.\n";
-            isValid = false;
-        } else {
-            $("#<%= txtEmail.ClientID %>").css("border-color", "");
-        }
-
-        // Validate dynamic Credit Transfer rows
-        $("#courseWrapper .course-row").each(function (index) {
-            var unitCode = $(this).find(".course-input").val().trim();
-            var unitTitle = $(this).find(".institution-input").val().trim();
-            var evidence = $(this).find(".year-input").val().trim();
-            var ctGranted = $(this).find(".ct-input").val().trim();
-
-            if (unitCode === "" || unitTitle === "" || evidence === "" || ctGranted === "") {
-                $(this).find("input").css("border-color", "red");
-                errorMsg += "Please fill all fields in Credit Transfer row " + (index + 1) + ".\n";
-                isValid = false;
-            } else {
-                $(this).find("input").css("border-color", "");
-            }
-        });
-
-        // Validate signature canvas
-        var canvas = document.getElementById("signatureCanvas");
-        var blank = document.createElement("canvas");
-        blank.width = canvas.width;
-        blank.height = canvas.height;
-        if (canvas.toDataURL() === blank.toDataURL()) {
-            errorMsg += "Please provide your signature.\n";
-            isValid = false;
-        }
-
-        // Show all errors in a single alert
-        if (!isValid) {
-            alert(errorMsg);
-        }
-
-        return isValid;
-    }
-</script>
-
-
-    <!-- dynamic rows script (pure JS) -->
     <script type="text/javascript">
+        // --- 1. Dynamic Row Add/Remove Logic ---
         document.addEventListener("DOMContentLoaded", function () {
             var courseWrapper = document.getElementById("courseWrapper");
 
-            // Delegate clicks inside the wrapper
             courseWrapper.addEventListener("click", function (event) {
-                // Add row when + clicked (button or image)
                 var add = event.target.closest && event.target.closest(".addRowBtn");
                 if (add) {
                     var template = courseWrapper.querySelector(".course-row");
                     var newRow = template.cloneNode(true);
-
-                    // clear inputs
                     newRow.querySelectorAll("input").forEach(function (inp) { inp.value = ""; });
-
-                    // show remove button in clone
                     var removeBtn = newRow.querySelector(".removeRowBtn");
                     if (removeBtn) removeBtn.style.display = "inline-block";
-
                     courseWrapper.appendChild(newRow);
                     return;
                 }
 
-                // Remove row when - clicked
                 var rem = event.target.closest && event.target.closest(".removeRowBtn");
                 if (rem) {
                     var row = rem.closest(".course-row");
@@ -526,55 +393,35 @@
                     return;
                 }
             });
+        });
 
-            // On submit, collect values into hidden fields (| delimited)
-            var submitBtn = document.getElementById("<%= btn_submit.ClientID %>");
-            if (submitBtn) {
-                submitBtn.addEventListener("click", function () {
-                    var rows = courseWrapper.querySelectorAll(".course-row");
-                    var unitCodeList = [], unitTitleList = [], evidenceList = [], ctList = [];
+        // --- 2. Captcha AJAX Generation ---
+        function generateCaptcha() {
+            $.ajax({
+                type: "POST",
+                url: "credit_transfer_application.aspx/GetCaptchaImage",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                cache: false,
+                success: function (response) {
+                    $("#captchaImage").attr("src", response.d);
+                    $("#<%= txt_captcha_input.ClientID %>").val("");
+                },
+                error: function (error) {
+                    console.log("Error generating captcha");
+                }
+            });
+        }
 
-                    for (var i = 0; i < rows.length; i++) {
-                        var code = (rows[i].querySelector(".course-input") || { value: "" }).value.trim();
-                        var title = (rows[i].querySelector(".institution-input") || { value: "" }).value.trim();
-                        var evidence = (rows[i].querySelector(".year-input") || { value: "" }).value.trim();
-                        var ct = (rows[i].querySelector(".ct-input") || { value: "" }).value.trim();
-
-                        // include the row only if any field has value
-                        if (code || title || evidence || ct) {
-                            unitCodeList.push(code);
-                            unitTitleList.push(title);
-                            evidenceList.push(evidence);
-                            ctList.push(ct);
-                        }
-                    }
-
-                    var hUnit = document.getElementById("<%= hdnUnitCode.ClientID %>");
-                    var hTitle = document.getElementById("<%= hdnUnitTitle.ClientID %>");
-                    var hEvidence = document.getElementById("<%= hdnEvidence.ClientID %>");
-                    var hCT = document.getElementById("<%= hdnCT.ClientID %>");
-
-                    if (hUnit) hUnit.value = unitCodeList.join("|");
-                    if (hTitle) hTitle.value = unitTitleList.join("|");
-                    if (hEvidence) hEvidence.value = evidenceList.join("|");
-                    if (hCT) hCT.value = ctList.join("|");
-                });
+        // --- 3. Int Tel Input & Helper Logic ---
+        function only_number(key) {
+            var charCode = (key.which) ? key.which : key.keyCode
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                return false;
             }
-        });
-    </script>
+            return true;
+        }
 
-    <script src="assets/js/select2.min.js"></script>
-
-    <script>
-        $(document).on('ready page:load', function () {
-            $('.select2').select2();
-            $('.search_dropdown .select2-container:eq(1)').hide();
-        });
-    </script>
-
-    <script src="assets/country_code/js/intlTelInput.js"></script>
-
-    <script>
         var input = document.querySelector("#phone");
         var output = document.querySelector("#output");
 
@@ -587,9 +434,7 @@
 
         var handleChange = function () {
             var text = (iti.isValidNumber()) ? "" : "Please enter a valid number";
-            var textNode = document.createTextNode(text);
-            output.innerHTML = "";
-            output.appendChild(textNode);
+            output.innerHTML = text;
             $("#<%= hd_contact_no_code.ClientID%>").val(iti.selectedCountryData.dialCode);
             $("#<%= hd_contact_no.ClientID%>").val($("#phone").val());
         };
@@ -597,25 +442,139 @@
         input.addEventListener('countrychange', handleChange);
         input.addEventListener('change', handleChange);
         input.addEventListener('keyup', handleChange);
-    </script>
 
-    <script>
-        function only_number(key) {
-            var charCode = (key.which) ? key.which : key.keyCode;
-            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-                return false;
-            } else {
-                return true;
+        // --- 4. Signature Pad Logic ---
+        const canvas = document.getElementById('signatureCanvas');
+        const signaturePad = new SignaturePad(canvas);
+
+        function resizeCanvas() {
+            const ratio = Math.max(window.devicePixelRatio || 1, 1);
+            canvas.width = canvas.offsetWidth * ratio;
+            canvas.height = canvas.offsetHeight * ratio;
+            canvas.getContext("2d").scale(ratio, ratio);
+            signaturePad.clear();
+        }
+        window.addEventListener("resize", resizeCanvas);
+
+        $(document).ready(function () {
+            generateCaptcha();
+            resizeCanvas();
+            $('#clearBtn').click(() => signaturePad.clear());
+            $('.select2').select2();
+            $('.search_dropdown .select2-container:eq(1)').hide();
+        });
+
+        // --- 5. Unified Submit, Validation, and Row Extraction ---
+        function onSubmitValidate(btn) {
+            var isValid = true;
+            var errorMsg = "";
+
+            function validateInput(id, fieldName) {
+                if ($("#" + id).val().trim() === "") {
+                    $("#" + id).css("border-color", "red");
+                    errorMsg += "- " + fieldName + " is required.\n";
+                    isValid = false;
+                } else {
+                    $("#" + id).css("border-color", "");
+                }
             }
+
+            // Standard inputs
+            if ($("#<%= ddlTitle.ClientID %>").prop("selectedIndex") === 0) {
+                $("#<%= ddlTitle.ClientID %>").css("border-color", "red");
+                errorMsg += "- Please select a Title.\n";
+                isValid = false;
+            } else { $("#<%= ddlTitle.ClientID %>").css("border-color", ""); }
+
+            validateInput("<%= txtLastName.ClientID %>", "Last Name");
+            validateInput("<%= txtGivenName.ClientID %>", "Given Name");
+            validateInput("<%= txtDOB.ClientID %>", "Date of Birth");
+            validateInput("<%= txtAddress.ClientID %>", "Address");
+            validateInput("<%= txtPostcode.ClientID %>", "Postcode");
+            validateInput("<%= txtState.ClientID %>", "State");
+            validateInput("<%= txtEmail.ClientID %>", "Email");
+            validateInput("<%= txtStudentID.ClientID %>", "Student ID");
+            validateInput("<%= txtCourseCode.ClientID %>", "Course Code");
+            validateInput("<%= txtCourseTitle.ClientID %>", "Course Title");
+            validateInput("<%= txtApplicationDate.ClientID %>", "Application Date");
+            validateInput("<%= txt_s_name.ClientID %>", "Declaration Student Name");
+            validateInput("<%= txt_sign_date.ClientID %>", "Sign Date");
+
+            // Email Regex check
+            var emailVal = $("#<%= txtEmail.ClientID %>").val();
+            var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (!emailRegex.test(emailVal) && emailVal.trim() !== "") {
+                $("#<%= txtEmail.ClientID %>").css("border-color", "red");
+                errorMsg += "- Please enter a valid Email.\n";
+                isValid = false;
+            }
+
+            // Phone check
+            if ($("#phone").val().trim() === "" || !iti.isValidNumber()) {
+                $("#phone").css("border-color", "red");
+                errorMsg += "- Valid Contact Number is required.\n";
+                isValid = false;
+            } else {
+                $("#phone").css("border-color", "");
+            }
+
+            // Dynamic Rows Validation AND Data Aggregation
+            var unitCodeList = [], unitTitleList = [], evidenceList = [], ctList = [];
+            $("#courseWrapper .course-row").each(function (index) {
+                var code = $(this).find(".course-input").val().trim();
+                var title = $(this).find(".institution-input").val().trim();
+                var evidence = $(this).find(".year-input").val().trim();
+                var ctGranted = $(this).find(".ct-input").val().trim();
+
+                if (code === "" || title === "" || evidence === "" || ctGranted === "") {
+                    $(this).find("input").css("border-color", "red");
+                    errorMsg += "- Please fill all fields in Credit Transfer row " + (index + 1) + ".\n";
+                    isValid = false;
+                } else {
+                    $(this).find("input").css("border-color", "");
+                    // Push to arrays if valid
+                    unitCodeList.push(code);
+                    unitTitleList.push(title);
+                    evidenceList.push(evidence);
+                    ctList.push(ctGranted);
+                }
+            });
+
+            // Signature Validation
+            if (signaturePad.isEmpty()) {
+                errorMsg += "- Please provide your signature.\n";
+                isValid = false;
+            }
+
+            // Captcha Client-Side Check
+            var userCaptchaInput = $("#<%= txt_captcha_input.ClientID %>").val().trim();
+            if (userCaptchaInput === "") {
+                $("#<%= txt_captcha_input.ClientID %>").css("border-color", "red");
+                errorMsg += "- Please enter the security captcha code.\n";
+                isValid = false;
+            } else {
+                $("#<%= txt_captcha_input.ClientID %>").css("border-color", "");
+            }
+
+            if (!isValid) {
+                alert("Please correct the following errors:\n" + errorMsg);
+                return false; // Stop postback
+            }
+
+            // ============================================
+            // INJECT DYNAMIC ROW DATA & SIGNATURE FOR ASP.NET
+            // ============================================
+            $("#<%= hdnUnitCode.ClientID %>").val(unitCodeList.join("|"));
+            $("#<%= hdnUnitTitle.ClientID %>").val(unitTitleList.join("|"));
+            $("#<%= hdnEvidence.ClientID %>").val(evidenceList.join("|"));
+            $("#<%= hdnCT.ClientID %>").val(ctList.join("|"));
+            $("#<%= hdnSignature.ClientID %>").val(signaturePad.toDataURL("image/png"));
+
+            // VISUAL SUBMIT STATE
+            btn.value = "Submitting...";
+            btn.style.opacity = "0.7";
+
+            return true; // Allow postback
         }
     </script>
-       <script>
-           $(function () {
-               // remove all nice-select wrappers and show native select
-               $('.nice-select').remove();
-               $('select').show().css({ display: 'block', visibility: 'visible', opacity: 1 });
-               // stop plugin re-init
-               $.fn.niceSelect = function(){ return this; };
-           });
-</script>
 </asp:Content>

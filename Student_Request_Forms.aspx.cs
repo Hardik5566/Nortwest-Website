@@ -8,7 +8,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
 using System.Data.SqlClient;
-using System.Threading.Tasks;
+using System.Web.Services;
 
 public partial class Student_Request_Forms : System.Web.UI.Page
 {
@@ -16,42 +16,92 @@ public partial class Student_Request_Forms : System.Web.UI.Page
     {
 
     }
+    [WebMethod(EnableSession = true)]
+    public static string GetCaptchaImage()
+    {
+        Random rand = new Random();
+        int num1 = rand.Next(1, 20);
+        int num2 = rand.Next(1, 10);
+        bool isAddition = rand.Next(0, 2) == 0;
+        string operatorStr = isAddition ? "+" : "-";
 
+        if (!isAddition && num1 < num2)
+        {
+            int temp = num1;
+            num1 = num2;
+            num2 = temp;
+        }
+
+        int result = isAddition ? (num1 + num2) : (num1 - num2);
+
+        // Securely store the correct answer
+        HttpContext.Current.Session["CaptchaResult"] = result.ToString();
+
+        // Using String.Format instead of $ interpolation
+        string captchaText = String.Format("{0} {1} {2} = ?", num1, operatorStr, num2);
+
+        using (Bitmap bitmap = new Bitmap(150, 50))
+        {
+            using (Graphics g = Graphics.FromImage(bitmap))
+            {
+                g.Clear(Color.FromArgb(249, 249, 249));
+
+                // Add random noise lines to defeat simple bots
+                Pen pen = new Pen(Color.FromArgb(204, 204, 204));
+                for (int i = 0; i < 6; i++)
+                {
+                    g.DrawLine(pen, rand.Next(0, 150), rand.Next(0, 50), rand.Next(0, 150), rand.Next(0, 50));
+                }
+
+                using (Font font = new Font("Arial", 16, FontStyle.Bold))
+                {
+                    g.DrawString(captchaText, font, Brushes.Black, new PointF(10, 12));
+                }
+            }
+
+            using (MemoryStream ms = new MemoryStream())
+            {
+                bitmap.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                byte[] imageBytes = ms.ToArray();
+                return "data:image/png;base64," + Convert.ToBase64String(imageBytes);
+            }
+        }
+    }
     protected void btn_submit_Click(object sender, EventArgs e)
     {
         try
         {
-            string save_signature = SaveSignature();
-            string file_name = "";
+            string sessionCaptcha = Session["CaptchaResult"] != null ? Session["CaptchaResult"].ToString() : "";
+            string userCaptcha = txt_captcha_input.Text.Trim();
 
-            if (upd_doc.HasFile)
+            if (string.IsNullOrEmpty(userCaptcha) || userCaptcha != sessionCaptcha)
             {
-                string originalName = Path.GetFileNameWithoutExtension(upd_doc.FileName);
-                string extension = Path.GetExtension(upd_doc.FileName);
-
-                // create unique file name: originalName_20250909_103012.png
-                file_name = originalName + "_" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + extension;
-
-                string save_path = Server.MapPath("~/assets/img/document/");
-                string fullPath = Path.Combine(save_path, file_name);
-
-                upd_doc.SaveAs(fullPath);
+                // Clear input and alert the user via Javascript
+                txt_captcha_input.Text = "";
+                ScriptManager.RegisterStartupScript(this, GetType(), "CaptchaError", "alert('Invalid Captcha Result. Please try again.'); generateCaptcha();", true);
+                return;
             }
 
+            // Clean out the session to prevent double submission exploits
+            Session.Remove("CaptchaResult");
+            string save_signature = SaveSignature();
+            string file_name = "";
+            if (upd_doc.HasFile)
+            {
+                file_name = upd_doc.FileName.ToString();
+                string save_path = Server.MapPath("~/assets/img/document/");
+                upd_doc.SaveAs(save_path + file_name);
+            }
 
-            DataSet ds = BAL_Forms.ins_student_request(ddl_title.SelectedValue.ToString(), txt_f_name.Text, txt_l_name.Text, ddl_gender.SelectedValue.ToString(), txt_student_id.Text, txt_date.Text, txt_address.Text, txt_suburb.Text, txt_postcode.Text, txt_m_address.Text, txt_m_suburb.Text, txt_m_postcode.Text, txt_email.Text, hd_contact_no_code.Value.ToString(), hd_contact_no.Value.ToString(), selected_value(), txt_detail.Text, file_name, save_signature, txt_sign_date.Text, "1");
+            DataSet ds = BAL_Forms.ins_student_request(ddl_title.SelectedValue.ToString(), txt_f_name.Text, txt_l_name.Text, ddl_gender.SelectedValue.ToString(), txt_student_id.Text, txt_date.Text, txt_address.Text, txt_suburb.Text, txt_postcode.Text, txt_m_address.Text, txt_m_suburb.Text, txt_m_postcode.Text, txt_email.Text, hd_contact_no_code.Value.ToString(), hd_contact_no.Value.ToString(), selected_value(), txt_detail.Text, file_name, save_signature,txt_sign_date.Text,"1");
             if (ds.Tables[0].Rows.Count > 0)
             {
 
                 string signaturePath = Server.MapPath("~/assets/img/sign/") + ds.Tables[0].Rows[0]["student_signature"].ToString();
                 string documents = Server.MapPath("~/assets/img/document/") + ds.Tables[0].Rows[0]["documents"].ToString();
                 string full_name = ds.Tables[0].Rows[0]["first_name"].ToString() + ds.Tables[0].Rows[0]["last_name"].ToString();
-                Task.Run(() =>
-  {
-      Send_Mail.MailWithouAttachment("sso@nortwest.edu.au", "New Student Request Form (" + full_name + ")", mailbody(ds.Tables[0].Rows[0]["title"].ToString(), ds.Tables[0].Rows[0]["first_name"].ToString(), ds.Tables[0].Rows[0]["last_name"].ToString(), ds.Tables[0].Rows[0]["gender"].ToString(), ds.Tables[0].Rows[0]["student_id"].ToString(), ds.Tables[0].Rows[0]["register_date"].ToString(), ds.Tables[0].Rows[0]["residential_adress"].ToString(), ds.Tables[0].Rows[0]["residential_suburb"].ToString(), ds.Tables[0].Rows[0]["residential_postcode"].ToString(), ds.Tables[0].Rows[0]["mailing_adress"].ToString(), ds.Tables[0].Rows[0]["mailing_suburb"].ToString(), ds.Tables[0].Rows[0]["mailing_postcode"].ToString(), ds.Tables[0].Rows[0]["email"].ToString(), ds.Tables[0].Rows[0]["country_code"].ToString() + ds.Tables[0].Rows[0]["contact_no"].ToString(), ds.Tables[0].Rows[0]["request"].ToString(), ds.Tables[0].Rows[0]["detail"].ToString(), ds.Tables[0].Rows[0]["sign_date"].ToString()), documents, signaturePath);
 
-  });
-
+                Send_Mail.MailWithouAttachment("himanshumakwana8281@gmail.com", "New Student Request Form (" + full_name + ")", mailbody(ds.Tables[0].Rows[0]["title"].ToString(), ds.Tables[0].Rows[0]["first_name"].ToString(), ds.Tables[0].Rows[0]["last_name"].ToString(), ds.Tables[0].Rows[0]["gender"].ToString(), ds.Tables[0].Rows[0]["student_id"].ToString(), ds.Tables[0].Rows[0]["register_date"].ToString(), ds.Tables[0].Rows[0]["residential_adress"].ToString(), ds.Tables[0].Rows[0]["residential_suburb"].ToString(), ds.Tables[0].Rows[0]["residential_postcode"].ToString(), ds.Tables[0].Rows[0]["mailing_adress"].ToString(), ds.Tables[0].Rows[0]["mailing_suburb"].ToString(), ds.Tables[0].Rows[0]["mailing_postcode"].ToString(), ds.Tables[0].Rows[0]["email"].ToString(), ds.Tables[0].Rows[0]["country_code"].ToString() + ds.Tables[0].Rows[0]["contact_no"].ToString(), ds.Tables[0].Rows[0]["request"].ToString(), ds.Tables[0].Rows[0]["detail"].ToString(), ds.Tables[0].Rows[0]["sign_date"].ToString()), documents, signaturePath);
                 Response.Redirect("Success.aspx");
             }
 

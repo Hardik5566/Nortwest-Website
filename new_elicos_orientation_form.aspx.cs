@@ -12,6 +12,8 @@ using System.Net.Mail;
 using CrystalDecisions.Shared;
 using CrystalDecisions.CrystalReports.Engine;
 using System.Threading.Tasks;
+using System.Web.Services;
+using System.Drawing.Drawing2D;
 
 public partial class new_elicos_orientation_form : System.Web.UI.Page
 {
@@ -19,17 +21,77 @@ public partial class new_elicos_orientation_form : System.Web.UI.Page
     {
 
     }
+    [WebMethod(EnableSession = true)]
+    public static string GetCaptchaImage()
+    {
+        Random rand = new Random();
+        int num1 = rand.Next(1, 20);
+        int num2 = rand.Next(1, 10);
+        bool isAddition = rand.Next(0, 2) == 0;
+        string operatorStr = isAddition ? "+" : "-";
+
+        // Prevent negative results
+        if (!isAddition && num1 < num2)
+        {
+            int temp = num1;
+            num1 = num2;
+            num2 = temp;
+        }
+
+        int result = isAddition ? (num1 + num2) : (num1 - num2);
+
+        // Securely store the correct answer in the active Session
+        HttpContext.Current.Session["CaptchaResult"] = result.ToString();
+
+        string captchaText = String.Format("{0} {1} {2} = ?", num1, operatorStr, num2);
+
+        using (Bitmap bitmap = new Bitmap(150, 50))
+        {
+            using (Graphics g = Graphics.FromImage(bitmap))
+            {
+                g.Clear(Color.FromArgb(249, 249, 249));
+
+                // Add random noise lines to defeat OCR bots
+                Pen pen = new Pen(Color.FromArgb(204, 204, 204));
+                for (int i = 0; i < 6; i++)
+                {
+                    g.DrawLine(pen, rand.Next(0, 150), rand.Next(0, 50), rand.Next(0, 150), rand.Next(0, 50));
+                }
+
+                using (Font font = new Font("Arial", 16, FontStyle.Bold))
+                {
+                    g.DrawString(captchaText, font, Brushes.Black, new PointF(10, 12));
+                }
+            }
+
+            using (MemoryStream ms = new MemoryStream())
+            {
+                bitmap.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                byte[] imageBytes = ms.ToArray();
+                return "data:image/png;base64," + Convert.ToBase64String(imageBytes);
+            }
+        }
+    }
     protected void btn_submit_Click(object sender, EventArgs e)
     {
         try
         {
+            string sessionCaptcha = Session["CaptchaResult"] != null ? Session["CaptchaResult"].ToString() : "";
+            string userCaptcha = txt_captcha_input.Text.Trim();
+            if (string.IsNullOrEmpty(userCaptcha) || userCaptcha != sessionCaptcha)
+            {
+                txt_captcha_input.Text = "";
+                ScriptManager.RegisterStartupScript(this, GetType(), "CaptchaError", "alert('Invalid Captcha Code. Please try again.'); generateCaptcha();", true);
+                return;
+            }
+            Session.Remove("CaptchaResult");
             string selected_valuea = selected_value1();
             string selected_valueb = selected_value2();
             string selected_valuec = selected_value3();
             string selected_valued = selected_value4();
             string selected_valuee = selected_value5();
             string selected_valuef = selected_value6();
-          
+
             string selected_valueh = select_1();
             string selected_valuei = select_2();
             string save_signature = SaveSignature();
@@ -48,7 +110,7 @@ public partial class new_elicos_orientation_form : System.Web.UI.Page
                 selected_valuee, selected_valuef, txt_name.Text, save_signature, "1");
             if (ds.Tables[0].Rows.Count > 0)
             {
-                Task.Run(() => send_mail(ds));
+                send_mail(ds);
                 Response.Redirect("Success.aspx");
             }
 
@@ -198,7 +260,7 @@ public partial class new_elicos_orientation_form : System.Web.UI.Page
         }
         return selectedValue;
     }
- 
+
 
 
 

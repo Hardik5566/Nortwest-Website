@@ -117,7 +117,7 @@
                     <asp:TemplateField HeaderText="Signature">
                         <ItemTemplate>
                             <label>
-                                <a href=' <%# "/assets/img/sign" + Eval("student_signature") %>' download>Download</a>
+                                <a href=' <%# "/assets/img/sign/" + Eval("student_signature") %>' download>Download</a>
                             </label> 
                         </ItemTemplate>
                     </asp:TemplateField>

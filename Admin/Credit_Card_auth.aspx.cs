@@ -15,7 +15,7 @@ public partial class Admin_Credit_Card_auth : System.Web.UI.Page
             if (!IsPostBack)
             {
                 txt_from_date.Text = DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd");
-                txt_to_date.Text = DateTime.Now.ToString("yyyy-MM-dd");
+                txt_to_date.Text = DateTime.Now.AddDays(1).ToString("yyyy-MM-dd");
                 bind_data();
 
 

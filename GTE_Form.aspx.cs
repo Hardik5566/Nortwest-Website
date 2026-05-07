@@ -10,6 +10,7 @@ using System.Linq;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -31,6 +32,56 @@ public partial class GTE_Form : System.Web.UI.Page
             throw;
         }
     }
+    [WebMethod(EnableSession = true)]
+    public static string GetCaptchaImage()
+    {
+        Random rand = new Random();
+        int num1 = rand.Next(1, 20);
+        int num2 = rand.Next(1, 10);
+        bool isAddition = rand.Next(0, 2) == 0;
+        string operatorStr = isAddition ? "+" : "-";
+
+        if (!isAddition && num1 < num2)
+        {
+            int temp = num1;
+            num1 = num2;
+            num2 = temp;
+        }
+
+        int result = isAddition ? (num1 + num2) : (num1 - num2);
+
+        // Securely store the correct answer in the active Session
+        HttpContext.Current.Session["CaptchaResult"] = result.ToString();
+
+        string captchaText = String.Format("{0} {1} {2} = ?", num1, operatorStr, num2);
+
+        using (Bitmap bitmap = new Bitmap(150, 50))
+        {
+            using (Graphics g = Graphics.FromImage(bitmap))
+            {
+                g.Clear(Color.FromArgb(249, 249, 249));
+
+                // Add random noise lines to defeat simple OCR bots
+                Pen pen = new Pen(Color.FromArgb(204, 204, 204));
+                for (int i = 0; i < 6; i++)
+                {
+                    g.DrawLine(pen, rand.Next(0, 150), rand.Next(0, 50), rand.Next(0, 150), rand.Next(0, 50));
+                }
+
+                using (Font font = new Font("Arial", 16, FontStyle.Bold))
+                {
+                    g.DrawString(captchaText, font, Brushes.Black, new PointF(10, 12));
+                }
+            }
+
+            using (MemoryStream ms = new MemoryStream())
+            {
+                bitmap.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                byte[] imageBytes = ms.ToArray();
+                return "data:image/png;base64," + Convert.ToBase64String(imageBytes);
+            }
+        }
+    }
     public void bind_data()
     {
         try
@@ -50,6 +101,23 @@ public partial class GTE_Form : System.Web.UI.Page
     }
     protected void btn_submit_Click(object sender, EventArgs e)
     {
+        string sessionCaptcha = Session["CaptchaResult"] != null ? Session["CaptchaResult"].ToString() : "";
+        string userCaptcha = txt_captcha_input.Text.Trim();
+
+        // Validate the Captcha Server-Side
+        if (string.IsNullOrEmpty(userCaptcha) || userCaptcha != sessionCaptcha)
+        {
+            // Clear the wrong input
+            txt_captcha_input.Text = "";
+
+            // Show an error and refresh the captcha image automatically
+            ScriptManager.RegisterStartupScript(this, GetType(), "CaptchaError", "alert('Invalid Captcha Code. Please try again.'); generateCaptcha();", true);
+
+            return; // Stop execution, do not save data
+        }
+
+        // Success! Clean out the session to prevent double submission exploits
+        Session.Remove("CaptchaResult");
         string courseData = hdnCourse.Value + "|";
         string institutionData = hdnInstitution.Value + "|";
         string yearData = hdnYear.Value + "|";
@@ -108,10 +176,8 @@ if (upd_undertaken_IELTS.HasFile)
         DataSet ds = BAL_Forms.ins_gte_form(txt_family_name.Text, txt_given_name.Text, txt_stu_id.Text, txt_dob.Text, ddl_country.SelectedValue.ToString(), txt_citizenship.Text, txt_agent_name.Text, txt_agent_code.Text, txt_agent_email.Text, txt_course.Text, txt_current_address.Text, rad_marital_status.SelectedValue.ToString(), bringing_family, txt_bringing_family_details.Text, health_condition, txt_health_condition.Text, refused_visa, refused_visa_aus, txt_refused_visa_aus_details.Text, student_visa_other, txt_student_visa_other_details.Text, visited_aus_breached, evidence_visited, txt_visited_aus_breached_detail.Text, apply_admision, txt_apply_admision_detail.Text, previous_studied, txt_previous_studied_detail.Text, relatives_aus, txt_relatives_aus_detai.Text, accommodation_plan, txt_accommodation_plan_detail.Text, criminal_record, txt_criminal_record_detail.Text, gaps_education, txt_gaps_education_detail.Text, undertaken_IELTS, file_undertaken_IELTS, txt_undertaken_IELTS_detail.Text, txt_plans_intention_study_aus.Text, txt_type_of_job.Text, txt_sort_long_term.Text, txt_expect_learn.Text, txt_decide_study_aus.Text, txt_other_course.Text, txt_nortwest_institute.Text, livine_expence, txt_livine_expence_detail.Text, lerning_exp, txt_lerning_exp_detail.Text, txt_course_relavant.Text, txt_change_area_study.Text, work_desc, txt_work_explain_explain.Text, txt_planing_while_study.Text, term_condition, save_signature, txt_sign_date.Text, "1", courseData, institutionData, yearData, position, company, job_year);
         if (ds.Tables.Count > 0)
         {
-            Task.Run(() =>
-            {
+            
                 send_mail(ds);
-            });
             Response.Redirect("Success.aspx");
         }
     }

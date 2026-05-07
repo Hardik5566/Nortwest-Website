@@ -1691,134 +1691,165 @@
         });
     </script>
 
-    <script>
-        // Audio recording code (unchanged)
-        var mediaRecorder;
-        var audiosContainer = document.getElementById('audios-container');
-        var messageContainer = document.getElementById('message-container');
-        var isRecording = false;
+   <script>
+       // Audio recording code
+       var mediaRecorder;
+       var audiosContainer = document.getElementById('audios-container');
+       var messageContainer = document.getElementById('message-container');
+       var isRecording = false;
 
-        document.querySelector('#start-recording').onclick = function () {
-            this.disabled = true;
-            isRecording = true;
-            captureUserMedia({ audio: true }, onMediaSuccess, onMediaError);
-        };
+       // Modified Start Recording with Microphone Check and Postback Prevention
+       document.querySelector('#start-recording').onclick = function (e) {
+           // Prevent ASP.NET Postback
+           if (e && e.preventDefault) { 
+               e.preventDefault(); 
+           } else {
+               window.event.returnValue = false; 
+           }
 
-        document.querySelector('#stop-recording').onclick = function () {
-            this.disabled = true;
-            mediaRecorder.stop();
-            mediaRecorder.stream.getTracks().forEach(track => track.stop());
-            isRecording = false;
+           const self = this;
 
-            document.querySelector('#start-recording').disabled = false;
-            document.querySelector('#retry-recording').disabled = false;
-        };
+           // Check for microphone hardware
+           navigator.mediaDevices.enumerateDevices().then(devices => {
+               const hasMicrophone = devices.some(device => device.kind === 'audioinput');
+            
+           if (!hasMicrophone) {
+               alert("No microphone detected. Please plug in a microphone and try again.");
+           } else {
+               // Microphone found, start recording logic
+               self.disabled = true;
+               isRecording = true;
+               captureUserMedia({ audio: true }, onMediaSuccess, onMediaError);
+           }
+       }).catch(err => {
+           console.error("Error checking devices: ", err);
+       alert("Could not access media devices. Please check browser permissions.");
+       });
 
-        document.querySelector('#retry-recording').onclick = function () {
-            if (mediaRecorder) {
-                mediaRecorder.stop();
-                mediaRecorder.stream.getTracks().forEach(track => track.stop());
-            }
-            isRecording = false;
+       return false; // Backup to prevent postback
+       };
 
+       document.querySelector('#stop-recording').onclick = function (e) {
+           if (e && e.preventDefault) e.preventDefault();
+           this.disabled = true;
+           mediaRecorder.stop();
+           mediaRecorder.stream.getTracks().forEach(track => track.stop());
+           isRecording = false;
+
+           document.querySelector('#start-recording').disabled = false;
+           document.querySelector('#retry-recording').disabled = false;
+           return false;
+       };
+
+       document.querySelector('#retry-recording').onclick = function (e) {
+           if (e && e.preventDefault) e.preventDefault();
+           if (mediaRecorder) {
+               mediaRecorder.stop();
+               mediaRecorder.stream.getTracks().forEach(track => track.stop());
+           }
+           isRecording = false;
+
+           audiosContainer.innerHTML = '';
+           messageContainer.innerHTML = '';
+           document.getElementById('<%= hdn_audio_file.ClientID %>').value = '';
+
+        document.querySelector('#start-recording').disabled = false;
+        document.querySelector('#stop-recording').disabled = true;
+        this.disabled = true;
+        return false;
+    };
+
+    function captureUserMedia(mediaConstraints, successCallback, errorCallback) {
+        navigator.mediaDevices.getUserMedia(mediaConstraints).then(successCallback).catch(errorCallback);
+    }
+
+    function onMediaSuccess(stream) {
+        var audio = document.createElement('audio');
+        audio.controls = true;
+        audio.muted = true;
+        audio.srcObject = stream;
+        audio.play();
+
+        audiosContainer.appendChild(audio);
+        audiosContainer.appendChild(document.createElement('hr'));
+
+        mediaRecorder = new MediaStreamRecorder(stream);
+        mediaRecorder.stream = stream;
+
+        mediaRecorder.mimeType = 'audio/mp3';
+        mediaRecorder.audioBitsPerSecond = 128000;
+
+        mediaRecorder.ondataavailable = function (blob) {
             audiosContainer.innerHTML = '';
-            messageContainer.innerHTML = '';
-            document.getElementById('<%= hdn_audio_file.ClientID %>').value = '';
 
-            document.querySelector('#start-recording').disabled = false;
-            document.querySelector('#stop-recording').disabled = true;
-            this.disabled = true;
+            var audioElement = document.createElement('audio');
+            audioElement.controls = true;
+            audioElement.src = URL.createObjectURL(blob);
+            audiosContainer.appendChild(audioElement);
+
+            var uniqueFileName = generateUniqueFileName() + '.mp3';
+            document.getElementById('<%= hdn_audio_file.ClientID %>').value = uniqueFileName;
+
+            var formData = new FormData();
+            formData.append('audio', blob, uniqueFileName);
+            formData.append('hdn_audio_file', uniqueFileName);
+
+            fetch('EPT_Test.aspx', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Network response was not ok');
+            return response.text();
+        })
+            .then(result => {
+                var fileName = document.getElementById('<%= hdn_audio_file.ClientID %>').value;
+            displayMessage(fileName + ' saved successfully!', 'green');
+            console.log('Success:', result);
+        })
+        .catch(error => {
+            displayMessage('Error: issue storing recorded audio', 'red');
+        console.error('Error:', error);
+        });
         };
 
-        function captureUserMedia(mediaConstraints, successCallback, errorCallback) {
-            navigator.mediaDevices.getUserMedia(mediaConstraints).then(successCallback).catch(errorCallback);
+        var timeInterval = 6000 * 1000; // 10 minutes
+        mediaRecorder.start(timeInterval);
+
+        document.querySelector('#stop-recording').disabled = false;
         }
 
-        function onMediaSuccess(stream) {
-            var audio = document.createElement('audio');
-            audio.controls = true;
-            audio.muted = true;
-            audio.srcObject = stream;
-            audio.play();
+        function onMediaError(e) {
+            console.error('Media error:', e);
+            alert("Microphone access denied. Please allow microphone permissions in your browser.");
+            document.querySelector('#start-recording').disabled = false;
+            isRecording = false;
+        }
 
-            audiosContainer.appendChild(audio);
-            audiosContainer.appendChild(document.createElement('hr'));
+        function generateUniqueFileName() {
+            return 'audio_' + ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
+                (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+            );
+        }
 
-            mediaRecorder = new MediaStreamRecorder(stream);
-            mediaRecorder.stream = stream;
+        function displayMessage(message, color) {
+            messageContainer.innerHTML = `<p style="color: ${color};">${message}</p>`;
+        }
 
-            mediaRecorder.mimeType = 'audio/mp3';
-            mediaRecorder.audioBitsPerSecond = 128000;
+        window.onbeforeunload = function () {
+            document.querySelector('#start-recording').disabled = false;
+        };
 
-            mediaRecorder.ondataavailable = function (blob) {
-                audiosContainer.innerHTML = '';
-
-                var audioElement = document.createElement('audio');
-                audioElement.controls = true;
-                audioElement.src = URL.createObjectURL(blob);
-                audiosContainer.appendChild(audioElement);
-
-                var uniqueFileName = generateUniqueFileName() + '.mp3';
-                document.getElementById('<%= hdn_audio_file.ClientID %>').value = uniqueFileName;
-
-                var formData = new FormData();
-                formData.append('audio', blob, uniqueFileName);
-                formData.append('hdn_audio_file', uniqueFileName);
-
-                fetch('EPT_Test.aspx', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => {
-                    if (!response.ok) throw new Error('Network response was not ok');
-                return response.text();
-            })
-                .then(result => {
-                    var fileName = document.getElementById('<%= hdn_audio_file.ClientID %>').value;
-                displayMessage(fileName + ' saved successfully!', 'green');
-                console.log('Success:', result);
-            })
-            .catch(error => {
-                displayMessage('Error: issue storing recorded audio', 'red');
-            console.error('Error:', error);
-            });
-            };
-
-            var timeInterval = 6000 * 1000; // 10 minutes
-            mediaRecorder.start(timeInterval);
-
-            document.querySelector('#stop-recording').disabled = false;
-            }
-
-            function onMediaError(e) {
-                console.error('Media error:', e);
-            }
-
-            function generateUniqueFileName() {
-                return 'audio_' + ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
-                    (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
-                );
-            }
-
-            function displayMessage(message, color) {
-                messageContainer.innerHTML = `<p style="color: ${color};">${message}</p>`;
-            }
-
-            window.onbeforeunload = function () {
-                document.querySelector('#start-recording').disabled = false;
-            };
-
-            // ASP.NET Button Check
-            document.getElementById('<%= btn_submit.ClientID %>').addEventListener('click', function (e) {
-                if (isRecording) {
-                    e.preventDefault();
-                    alert("Recording is still running. Please stop the recording first.");
-                    return false;
-                }
-
-                console.log("Audio ready, proceeding with submit...");
-            });
-    </script>
+        // ASP.NET Button Check
+        document.getElementById('<%= btn_submit.ClientID %>').addEventListener('click', function (e) {
+        if (isRecording) {
+            e.preventDefault();
+            alert("Recording is still running. Please stop the recording first.");
+            return false;
+        }
+        console.log("Audio ready, proceeding with submit...");
+    });
+</script>
     <script>
         // Disable right click
         document.addEventListener('contextmenu', function (e) {

@@ -18,6 +18,7 @@ public partial class MasterPage : System.Web.UI.MasterPage
             {
                 if (Request.Cookies["user_id"] != null)
                 {
+                    img_profile_master.ImageUrl = "~/image/user_default.png";
                     string userId = Request.Cookies["user_id"].Value;
                     Session["user_id"] = userId;
                 }

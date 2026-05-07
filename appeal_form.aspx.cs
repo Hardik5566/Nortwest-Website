@@ -7,6 +7,9 @@ using System.Web.UI.WebControls;
 using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
+using System.Web.Services;
+using System.Drawing;
+using System.IO;
 
 public partial class appeal_form : System.Web.UI.Page
 {
@@ -31,6 +34,56 @@ public partial class appeal_form : System.Web.UI.Page
         }
 
     }
+    [WebMethod(EnableSession = true)]
+    public static string GetCaptchaImage()
+    {
+        Random rand = new Random();
+        int num1 = rand.Next(1, 20);
+        int num2 = rand.Next(1, 10);
+        bool isAddition = rand.Next(0, 2) == 0;
+        string operatorStr = isAddition ? "+" : "-";
+
+        if (!isAddition && num1 < num2)
+        {
+            int temp = num1;
+            num1 = num2;
+            num2 = temp;
+        }
+
+        int result = isAddition ? (num1 + num2) : (num1 - num2);
+
+        // Securely store the correct answer in the active Session
+        HttpContext.Current.Session["CaptchaResult"] = result.ToString();
+
+        string captchaText = String.Format("{0} {1} {2} = ?", num1, operatorStr, num2);
+
+        using (Bitmap bitmap = new Bitmap(150, 50))
+        {
+            using (Graphics g = Graphics.FromImage(bitmap))
+            {
+                g.Clear(Color.FromArgb(249, 249, 249));
+
+                // Add random noise lines to defeat simple OCR bots
+                Pen pen = new Pen(Color.FromArgb(204, 204, 204));
+                for (int i = 0; i < 6; i++)
+                {
+                    g.DrawLine(pen, rand.Next(0, 150), rand.Next(0, 50), rand.Next(0, 150), rand.Next(0, 50));
+                }
+
+                using (Font font = new Font("Arial", 16, FontStyle.Bold))
+                {
+                    g.DrawString(captchaText, font, Brushes.Black, new PointF(10, 12));
+                }
+            }
+
+            using (MemoryStream ms = new MemoryStream())
+            {
+                bitmap.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                byte[] imageBytes = ms.ToArray();
+                return "data:image/png;base64," + Convert.ToBase64String(imageBytes);
+            }
+        }
+    }
     public void bind_data()
     {
         try
@@ -51,15 +104,21 @@ public partial class appeal_form : System.Web.UI.Page
     }
     protected void btn_submit_Click(object sender, EventArgs e)
     {
+        string sessionCaptcha = Session["CaptchaResult"] != null ? Session["CaptchaResult"].ToString() : "";
+        string userCaptcha = txt_captcha_input.Text.Trim();
+        if (string.IsNullOrEmpty(userCaptcha) || userCaptcha != sessionCaptcha)
+        {
+            txt_captcha_input.Text = "";
+            ScriptManager.RegisterStartupScript(this, GetType(), "CaptchaError", "alert('Invalid Captcha Code. Please try again.'); generateCaptcha();", true);
+            return;
+        }
+        Session.Remove("CaptchaResult");
         string contactNoCode = hd_contact_no_code.Value;  // Hidden field value for contact code
         string contactNo = hd_contact_no.Value;
         DataSet ds = BAL_Forms.ins_appeal_form(txt_s_number.Text, txt_s_last_name.Text, txt_s_given_name.Text, txt_s_full_name.Text, txt_email.Text, contactNoCode, contactNo, txt_add.Text, txt_add_line_2.Text, txt_city.Text, txt_state.Text, txt_zip.Text, ddl_country.SelectedValue.ToString(), "1");
         if (ds.Tables[0].Rows.Count > 0)
         {
-            Task.Run(() =>
-            {
-                Send_Mail.MailWithouAttachment("sso@nortwest.edu.au", "New Application For Appeal Form (" + txt_s_full_name.Text + ")", mailbody(txt_s_number.Text, txt_s_last_name.Text, txt_s_given_name.Text, txt_s_full_name.Text, txt_email.Text, hd_contact_no_code.Value.ToString() + hd_contact_no.Value.ToString(), txt_add.Text, txt_add_line_2.Text, ddl_country.SelectedValue.ToString(), txt_state.Text, txt_city.Text, txt_zip.Text), "", "");
-            });
+            Send_Mail.MailWithouAttachment("sso@nortwest.edu.au", "New Application For Appeal Form (" + txt_s_full_name.Text + ")", mailbody(txt_s_number.Text, txt_s_last_name.Text, txt_s_given_name.Text, txt_s_full_name.Text, txt_email.Text, hd_contact_no_code.Value.ToString() + hd_contact_no.Value.ToString(), txt_add.Text, txt_add_line_2.Text, ddl_country.SelectedValue.ToString(), txt_state.Text, txt_city.Text, txt_zip.Text), "", "");
             Response.Redirect("Success.aspx");
         }
     }
@@ -69,7 +128,7 @@ public partial class appeal_form : System.Web.UI.Page
         string html = @"
 <div style='width: 100%; background-color: #f0f0f0; padding: 50px 0px'>
     <div style='width: 100%; text-align: center; margin-bottom: 15px'>
-        <img src='https://website.nortwest.edu.au/assets/img/logo_nwc_transp@1x.png' width='160px' />
+        <img src='https://nortwest.edu.au/assets/img/logo_nwc_transp@1x.png' width='160px' />
         <h2 style='text-align: center'>Appeal Form</h2>
     </div>
     <div style='margin-left: auto; margin-right: auto; width: 85%; background-color: white; border-top: 3px solid #008a7f; border-bottom: 3px solid #008a7f;'>

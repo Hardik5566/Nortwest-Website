@@ -49,13 +49,23 @@
         input {
             min-height: 0px !important;
         }
-        /*.selection{
-            display:none !important;
-        }*/
 
-        /*.form-control .radio-inline input {
-            min-height: 13px !important;
-        }*/
+        /* Math Captcha Styling */
+        .captcha-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        #captchaImage {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+        .refresh-captcha {
+            cursor: pointer;
+            color: #007bff;
+            font-size: 18px;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="body" runat="Server">
@@ -105,12 +115,11 @@
                             <label class="lbl_title">Nationality</label>
                             <asp:DropDownList ID="ddl_nationality" runat="server" data-live-search="true" CssClass="form-control" aria-required="true" aria-invalid="false">
                                 <asp:ListItem Text="Nationality" Value="" />
-
                                 <asp:ListItem Text="Afghan" Value="Afghan" />
                                 <asp:ListItem Text="American" Value="American" />
                                 <asp:ListItem Text="Albanian" Value="Albanian" />
                                 <asp:ListItem Text="Algerian" Value="Algerian" />
-                                <asp:ListItem Text="Argentine" Value="Argentine" />
+                                <asp:ListItem Text="Argentine" Value="Afghan" />
                                 <asp:ListItem Text="Argentinian" Value="Argentinian" />
                                 <asp:ListItem Text="Australian" Value="Australian" />
                                 <asp:ListItem Text="Austrian" Value="Austrian" />
@@ -276,7 +285,7 @@
 
                 <div style="margin-bottom: 13px">
                     <h6>Outline of Default Refund Arrangements (Please tick the appropriate reason of refund)</h6>
-                    <span class="lbl_explanation_error txt_error" style="display: none;">Please select at least one checkbox before submitting the form.</span>
+                    <span class="lbl_explanation_error txt_error" style="display: none; color:red;">Please select at least one checkbox before submitting the form.</span>
 
                 </div>
 
@@ -298,7 +307,7 @@
                             <asp:ListItem Text="RPL assessment/No refund" />
                         </asp:CheckBoxList>
                         <div>
-                            <h6 style="color: black">*****Administration fee is calculated as 5% of the amount paid or $500 whichever is the lesser*****<br />
+                            <h6 style="color: black; margin-top:15px;">*****Administration fee is calculated as 5% of the amount paid or $500 whichever is the lesser*****<br />
                                 NB: Please provide all the supporting evidence if applicable.</h6>
                         </div>
                     </div>
@@ -354,13 +363,12 @@
 
                         <div>
                             <label class="lbl_title">Signature:</label>
-                            <img id="clearBtn" style="width: 22px; float: right; margin-bottom: 8px;" src="assets/img/eraser.png" />
+                            <img id="clearBtn" style="width: 22px; float: right; margin-bottom: 8px; cursor:pointer;" src="assets/img/eraser.png" />
                         </div>
 
                         <asp:HiddenField ID="hdnSignature" runat="server" />
 
                         <canvas id="signatureCanvas" style="border: 1px solid rgb(223 223 223); width: 100%; height: 250px; touch-action: none; background-color: white;"></canvas>
-
 
                     </div>
                     <div class="col-md-6" style="margin-top: 15px">
@@ -369,19 +377,53 @@
                     </div>
 
                 </div>
+                
+                <div class="row" style="margin-top:15px;">
+                    <div class="col-md-4">
+                        <label class="lbl_title">Enter Captcha Code</label>
+                        <div class="captcha-box">
+                            <img id="captchaImage" width="150" height="50" alt="Security Captcha" />
+                            <i class="fas fa-sync-alt refresh-captcha" onclick="generateCaptcha()"></i>
+                        </div>
+                        <asp:TextBox ID="txt_captcha_input" runat="server" CssClass="form-control" style="margin-top:10px;" placeholder="Captcha Result" onkeypress="return only_number(event)"></asp:TextBox>
+                    </div>
+                </div>
+
             </div>
 
             <div>
-                <asp:Button ID="btn_submit" runat="server" OnClientClick="saveSignature()" OnClick="btn_submit_Click" Text="SUBMIT" CssClass="btn btn-success" />
+                <asp:Button ID="btn_submit" runat="server" OnClientClick="return onSubmitValidate(this);" OnClick="btn_submit_Click" Text="SUBMIT" CssClass="btn btn-success" />
             </div>
         </div>
     </div>
+</asp:Content>
+<asp:Content ID="Content4" ContentPlaceHolderID="jqury" runat="Server">
+    <script src="assets/js/select2.min.js"></script>
+    <script src="assets/country_code/js/intlTelInput.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
+
     <script>
+        // AJAX Call to generate captcha dynamically from the backend
+        function generateCaptcha() {
+            $.ajax({
+                type: "POST",
+                url: "refund_form.aspx/GetCaptchaImage",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                cache: false, // Prevents browser caching
+                success: function (response) {
+                    $("#captchaImage").attr("src", response.d);
+                    $("#<%= txt_captcha_input.ClientID %>").val("");
+                },
+                error: function (error) {
+                    console.log("Error generating captcha");
+                }
+            });
+        }
+
         const canvas = document.getElementById('signatureCanvas');
         const signaturePad = new SignaturePad(canvas);
 
-        // Resize canvas for high-DPI displays
         function resizeCanvas() {
             const ratio = Math.max(window.devicePixelRatio || 1, 1);
             canvas.width = canvas.offsetWidth * ratio;
@@ -390,203 +432,201 @@
             signaturePad.clear();
         }
         window.addEventListener("resize", resizeCanvas);
-        resizeCanvas();
 
-        // Clear button
         document.getElementById('clearBtn').addEventListener('click', () => {
             signaturePad.clear();
         });
 
         function saveSignature() {
-            var canvas = document.getElementById("signatureCanvas");
-            var signatureData = canvas.toDataURL("image/png"); // Get signature as Base64
-            document.getElementById("<%= hdnSignature.ClientID %>").value = signatureData; // Set value in hidden field
+            var signatureData = canvas.toDataURL("image/png");
+            document.getElementById("<%= hdnSignature.ClientID %>").value = signatureData;
         }
 
-        // <%--Save button
-        document.getElementById('saveBtn').addEventListener('click', () => {
-            if (!signaturePad.isEmpty()) {
-                const signatureData = signaturePad.toDataURL('image/png');
-        document.getElementById('<%= hdnSignature.ClientID %>').value = signatureData;
-        document.getElementById('<%= btnPostBack.ClientID %>').click(); // Trigger postback
-        } else {
-            alert("Please provide a signature.");
-        }
-        });--%>
-    </script>
+        $(document).ready(function () {
+            generateCaptcha();
+            $('#<%= ddl_nationality.ClientID %>').select2({ width: '100%' });
+            resizeCanvas();
 
-</asp:Content>
-<asp:Content ID="Content4" ContentPlaceHolderID="jqury" runat="Server">
-
-    <script src="assets/js/select2.min.js"></script>
-    <script>
-        $("#<%= btn_submit.ClientID %>").click(function (event) {
-            if (!validateForm()) {
-                event.preventDefault(); // Prevent form submission if validation fails
-                return false;
-            }
-        });
-
-        // Form validation function
-        function validateForm() {
-            var isValid = true;
-            // Country Dropdown Validation with Nice Select
-           
-
-            // Validate Full Name
-            if ($("#<%= txt_first_name.ClientID %>").val().trim() == "") {
-                $("#<%= txt_first_name.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_first_name.ClientID %>").css("border-color", "");
-            }
-            if ($("#<%= txt_last_name.ClientID %>").val().trim() == "") {
-                $("#<%= txt_last_name.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_last_name.ClientID %>").css("border-color", "");
-            }
-            if ($("#<%= txt_birth_date.ClientID %>").val().trim() == "") {
-                $("#<%= txt_birth_date.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_birth_date.ClientID %>").css("border-color", "");
-            }
-            if ($("#<%= hd_contact_no.ClientID %>").val().trim() == "") {
-                $("#<%= hd_contact_no.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= hd_contact_no.ClientID %>").css("border-color", "");
-            }
-          
-            if ($("#<%= txt_passport_no.ClientID %>").val().trim() == "") {
-                $("#<%= txt_passport_no.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_passport_no.ClientID %>").css("border-color", "");
-            }
-            if ($("#<%= txt_address.ClientID %>").val().trim() == "") {
-                $("#<%= txt_address.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_address.ClientID %>").css("border-color", "");
-            }
-            if ($("#<%= txt_course_name.ClientID %>").val().trim() == "") {
-                $("#<%= txt_course_name.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_course_name.ClientID %>").css("border-color", "");
-            }
-            if ($("#<%= txt_acc_hold_name.ClientID %>").val().trim() == "") {
-                $("#<%= txt_acc_hold_name.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_acc_hold_name.ClientID %>").css("border-color", "");
-            }
-            if ($("#<%= txt_bank_name.ClientID %>").val().trim() == "") {
-                $("#<%= txt_bank_name.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_bank_name.ClientID %>").css("border-color", "");
-            }
-            if ($("#<%= txt_bank_code.ClientID %>").val().trim() == "") {
-                $("#<%= txt_bank_code.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_bank_code.ClientID %>").css("border-color", "");
-            }
-            if ($("#<%= txt_card_no.ClientID %>").val().trim() == "") {
-                $("#<%= txt_card_no.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_card_no.ClientID %>").css("border-color", "");
-            }
-            if ($("#<%= txt_address_account.ClientID %>").val().trim() == "") {
-                $("#<%= txt_address_account.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_address_account.ClientID %>").css("border-color", "");
-            }
-            if ($("#<%= txt_swift_code.ClientID %>").val().trim() == "") {
-                $("#<%= txt_swift_code.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_swift_code.ClientID %>").css("border-color", "");
-            }
-            if ($("#<%= txt_student_name.ClientID %>").val().trim() == "") {
-                $("#<%= txt_student_name.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_student_name.ClientID %>").css("border-color", "");
-            }
-            if ($("#<%= txt_sign_date.ClientID %>").val().trim() == "") {
-                $("#<%= txt_sign_date.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_sign_date.ClientID %>").css("border-color", "");
-            }
-            var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-            if (!emailRegex.test($("#<%= txt_email.ClientID %>").val())) {
-                $("#<%= txt_email.ClientID %>").css("border-color", "red");
-                isValid = false;
-            } else {
-                $("#<%= txt_email.ClientID %>").css("border-color", "");
-            }
-            if ($("#<%= ch_reason.ClientID %> input:checkbox:checked").length == 0) {
-                // Show the error message
-                $(".lbl_explanation_error").show();
-                isValid = false;
-            } else {
-                // Hide the error message
-                $(".lbl_explanation_error").hide();
-            }
-
-
-            var canvas = document.getElementById("signatureCanvas");
-            var blank = document.createElement("canvas");
-            blank.width = canvas.width;
-            blank.height = canvas.height;
-            if (canvas.toDataURL() === blank.toDataURL()) {
-                alert("Please provide your signature.");
-                isValid = false;
-            }
-            return isValid;
-        }
-
-    </script>
-    <script>
-        $(document).ready(function() {
-            // Initialize select2 on the dropdown by using ClientID
-            $('#<%= ddl_nationality.ClientID %>').select2({
-                width: '100%' // Optional, adjust the width as needed
+            // NiceSelect fixing as per your original file
+            $(function () {
+                $('.nice-select').remove();
+                $('select').show().css({ display: 'block', visibility: 'visible', opacity: 1 });
+                if(typeof $.fn.niceSelect === 'function') {
+                    $.fn.niceSelect = function(){ return this; };
+                }
             });
         });
 
-    </script>
+        // Unified Submit Handler: Safely checks forms before sending to server
+        function onSubmitValidate(btn) {
+            if (!validateForm()) {
+                return false; // Blocks postback on failure
+            }
 
-    <script src="assets/country_code/js/intlTelInput.js"></script>
+            // Save Signature Data to Hidden Field before postback
+            saveSignature();
 
+            // Provide visual feedback but ALLOW postback to continue
+            btn.value = "Submitting...";
+            btn.style.opacity = "0.7";
+            return true; 
+        }
 
+        function validateForm() {
+            var isValid = true;
+            var errorMsg = "";
+            
+            if ($("#<%= ddl_nationality.ClientID %>").val() === "") {
+                isValid = false;
+                errorMsg += "- Please select Nationality.\n";
+                $(".select2-selection").css("border", "1px solid red");
+            } else {
+                $(".select2-selection").css("border", "");
+            }
 
-    <script>
+            if ($("#<%= txt_first_name.ClientID %>").val().trim() == "") {
+                isValid = false;
+                errorMsg += "- First Name is required.\n";
+                $("#<%= txt_first_name.ClientID %>").css("border-color", "red");
+            } else { $("#<%= txt_first_name.ClientID %>").css("border-color", ""); }
+
+            if ($("#<%= txt_last_name.ClientID %>").val().trim() == "") {
+                isValid = false;
+                errorMsg += "- Last Name is required.\n";
+                $("#<%= txt_last_name.ClientID %>").css("border-color", "red");
+            } else { $("#<%= txt_last_name.ClientID %>").css("border-color", ""); }
+
+            if ($("#<%= txt_birth_date.ClientID %>").val().trim() == "") {
+                isValid = false;
+                errorMsg += "- Date of Birth is required.\n";
+                $("#<%= txt_birth_date.ClientID %>").css("border-color", "red");
+            } else { $("#<%= txt_birth_date.ClientID %>").css("border-color", ""); }
+
+            if ($("#<%= hd_contact_no.ClientID %>").val().trim() == "") {
+                isValid = false;
+                errorMsg += "- Contact Number is required.\n";
+                $("#phone").css("border-color", "red");
+            } else { $("#phone").css("border-color", ""); }
+          
+            var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (!emailRegex.test($("#<%= txt_email.ClientID %>").val())) {
+                isValid = false;
+                errorMsg += "- Valid Email is required.\n";
+                $("#<%= txt_email.ClientID %>").css("border-color", "red");
+            } else { $("#<%= txt_email.ClientID %>").css("border-color", ""); }
+
+            if ($("#<%= txt_passport_no.ClientID %>").val().trim() == "") {
+                isValid = false;
+                errorMsg += "- Passport No is required.\n";
+                $("#<%= txt_passport_no.ClientID %>").css("border-color", "red");
+            } else { $("#<%= txt_passport_no.ClientID %>").css("border-color", ""); }
+
+            if ($("#<%= txt_address.ClientID %>").val().trim() == "") {
+                isValid = false;
+                errorMsg += "- Current Address is required.\n";
+                $("#<%= txt_address.ClientID %>").css("border-color", "red");
+            } else { $("#<%= txt_address.ClientID %>").css("border-color", ""); }
+
+            if ($("#<%= txt_course_name.ClientID %>").val().trim() == "") {
+                isValid = false;
+                errorMsg += "- Course Details are required.\n";
+                $("#<%= txt_course_name.ClientID %>").css("border-color", "red");
+            } else { $("#<%= txt_course_name.ClientID %>").css("border-color", ""); }
+
+            if ($("#<%= ch_reason.ClientID %> input:checkbox:checked").length == 0) {
+                isValid = false;
+                errorMsg += "- Please select at least one Reason for Refund.\n";
+                $(".lbl_explanation_error").show();
+            } else { $(".lbl_explanation_error").hide(); }
+
+            if ($("#<%= txt_acc_hold_name.ClientID %>").val().trim() == "") {
+                isValid = false;
+                errorMsg += "- Account Holder Name is required.\n";
+                $("#<%= txt_acc_hold_name.ClientID %>").css("border-color", "red");
+            } else { $("#<%= txt_acc_hold_name.ClientID %>").css("border-color", ""); }
+
+            if ($("#<%= txt_bank_name.ClientID %>").val().trim() == "") {
+                isValid = false;
+                errorMsg += "- Bank Name is required.\n";
+                $("#<%= txt_bank_name.ClientID %>").css("border-color", "red");
+            } else { $("#<%= txt_bank_name.ClientID %>").css("border-color", ""); }
+
+            if ($("#<%= txt_bank_code.ClientID %>").val().trim() == "") {
+                isValid = false;
+                errorMsg += "- BSB/Bank Code is required.\n";
+                $("#<%= txt_bank_code.ClientID %>").css("border-color", "red");
+            } else { $("#<%= txt_bank_code.ClientID %>").css("border-color", ""); }
+
+            if ($("#<%= txt_card_no.ClientID %>").val().trim() == "") {
+                isValid = false;
+                errorMsg += "- Account/Card Number is required.\n";
+                $("#<%= txt_card_no.ClientID %>").css("border-color", "red");
+            } else { $("#<%= txt_card_no.ClientID %>").css("border-color", ""); }
+
+            if ($("#<%= txt_address_account.ClientID %>").val().trim() == "") {
+                isValid = false;
+                errorMsg += "- Bank Address is required.\n";
+                $("#<%= txt_address_account.ClientID %>").css("border-color", "red");
+            } else { $("#<%= txt_address_account.ClientID %>").css("border-color", ""); }
+
+            if ($("#<%= txt_swift_code.ClientID %>").val().trim() == "") {
+                isValid = false;
+                errorMsg += "- SWIFT Code is required.\n";
+                $("#<%= txt_swift_code.ClientID %>").css("border-color", "red");
+            } else { $("#<%= txt_swift_code.ClientID %>").css("border-color", ""); }
+
+            if ($("#<%= txt_student_name.ClientID %>").val().trim() == "") {
+                isValid = false;
+                errorMsg += "- Declaration Student Name is required.\n";
+                $("#<%= txt_student_name.ClientID %>").css("border-color", "red");
+            } else { $("#<%= txt_student_name.ClientID %>").css("border-color", ""); }
+
+            if ($("#<%= txt_sign_date.ClientID %>").val().trim() == "") {
+                isValid = false;
+                errorMsg += "- Sign Date is required.\n";
+                $("#<%= txt_sign_date.ClientID %>").css("border-color", "red");
+            } else { $("#<%= txt_sign_date.ClientID %>").css("border-color", ""); }
+
+            if (signaturePad.isEmpty()) {
+                isValid = false;
+                errorMsg += "- Please provide your signature.\n";
+            }
+
+            // ONLY check if empty client-side. The true math validation is strictly processed in C#.
+            var userCaptchaInput = $("#<%= txt_captcha_input.ClientID %>").val().trim();
+            if (userCaptchaInput === "") {
+                isValid = false;
+                errorMsg += "- Please enter the security captcha code.\n";
+                $("#<%= txt_captcha_input.ClientID %>").css("border-color", "red");
+            } else {
+                $("#<%= txt_captcha_input.ClientID %>").css("border-color", "");
+            }
+
+            if (!isValid) {
+                alert("Validation Errors:\n" + errorMsg);
+            }
+
+            return isValid;
+        }
+
+        function only_number(key) {
+            var charCode = (key.which) ? key.which : key.keyCode
+            return !(charCode > 31 && (charCode < 48 || charCode > 57));
+        }
+
+        // Phone Input Logic
         var input = document.querySelector("#phone");
         var output = document.querySelector("#output");
-
         var iti = window.intlTelInput(input, {
             nationalMode: true,
             separateDialCode: true,
-            //initialCountry: "auto",
-
             preferredCountries: ['au'],
             utilsScript: "assets/country_code/js/utils.js",
         });
 
         var handleChange = function () {
-
             var text = (iti.isValidNumber()) ? "" : "Please enter a valid number";
-            var textNode = document.createTextNode(text);
-            output.innerHTML = "";
-            output.appendChild(textNode);
+            output.innerHTML = text;
             $("#<%= hd_contact_no_code.ClientID%>").val(iti.selectedCountryData.dialCode);
             $("#<%= hd_contact_no.ClientID%>").val($("#phone").val());
         };
@@ -594,47 +634,5 @@
         input.addEventListener('countrychange', handleChange);
         input.addEventListener('change', handleChange);
         input.addEventListener('keyup', handleChange);
-
     </script>
-
-    <script>
-        function only_number(key) {
-            var charCode = (key.which) ? key.which : key.keyCode
-            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-                return false;
-            }
-            else {
-                return true;
-            }
-
-        }
-
-    </script>
-
-    <script>
-        $(document).ready(function () {
-            // On form submit
-            $("#<%= btn_submit.ClientID %>").click(function (event) {
-            var isValid = true;
-
-            // Get value of dropdown
-            var nationality = $("#<%= ddl_nationality.ClientID %>").val();
-
-            if (nationality === "") {
-                isValid = false;
-                $("#nationalityError").show();
-                $(".bootstrap-select .dropdown-toggle").css("border", "1px solid red"); // highlight select.js dropdown
-            } else {
-                $("#nationalityError").hide();
-                $(".bootstrap-select .dropdown-toggle").css("border", ""); // remove border if valid
-            }
-
-            if (!isValid) {
-                event.preventDefault(); // stop submit
-                return false;
-            }
-        });
-    });
-</script>
 </asp:Content>
-
