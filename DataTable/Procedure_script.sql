@@ -971,7 +971,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE PROCEDURE [dbo].[dis_tbl_agents_sp]
+alter PROCEDURE [dbo].[dis_tbl_agents_sp]
 AS
 BEGIN
    SELECT 
@@ -979,6 +979,8 @@ BEGIN
         agency_name,
         business_name,
         contact_number,
+		business_suburb,
+		business_country,
         status
     FROM 
 		tbl_agents

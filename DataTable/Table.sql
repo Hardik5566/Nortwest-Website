@@ -322,6 +322,7 @@ create table tbl_policies
 ----------------------------------------
 --------------Table Agent----------------
 ----------------------------------------
+--select * from tbl_agents
 create table tbl_agents
 (
 	agent_id int identity(1,1),
@@ -334,7 +335,9 @@ create table tbl_agents
 	modify_by int,
 	modify_date datetime,
 	delete_by int,
-	delete_date datetime
+	delete_date datetime,
+	business_suburb varchar(200),
+	business_country varchar(200)
 )
 ----------------------------------------
 --------------Table Agent Type-----------
