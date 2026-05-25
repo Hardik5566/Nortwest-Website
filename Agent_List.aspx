@@ -51,7 +51,7 @@
                     </div>
                 </div>
                 <div class="agent-image">
-                    <a href="Agent_Application.aspx">
+                    <a href="Agent_app_form.aspx">
                         <img src="assets/img/agent1.jpg" alt="Agent Banner" />
                     </a>
                 </div>

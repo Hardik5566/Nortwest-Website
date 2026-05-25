@@ -4453,3 +4453,74 @@ BEGIN
 	select 'ok'
 END
 GO
+ ----------------------------------------
+-------------Insert new agent----------------
+----------------------------------------
+alter PROC ins_new_agent_form_sp
+(
+    @agency_name       VARCHAR(450),
+    @agency_location   VARCHAR(500),
+    @website           VARCHAR(500),
+    @contact_name      VARCHAR(250),
+    @contact_email     VARCHAR(350),
+    @contact_no_code   VARCHAR(5),
+    @contact_no        VARCHAR(25),
+    @create_by         INT
+)
+AS
+BEGIN
+
+    INSERT INTO tbl_new_agent_form
+    (
+        agency_name,
+        agency_location,
+        website,
+        contact_name,
+        contact_email,
+        contact_no_code,
+        contact_no,
+        status,
+        create_by,
+        create_date
+    )
+    VALUES
+    (
+        @agency_name,
+        @agency_location,
+        @website,
+        @contact_name,
+        @contact_email,
+        @contact_no_code,
+        @contact_no,
+        1,
+        @create_by,
+        dbo.GetCurrentAUTTime()
+    )
+	declare @agent_id int=@@identity
+	exec sel_new_agent_form_sp @agent_id
+END
+ ----------------------------------------
+-------------Select new agent----------------
+----------------------------------------
+alter PROC sel_new_agent_form_sp
+(
+    @agent_id INT
+)
+AS
+BEGIN
+
+    SELECT 
+        agent_id,
+        agency_name,
+        agency_location,
+        website,
+        contact_name,
+        contact_email,
+        contact_no_code,
+        contact_no,
+        status
+    FROM tbl_new_agent_form
+    WHERE agent_id = @agent_id
+    AND status=1
+
+END

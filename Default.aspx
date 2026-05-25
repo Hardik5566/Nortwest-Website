@@ -49,7 +49,7 @@
                                 <div class="row">
                                     <div class="col-md-8">
                                         <div class="content">
-                                            <h4 data-animation="animated fadeInUp">Welcome to Nortwest</h4>
+                                            <h4 data-animation="animated fadeInUp">Welcome to Nortwest College</h4>
                                             <h2 data-animation="animated fadeInLeft">Connecting Students Worldwide for a Brighter Future.</h2>
                                             <a data-animation="animated fadeInDown" class="btn btn-light border btn-md" href="#home_about">Learn More</a>
                                             <a data-animation="animated fadeInUp" class="btn btn-theme effect btn-md" href="Courses.aspx">View Courses</a>
@@ -67,7 +67,7 @@
                                 <div class="row">
                                     <div class="col-md-8">
                                         <div class="content">
-                                            <h4 data-animation="animated fadeInUp">Welcome to Nortwest</h4>
+                                            <h4 data-animation="animated fadeInUp">Welcome to Nortwest College</h4>
                                             <h2 data-animation="animated fadeInLeft">Global Learning, Endless Opportunities for Every Student.</h2>
                                             <a data-animation="animated fadeInDown" class="btn btn-light border btn-md" href="#home_about">Learn More</a>
                                             <a data-animation="animated fadeInUp" class="btn btn-theme effect btn-md" href="Courses.aspx">View Courses</a>
@@ -99,10 +99,10 @@
                 <div class="about-items">
                     <div class="col-md-6 about-info">
                         <h2 style="margin-bottom: 0px !important">Welcome ! </h2>
-                        <h1><span style="font-size: 26px; font-weight: 200">We're International Education Academy</span></h1>
+                        <h1><span style="font-size: 26px; font-weight: 200">Welcome to Nortwest College!</span></h1>
 
                         <blockquote>
-                            Nortwest College has been Australia’s premier provider of education to overseas students since 2007. Nortwest College focuses on up-to-date, industry-endorsed courses in Business, Management, Project Management, IT, Trade, Commercial Cookery and Hospitality Management, and English. We have students from all over the world studying with us and experiencing life, study, and work in Australia with our support.
+                            Nortwest College has been Australia’s premier provider of education to overseas students since 2007. Nortwest College focuses on up-to-date, Industry informed courses in Business, Management, Project Management, IT, Trade, Commercial Cookery and Hospitality Management, and English. We have students from all over the world studying with us and experiencing Experiencing studying in Australia with our support.
                        
                         </blockquote>
 
@@ -116,8 +116,8 @@
                                             <i class="ti-panel"></i>
                                         </div>
                                         <div class="info">
-                                            <h2>12</h2>
-                                            <h4>Expert faculty</h4>
+                                          <%--  <h2>12</h2>--%>
+                                            <h4>Expert <br />Trainers</h4>
                                         </div>
                                     </a>
                                 </div>
@@ -129,8 +129,8 @@
                                             <i class="ti-ruler-pencil"></i>
                                         </div>
                                         <div class="info">
-                                            <h2>68</h2>
-                                            <h4>Best Teachers</h4>
+                                            <%--<h2>68</h2>--%>
+                                            <h4>Friendly <br />Staff</h4>
                                         </div>
                                     </a>
                                 </div>
@@ -142,8 +142,8 @@
                                             <i class="ti-server"></i>
                                         </div>
                                         <div class="info">
-                                            <h2>120</h2>
-                                            <h4>Online Courses</h4>
+                                          <%--  <h2>120</h2>--%>
+                                            <h4>Supportive Learning Environment</h4>
                                         </div>
                                     </a>
                                 </div>
@@ -155,8 +155,8 @@
                                             <i class="ti-desktop"></i>
                                         </div>
                                         <div class="info">
-                                            <h2>689</h2>
-                                            <h4>Scholarship</h4>
+                                            <%--<h2>689</h2>--%>
+                                            <h4>Scholarships of Offer</h4>
                                         </div>
                                     </a>
                                 </div>
@@ -177,7 +177,7 @@
                     <div class="col-md-8 col-md-offset-2">
                         <h2>Our Campus</h2>
                         <p>
-                            Welcome to our educational institution with three campuses in different cities, offering quality learning opportunities nationwide.
+                           Welcome to our education institution with 4 campuses across 3 different states, all offering quality learning opportunities for our valued students. 
                         </p>
                     </div>
                 </div>
@@ -277,11 +277,8 @@
             <div class="row">
                 <div class="site-heading text-center">
                     <div class="col-md-8 col-md-offset-2">
-                        <h2>Academic</h2>
-                        <p>
-                            Discourse assurance estimable applauded to so. Him everything melancholy uncommonly but solicitude inhabiting projection off. Connection stimulated estimating excellence an to impression. 
+                        <h2>Discover More</h2>
                        
-                        </p>
                     </div>
                 </div>
             </div>
@@ -406,30 +403,30 @@
                         <div class="content campus-carousel owl-carousel owl-theme">
                             <div class="item">
                                 <h4>Adelaide Campus</h4>
-                                <p>
+                               <%-- <p>
                                     Decisively surrounded all admiration and not you. Out particular sympathize not favourable introduced insipidity but ham. Rather number can and set praise. Distrusts an it contented perceived attending oh. Thoroughly estimating introduced stimulated why but motionless. 
                                
-                                </p>
+                                </p>--%>
                                 <a href="https://www.youtube.com/watch?v=NuDOU3V1Xno" class="popup-youtube relative light video-play-button item-center">
                                     <i class="fa fa-play"></i>
                                 </a>
                             </div>
                             <div class="item">
                                 <h4>Sydney Campus</h4>
-                                <p>
+                               <%-- <p>
                                     Decisively surrounded all admiration and not you. Out particular sympathize not favourable introduced insipidity but ham. Rather number can and set praise. Distrusts an it contented perceived attending oh. Thoroughly estimating introduced stimulated why but motionless. 
                                
-                                </p>
+                                </p>--%>
                                 <a href="https://www.youtube.com/watch?v=4YtGrK5Umlk" class="popup-youtube relative light video-play-button item-center">
                                     <i class="fa fa-play"></i>
                                 </a>
                             </div>
                             <div class="item">
                                 <h4>Melbourne Campus</h4>
-                                <p>
+                            <%--    <p>
                                     Decisively surrounded all admiration and not you. Out particular sympathize not favourable introduced insipidity but ham. Rather number can and set praise. Distrusts an it contented perceived attending oh. Thoroughly estimating introduced stimulated why but motionless. 
                                
-                                </p>
+                                </p>--%>
                                 <a href="https://www.youtube.com/watch?v=L-MudjY5Uf0" class="popup-youtube relative light video-play-button item-center">
                                     <i class="fa fa-play"></i>
                                 </a>

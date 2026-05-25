@@ -144,7 +144,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="item">
+<%--                                            <div class="item">
                                                 <div class="info">
                                                     <div class="author">
                                                         <h4>Can I come to Australia on a tourist visa and change it for a student visa?</h4>
@@ -155,7 +155,7 @@
             <a href="#">Click here</a> for more information about SVP.
                                                     </p>
                                                 </div>
-                                            </div>
+                                            </div>--%>
 
                                             <div class="item">
                                                 <div class="info">

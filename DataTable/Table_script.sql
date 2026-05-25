@@ -1078,3 +1078,24 @@ create TABLE tbl_contact_us_form(
 	delete_by int,
 	delete_date datetime
 )
+ ----------------------------------------
+----------------------------------------
+----------------------------------------
+CREATE TABLE tbl_new_agent_form
+(
+    agent_id INT IDENTITY(1,1) PRIMARY KEY,
+	agency_name        VARCHAR(450),
+    agency_location    VARCHAR(500),
+    website            VARCHAR(500),
+	contact_name       VARCHAR(250),
+    contact_email      VARCHAR(350),
+    contact_no_code     VARCHAR(5),
+	contact_no			VARCHAR(25),
+	status             BIT,
+	create_by          INT,
+    create_date        DATETIME,
+	modify_by          INT,
+    modify_date        DATETIME,
+	delete_by          INT,
+    delete_date        DATETIME
+)

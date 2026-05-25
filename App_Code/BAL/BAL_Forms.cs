@@ -1286,4 +1286,20 @@ public class BAL_Forms
         cmd.Parameters.Add(param.datetimeparam("@sign_date", sign_date));
         return command.ExtQueryDS(cmd);
     }
+    public static DataSet ins_new_agent_form(string agency_name, string agency_location, string website, string contact_name, string contact_email, string contact_no_code, string contact_no, string create_by)
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.CommandText = "ins_new_agent_form_sp";
+        parameter param = new parameter();
+        cmd.Parameters.Add(param.stringparam("@agency_name", agency_name));
+        cmd.Parameters.Add(param.stringparam("@agency_location", agency_location));
+        cmd.Parameters.Add(param.stringparam("@website", website));
+        cmd.Parameters.Add(param.stringparam("@contact_name", contact_name));
+        cmd.Parameters.Add(param.stringparam("@contact_email", contact_email));
+        cmd.Parameters.Add(param.stringparam("@contact_no_code", contact_no_code));
+        cmd.Parameters.Add(param.stringparam("@contact_no", contact_no));
+        cmd.Parameters.Add(param.intparam("@create_by", create_by));
+
+        return command.ExtQueryDS(cmd);
+    }
 }
