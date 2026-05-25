@@ -127,9 +127,8 @@
                         </a>
                     </li>
 
-
                     <li class="menu-label">Forms</li>
-                    <%--    <li>
+                    <li>
                         <a href="javascript:;" class="has-arrow">
                             <div class="parent-icon">
                                 <i class="bi bi-grid-fill"></i>
@@ -137,19 +136,14 @@
                             <div class="menu-title">Master</div>
                         </a>
                         <ul>
-                            <li><a href="Course_master.aspx"><i class="bi bi-circle"></i>Course</a>
-                            </li>
-                            <li><a href="Intake_master.aspx"><i class="bi bi-circle"></i>Intake</a>
-                            </li>
-                            <li><a href="public_holidays_master.aspx"><i class="bi bi-circle"></i>Holiday</a>
-                            </li>
-                            <li><a href="Policies_master.aspx"><i class="bi bi-circle"></i>Policies</a>
-                            </li>
-                            <li><a href="Bulk_agent_upload.aspx"><i class="bi bi-circle"></i>Agent</a>
-                            </li>
+                            <li><a href="Course_master.aspx"><i class="bi bi-circle"></i>Course</a></li>
+                            <li><a href="Intake_master.aspx"><i class="bi bi-circle"></i>Intake</a></li>
+                            <li><a href="Termbreak_master.aspx"><i class="bi bi-circle"></i>TermBreak</a></li>
+                            <li><a href="public_holidays_master.aspx"><i class="bi bi-circle"></i>Holiday</a></li>
+                            <li><a href="Policies_master.aspx"><i class="bi bi-circle"></i>Policies</a></li>
+                            <li><a href="Bulk_agent_upload.aspx"><i class="bi bi-circle"></i>Agent</a></li>
                         </ul>
-
-                    </li>--%>
+                    </li>
 
                     <li>
                         <a href="Form_list.aspx">
@@ -160,7 +154,7 @@
                         </a>
                     </li>
 
-                    <%-- <li>
+                    <li>
                         <a href="javascript:;" class="has-arrow">
                             <div class="parent-icon">
                                 <i class="bi bi-grid-fill"></i>
@@ -168,47 +162,30 @@
                             <div class="menu-title">Student Forms</div>
                         </a>
                         <ul>
-                            <li><a href="Student_Request.aspx"><i class="bi bi-circle"></i>Student Request</a>
-                            </li>
-                            <li><a href="Application_For_Deferment.aspx"><i class="bi bi-circle"></i>Deferment / Suspension of Studies</a>
-                            </li>
-                            <li><a href="Change_Course.aspx"><i class="bi bi-circle"></i>Change of a Course</a>
-                            </li>
-                            <li><a href="Cancellation_Form.aspx"><i class="bi bi-circle"></i>Cancelation</a>
-                            </li>
-                            <li><a href="Special_Leave_Request.aspx"><i class="bi bi-circle"></i>Special Leave Request</a>
-                            </li>
-                            <li><a href="Credit_Card_auth.aspx"><i class="bi bi-circle"></i>Credit Card Authorisation</a>
-                            </li>
-                            <li><a href="Student_Details_Form.aspx"><i class="bi bi-circle"></i>Student Details</a>
-                            </li>
-                            <li><a href="Credit_Transfer_Application.aspx"><i class="bi bi-circle"></i>Credit Transfer Application</a>
-                            </li>
-                            <li><a href="Application_For_Reassesment.aspx"><i class="bi bi-circle"></i>Application for Reassessment</a>
-                            </li>
-                            <li><a href="Appeal_Form.aspx"><i class="bi bi-circle"></i>Appeal</a>
-                            </li>
-                            <li><a href="Complaint_and_Feedback.aspx"><i class="bi bi-circle"></i>Complaint and Feedback</a>
-                            </li>
-                            <li><a href="Change_of_Campus.aspx"><i class="bi bi-circle"></i>Change of Campus</a>
-                            </li>
-                            <li><a href="Cricos_student_Withdraw_Form.aspx"><i class="bi bi-circle"></i>CRICOS Student Withdrawal</a>
-                            </li>
-                            <li><a href="Refund.aspx"><i class="bi bi-circle"></i>Refund</a>
-                            </li>
-                            <li><a href="GTE.aspx"><i class="bi bi-circle"></i>GTE</a>
-                            </li>
-                            <li><a href="English_Test.aspx"><i class="bi bi-circle"></i>English Test (EPT)</a>
-                            </li>
-                            <li><a href="release_request_form.aspx"><i class="bi bi-circle"></i>Release Request Form</a>
-                            </li>
-                            <li><a href="qualification_issuance__form.aspx"><i class="bi bi-circle"></i>Qualification Issuance Form</a>
-                            </li>
-                              <li><a href="GST_form.aspx"><i class="bi bi-circle"></i>GST Form</a>
-                            </li>
+                            <li><a href="Student_Request.aspx"><i class="bi bi-circle"></i>Student Request</a></li>
+                            <li><a href="Application_For_Deferment.aspx"><i class="bi bi-circle"></i>Deferment / Suspension of Studies</a></li>
+                            <li><a href="Change_Course.aspx"><i class="bi bi-circle"></i>Change of a Course</a></li>
+                            <li><a href="Cancellation_Form.aspx"><i class="bi bi-circle"></i>Cancelation</a></li>
+                            <li><a href="Special_Leave_Request.aspx"><i class="bi bi-circle"></i>Special Leave Request</a></li>
+                            <li><a href="Credit_Card_auth.aspx"><i class="bi bi-circle"></i>Credit Card Authorisation</a></li>
+                            <li><a href="Student_Details_Form.aspx"><i class="bi bi-circle"></i>Student Details</a></li>
+                            <li><a href="Credit_Transfer_Application.aspx"><i class="bi bi-circle"></i>Credit Transfer Application</a></li>
+                            <li><a href="Application_For_Reassesment.aspx"><i class="bi bi-circle"></i>Application for Reassessment</a></li>
+                            <li><a href="Appeal_Form.aspx"><i class="bi bi-circle"></i>Appeal</a></li>
+                            <li><a href="Complaint_and_Feedback.aspx"><i class="bi bi-circle"></i>Complaint and Feedback</a></li>
+                            <li><a href="Change_of_Campus.aspx"><i class="bi bi-circle"></i>Change of Campus</a></li>
+                            <li><a href="Cricos_student_Withdraw_Form.aspx"><i class="bi bi-circle"></i>CRICOS Student Withdrawal</a></li>
+                            <li><a href="Refund.aspx"><i class="bi bi-circle"></i>Refund</a></li>
+                            <li><a href="GTE.aspx"><i class="bi bi-circle"></i>GTE</a></li>
+                            <li><a href="English_Test.aspx"><i class="bi bi-circle"></i>English Test (EPT)</a></li>
+                            <li><a href="release_request_form.aspx"><i class="bi bi-circle"></i>Release Request Form</a></li>
+                            <li><a href="qualification_issuance__form.aspx"><i class="bi bi-circle"></i>Qualification Issuance Form</a></li>
+                            <li><a href="GST_form.aspx"><i class="bi bi-circle"></i>GST Form</a></li>
+                            <li><a href="Contact_us.aspx"><i class="bi bi-circle"></i>Contact Us</a></li>
+                            <li><a href="course_entry_form.aspx"><i class="bi bi-circle"></i>Course Entry Form</a></li>
+                            <li><a href="Agent_application.aspx"><i class="bi bi-circle"></i>Agent Application</a></li>
                         </ul>
-
-                    </li>--%>
+                    </li>
 
                     <li>
                         <a href="javascript:;" class="has-arrow">
@@ -218,14 +195,10 @@
                             <div class="menu-title">Student Orientation</div>
                         </a>
                         <ul>
-                            <li><a href="New_Vet_Orientation.aspx"><i class="bi bi-circle"></i>Vet Course Student</a>
-                            </li>
-                            <li><a href="New_Elicos_Orientation.aspx"><i class="bi bi-circle"></i>Elicos Course Student</a>
-                            </li>
-
+                            <li><a href="New_Vet_Orientation.aspx"><i class="bi bi-circle"></i>Vet Course Student</a></li>
+                            <li><a href="New_Elicos_Orientation.aspx"><i class="bi bi-circle"></i>Elicos Course Student</a></li>
                         </ul>
                     </li>
-
 
                 </ul>
                 <!--end navigation-->

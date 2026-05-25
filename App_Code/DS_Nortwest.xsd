@@ -592,6 +592,20 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
+        <xs:element name="dt_bulk_sleep" msprop:Generator_TableClassName="dt_bulk_sleepDataTable" msprop:Generator_TableVarName="tabledt_bulk_sleep" msprop:Generator_RowChangedName="dt_bulk_sleepRowChanged" msprop:Generator_TablePropName="dt_bulk_sleep" msprop:Generator_RowDeletingName="dt_bulk_sleepRowDeleting" msprop:Generator_RowChangingName="dt_bulk_sleepRowChanging" msprop:Generator_RowEvHandlerName="dt_bulk_sleepRowChangeEventHandler" msprop:Generator_RowDeletedName="dt_bulk_sleepRowDeleted" msprop:Generator_RowClassName="dt_bulk_sleepRow" msprop:Generator_UserTableName="dt_bulk_sleep" msprop:Generator_RowEvArgName="dt_bulk_sleepRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ac_no" msprop:Generator_ColumnVarNameInTable="columnac_no" msprop:Generator_ColumnPropNameInRow="ac_no" msprop:Generator_ColumnPropNameInTable="ac_noColumn" msprop:Generator_UserColumnName="ac_no" type="xs:string" minOccurs="0" />
+              <xs:element name="part_no" msprop:Generator_ColumnVarNameInTable="columnpart_no" msprop:Generator_ColumnPropNameInRow="part_no" msprop:Generator_ColumnPropNameInTable="part_noColumn" msprop:Generator_UserColumnName="part_no" type="xs:string" minOccurs="0" />
+              <xs:element name="full_name" msprop:Generator_ColumnVarNameInTable="columnfull_name" msprop:Generator_ColumnPropNameInRow="full_name" msprop:Generator_ColumnPropNameInTable="full_nameColumn" msprop:Generator_UserColumnName="full_name" type="xs:string" minOccurs="0" />
+              <xs:element name="middle_name" msprop:Generator_ColumnVarNameInTable="columnmiddle_name" msprop:Generator_ColumnPropNameInRow="middle_name" msprop:Generator_ColumnPropNameInTable="middle_nameColumn" msprop:Generator_UserColumnName="middle_name" type="xs:string" minOccurs="0" />
+              <xs:element name="sex_age" msprop:Generator_ColumnVarNameInTable="columnsex_age" msprop:Generator_ColumnPropNameInRow="sex_age" msprop:Generator_ColumnPropNameInTable="sex_ageColumn" msprop:Generator_UserColumnName="sex_age" type="xs:string" minOccurs="0" />
+              <xs:element name="idcard_no" msprop:Generator_ColumnVarNameInTable="columnidcard_no" msprop:Generator_ColumnPropNameInRow="idcard_no" msprop:Generator_ColumnPropNameInTable="idcard_noColumn" msprop:Generator_UserColumnName="idcard_no" type="xs:string" minOccurs="0" />
+              <xs:element name="polling_location" msprop:Generator_ColumnVarNameInTable="columnpolling_location" msprop:Generator_ColumnPropNameInRow="polling_location" msprop:Generator_ColumnPropNameInTable="polling_locationColumn" msprop:Generator_UserColumnName="polling_location" type="xs:string" minOccurs="0" />
+              <xs:element name="slnoinpart" msprop:Generator_ColumnVarNameInTable="columnslnoinpart" msprop:Generator_ColumnPropNameInRow="slnoinpart" msprop:Generator_ColumnPropNameInTable="slnoinpartColumn" msprop:Generator_UserColumnName="slnoinpart" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
       </xs:choice>
     </xs:complexType>
   </xs:element>

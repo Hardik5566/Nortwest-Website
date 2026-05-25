@@ -294,6 +294,7 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">For Students</a>
                                 <ul class="dropdown-menu">
                                     <li><a href="Vet_Orientation.aspx">New Student Orientation</a></li>
+                                    <li><a href="Student_Orientation_Access.aspx">Orientation - Step by Step</a></li>
                                     <li><a href="academic_enrolment_calenda.aspx">ACADEMIC CALENDAR</a></li>
 
                                     <%--                                    <li class="dropdown-submenu">
