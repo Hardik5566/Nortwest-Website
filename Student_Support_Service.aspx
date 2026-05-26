@@ -502,8 +502,8 @@
                     <h4 style="margin: 25px 0 15px; font-weight: 600; color: var(--navy);">Contact Student Support</h4>
                     <ul style="margin-bottom: 0;">
                         <li><i class="fas fa-envelope" style="color: var(--teal); width: 25px;"></i> <strong>Email:</strong> <a href="mailto:sso@nortwest.edu.au">sso@nortwest.edu.au</a></li>
-                        <li><i class="fas fa-phone-alt" style="color: var(--teal); width: 25px;"></i> <strong>Phone:</strong> College phone number</li>
-                        <li><i class="fas fa-map-marker-alt" style="color: var(--teal); width: 25px;"></i> <strong>Campus:</strong> Campus addresses for Sydney, Melbourne and Adelaide</li>
+                        <li><i class="fas fa-phone-alt" style="color: var(--teal); width: 25px;"></i> <strong>Phone:</strong>-</li>
+                        <li><i class="fas fa-map-marker-alt" style="color: var(--teal); width: 25px;"></i> <strong>Campus:</strong>-</li>
                         <li><i class="fas fa-clock" style="color: var(--teal); width: 25px;"></i> <strong>Hours:</strong> Monday to Friday, 9:00 am – 8:00 pm</li>
                         <li><i class="fas fa-moon" style="color: var(--teal); width: 25px;"></i> <strong>After-hours emergency contact:</strong> emergency contact number for each campus</li>
                         <li style="border-bottom: none;"><i class="fas fa-wpforms" style="color: var(--teal); width: 25px;"></i> <strong>Support form:</strong> <a href="https://nortwest.edu.au/Student_Request_Forms.aspx" target="_blank">Student Request Forms</a></li>
@@ -666,7 +666,7 @@
                     <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid var(--border);">
                         <h4 style="font-size: 16px; margin-bottom: 10px;">Contact Student Support Team:</h4>
                         <p style="margin-bottom: 5px;"><strong>Email:</strong> <a href="mailto:sso@nortwest.edu.au">sso@nortwest.edu.au</a></p>
-                        <p style="margin-bottom: 0;"><strong>Phone:</strong> [College phone number]</p>
+                        <p style="margin-bottom: 0;"><strong>Phone:</strong>-</p>
                     </div>
                 </div>
             </div>
