@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="Agent_app_form.aspx.cs" Inherits="Agent_app_form" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="title" runat="Server">
-    Agent Application Form
+    Agent Enquiry
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="head" runat="Server">
 
@@ -73,10 +73,10 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 col-md-12">
-                    <h1>Agent application</h1>
+                    <h1>Agent Enquiry</h1>
                     <ul class="breadcrumb">
                         <li><a href="Default.aspx"><i class="fas fa-home"></i>Home</a></li>
-                        <li class="active">Agent application</li>
+                        <li class="active">Agent Enquiry</li>
                     </ul>
                 </div>
             </div>
@@ -88,16 +88,16 @@
             <div class="row">
                 <div class="site-heading text-center">
                     <div class="col-md-8 col-md-offset-2">
-                        <h2>Agent Application</h2>
+                        <h2>Agent Enquiry</h2>
                     </div>
                 </div>
             </div>
 
             <div class="form-container">
-                <h4>Agency Details</h4>
-                <span>(Please note all particulars must be completed. Print clearly and use BLOCK letters only)</span>
-                <br />
-                <br />
+                <%--<h4>Agency Details</h4>--%>
+                <%--<span>(Please note all particulars must be completed. Print clearly and use BLOCK letters only)</span>--%>
+                <%--<br />
+                <br />--%>
 
                 <div class="row">
                     <div class="col-md-6">

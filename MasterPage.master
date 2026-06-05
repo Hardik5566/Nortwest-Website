@@ -291,7 +291,7 @@
                                 <a href="pre-enrolment.aspx">Pre-Enrolment</a>
                             </li>
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">For Students</a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">New Student Orientation</a>
                                 <ul class="dropdown-menu">
                                     <li><a href="Vet_Orientation.aspx">New Student Orientation</a></li>
                                     <%--<li><a href="Student_Orientation_Access.aspx">Orientation - Step by Step</a></li>--%>
@@ -424,7 +424,8 @@
                                     <p style="font-size: 13px">
 
                                         <a href="https://goo.gl/maps/rrK2MkmPbKX2EWWA8" target="_blank">
-                                            <i class="fas fa-map">&nbsp&nbsp</i>Level 2, 531 George Street, Sydney NSW 2000 Australia
+                                            <i class="fas fa-map">&nbsp&nbsp</i>Level 2, 511 George Street Sydney NSW 2000 AUSTRALIA
+
                                         </a>
                                     </p>
 
@@ -454,7 +455,8 @@
                                     <p style="font-size: 13px">
 
                                         <a href="https://www.google.com/maps/place/The+Grace+Sydney/@-33.8689641,151.2058908,936m/data=!3m2!1e3!4b1!4m9!3m8!1s0x6b12ae3f4100379f:0xdcefb6f023fc341f!5m2!4m1!1i2!8m2!3d-33.8689641!4d151.2058908!16zL20vMDd3dmJu?entry=ttu&g_ep=EgoyMDI1MDgyNS4wIKXMDSoASAFQAw%3D%3D" target="_blank">
-                                            <i class="fas fa-map">&nbsp&nbsp</i>Level 2, The Grace Hotel Building 77 York Street Sydney NSW 2000 Australia
+                                            <i class="fas fa-map">&nbsp&nbsp</i>Level 2, The Grace Building Hotel 77 York Street Sydney NSW 2000 AUSTRALIA
+
                                         </a>
                                     </p>
 
@@ -483,7 +485,7 @@
                                     <p style="font-size: 13px">
 
                                         <a href="https://www.google.com/maps/place/1+2%2F68+Grenfell+St,+Adelaide+SA+5000/@-34.9240955,138.6021704,924m/data=!3m2!1e3!4b1!4m6!3m5!1s0x6ab0ced693478bfb:0xc5535aea4c408e49!8m2!3d-34.9240955!4d138.6021704!16s%2Fg%2F11k9jddzth?entry=ttu&g_ep=EgoyMDI1MDgyNS4wIKXMDSoASAFQAw%3D%3D" target="_blank">
-                                            <i class="fas fa-map">&nbsp&nbsp</i>Suite 1,Level 2 66-68 Grenfell Street Adelaide SA 5000 Australia
+                                            <i class="fas fa-map">&nbsp&nbsp</i>Suite 1, Level 2 66-68 Grenfell Street Adeliade, SA 5000 AUSTRALIA
                                         </a>
                                     </p>
 
@@ -511,9 +513,8 @@
                                     <p style="font-size: 13px">
 
                                         <a href="https://www.google.com/maps/place/9%2F108+Lonsdale+St,+Melbourne+VIC+3000/@-37.8101304,144.9690749,891m/data=!3m2!1e3!4b1!4m6!3m5!1s0x6ad642c92c70b903:0x1a52b8f482d3e7ff!8m2!3d-37.8101304!4d144.9690749!16s%2Fg%2F11w8dn7696?entry=ttu&g_ep=EgoyMDI1MDgyNS4wIKXMDSoASAFQAw%3D%3D" target="_blankx">
-                                            <i class="fas fa-map">&nbsp&nbsp</i>Level 9,
-                                                                108 Lonsdale Street,
-                                                                Melbourne, VIC, 3000, Australia
+                                            <i class="fas fa-map">&nbsp&nbsp</i>Level 9, 108 Lonsdale Street Melbourne, VIC, 3000 AUSTRALIA
+
                                         </a>
                                     </p>
 
@@ -529,7 +530,7 @@
                             <div class="f-item about">
                                 <h4>About</h4>
                                 <p style="text-align: justify;">
-                                    Nortwest College has been Australia’s premier provider of education to overseas students since since 2009’. Industry endorsed changes to industry informed Delete ‘life, study and work’ and change to ‘studying in Australia.
+                                    Nortwest College has been a high-quality provider of Australian vocational education and training to overseas students since 2009. Offering a wide range of courses, we have students from all over the world studying with us and experiencing the opportunities Australia has to offer, while achieving their global study ambitions.
                                 </p>
 
                             </div>
@@ -551,7 +552,7 @@
                                         <a href="Student_Forms.aspx"><i class="ti-angle-right"></i>Student Forms</a>
                                     </li>
                                     <li>
-                                        <a href="academic_enrolment_calenda.aspx"><i class="ti-angle-right"></i>Calendar</a>
+                                        <a href="academic_enrolment_calenda.aspx"><i class="ti-angle-right"></i>Intake Dates</a>
                                     </li>
 
                                 </ul>

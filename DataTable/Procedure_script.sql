@@ -979,6 +979,7 @@ BEGIN
         agency_name,
         business_name,
         contact_number,
+		email,
 		business_suburb,
 		business_country,
         status

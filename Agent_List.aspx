@@ -46,7 +46,7 @@
                     <div class="col-md-8 col-md-offset-2">
                         <h2>Agents</h2>
                         <p>
-                            Under the new requirements of the Education Services for Overseas Students (ESOS) legislation, Nortwest college must now publish a list of Education Agents acting on its behalf. The list of Education Agents is also published in other materials as prescribed in the legislation.
+                            Nortwest works with approved education agents who are formally authorised to represent the College and support prospective international students with accurate and ethical information about our courses and services. Nortwest actively monitors the performance and conduct of its education agents to ensure compliance with the ESOS Act, National Code, and the College’s policies. Approved education agents may receive commissions from the College for successful student enrolments in accordance with written agreements and applicable legislation.
                         </p>
                     </div>
                 </div>
@@ -63,8 +63,10 @@
                             <thead>
                                 <tr>
                                     <th>Agency</th>
-                                    <th>Address</th>
                                     
+                                    <th>Business Suburb</th>
+                                    <th>Business Country</th>
+                                    <th>Email</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -72,8 +74,10 @@
                                     <ItemTemplate>
                                         <tr>
                                             <td><%# Eval("agency_name") %></td>
-                                            <td><%# Eval("business_suburb")+", "+Eval("business_country") %></td>
-                                    
+                                             
+                                            <td><%# Eval("business_suburb") %></td>
+                                            <td><%# Eval("business_country") %></td>
+                                    <td><%# Eval("email") %></td>
                                         </tr>
                                     </ItemTemplate>
                                 </asp:ListView>

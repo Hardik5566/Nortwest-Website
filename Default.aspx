@@ -102,7 +102,7 @@
                         <h1><span style="font-size: 26px; font-weight: 200">Welcome to Nortwest College!</span></h1>
 
                         <blockquote>
-                            Nortwest College has been Australia’s premier provider of education to overseas students since 2007. Nortwest College focuses on up-to-date, Industry informed courses in Business, Management, Project Management, IT, Trade, Commercial Cookery and Hospitality Management, and English. We have students from all over the world studying with us and experiencing Experiencing studying in Australia with our support.
+                            Nortwest College has been a high-quality provider of Australian vocational education and training to overseas students since 2009. Nortwest College delivers up-to-date, industry informed courses in Business, Management, Project Management, IT, Building & Construction, Commercial Cookery, Hospitality Management, and ELICOS (English Language Intensive Courses for Overseas Students). We have students from all over the world studying with us and experiencing the opportunities Australia has to offer, while achieving their global study ambitions.
                        
                         </blockquote>
 
@@ -156,7 +156,7 @@
                                         </div>
                                         <div class="info">
                                             <%--<h2>689</h2>--%>
-                                            <h4>Scholarships of Offer</h4>
+                                            <h4>Scholarships on Offer</h4>
                                         </div>
                                     </a>
                                 </div>

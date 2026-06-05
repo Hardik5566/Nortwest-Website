@@ -1,27 +1,27 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.37314.3 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Nortwest-Website(1)", "http://localhost:52215", "{E6A6FC76-AA17-4465-B651-780EBCDE2AB3}"
 	ProjectSection(WebsiteProperties) = preProject
 		UseIISExpress = "true"
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_52215"
-		Debug.AspNetCompiler.PhysicalPath = "F:\Other Project\Nortwest-Website\"
+		Debug.AspNetCompiler.PhysicalPath = "..\Nortwest-Website\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_52215\"
 		Debug.AspNetCompiler.Updateable = "true"
 		Debug.AspNetCompiler.ForceOverwrite = "true"
 		Debug.AspNetCompiler.FixedNames = "false"
 		Debug.AspNetCompiler.Debug = "True"
 		Release.AspNetCompiler.VirtualPath = "/localhost_52215"
-		Release.AspNetCompiler.PhysicalPath = "F:\Other Project\Nortwest-Website\"
+		Release.AspNetCompiler.PhysicalPath = "..\Nortwest-Website\"
 		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_52215\"
 		Release.AspNetCompiler.Updateable = "true"
 		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
-		SlnRelativePath = "F:\Other Project\Nortwest-Website\"
+		SlnRelativePath = "..\Nortwest-Website\"
 	EndProjectSection
 EndProject
 Global
@@ -34,5 +34,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {13AFAE62-1ECB-4F33-96F8-EBF4698489E9}
 	EndGlobalSection
 EndGlobal

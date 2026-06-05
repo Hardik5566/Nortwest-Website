@@ -57,11 +57,15 @@ CREATE TABLE [dbo].[tbl_admin](
 ----------------------------------------
 ----------------------------------------
 ----------------------------------------
+
 CREATE TABLE [dbo].[tbl_agents](
 	[agent_id] [int] IDENTITY(1,1) NOT NULL,
 	[agency_name] [varchar](450) NULL,
 	[business_name] [varchar](max) NULL,
 	[contact_number] [varchar](15) NULL,
+	business_suburb varchar(100),
+	business_country varchar(100),
+	email varchar(200),
 	[status] [bit] NULL,
 	[create_by] [int] NULL,
 	[create_date] [datetime] NULL,

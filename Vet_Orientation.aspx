@@ -59,7 +59,7 @@
         </div>
     </div>
 
-    <div class="blog-area full-blog blog-standard full-blog default-padding" style="padding-top: 50px">
+   <%-- <div class="blog-area full-blog blog-standard full-blog default-padding" style="padding-top: 50px">
 
         <div class="container">
             <div class="row">
@@ -104,9 +104,9 @@
             </div>
         </div>
 
-    </div>
+    </div>--%>
 
-    <div class="event-area flex-less">
+    <div class="event-area flex-less" style="padding-top: 50px">
         <div class="container">
             <div class="row">
                 <div class="event-items">
