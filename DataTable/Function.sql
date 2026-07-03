@@ -7,3 +7,13 @@ BEGIN
 END;
 GO
 
+
+ ----------------------------------------
+-------------Select new agent----------------
+----------------------------------------
+CREATE FUNCTION dbo.fn_CleanID(@val NVARCHAR(100))
+RETURNS NVARCHAR(100)
+AS
+BEGIN
+    RETURN TRIM(CHAR(9) + CHAR(10) + CHAR(13) + CHAR(32) + CHAR(160) FROM @val)
+END

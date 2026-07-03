@@ -339,6 +339,89 @@ public class BAL_Forms
         return command.ExtQueryDS(cmd);
     }
 
+    public static DataSet ins_new_vet_orientation_form_for_int(
+   string studentfullname,
+   string campus,
+   string email,
+   string qualification,
+   string countrycode,
+   string contactno,
+   string studentidno,
+   string photo,
+   string ausline1,
+   string ausline2,
+   string auscit,
+   string ausstate,
+   string auspostcode,
+   string overaddline1,
+   string overaddline2,
+   string overcit,
+   string overcountry,
+   string postcode,
+   string usino,
+   string lateassignment,
+   string studentissue,
+   string seriousinjury,
+   string studentvisa,
+   string changecontacttime,
+   string specialleave,
+   string academicmisconduct,
+   string emergencyno,
+   string studentdeclaration,
+   string explanation,
+   string achievements,
+   string studentsignature,
+   string createby,
+   string create_date     )
+    {
+        // Create a new SqlCommand object
+        SqlCommand cmd = new SqlCommand();
+
+        // Set the name of the stored procedure to be executed
+        cmd.CommandText = "ins_new_vet_orientation_form_for_int_sp";
+
+        // Initialize the parameter helper class
+        parameter param = new parameter();
+
+        // Add the parameters for the stored procedure
+        cmd.Parameters.Add(param.stringparam("@studentfullname", studentfullname));
+        cmd.Parameters.Add(param.stringparam("@campus", campus));
+        cmd.Parameters.Add(param.stringparam("@email", email));
+        cmd.Parameters.Add(param.stringparam("@qualification", qualification));
+        cmd.Parameters.Add(param.stringparam("@countrycode", countrycode));
+        cmd.Parameters.Add(param.stringparam("@contactno", contactno));
+        cmd.Parameters.Add(param.stringparam("@studentidno", studentidno));
+        cmd.Parameters.Add(param.stringparam("@photo", photo));
+        cmd.Parameters.Add(param.stringparam("@ausline1", ausline1));
+        cmd.Parameters.Add(param.stringparam("@ausline2", ausline2));
+        cmd.Parameters.Add(param.stringparam("@auscit", auscit));
+        cmd.Parameters.Add(param.stringparam("@ausstate", ausstate));
+        cmd.Parameters.Add(param.stringparam("@auspostcode", auspostcode));
+        cmd.Parameters.Add(param.stringparam("@overaddline1", overaddline1));
+        cmd.Parameters.Add(param.stringparam("@overaddline2", overaddline2));
+        cmd.Parameters.Add(param.stringparam("@overcit", overcit));
+        cmd.Parameters.Add(param.stringparam("@overcountry", overcountry));
+        cmd.Parameters.Add(param.stringparam("@postcode", postcode));
+        cmd.Parameters.Add(param.stringparam("@usino", usino));
+        cmd.Parameters.Add(param.stringparam("@lateassignment", lateassignment));
+        cmd.Parameters.Add(param.stringparam("@studentissue", studentissue));
+        cmd.Parameters.Add(param.stringparam("@seriousinjury", seriousinjury));
+        cmd.Parameters.Add(param.stringparam("@studentvisa", studentvisa));
+        cmd.Parameters.Add(param.stringparam("@changecontacttime", changecontacttime));
+        cmd.Parameters.Add(param.stringparam("@specialleave", specialleave));
+        cmd.Parameters.Add(param.stringparam("@academicmisconduct", academicmisconduct));
+        cmd.Parameters.Add(param.stringparam("@emergencyno", emergencyno));
+        cmd.Parameters.Add(param.stringparam("@studentdeclaration", studentdeclaration));
+        cmd.Parameters.Add(param.stringparam("@explanation", explanation));
+        cmd.Parameters.Add(param.stringparam("@achievements", achievements));
+        cmd.Parameters.Add(param.stringparam("@studentsignature", studentsignature));
+        cmd.Parameters.Add(param.stringparam("@createby", createby));
+        cmd.Parameters.Add(param.datetimeparam("@create_date", create_date));
+
+        // Execute the query and return the result as a DataSet
+        return command.ExtQueryDS(cmd);
+    }
+
 
     public static DataSet sel_new_vet_orientation_form(string id)
     {
@@ -1300,6 +1383,54 @@ public class BAL_Forms
         cmd.Parameters.Add(param.stringparam("@contact_no", contact_no));
         cmd.Parameters.Add(param.intparam("@create_by", create_by));
 
+        return command.ExtQueryDS(cmd);
+    }
+    public static DataSet ins_lln_exam_result(
+    string exam_id,
+    string std_id,
+    string result)
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.CommandText = "ins_lln_exam_result_sp";
+
+        parameter param = new parameter();
+        cmd.Parameters.Add(param.intparam("@exam_id", exam_id));
+        cmd.Parameters.Add(param.stringparam("@std_id", std_id));
+        cmd.Parameters.Add(param.stringparam("@result", result));
+
+        return command.ExtQueryDS(cmd);
+    }
+
+    public static DataSet dis_student_orientation_list()
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.CommandText = "dis_student_orientation_list_sp";
+        return command.ExtQueryDS(cmd);
+    }
+
+    public static DataSet ins_student_document(
+    string std_id,
+    string files,
+    string create_by)
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.CommandText = "ins_student_document_sp";
+
+        parameter param = new parameter();
+
+        cmd.Parameters.Add(param.stringparam("@std_id", std_id));
+        cmd.Parameters.Add(param.stringparam("@files", files));
+        cmd.Parameters.Add(param.intparam("@create_by", create_by));
+
+        return command.ExtQueryDS(cmd);
+    }
+
+    public static DataSet sel_stu_document(string id)
+    {
+        SqlCommand cmd = new SqlCommand();
+        cmd.CommandText = "sel_stu_document_sp";
+        parameter param = new parameter();
+        cmd.Parameters.Add(param.intparam("@id", id));
         return command.ExtQueryDS(cmd);
     }
 }

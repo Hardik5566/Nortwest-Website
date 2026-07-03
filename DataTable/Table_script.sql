@@ -1103,3 +1103,33 @@ CREATE TABLE tbl_new_agent_form
 	delete_by          INT,
     delete_date        DATETIME
 )
+ ----------------------------------------
+----------------------------------------
+----------------------------------------
+CREATE TABLE [dbo].[tbl_lln_exam_result](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[exam_id] [int] NULL,
+	[std_id] [varchar](100) NULL,
+	[result] [varchar](100) NULL,
+	[result_pdf] [nvarchar](max) NULL,
+	[exam_date] [datetime] NULL,
+	[create_by] [int] NULL,
+	[create_date] [datetime] NULL,
+	[modify_by] [int] NULL,
+	[modify_date] [datetime] NULL,
+	[delete_by] [int] NULL,
+	[delete_date] [datetime] NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+----------------------------------------
+----------------------------------------
+----------------------------------------
+create table tbl_student_document
+(
+	std_id varchar(100),
+	files nvarchar(max),
+	status bit,
+	create_by int,
+	create_date datetime
+
+)

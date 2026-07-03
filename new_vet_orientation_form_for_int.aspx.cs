@@ -1,0 +1,797 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Data;
+using System.Data.SqlClient;
+using CrystalDecisions.CrystalReports.Engine;
+using System.Configuration;
+using System.Net.Mail;
+using CrystalDecisions.Shared;
+using System.Text;
+using System.Threading.Tasks;
+using System.Web.Services;
+
+public partial class new_vet_orientation_form_for_int : System.Web.UI.Page
+{
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        try
+        {
+            if (!IsPostBack)
+            {
+
+                bind_data();
+                ddl_country.Items.Insert(0, new ListItem("Select Country", "0"));
+
+            }
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+    }
+
+    public void bind_data()
+    {
+        try
+        {
+            DataSet ds_country = BAL_Forms.dis_country();
+            if (ds_country.Tables.Count > 0)
+            {
+                ddl_country.DataSource = ds_country.Tables[0];
+                ddl_country.DataBind();
+
+            }
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+    }
+    [WebMethod(EnableSession = true)]
+    public static string GetCaptchaImage()
+    {
+        Random rand = new Random();
+        int num1 = rand.Next(1, 20);
+        int num2 = rand.Next(1, 10);
+        bool isAddition = rand.Next(0, 2) == 0;
+        string operatorStr = isAddition ? "+" : "-";
+
+        if (!isAddition && num1 < num2)
+        {
+            int temp = num1;
+            num1 = num2;
+            num2 = temp;
+        }
+
+        int result = isAddition ? (num1 + num2) : (num1 - num2);
+
+        // Securely store the correct answer
+        HttpContext.Current.Session["CaptchaResult"] = result.ToString();
+
+        // Using String.Format instead of $ interpolation
+        string captchaText = String.Format("{0} {1} {2} = ?", num1, operatorStr, num2);
+
+        using (Bitmap bitmap = new Bitmap(150, 50))
+        {
+            using (Graphics g = Graphics.FromImage(bitmap))
+            {
+                g.Clear(Color.FromArgb(249, 249, 249));
+
+                // Add random noise lines to defeat simple bots
+                Pen pen = new Pen(Color.FromArgb(204, 204, 204));
+                for (int i = 0; i < 6; i++)
+                {
+                    g.DrawLine(pen, rand.Next(0, 150), rand.Next(0, 50), rand.Next(0, 150), rand.Next(0, 50));
+                }
+
+                using (Font font = new Font("Arial", 16, FontStyle.Bold))
+                {
+                    g.DrawString(captchaText, font, Brushes.Black, new PointF(10, 12));
+                }
+            }
+
+            using (MemoryStream ms = new MemoryStream())
+            {
+                bitmap.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                byte[] imageBytes = ms.ToArray();
+                return "data:image/png;base64," + Convert.ToBase64String(imageBytes);
+            }
+        }
+    }
+
+    protected void btn_submit_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            string sessionCaptcha = Session["CaptchaResult"] != null ? Session["CaptchaResult"].ToString() : "";
+            string userCaptcha = txt_captcha_input.Text.Trim();
+
+            if (string.IsNullOrEmpty(userCaptcha) || userCaptcha != sessionCaptcha)
+            {
+                // Clear input and alert the user via Javascript
+                txt_captcha_input.Text = "";
+                ScriptManager.RegisterStartupScript(this, GetType(), "CaptchaError", "alert('Invalid Captcha Result. Please try again.'); generateCaptcha();", true);
+                return;
+            }
+
+            // Clean out the session to prevent double submission exploits
+            Session.Remove("CaptchaResult");
+            // Retrieving values from the controls on the page
+            string selected_valuea = selected_value1(); // Assuming this gets the selected value from a radio button
+            string selected_valueb = selected_value2();
+            string selected_valuec = selected_value3();
+            string selected_valued = selected_value4();
+            string selected_valuee = selected_value5();
+            string selected_valuef = selected_value6();
+            string selected_valueg = selected_value7();
+            string selected_valueh = selected_value8();
+
+            string selected_valuei = select_1();  // Assuming this method fetches the selected value from control
+            string selected_valuej = select_2();  // Same for this method
+            string save_signature = SaveSignature();  // Assuming this method returns the student's signature or achievements
+
+            // Contact number details from hidden fields
+            string contactNoCode = hd_contact_no_code.Value;  // Hidden field value for contact code
+            string contactNo = hd_contact_no.Value;
+
+            // File handling for photo upload
+            string file_name = "";
+            if (upd_photo.HasFile)
+            {
+                string fileExt = Path.GetExtension(upd_photo.FileName);
+
+                // Create unique file name using timestamp
+                file_name = "IMG_" + DateTime.Now.ToString("yyyyMMddHHmmssfff") + fileExt;
+                string save_path = Server.MapPath("~/assets/img/document/");
+                upd_photo.SaveAs(save_path + file_name);
+            }
+
+            // Now calling the stored procedure with the parameters
+            DataSet ds = BAL_Forms.ins_new_vet_orientation_form_for_int(
+                txt_f_name.Text,                          
+                ddl_campus.SelectedValue.ToString(),      
+                txt_email.Text,                           
+                ddl_qulification.SelectedValue.ToString(),
+                contactNoCode,                            
+                contactNo,                                
+                txt_id_no.Text,                           
+                file_name,                                
+                txt_aus_line_1.Text,                      
+                txt_aus_line_2.Text,                      
+                txt_aus_city.Text,                        
+                ddl_state.SelectedValue.ToString(),       
+                txt_aus_post_code.Text,                   
+                txt_over_line1.Text,                      
+                txt_over_line2.Text,                      
+                txt_over_city.Text,                       
+                ddl_country.SelectedValue.ToString(),     
+                txt_over_post.Text,                       
+                txt_usi_no.Text,                          
+                selected_valuea,                          
+                selected_valueb,                          
+                selected_valuec,                          
+                selected_valued,                          
+                selected_valuee,                          
+                selected_valuef,                          
+                selected_valueg,                          
+                selected_valueh,                          
+                selected_valuei,                          
+                selected_valuej,
+                "True",// achievements
+                save_signature,                           
+                "1",
+                txt_submit_date.Text                       
+            );
+            ClearControls(this);
+
+
+            if (ds.Tables.Count > 0)
+            {
+                send_mail(ds);
+                Response.Redirect("Success.aspx");
+            }
+
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+
+    }
+    public string selected_value1()
+    {
+        string selectedValue = string.Empty;
+        if (RadioButton1.Checked)
+        {
+            selectedValue = RadioButton1.Text;
+        }
+        else if (RadioButton2.Checked)
+        {
+            selectedValue = RadioButton2.Text;
+        }
+        else if (RadioButton3.Checked)
+        {
+            selectedValue = RadioButton3.Text;
+        }
+        else if (RadioButton4.Checked)
+        {
+            selectedValue = RadioButton4.Text;
+        }
+        if (string.IsNullOrEmpty(selectedValue))
+        {
+            selectedValue = "";
+        }
+        return selectedValue;
+    }
+
+
+    public string selected_value2()
+    {
+        string selectedValue = string.Empty;
+        if (RadioButton5.Checked)
+        {
+            selectedValue = RadioButton5.Text;
+        }
+        else if (RadioButton6.Checked)
+        {
+            selectedValue = RadioButton6.Text;
+        }
+        else if (RadioButton7.Checked)
+        {
+            selectedValue = RadioButton7.Text;
+        }
+        else if (RadioButton8.Checked)
+        {
+            selectedValue = RadioButton8.Text;
+        }
+        if (string.IsNullOrEmpty(selectedValue))
+        {
+            selectedValue = "";
+        }
+        return selectedValue;
+    }
+
+    public string selected_value3()
+    {
+        string selectedValue = string.Empty;
+        if (RadioButton9.Checked)
+        {
+            selectedValue = RadioButton9.Text;
+        }
+
+        else if (RadioButton10.Checked)
+        {
+            selectedValue = RadioButton10.Text;
+        }
+        else if (RadioButton11.Checked)
+        {
+            selectedValue = RadioButton11.Text;
+        }
+        else if (RadioButton12.Checked)
+        {
+            selectedValue = RadioButton12.Text;
+        }
+        if (string.IsNullOrEmpty(selectedValue))
+        {
+            selectedValue = "";
+        }
+        return selectedValue;
+    }
+
+    public string selected_value4()
+    {
+        string selectedValue = string.Empty;
+        if (RadioButton13.Checked)
+        {
+            selectedValue = RadioButton13.Text;
+        }
+
+        else if (RadioButton14.Checked)
+        {
+            selectedValue = RadioButton14.Text;
+        }
+        else if (RadioButton15.Checked)
+        {
+            selectedValue = RadioButton15.Text;
+        }
+        else if (RadioButton16.Checked)
+        {
+            selectedValue = RadioButton16.Text;
+        }
+        if (string.IsNullOrEmpty(selectedValue))
+        {
+            selectedValue = "";
+        }
+        return selectedValue;
+    }
+
+    public string selected_value5()
+    {
+        string selectedValue = string.Empty;
+        if (RadioButton17.Checked)
+        {
+            selectedValue = RadioButton17.Text;
+        }
+
+        else if (RadioButton18.Checked)
+        {
+            selectedValue = RadioButton18.Text;
+        }
+        else if (RadioButton19.Checked)
+        {
+            selectedValue = RadioButton19.Text;
+        }
+        else if (RadioButton20.Checked)
+        {
+            selectedValue = RadioButton20.Text;
+        }
+        if (string.IsNullOrEmpty(selectedValue))
+        {
+            selectedValue = "";
+        }
+        return selectedValue;
+    }
+
+    public string selected_value6()
+    {
+        string selectedValue = string.Empty;
+        if (RadioButton21.Checked)
+        {
+            selectedValue = RadioButton21.Text;
+        }
+
+        else if (RadioButton22.Checked)
+        {
+            selectedValue = RadioButton22.Text;
+        }
+        else if (RadioButton23.Checked)
+        {
+            selectedValue = RadioButton23.Text;
+        }
+        else if (RadioButton24.Checked)
+        {
+            selectedValue = RadioButton24.Text;
+        }
+        if (string.IsNullOrEmpty(selectedValue))
+        {
+            selectedValue = "";
+        }
+        return selectedValue;
+    }
+    public string selected_value7()
+    {
+        string selectedValue = string.Empty;
+        if (RadioButton25.Checked)
+        {
+            selectedValue = RadioButton25.Text;
+        }
+
+        else if (RadioButton26.Checked)
+        {
+            selectedValue = RadioButton26.Text;
+        }
+        else if (RadioButton27.Checked)
+        {
+            selectedValue = RadioButton27.Text;
+        }
+        else if (RadioButton28.Checked)
+        {
+            selectedValue = RadioButton28.Text;
+        }
+        if (string.IsNullOrEmpty(selectedValue))
+        {
+            selectedValue = "";
+        }
+        return selectedValue;
+    }
+    public string selected_value8()
+    {
+        string selectedValue = string.Empty;
+        if (RadioButton29.Checked)
+        {
+            selectedValue = RadioButton29.Text;
+        }
+
+        else if (RadioButton30.Checked)
+        {
+            selectedValue = RadioButton30.Text;
+        }
+        else if (RadioButton31.Checked)
+        {
+            selectedValue = RadioButton31.Text;
+        }
+        else if (RadioButton32.Checked)
+        {
+            selectedValue = RadioButton32.Text;
+        }
+        if (string.IsNullOrEmpty(selectedValue))
+        {
+            selectedValue = "";
+        }
+        return selectedValue;
+    }
+
+
+    public string select_1()
+    {
+        // Create a variable to store the selected checkbox texts
+        string selectedOptions = "";
+
+        // Check if CheckBox1 is checked and append the Text to the variable
+        if (CheckBox1.Checked)
+        {
+            selectedOptions += CheckBox1.Text + ", ";
+        }
+
+        // Check if CheckBox2 is checked and append the Text to the variable
+        if (CheckBox2.Checked)
+        {
+            selectedOptions += CheckBox2.Text + ", ";
+        }
+
+        // If there are selected options, remove the trailing comma and space
+        if (!string.IsNullOrEmpty(selectedOptions))
+        {
+            selectedOptions = selectedOptions.TrimEnd(',', ' ');
+        }
+
+        // At this point, 'selectedOptions' holds the concatenated texts of the checked options.
+        // You can store or display this variable as needed
+        return selectedOptions;
+    }
+    public string select_2()
+    {
+        // Create a variable to store the selected checkbox texts
+        string selectedOptions = "";
+
+        // Check each checkbox and append the Text if checked
+        if (CheckBox3.Checked)
+        {
+            selectedOptions += CheckBox3.Text + ", ";
+        }
+
+        if (CheckBox4.Checked)
+        {
+            selectedOptions += CheckBox4.Text + ", ";
+        }
+
+        if (CheckBox5.Checked)
+        {
+            selectedOptions += CheckBox5.Text + ", ";
+        }
+
+        if (CheckBox6.Checked)
+        {
+            selectedOptions += CheckBox6.Text + ", ";
+        }
+
+        if (CheckBox7.Checked)
+        {
+            selectedOptions += CheckBox7.Text + ", ";
+        }
+
+        if (CheckBox8.Checked)
+        {
+            selectedOptions += CheckBox8.Text + ", ";
+        }
+
+        if (CheckBox9.Checked)
+        {
+            selectedOptions += CheckBox9.Text + ", ";
+        }
+
+        if (CheckBox10.Checked)
+        {
+            selectedOptions += CheckBox10.Text + ", ";
+        }
+
+        if (CheckBox13.Checked)
+        {
+            selectedOptions += CheckBox13.Text + ", ";
+        }
+
+        if (CheckBox12.Checked)
+        {
+            selectedOptions += CheckBox12.Text + ", ";
+        }
+
+        if (CheckBox11.Checked)
+        {
+            selectedOptions += CheckBox11.Text + ", ";
+        }
+
+        // If there are selected options, remove the trailing comma and space
+        if (!string.IsNullOrEmpty(selectedOptions))
+        {
+            selectedOptions = selectedOptions.TrimEnd(',', ' ');
+        }
+
+        // At this point, 'selectedOptions' holds the concatenated texts of the checked options.
+        // You can store or display this variable as needed
+        return selectedOptions;
+    }
+
+
+    public string SaveSignature()
+    {
+        // Retrieve the base64 signature from the hidden field
+        string base64Signature = hdnSignature.Value;
+        string signName = "";
+
+        if (!string.IsNullOrEmpty(base64Signature))
+        {
+            try
+            {
+                // Define the folder path to save the signature
+                string folderPath = Server.MapPath("~/assets/img/sign/");
+                if (!Directory.Exists(folderPath))
+                {
+                    Directory.CreateDirectory(folderPath); // Create folder if it doesn't exist
+                }
+
+                // Generate a unique file name
+                string fileName = "Signature_" + DateTime.Now.Ticks + ".jpg"; // Save as JPG
+                string filePath = Path.Combine(folderPath, fileName);
+
+                // Remove the base64 prefix and convert to byte array
+                byte[] signatureBytes = Convert.FromBase64String(base64Signature.Replace("data:image/png;base64,", ""));
+
+                // Create and save the image
+                using (MemoryStream ms = new MemoryStream(signatureBytes))
+                {
+                    using (System.Drawing.Image signatureImage = System.Drawing.Image.FromStream(ms))
+                    {
+                        // Create a bitmap with white background
+                        using (Bitmap bitmap = new Bitmap(signatureImage.Width, signatureImage.Height))
+                        {
+                            using (Graphics g = Graphics.FromImage(bitmap))
+                            {
+                                g.Clear(Color.White); // Set background to white
+                                g.DrawImage(signatureImage, 0, 0); // Draw signature image
+
+                                // Save the bitmap as a JPG file
+                                bitmap.Save(filePath, System.Drawing.Imaging.ImageFormat.Jpeg);
+                            }
+                        }
+                    }
+                }
+
+                signName = fileName; // Set the file name to return
+            }
+            catch (Exception ex)
+            {
+                // Log the error (replace with a proper logging mechanism)
+                Response.Write("Error: " + ex.Message);
+            }
+        }
+        else
+        {
+            // Handle the case where the signature is empty
+            Response.Write("Signature data is missing.");
+        }
+
+        return signName; // Return the saved file name or an empty string
+    }
+
+    public void send_mail(DataSet ds)
+    {
+
+        //string server_url = ConfigurationManager.ConnectionStrings["server_url"].ToString();
+
+        ReportDocument rpt = new ReportDocument();
+        try
+        {
+
+            if (ds.Tables.Count > 0)
+            {
+                string stu_photo = Server.MapPath("assets/img/document/") + ds.Tables[0].Rows[0]["student_photo"];
+
+                ds.Tables[0].Rows[0]["signature"] = Server.MapPath("assets/img/sign/") + ds.Tables[0].Rows[0]["signature"];
+                ds.Tables[0].Rows[0]["student_photo"] = Server.MapPath("assets/img/document/") + ds.Tables[0].Rows[0]["student_photo"];
+
+                rpt.Load(Server.MapPath("RPT/RPT_vet_orientation_form.rpt"));
+                rpt.Database.Tables["dt_ver_orientation"].SetDataSource(ds.Tables[0]);
+
+                string name = "New enrolment form";
+
+                Stream ach_stream = rpt.ExportToStream(ExportFormatType.PortableDocFormat);
+                Attachment ach_attachment = new Attachment(ach_stream, name + ".pdf", "application/pdf");
+
+
+                // Dispose of the report
+                rpt.Close();
+                rpt.Dispose();
+
+                string subject = "Orientation Form For New VET Student (" + ds.Tables[0].Rows[0]["student_full_name"].ToString() + "-" + ds.Tables[0].Rows[0]["student_id_no"].ToString() + ")";
+                string mail_body = get_email_body(ds.Tables[0].Rows[0]["student_full_name"].ToString(), ds.Tables[0].Rows[0]["student_id_no"].ToString());
+
+                if (ds.Tables[0].Rows[0]["campus"].ToString() == "Adelaide")
+                {
+                    string result = Send_Mail.SendMail_new_vet("sso@nortwest.edu.au", "orientation@nortwest.edu.au,adminadelaide@nortwest.edu.au,", subject, mail_body, ach_attachment, "", stu_photo);
+
+                }
+                else
+                {
+                    string result = Send_Mail.SendMail_new_vet("sso@nortwest.edu.au", "orientation@nortwest.edu.au,", subject, mail_body, ach_attachment, "", stu_photo);
+                }
+
+
+                rpt.Close();
+                rpt.Dispose();
+            }
+
+        }
+        catch (Exception)
+        {
+            rpt.Close();
+            rpt.Dispose();
+        }
+        finally
+        {
+            rpt.Close();
+            rpt.Dispose();
+        }
+    }
+
+    public string get_email_body(string name, string std_id)
+    {
+        try
+        {
+            string emailBody = @"
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>New Vet Orientation Form
+</title>
+    <style>
+        body {
+            background: #108a7c;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+        }
+        .wrapper {
+            width: 100%;
+            display: block;
+            text-align: center;
+            padding-top: 10%;
+            padding-bottom: 10%;
+            background: #108a7c;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: left;
+            max-width: 550px;
+            width: 90%;
+            margin: 0 auto;
+            display: inline-block;
+        }
+        .logo {
+            display: block;
+            margin: 0 auto; /* center the logo */
+        }
+        .title {
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center; /* center the title */
+            margin-top:20px;
+        }
+        .content {
+            margin: 20px 0;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .footer {
+            color: #B0BEC5;
+            font-size: 12px;
+            margin-top: 20px;
+            text-align: center;
+            border-top: 1px solid lightgray;
+            padding-top: 10px;
+        }
+        .note {
+            color: #FFFFFF;
+            font-size: 12px;
+            margin-top: 10px;
+            text-align: center;
+        }
+        @media screen and (max-width: 480px) {
+            .wrapper {
+                width: 90%;
+                padding: 15px; 
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class='wrapper'>
+      <div class='logo' style='padding-bottom:20px;'>
+       <img  src='https://nortwest.edu.au/assets/uploads/2017/05/logo_nwc_transp@1x.png' alt='Nortwest Logo' style='background-color:white;border-radius:9px;padding:5px' width='200'>
+       </div>
+        <div class='container'>
+           
+            <div class='title'>New Vet Orientation Form</div>
+            <div class='content'>
+                <p>Dear Team,</p>
+                <p>Please find attached the New Vet Orientation Form Form acknowledgement for Nortwest.</p>
+                <p><b>Form Details:</b></p>
+                <ul>
+                     <li>Submitted By: " + name + @"</li>
+                     <li>Student ID: " + std_id + @"</li>
+                     <li>Submission Date: " + DateTime.Now.ToString("dd MMM yyyy") + @"</li>
+                
+                </ul>
+                <p>Kindly verify the details and keep this acknowledgement for your records. 
+                If you require any additional information,Please find attached the New Vet Orientation Form.</p>
+                <p>Thank you for your prompt attention.</p>
+            </div>
+            <div class='footer'>Nortwest Pty Ltd, All rights reserved</div>
+        </div>
+
+        <!-- Note outside the container -->
+        <p class='note'><b>Note:</b> This is an automated email. Please do not reply to this email.</p>
+
+    </div>
+</body>
+</html>
+";
+
+            return emailBody;
+
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+    }
+    public void ClearControls(Control parent)
+    {
+        foreach (Control c in parent.Controls)
+        {
+            if (c is TextBox)
+            {
+                (c as TextBox).Text = string.Empty;
+            }
+            else if (c is DropDownList)
+            {
+                (c as DropDownList).ClearSelection();
+            }
+            else if (c is CheckBox)
+            {
+                (c as CheckBox).Checked = false;
+            }
+            else if (c is RadioButton)
+            {
+                (c as RadioButton).Checked = false;
+            }
+            else if (c is HiddenField)
+            {
+                (c as HiddenField).Value = string.Empty;
+            }
+            else if (c is FileUpload)
+            {
+                // FileUpload cannot be cleared directly due to security, 
+                // it resets automatically on postback
+            }
+            else if (c.HasControls())
+            {
+                // Recursively check child controls
+                ClearControls(c);
+            }
+        }
+    }
+
+}
