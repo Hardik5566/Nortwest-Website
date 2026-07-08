@@ -680,19 +680,19 @@
 
                                     <p class="oa-steps-heading">Please find the steps to complete the documents below:</p>
 
-                                    <div class="oa-card oa-step-card">
-                                        <div class="oa-form-row">
-                                            <div class="oa-form-left">
-                                                <div class="oa-step-badge">Step 1</div>
-                                                <div class="oa-card-title"><i class="fas fa-id-card oa-title-icon"></i>USI Form</div>
-                                                <p class="oa-form-desc">Create your Unique Student Identifier (USI). Required before you submit forms.</p>
-                                            </div>
-                                            <a class="oa-arrow-btn" target="_blank" href="https://www.usi.gov.au/students/get-a-usi" aria-label="Open USI link">
-                                                <span class="oa-btn-text">Open</span>
-                                                <i class="fas fa-arrow-right"></i>
-                                            </a>
+                                <div class="oa-card oa-step-card">
+                                    <div class="oa-form-row">
+                                        <div class="oa-form-left">
+                                            <div class="oa-step-badge">Step 1</div>
+                                            <div class="oa-card-title"><i class="fas fa-id-card oa-title-icon"></i>USI Form</div>
+                                            <p class="oa-form-desc">If you dont have a USI, please create one now</p>
                                         </div>
+                                        <a class="oa-arrow-btn" target="_blank" href="https://www.usi.gov.au/students/get-a-usi" aria-label="Open USI link">
+                                            <span class="oa-btn-text">Open</span>
+                                            <i class="fas fa-arrow-right"></i>
+                                        </a>
                                     </div>
+                                </div>
 
                                     <div class="oa-card oa-step-card">
                                         <div class="oa-form-row">
@@ -793,7 +793,7 @@
                         <div id="uploadDropZone" class="oa-upload-zone" role="button" tabindex="0" aria-label="Choose files to upload">
                             <div class="oa-upload-zone-icon"><i class="fas fa-file-upload"></i></div>
                             <p class="oa-upload-zone-title">Drag &amp; drop your documents here</p>
-                            <p class="oa-upload-zone-desc">or click to browse — PDF, JPG, PNG (max 5 MB each, multiple files allowed)</p>
+                            <p class="oa-upload-zone-desc">or click to browse � PDF, JPG, PNG (max 5 MB each, multiple files allowed)</p>
                         </div>
                         <div id="selectedFilesList" class="oa-upload-files-list"></div>
                         <asp:FileUpload ID="fuDocument" runat="server" AllowMultiple="true" CssClass="oa-file-input-hidden" Style="display: none;" accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png" />

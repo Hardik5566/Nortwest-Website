@@ -606,11 +606,11 @@
                         </label>
                     </div>
 
-                    <div class="col-md-12">
+                    <%--<div class="col-md-12">
                         <label class="checkbox-inline lbl_title ch_agree">
                             <asp:CheckBox ID="ch_i_agree" runat="server" Style="font-weight: bold" Text="I agree that my photo, video and achievements may be used for promotional or publicity purposes without written consent or notification." />
                         </label>
-                    </div>
+                    </div>--%>
 
                 </div>
             </div>

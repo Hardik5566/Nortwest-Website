@@ -656,7 +656,6 @@
 
         <img src="assets/img/whatsapp.png" alt="WhatsApp" data-toggle="modal" data-target="#myModal" class="whatsapp-icon_main fixed-bottom-left" />
 
-
         <!-- The Modal -->
         <div class="modal wtsp_modal" id="myModal">
             <div class="modal-dialog modal-dialog-centered modal_fixed_left" style="width: 360px">

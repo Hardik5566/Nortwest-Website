@@ -776,7 +776,7 @@
                     </asp:TemplateField>
 
                     <%-- Enrollment Form Status --%>
-                    <asp:TemplateField HeaderText="Enrollment Form">
+                    <asp:TemplateField HeaderText="Orientation Form">
                         <ItemTemplate>
                             <asp:LinkButton runat="server"
                                 CommandArgument='<%# Eval("enrolment_id") %>'
