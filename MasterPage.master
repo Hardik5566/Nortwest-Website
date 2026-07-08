@@ -293,18 +293,10 @@
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">New Student Orientation</a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="Vet_Orientation.aspx">New Student Orientation</a></li>
-                                    <%--<li><a href="Student_Orientation_Access.aspx">Orientation - Step by Step</a></li>--%>
                                     <li><a href="academic_enrolment_calenda.aspx">ACADEMIC CALENDAR</a></li>
-
-                                    <%--                                    <li class="dropdown-submenu">
-                                        <a href="#" class="dropdown-toggle">LMS</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="http://appv2.nortwest.edu.au/web" target="_blank">Student Login</a></li>
-                                            <li><a href="http://appv2.nortwest.edu.au/admin" target="_blank">Faculty Login</a></li>
-                                        </ul>
-                                    </li>--%>
                                     <li><a href="https://mail.google.com" target="_blank">Login Gmail</a></li>
+                                    <li><a href="https://nortwest.edu.au/assets/prefix_file/INTERNATIONAL-STUDENT-HANDBOOK.pdf" target="_blank">Student Handbook</a></li>
+
                                 </ul>
                             </li>
 
