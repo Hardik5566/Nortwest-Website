@@ -84,4 +84,96 @@ public class BAL_OrientationAccess
     {
         return "This orientation link is invalid or has expired. Please scan today's QR code provided by the college.";
     }
+
+    public static string GetAccessKeyFromRequest(string key, string fallbackKey)
+    {
+        if (!string.IsNullOrWhiteSpace(key))
+        {
+            return key.Trim();
+        }
+
+        if (!string.IsNullOrWhiteSpace(fallbackKey))
+        {
+            return fallbackKey.Trim();
+        }
+
+        return null;
+    }
+
+    public static string TryGetReturnUrl(string status, string key, string expectedStatus)
+    {
+        return TryGetReturnUrl(status, key, expectedStatus, null);
+    }
+
+    public static string TryGetReturnUrl(string status, string key, string expectedStatus, string result)
+    {
+        if (string.IsNullOrWhiteSpace(status) || string.IsNullOrWhiteSpace(key))
+        {
+            return null;
+        }
+
+        if (!string.Equals(status.Trim(), expectedStatus, StringComparison.OrdinalIgnoreCase))
+        {
+            return null;
+        }
+
+        string url = "Student_Orientation_Access.aspx?k=" + Uri.EscapeDataString(key.Trim())
+            + "&status=" + Uri.EscapeDataString(status.Trim());
+
+        if (!string.IsNullOrWhiteSpace(result))
+        {
+            url += "&result=" + Uri.EscapeDataString(result.Trim());
+        }
+
+        return url;
+    }
+
+    public static string GetSuccessTitle(string status)
+    {
+        if (string.Equals(status, "orientation", StringComparison.OrdinalIgnoreCase))
+        {
+            return "Orientation Form Submitted";
+        }
+
+        if (string.Equals(status, "courseentry", StringComparison.OrdinalIgnoreCase))
+        {
+            return "Course Entry Form Submitted";
+        }
+
+        if (string.Equals(status, "lln", StringComparison.OrdinalIgnoreCase))
+        {
+            return "LLN Test Completed";
+        }
+
+        if (string.Equals(status, "upload", StringComparison.OrdinalIgnoreCase))
+        {
+            return "Documents Uploaded";
+        }
+
+        return "Success!";
+    }
+
+    public static string GetSuccessMessage(string status)
+    {
+        if (string.Equals(status, "orientation", StringComparison.OrdinalIgnoreCase))
+        {
+            return "Orientation form successfully submitted.";
+        }
+
+        if (string.Equals(status, "courseentry", StringComparison.OrdinalIgnoreCase))
+        {
+            return "Course entry interview form successfully submitted.";
+        }
+        if (string.Equals(status, "lln", StringComparison.OrdinalIgnoreCase))
+        {
+            return "LLN Exam successfully submitted.";
+        }
+
+        if (string.Equals(status, "upload", StringComparison.OrdinalIgnoreCase))
+        {
+            return "Your supporting documents have been uploaded successfully.";
+        }
+
+        return null;
+    }
 }

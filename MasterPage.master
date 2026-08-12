@@ -291,7 +291,7 @@
                                 <a href="pre-enrolment.aspx">Pre-Enrolment</a>
                             </li>
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">New Student Orientation</a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Current Student</a>
                                 <ul class="dropdown-menu">
                                     <li><a href="academic_enrolment_calenda.aspx">ACADEMIC CALENDAR</a></li>
                                     <li><a href="https://mail.google.com" target="_blank">Login Gmail</a></li>

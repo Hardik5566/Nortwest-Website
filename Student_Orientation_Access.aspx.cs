@@ -10,6 +10,8 @@ using System.Web.UI;
 public partial class Student_Orientation_Access : Page
 {
     private const int MaxFileSizeMb = 5;
+    private const string SuccessStatusSessionKey = "OrientationSuccessStatus";
+    private const string SuccessResultSessionKey = "OrientationSuccessResult";
     private static readonly string[] AllowedExtensions = { ".pdf", ".jpg", ".jpeg", ".png" };
 
     protected void Page_Load(object sender, EventArgs e)
@@ -24,9 +26,17 @@ public partial class Student_Orientation_Access : Page
 
             if (BAL_OrientationAccess.IsValidKey(key))
             {
+                if (TryRedirectWithoutStatus(key))
+                {
+                    return;
+                }
+
                 pnlOrientation.Visible = true;
                 pnlExpired.Visible = false;
                 ViewState["AccessGranted"] = true;
+                ViewState["AccessKey"] = key.Trim();
+                BindStepLinks(key.Trim());
+                ShowPendingSuccessPopup();
                 return;
             }
 
@@ -40,6 +50,20 @@ public partial class Student_Orientation_Access : Page
         bool accessGranted = ViewState["AccessGranted"] != null && (bool)ViewState["AccessGranted"];
         pnlOrientation.Visible = accessGranted;
         pnlExpired.Visible = !accessGranted;
+
+        if (accessGranted && ViewState["AccessKey"] != null)
+        {
+            BindStepLinks(ViewState["AccessKey"].ToString());
+        }
+    }
+
+    private void BindStepLinks(string key)
+    {
+        string encodedKey = HttpUtility.UrlEncode(key);
+
+        lnkOrientationForm.NavigateUrl = "new_vet_orientation_form.aspx?status=orientation&k=" + encodedKey;
+        lnkCourseEntryForm.NavigateUrl = "course_entry_form.aspx?status=courseentry&k=" + encodedKey;
+        lnkLlnTest.NavigateUrl = "https://nortwest.llnexam.com?status=lln&k=" + encodedKey;
     }
 
     protected void btnUploadSubmit_Click(object sender, EventArgs e)
@@ -111,7 +135,7 @@ public partial class Student_Orientation_Access : Page
             if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
             {
                 txt_std_id.Text = string.Empty;
-                ShowUploadMessage("Documents uploaded successfully.", true);
+                ShowUploadMessage("Documents uploaded successfully.", "upload");
                 return;
             }
 
@@ -129,12 +153,97 @@ public partial class Student_Orientation_Access : Page
         return Regex.Replace(safeName, @"[^\w\.\-]", "_");
     }
 
-    private void ShowUploadMessage(string message, bool isSuccess = false)
+    private bool TryRedirectWithoutStatus(string key)
     {
-        string script = isSuccess
-            ? "setTimeout(function(){ $('#uploadDocModal').modal('hide'); alert('" + HttpUtility.JavaScriptStringEncode(message) + "'); }, 100);"
-            : "alert('" + HttpUtility.JavaScriptStringEncode(message) + "');";
+        string status = Request.QueryString["status"];
+        string message = BAL_OrientationAccess.GetSuccessMessage(status);
+        if (string.IsNullOrEmpty(message))
+        {
+            return false;
+        }
 
+        Session[SuccessStatusSessionKey] = status.Trim();
+
+        string result = Request.QueryString["result"];
+        if (!string.IsNullOrWhiteSpace(result))
+        {
+            Session[SuccessResultSessionKey] = result.Trim();
+        }
+
+        Response.Redirect("Student_Orientation_Access.aspx?k=" + HttpUtility.UrlEncode(key.Trim()), false);
+        Context.ApplicationInstance.CompleteRequest();
+        return true;
+    }
+
+    private void ShowPendingSuccessPopup()
+    {
+        object pendingStatus = Session[SuccessStatusSessionKey];
+        if (pendingStatus == null)
+        {
+            return;
+        }
+
+        Session.Remove(SuccessStatusSessionKey);
+
+        object pendingResult = Session[SuccessResultSessionKey];
+        Session.Remove(SuccessResultSessionKey);
+
+        ShowSuccessModal(pendingStatus.ToString(), pendingResult != null ? pendingResult.ToString() : null);
+    }
+
+    private void ShowUploadMessage(string message, string successStatus = null)
+    {
+        if (!string.IsNullOrEmpty(successStatus))
+        {
+            ShowSuccessModal(successStatus);
+            return;
+        }
+
+        ShowAlert(message);
+    }
+
+    private void ShowSuccessModal(string status, string result = null)
+    {
+        string title = BAL_OrientationAccess.GetSuccessTitle(status);
+        string message = BAL_OrientationAccess.GetSuccessMessage(status);
+        bool showReappear = false;
+        string reappearUrl = string.Empty;
+
+        if (string.Equals(status, "lln", StringComparison.OrdinalIgnoreCase)
+            && string.Equals(result, "fail", StringComparison.OrdinalIgnoreCase))
+        {
+            title = "LLN Test Not Passed";
+            message = "You have not passed the LLN examination. Please reappear for the test to continue with your orientation process.";
+            showReappear = true;
+
+            if (ViewState["AccessKey"] != null)
+            {
+                reappearUrl = "https://nortwest.llnexam.com?status=lln&k="
+                    + HttpUtility.UrlEncode(ViewState["AccessKey"].ToString());
+            }
+        }
+
+        if (string.IsNullOrEmpty(message))
+        {
+            return;
+        }
+
+        string script = "setTimeout(function(){ $('#uploadDocModal').modal('hide'); showOaSuccessModal('"
+            + HttpUtility.JavaScriptStringEncode(title)
+            + "', '"
+            + HttpUtility.JavaScriptStringEncode(message)
+            + "', "
+            + (showReappear ? "true" : "false")
+            + ", '"
+            + HttpUtility.JavaScriptStringEncode(reappearUrl)
+            + "'); }, 100);";
+
+        Page.ClientScript.RegisterStartupScript(GetType(), Guid.NewGuid().ToString(), script, true);
+    }
+
+    private void ShowAlert(string message)
+    {
+        string script = "alert('" + HttpUtility.JavaScriptStringEncode(message) + "');";
         Page.ClientScript.RegisterStartupScript(GetType(), Guid.NewGuid().ToString(), script, true);
     }
 }

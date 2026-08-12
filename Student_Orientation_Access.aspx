@@ -632,6 +632,336 @@
                 font-size: 16px;
             }
         }
+
+        /* Success modal */
+        .oa-success-modal .modal-dialog {
+            max-width: 440px;
+            margin: 20px auto;
+        }
+
+        .oa-success-modal .modal-content {
+            border: 0;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 24px 60px rgba(15, 23, 42, .18);
+        }
+
+        .oa-success-body {
+            padding: 36px 28px 28px;
+            text-align: center;
+            background: #fff;
+        }
+
+        .oa-success-icon-wrap {
+            position: relative;
+            width: 88px;
+            height: 88px;
+            margin: 0 auto 20px;
+        }
+
+        .oa-success-icon-ring {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: rgba(72, 187, 120, .12);
+            animation: oaSuccessPulse 2s ease-out infinite;
+        }
+
+        .oa-success-icon-wrap.is-fail .oa-success-icon-ring {
+            background: rgba(229, 62, 62, .12);
+            animation: oaFailPulse 2s ease-out infinite;
+        }
+
+        .oa-success-icon {
+            position: relative;
+            z-index: 1;
+            width: 88px;
+            height: 88px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: #fff;
+            font-size: 36px;
+            box-shadow: 0 10px 24px rgba(56, 161, 105, .35);
+        }
+
+        .oa-success-icon-wrap.is-fail .oa-success-icon {
+            background: linear-gradient(135deg, #fc8181 0%, #e53e3e 100%);
+            box-shadow: 0 10px 24px rgba(229, 62, 62, .35);
+        }
+
+        @keyframes oaSuccessPulse {
+            0% {
+                transform: scale(1);
+                opacity: .7;
+            }
+
+            70% {
+                transform: scale(1.12);
+                opacity: 0;
+            }
+
+            100% {
+                transform: scale(1.12);
+                opacity: 0;
+            }
+        }
+
+        @keyframes oaFailPulse {
+            0% {
+                transform: scale(1);
+                opacity: .7;
+            }
+
+            70% {
+                transform: scale(1.12);
+                opacity: 0;
+            }
+
+            100% {
+                transform: scale(1.12);
+                opacity: 0;
+            }
+        }
+
+        .oa-success-title {
+            margin: 0 0 10px;
+            font-size: 22px;
+            font-weight: 800;
+            color: #0f172a;
+            line-height: 1.3;
+        }
+
+        .oa-success-message {
+            margin: 0 0 24px;
+            font-size: 14px;
+            line-height: 1.65;
+            color: #64748b;
+        }
+
+        .oa-success-btn {
+            min-width: 140px;
+            height: 44px;
+            border-radius: 10px;
+            border: 0;
+            background: #44877c;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background .2s ease;
+        }
+
+        .oa-success-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .oa-reappear-btn {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            background: #e53e3e;
+        }
+
+            .oa-reappear-btn:hover,
+            .oa-reappear-btn:focus {
+                background: #c53030;
+                color: #fff;
+                text-decoration: none;
+            }
+
+            .oa-success-btn:hover,
+            .oa-success-btn:focus {
+                background: #356b62;
+                color: #fff;
+                outline: none;
+            }
+
+        @media (max-width: 575px) {
+            .oa-success-body {
+                padding: 28px 20px 22px;
+            }
+
+            .oa-success-title {
+                font-size: 20px;
+            }
+
+            .oa-success-message {
+                font-size: 13px;
+            }
+        }
+        /* =========================================================
+   Mobile View Enhancements (< 576px)
+   ========================================================= */
+@media (max-width: 575.98px) {
+    /* 1. Header & Breadcrumb Adjustments */
+    .breadcrumb-area {
+        padding: 30px 15px !important;
+        border-radius: 0 0 16px 16px;
+    }
+    
+    .oa-page .breadcrumb-area h1 {
+        font-size: 22px !important;
+        font-weight: 800;
+        letter-spacing: -0.3px;
+    }
+
+    /* 2. Container Spacing */
+    .oa-content-wrap {
+        padding: 0 4px;
+    }
+
+    .oa-cards {
+        margin-top: 12px;
+    }
+
+    /* 3. Welcome & Info Cards */
+    .oa-card {
+        padding: 16px;
+        border-radius: 12px;
+        border: 1px solid #e2e8f0;
+        box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+    }
+
+    .oa-main-title {
+        font-size: 19px !important;
+    }
+
+    /* 4. Interactive Step Cards */
+    .oa-step-card {
+        position: relative;
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .oa-step-card:active {
+        transform: scale(0.985);
+        background-color: #f8fafc;
+    }
+
+    /* Form Layout Adjustment */
+    .oa-form-row {
+        gap: 8px;
+        align-items: center;
+    }
+
+    .oa-step-badge {
+        font-size: 10.5px;
+        padding: 3px 8px;
+        font-weight: 700;
+        background: #e2e8f0;
+        color: #334155;
+        margin-bottom: 6px;
+    }
+
+    .oa-card-title {
+        font-size: 15px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        margin-bottom: 4px;
+    }
+
+    .oa-title-icon {
+        font-size: 16px;
+    }
+
+    .oa-form-desc {
+        font-size: 12px;
+        line-height: 1.45;
+        color: #64748b;
+    }
+
+    /* Arrow Action Buttons */
+    .oa-arrow-btn {
+        width: 42px !important;
+        height: 42px !important;
+        min-width: 42px !important;
+        border-radius: 50% !important; /* Circular buttons for mobile app look */
+        box-shadow: 0 4px 10px rgba(68, 135, 124, 0.25);
+    }
+
+    .oa-arrow-btn i {
+        font-size: 14px;
+    }
+
+    /* 5. Mobile File Upload Modal (Bottom Sheet Style) */
+    .oa-upload-modal .modal-dialog {
+        margin: 0;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        max-width: 100%;
+    }
+
+    .oa-upload-modal .modal-content {
+        border-radius: 20px 20px 0 0 !important;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    .oa-upload-modal .modal-header {
+        padding: 16px 20px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .oa-upload-modal-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 16px;
+    }
+
+    .oa-upload-modal .modal-body {
+        padding: 18px 16px;
+    }
+
+    .oa-upload-zone {
+        padding: 20px 12px;
+        border-radius: 12px;
+        background: #f8fafc;
+    }
+
+    .oa-upload-zone-icon {
+        width: 44px;
+        height: 44px;
+        font-size: 18px;
+        margin-bottom: 8px;
+    }
+
+    .oa-upload-zone-title {
+        font-size: 13.5px;
+    }
+
+    .oa-upload-zone-desc {
+        font-size: 11.5px;
+    }
+
+    .oa-upload-modal .modal-footer {
+        padding: 12px 16px;
+        background: #fff;
+        display: grid;
+        grid-template-columns: 1fr 1.5fr; /* Side-by-side balanced full width buttons */
+        gap: 10px;
+    }
+
+    .oa-btn-cancel, 
+    .oa-btn-submit {
+        width: 100%;
+        height: 44px;
+        font-size: 14px;
+        font-weight: 700;
+        border-radius: 10px;
+    }
+}
     </style>
 </asp:Content>
 
@@ -680,19 +1010,19 @@
 
                                     <p class="oa-steps-heading">Please find the steps to complete the documents below:</p>
 
-                                <div class="oa-card oa-step-card">
-                                    <div class="oa-form-row">
-                                        <div class="oa-form-left">
-                                            <div class="oa-step-badge">Step 1</div>
-                                            <div class="oa-card-title"><i class="fas fa-id-card oa-title-icon"></i>USI Form</div>
-                                            <p class="oa-form-desc">If you dont have a USI, please create one now</p>
+                                    <div class="oa-card oa-step-card">
+                                        <div class="oa-form-row">
+                                            <div class="oa-form-left">
+                                                <div class="oa-step-badge">Step 1</div>
+                                                <div class="oa-card-title"><i class="fas fa-id-card oa-title-icon"></i>USI Form</div>
+                                                <p class="oa-form-desc">Create your Unique Student Identifier (USI). Required before you submit forms.</p>
+                                            </div>
+                                            <a class="oa-arrow-btn" target="_blank" href="https://www.usi.gov.au/students/get-a-usi" aria-label="Open USI link">
+                                                <span class="oa-btn-text">Open</span>
+                                                <i class="fas fa-arrow-right"></i>
+                                            </a>
                                         </div>
-                                        <a class="oa-arrow-btn" target="_blank" href="https://www.usi.gov.au/students/get-a-usi" aria-label="Open USI link">
-                                            <span class="oa-btn-text">Open</span>
-                                            <i class="fas fa-arrow-right"></i>
-                                        </a>
                                     </div>
-                                </div>
 
                                     <div class="oa-card oa-step-card">
                                         <div class="oa-form-row">
@@ -701,10 +1031,10 @@
                                                 <div class="oa-card-title"><i class="fas fa-file-alt oa-title-icon"></i>Orientation Form</div>
                                                 <p class="oa-form-desc">Complete the VET student orientation form carefully and submit it.</p>
                                             </div>
-                                            <a class="oa-arrow-btn" href="new_vet_orientation_form.aspx" aria-label="Open orientation form">
+                                            <asp:HyperLink runat="server" ID="lnkOrientationForm" CssClass="oa-arrow-btn" aria-label="Open orientation form">
                                                 <span class="oa-btn-text">Open</span>
                                                 <i class="fas fa-arrow-right"></i>
-                                            </a>
+                                            </asp:HyperLink>
                                         </div>
                                     </div>
 
@@ -715,10 +1045,10 @@
                                                 <div class="oa-card-title"><i class="fas fa-pen oa-title-icon"></i>Course Entry Interview Form</div>
                                                 <p class="oa-form-desc">Fill in the course entry interview form as part of the enrolment process.</p>
                                             </div>
-                                            <a class="oa-arrow-btn" href="course_entry_form.aspx" aria-label="Open course entry form">
+                                            <asp:HyperLink runat="server" ID="lnkCourseEntryForm" CssClass="oa-arrow-btn" aria-label="Open course entry form">
                                                 <span class="oa-btn-text">Open</span>
                                                 <i class="fas fa-arrow-right"></i>
-                                            </a>
+                                            </asp:HyperLink>
                                         </div>
                                     </div>
 
@@ -730,10 +1060,10 @@
                                                 <div class="oa-card-title"><i class="fas fa-clipboard-check oa-title-icon"></i>LLN Test</div>
                                                 <p class="oa-form-desc">Complete the Language, Literacy and Numeracy (LLN) test online.</p>
                                             </div>
-                                            <a class="oa-arrow-btn" href="lln-test" aria-label="Open LLN test">
+                                            <asp:HyperLink runat="server" ID="lnkLlnTest" CssClass="oa-arrow-btn" aria-label="Open LLN test">
                                                 <span class="oa-btn-text">Open</span>
                                                 <i class="fas fa-arrow-right"></i>
-                                            </a>
+                                            </asp:HyperLink>
                                         </div>
                                     </div>
 
@@ -793,7 +1123,7 @@
                         <div id="uploadDropZone" class="oa-upload-zone" role="button" tabindex="0" aria-label="Choose files to upload">
                             <div class="oa-upload-zone-icon"><i class="fas fa-file-upload"></i></div>
                             <p class="oa-upload-zone-title">Drag &amp; drop your documents here</p>
-                            <p class="oa-upload-zone-desc">or click to browse � PDF, JPG, PNG (max 5 MB each, multiple files allowed)</p>
+                            <p class="oa-upload-zone-desc">or click to browse — PDF, JPG, PNG (max 5 MB each, multiple files allowed)</p>
                         </div>
                         <div id="selectedFilesList" class="oa-upload-files-list"></div>
                         <asp:FileUpload ID="fuDocument" runat="server" AllowMultiple="true" CssClass="oa-file-input-hidden" Style="display: none;" accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png" />
@@ -807,10 +1137,72 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade oa-success-modal" id="oaSuccessModal" tabindex="-1" role="dialog" aria-labelledby="oaSuccessTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body oa-success-body">
+                    <div class="oa-success-icon-wrap" id="oaSuccessIconWrap">
+                        <div class="oa-success-icon-ring"></div>
+                        <span class="oa-success-icon" id="oaSuccessIcon"><i class="fas fa-check"></i></span>
+                    </div>
+                    <h4 class="oa-success-title" id="oaSuccessTitle">Success!</h4>
+                    <p class="oa-success-message" id="oaSuccessMessage"></p>
+                    <div class="oa-success-actions">
+                        <button type="button" class="oa-success-btn" id="oaContinueBtn" data-dismiss="modal">Continue</button>
+                        <a href="#" class="oa-success-btn oa-reappear-btn" id="oaReappearBtn">Reappear Test</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </asp:Content>
 
 <asp:Content ID="Content4" ContentPlaceHolderID="jqury" runat="Server">
     <script>
+        window.showOaSuccessModal = function (title, message, showReappear, reappearUrl) {
+            var titleEl = document.getElementById('oaSuccessTitle');
+            var messageEl = document.getElementById('oaSuccessMessage');
+            var continueBtn = document.getElementById('oaContinueBtn');
+            var reappearBtn = document.getElementById('oaReappearBtn');
+            var iconWrap = document.getElementById('oaSuccessIconWrap');
+            var iconEl = document.getElementById('oaSuccessIcon');
+
+            if (titleEl) {
+                titleEl.textContent = title || 'Success!';
+            }
+
+            if (messageEl) {
+                messageEl.textContent = message || '';
+            }
+
+            if (iconWrap && iconEl) {
+                if (showReappear) {
+                    iconWrap.classList.add('is-fail');
+                    iconEl.innerHTML = '<i class="fas fa-times"></i>';
+                } else {
+                    iconWrap.classList.remove('is-fail');
+                    iconEl.innerHTML = '<i class="fas fa-check"></i>';
+                }
+            }
+
+            if (continueBtn) {
+                continueBtn.style.display = showReappear ? 'none' : 'inline-block';
+            }
+
+            if (reappearBtn) {
+                if (showReappear && reappearUrl) {
+                    reappearBtn.style.display = 'inline-flex';
+                    reappearBtn.href = reappearUrl;
+                } else {
+                    reappearBtn.style.display = 'none';
+                    reappearBtn.href = '#';
+                }
+            }
+
+            $('#oaSuccessModal').modal('show');
+        };
+
         (function () {
             var dropZone = document.getElementById('uploadDropZone');
             var fileInput = document.getElementById('<%= fuDocument.ClientID %>');

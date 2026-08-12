@@ -822,12 +822,24 @@
         var iti = window.intlTelInput(input, {
             nationalMode: true,
             separateDialCode: true,
-            preferredCountries: ['au'],
+            onlyCountries: ['au'],
+            initialCountry: 'au',
             utilsScript: "assets/country_code/js/utils.js",
         });
 
+        function isValidAustralianNumber() {
+            if (iti.getSelectedCountryData().iso2 !== 'au') return false;
+            if (iti.isValidNumber()) return true;
+
+            // Fallback: some valid AU ranges (e.g. 0494088320) fail in older utils.js.
+            // +61 is already shown via dial code, so leading 0 is optional.
+            var digits = ($("#phone").val() || "").replace(/\D/g, "");
+            // Mobile: 04xxxxxxxx / 4xxxxxxxx | Landline: 0[2378]xxxxxxxx / [2378]xxxxxxxx
+            return /^(0?4\d{8}|0?[2378]\d{8})$/.test(digits);
+        }
+
         var handleChange = function () {
-            var text = (iti.isValidNumber()) ? "" : "Please enter a valid number";
+            var text = isValidAustralianNumber() ? "" : "Please enter a valid Australian number";
             output.innerHTML = text;
             $("#<%= hd_contact_no_code.ClientID%>").val(iti.selectedCountryData.dialCode);
             $("#<%= hd_contact_no.ClientID%>").val($("#phone").val());
@@ -900,9 +912,9 @@
                 $(phone).css("border-color", "red");
                 errorMessages.push("Contact Number is required.");
                 isValid = false;
-            } else if (!iti.isValidNumber()) {
+            } else if (!isValidAustralianNumber()) {
                 $(phone).css("border-color", "red");
-                errorMessages.push("Please enter a valid international contact number.");
+                errorMessages.push("Valid Australian Contact Number is required.");
                 isValid = false;
             } else { $(phone).css("border-color", ""); }
 

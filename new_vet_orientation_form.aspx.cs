@@ -195,7 +195,7 @@ public partial class new_vet_orientation_form : System.Web.UI.Page
             if (ds.Tables.Count > 0)
             {
                 send_mail(ds);
-                Response.Redirect("Success.aspx");
+                RedirectAfterSubmit("orientation");
             }
 
         }
@@ -791,6 +791,23 @@ public partial class new_vet_orientation_form : System.Web.UI.Page
                 ClearControls(c);
             }
         }
+    }
+
+    private void RedirectAfterSubmit(string expectedStatus)
+    {
+        string status = Request.QueryString["status"];
+        string key = BAL_OrientationAccess.GetAccessKeyFromRequest(
+            Request.QueryString["k"],
+            Request.QueryString["key"]);
+
+        string returnUrl = BAL_OrientationAccess.TryGetReturnUrl(status, key, expectedStatus);
+        if (!string.IsNullOrEmpty(returnUrl))
+        {
+            Response.Redirect(returnUrl);
+            return;
+        }
+
+        Response.Redirect("Success.aspx");
     }
 
 }

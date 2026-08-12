@@ -243,7 +243,7 @@
 
                     <div class="col-md-12">
                         <label class="lbl_title">USI Number</label>
-                        <asp:TextBox ID="txt_usi_no" CssClass="form-control" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="txt_usi_no" CssClass="form-control" runat="server" MaxLength="10"></asp:TextBox>
                     </div>
 
                     <div class="col-md-12">
@@ -723,12 +723,24 @@
         var iti = window.intlTelInput(input, {
             nationalMode: true,
             separateDialCode: true,
-            preferredCountries: ['au'],
+            onlyCountries: ['au'],
+            initialCountry: 'au',
             utilsScript: "assets/country_code/js/utils.js",
         });
 
+        function isValidAustralianNumber() {
+            if (iti.getSelectedCountryData().iso2 !== 'au') return false;
+            if (iti.isValidNumber()) return true;
+
+            // Fallback: some valid AU ranges (e.g. 0494088320) fail in older utils.js.
+            // +61 is already shown via dial code, so leading 0 is optional.
+            var digits = ($("#phone").val() || "").replace(/\D/g, "");
+            // Mobile: 04xxxxxxxx / 4xxxxxxxx | Landline: 0[2378]xxxxxxxx / [2378]xxxxxxxx
+            return /^(0?4\d{8}|0?[2378]\d{8})$/.test(digits);
+        }
+
         var handleChange = function () {
-            var text = (iti.isValidNumber()) ? "" : "Please enter a valid number";
+            var text = isValidAustralianNumber() ? "" : "Please enter a valid Australian number";
             output.innerHTML = text;
             $("#<%= hd_contact_no_code.ClientID%>").val(iti.selectedCountryData.dialCode);
             $("#<%= hd_contact_no.ClientID%>").val($("#phone").val());
@@ -791,20 +803,33 @@
                 isValid = false;
             } else { $("#<%= txt_id_no.ClientID %>").css("border-color", ""); }
 
+            var usiVal = $("#<%= txt_usi_no.ClientID %>").val().trim();
+            if (usiVal == "") {
+                $("#<%= txt_usi_no.ClientID %>").css("border-color", "red");
+                errorMessages.push("USI Number is required.");
+                isValid = false;
+            } else if (usiVal.length !== 10) {
+                $("#<%= txt_usi_no.ClientID %>").css("border-color", "red");
+                errorMessages.push("USI Number must be exactly 10 characters.");
+                isValid = false;
+            } else { $("#<%= txt_usi_no.ClientID %>").css("border-color", ""); }
+
             if ($("#<%= txt_aus_line_1.ClientID %>").val().trim() == "") {
                 $("#<%= txt_aus_line_1.ClientID %>").css("border-color", "red");
                 errorMessages.push("Australian Address Line 1 is required.");
                 isValid = false;
             } else { $("#<%= txt_aus_line_1.ClientID %>").css("border-color", ""); }
 
-            if ($("#<%= ddl_country.ClientID %>").prop("selectedIndex") == 0) {
-                errorMessages.push("Overseas Country is required.");
+           <%-- var selectedCountry = $("#<%= ddl_country.ClientID %>").val();
+            if ($("#<%= ddl_country.ClientID %>").prop("selectedIndex") == 0 || selectedCountry.toLowerCase() !== "australia") {
+                $("#<%= ddl_country.ClientID %>").css("border-color", "red");
+                errorMessages.push("Please select Australia as country.");
                 isValid = false;
-            }
+            } else { $("#<%= ddl_country.ClientID %>").css("border-color", ""); }--%>
 
-            if ($("#phone").val().trim() == "" || !iti.isValidNumber()) {
+            if ($("#phone").val().trim() == "" || !isValidAustralianNumber()) {
                 $("#phone").css("border-color", "red");
-                errorMessages.push("Valid Contact Number is required.");
+                errorMessages.push("Valid Australian Contact Number is required.");
                 isValid = false;
             } else { $("#phone").css("border-color", ""); }
 
