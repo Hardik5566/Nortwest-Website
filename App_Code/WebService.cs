@@ -32,14 +32,14 @@ public class WebService : System.Web.Services.WebService
 
     [SoapHeader("User", Required = true)]
     [WebMethod]
-    public string ins_lln_exam_result(string exam_id, string std_id, string result)
+    public string ins_lln_exam_result(string exam_id, string std_id, string result, string activities)
     {
         if (User != null)
         {
             if (User.IsValid())
             {
 
-                DataSet ds = BAL_Forms.ins_lln_exam_result(exam_id,std_id, result);
+                DataSet ds = BAL_Forms.ins_lln_exam_result(exam_id, std_id, result, activities);
                 if (ds.Tables.Count > 0)
                 {
                     if (ds.Tables[0].Rows.Count > 0)

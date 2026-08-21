@@ -1388,7 +1388,8 @@ public class BAL_Forms
     public static DataSet ins_lln_exam_result(
     string exam_id,
     string std_id,
-    string result)
+    string result,
+   string activities )
     {
         SqlCommand cmd = new SqlCommand();
         cmd.CommandText = "ins_lln_exam_result_sp";
@@ -1397,6 +1398,7 @@ public class BAL_Forms
         cmd.Parameters.Add(param.intparam("@exam_id", exam_id));
         cmd.Parameters.Add(param.stringparam("@std_id", std_id));
         cmd.Parameters.Add(param.stringparam("@result", result));
+        cmd.Parameters.Add(param.stringparam("@activities", activities));
 
         return command.ExtQueryDS(cmd);
     }
